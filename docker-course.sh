@@ -1,9 +1,17 @@
 #!/bin/bash
 
+# This script has only been tested on Trusty ...
+
 # TODO check the user has run the setup script, if not warn them and exit
 # TODO make an interactive option for this script requiring the user to hit n for next
 # TODO delete all current docker images on this host before proceeding? This could potentially annoy someone
 
+# cat /etc/os-release
+
+EDITOR=/usr/bin/vim
+OUR_USER=dojo
+DOCKER_AUTHOR="Donovan Jones"
+DOCKER_EMAIL="donovan@catalyst.net.nz"
 INTERACTIVE=0
 function wait_for_keypress {
     if [[ $INTERACTIVE == '1' ]];
@@ -41,7 +49,7 @@ docker run ubuntu:14.04 /bin/echo 'Hello world'
 # -i, --interactive=false    Keep STDIN open even if not attached
 # -t, --tty=false            Allocate a pseudo-TTY
 echo --------------------------------02: An interactive container---------------------------------
-echo -n "# sudo docker run -t -i ubuntu:14.04 /bin/bash"
+echo "# sudo docker run -t -i ubuntu:14.04 /bin/bash"
 echo -n "# type exit when you are done looking around"
 wait_for_keypress;
 if [[ $INTERACTIVE == '1' ]];
@@ -51,26 +59,26 @@ fi
 
 # A daemonized Hello world
 echo --------------------------------03: A daemonized Hello world---------------------------------
-echo '# sudo docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"'
+echo -n '# sudo docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"'
 wait_for_keypress;
 
 # Note the use of --name=insane_babbage which gives us a consistent name
 # TODO: check we are not already running insane_babbage before running this
 docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
 
-echo '# sudo docker ps'
+echo -n '# sudo docker ps'
 wait_for_keypress;
 docker ps
 
-echo '# sudo docker logs insane_babbage'
+echo -n '# sudo docker logs insane_babbage'
 wait_for_keypress;
 docker logs insane_babbage | tail -n 10
 
-echo '# sudo docker stop insane_babbage'
+echo -n '# sudo docker stop insane_babbage'
 wait_for_keypress;
 docker stop insane_babbage
 
-echo '# sudo docker ps'
+echo -n '# sudo docker ps'
 wait_for_keypress;
 docker ps
 
@@ -98,7 +106,7 @@ docker attach --help
 echo --------------------------------03: Running a web application in Docker---------------------------------
 # Note the use of --name=nostalgic_morse which gives us a consistent name
 # -P, --publish-all=false    Publish all exposed ports to random ports
-echo '# sudo docker run --name=nostalgic_morse -d -P training/webapp python app.py'
+echo -n '# sudo docker run --name=nostalgic_morse -d -P training/webapp python app.py'
 wait_for_keypress;
 docker run --name=nostalgic_morse -d -P training/webapp python app.py
 
@@ -220,7 +228,7 @@ docker search sinatra
 
 # Pulling our image
 echo --------------------------------04: Pulling our image---------------------------------
-echo -n '# docker pull training/sinatra'
+echo -n '# sudo docker pull training/sinatra'
 wait_for_keypress;
 docker pull training/sinatra
 
@@ -232,13 +240,72 @@ then
     docker run -t -i training/sinatra /bin/bash
 fi
 
+# Creating our own images
+echo --------------------------------05: Creating our own images---------------------------------
+echo '# sudo docker run -t -i training/sinatra /bin/bash'
+echo "# type 'gem install json' inside your container"
+echo -n "# type exit when you are done"
+wait_for_keypress;
+if [[ $INTERACTIVE == '1' ]];
+then
+    docker run -t -i training/sinatra /bin/bash
+else
+    docker run training/sinatra gem install json
+fi
 
-echo --------------------------------04---------------------------------
-echo --------------------------------05---------------------------------
-echo --------------------------------06---------------------------------
-echo --------------------------------07---------------------------------
-echo --------------------------------08---------------------------------
-echo --------------------------------09---------------------------------
-echo --------------------------------10---------------------------------
-echo --------------------------------11---------------------------------
+CONTAINER_ID=$(docker ps -l -q)
 
+echo -n "# sudo docker commit -m 'Added json gem' -a \"$DOCKER_AUTHOR\" $CONTAINER_ID $OUR_USER/sinatra:v1"
+wait_for_keypress;
+docker commit -m "Added json gem" -a "$DOCKER_AUTHOR" $CONTAINER_ID $OUR_USER/sinatra:v1
+
+echo -n '# sudo docker images'
+wait_for_keypress;
+docker images
+
+echo -n "# sudo docker run -t -i $OUR_USER/sinatra:v1 /bin/bash"
+wait_for_keypress;
+if [[ $INTERACTIVE == '1' ]];
+then
+    docker run -t -i $OUR_USER/sinatra:v1 /bin/bash
+fi
+
+# Building an image from a Dockerfile
+echo --------------------------------06: Building an image from a Dockerfile---------------------------------
+echo -n "mkdir sinatra"
+wait_for_keypress;
+mkdir sinatra
+echo -n "cd sinatra"
+wait_for_keypress;
+cd sinatra
+echo -n "touch Dockerfile"
+wait_for_keypress;
+touch Dockerfile
+
+if [[ $INTERACTIVE == '1' ]];
+then
+    $EDITOR Dockerfile
+else
+    echo "# This is a comment
+FROM ubuntu:14.04
+MAINTAINER $DOCKER_AUTHOR <$DOCKER_EMAIL>
+RUN apt-get update && apt-get install -y ruby ruby-dev
+RUN gem install sinatra
+" >> Dockerfile
+fi
+
+echo -n "cat Dockerfile"
+wait_for_keypress;
+cat Dockerfile
+
+echo -n "# sudo docker build -t $OUR_USER/sinatra:v2 ."
+wait_for_keypress;
+docker build -t $OUR_USER/sinatra:v2 .
+
+# Setting tags on an image
+# Image Digests
+# Push an image to Docker Hub
+# Remove an image from the host
+
+# https://docs.docker.com/userguide/dockerlinks/
+# https://docs.docker.com/userguide/dockervolumes/
