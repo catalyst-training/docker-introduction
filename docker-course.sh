@@ -12,7 +12,7 @@ EDITOR=/usr/bin/vim
 OUR_USER=dojo
 DOCKER_AUTHOR="Donovan Jones"
 DOCKER_EMAIL="donovan@catalyst.net.nz"
-INTERACTIVE=0
+INTERACTIVE=1
 function wait_for_keypress {
     if [[ $INTERACTIVE == '1' ]];
     then
@@ -112,7 +112,7 @@ docker run --name=nostalgic_morse -d -P training/webapp python app.py
 
 # Viewing our web application container
 echo --------------------------------04: Viewing our web application container---------------------------------
-echo '# sudo docker ps -l'
+echo -n '# sudo docker ps -l'
 wait_for_keypress;
 docker ps -l
 
@@ -135,12 +135,13 @@ lsof -i | egrep 'docker|COMMAND'
 
 # Viewing the web application’s logs
 echo --------------------------------06: Viewing the web application’s logs---------------------------------
-echo -n "# sudo docker logs -f nostalgic_morse"
+echo "# sudo docker logs -f nostalgic_morse"
 echo -n "# hit CTRL-C to exit"
 wait_for_keypress;
 if [[ $INTERACTIVE == '1' ]];
 then
     docker logs -f nostalgic_morse
+    echo
 fi
 
 # Looking at our web application container’s processes
@@ -272,13 +273,13 @@ fi
 
 # Building an image from a Dockerfile
 echo --------------------------------06: Building an image from a Dockerfile---------------------------------
-echo -n "mkdir sinatra"
+echo -n "# mkdir sinatra"
 wait_for_keypress;
 mkdir sinatra
-echo -n "cd sinatra"
+echo -n "# cd sinatra"
 wait_for_keypress;
 cd sinatra
-echo -n "touch Dockerfile"
+echo -n "# touch Dockerfile"
 wait_for_keypress;
 touch Dockerfile
 
@@ -294,7 +295,7 @@ RUN gem install sinatra
 " >> Dockerfile
 fi
 
-echo -n "cat Dockerfile"
+echo -n "# cat Dockerfile"
 wait_for_keypress;
 cat Dockerfile
 
