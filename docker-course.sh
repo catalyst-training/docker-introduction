@@ -12,7 +12,7 @@ EDITOR=/usr/bin/vim
 OUR_USER=dojo
 DOCKER_AUTHOR="Donovan Jones"
 DOCKER_EMAIL="donovan@catalyst.net.nz"
-INTERACTIVE=1
+INTERACTIVE=0
 function wait_for_keypress {
     if [[ $INTERACTIVE == '1' ]];
     then
@@ -304,9 +304,32 @@ wait_for_keypress;
 docker build -t $OUR_USER/sinatra:v2 .
 
 # Setting tags on an image
+echo --------------------------------07: Setting tags on an image---------------------------------
+IMAGE_ID=$( docker images $OUR_USER/sinatra  | grep v2 | awk '{print $3}' )
+echo -n "# sudo docker tag $IMAGE_ID $OUR_USER/sinatra:devel"
+wait_for_keypress;
+docker tag $IMAGE_ID $OUR_USER/sinatra:devel
+
+echo -n "# sudo docker images $OUR_USER/sinatra"
+wait_for_keypress;
+docker images $OUR_USER/sinatra
+
 # Image Digests
+echo --------------------------------08: Image Digests---------------------------------
+echo -n "# sudo docker images --digests | head"
+wait_for_keypress;
+docker images --digests | head
+
 # Push an image to Docker Hub
+echo --------------------------------09: Push an image to Docker Hub---------------------------------
+# TODO: use local registry here
+
 # Remove an image from the host
+# TODO: remove conteiners that are using this image first
+echo --------------------------------10: Remove an image from the host---------------------------------
+echo -n "# sudo docker rmi training/sinatra"
+wait_for_keypress;
+docker rmi training/sinatra
 
 # https://docs.docker.com/userguide/dockerlinks/
 # https://docs.docker.com/userguide/dockervolumes/
