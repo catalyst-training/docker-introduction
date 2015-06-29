@@ -10,6 +10,11 @@
 
 # cat /etc/os-release
 
+if [[ $EUID -ne 0 ]]; then
+   echo "Usage: sudo ./docker-course.sh"
+   exit 1
+fi
+
 EDITOR=/usr/bin/vim
 OUR_USER=dojo
 DOCKER_AUTHOR="Donovan Jones"
@@ -378,7 +383,29 @@ echo "# sudo docker run -t -i --rm --link db:webdb training/webapp /bin/bash"
 echo "# type 'cat /etc/hosts'"
 echo "# type 'apt-get install -yqq inetutils-ping'"
 echo "# type 'ping webdb'"
+echo "# type 'nc -v -z webdb 5432'"
 echo -n "# type exit when you are done running these commands"
-docker run -t -i --rm --link db:webdb training/webapp /bin/bash
+wait_for_keypress;
+if [[ $INTERACTIVE == '1' ]];
+then
+    docker run -t -i --rm --link db:webdb training/webapp /bin/bash
+else
+    docker run --rm --link db:webdb training/webapp cat /etc/hosts
+fi
+
+echo -n "# sudo docker restart db"
+wait_for_keypress;
+docker restart db
+
+echo "# sudo docker run -t -i --rm --link db:db training/webapp /bin/bash"
+echo "# type 'cat /etc/hosts'"
+echo -n "# type exit when you are done"
+wait_for_keypress;
+if [[ $INTERACTIVE == '1' ]];
+then
+    docker run -t -i --rm --link db:db training/webapp /bin/bash
+else
+    docker run --rm --link db:db training/webapp cat /etc/hosts
+fi
 
 # https://docs.docker.com/userguide/dockervolumes/
