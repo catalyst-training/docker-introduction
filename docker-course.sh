@@ -409,3 +409,30 @@ else
 fi
 
 # https://docs.docker.com/userguide/dockervolumes/
+echo -n "# https://docs.docker.com/userguide/dockervolumes/"
+wait_for_keypress;
+
+# Adding a data volume
+echo --------------------------------5.01: Adding a data volume---------------------------------
+
+# Locating a volume
+echo --------------------------------5.02: Locating a volume---------------------------------
+
+# Mount a host directory as a data volume
+echo --------------------------------5.03: Mount a host directory as a data volume---------------------------------
+
+# Mount a host file as a data volume
+echo --------------------------------5.04: Mount a host file as a data volume---------------------------------
+
+# Creating and mounting a data volume container
+echo --------------------------------5.05: Creating and mounting a data volume container---------------------------------
+
+# Backup, restore, or migrate data volumes
+echo --------------------------------5.06: Backup, restore, or migrate data volumes---------------------------------
+
+# https://docs.docker.com/userguide/dockerrepos/
+echo -n "# https://docs.docker.com/userguide/dockerrepos/"
+wait_for_keypress;
+
+# Searching for images
+echo --------------------------------6.01: Searching for images---------------------------------
