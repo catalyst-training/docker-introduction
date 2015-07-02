@@ -47,6 +47,7 @@ wait_for_keypress;
 
 # Hello world
 echo --------------------------------1.01: Hello world---------------------------------
+
 echo -n "# sudo docker run ubuntu:14.04 /bin/echo 'Hello world'"
 wait_for_keypress;
 
@@ -56,6 +57,7 @@ docker run ubuntu:14.04 /bin/echo 'Hello world'
 # -i, --interactive=false    Keep STDIN open even if not attached
 # -t, --tty=false            Allocate a pseudo-TTY
 echo --------------------------------1.02: An interactive container---------------------------------
+
 echo "# sudo docker run -t -i ubuntu:14.04 /bin/bash"
 echo -n "# type exit when you are done looking around"
 wait_for_keypress;
@@ -66,6 +68,7 @@ fi
 
 # A daemonized Hello world
 echo --------------------------------1.03: A daemonized Hello world---------------------------------
+
 echo -n '# sudo docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"'
 wait_for_keypress;
 
@@ -96,12 +99,14 @@ wait_for_keypress;
 
 # Working with containers
 echo --------------------------------2.01: Working with containers---------------------------------
+
 echo -n "# sudo docker version"
 wait_for_keypress;
 docker version
 
 # Get Docker command help
 echo --------------------------------2.02: Get Docker command help---------------------------------
+
 echo -n "# docker --help"
 wait_for_keypress;
 docker --help
@@ -111,6 +116,7 @@ docker attach --help
 
 # Running a web application in Docker
 echo --------------------------------2.03: Running a web application in Docker---------------------------------
+
 # Note the use of --name=nostalgic_morse which gives us a consistent name
 # -P, --publish-all=false    Publish all exposed ports to random ports
 echo -n '# sudo docker run --name=nostalgic_morse -d -P training/webapp python app.py'
@@ -119,12 +125,14 @@ docker run --name=nostalgic_morse -d -P training/webapp python app.py
 
 # Viewing our web application container
 echo --------------------------------2.04: Viewing our web application container---------------------------------
+
 echo -n '# sudo docker ps -l'
 wait_for_keypress;
 docker ps -l
 
 # A network port shortcut
 echo --------------------------------2.05: A network port shortcut---------------------------------
+
 echo -n "# sudo docker port nostalgic_morse 5000"
 wait_for_keypress;
 docker port nostalgic_morse 5000
@@ -142,6 +150,7 @@ lsof -i | egrep 'docker|COMMAND'
 
 # Viewing the web application’s logs
 echo --------------------------------2.06: Viewing the web application’s logs---------------------------------
+
 echo "# sudo docker logs -f nostalgic_morse"
 echo -n "# hit CTRL-C to exit"
 wait_for_keypress;
@@ -153,12 +162,14 @@ fi
 
 # Looking at our web application container’s processes
 echo --------------------------------2.07: Looking at our web application container’s processes---------------------------------
+
 echo -n "# sudo docker top nostalgic_morse"
 wait_for_keypress;
 docker top nostalgic_morse
 
 # Inspecting our web application container
 echo --------------------------------2.08: Inspecting our web application container---------------------------------
+
 echo -n "# sudo docker inspect nostalgic_morse"
 wait_for_keypress;
 docker inspect nostalgic_morse
@@ -169,6 +180,7 @@ docker inspect -f '{{ .NetworkSettings.IPAddress }}' nostalgic_morse
 
 # Stopping our web application container
 echo --------------------------------2.09: Stopping our web application container---------------------------------
+
 echo -n "# sudo docker stop nostalgic_morse"
 wait_for_keypress;
 docker stop nostalgic_morse
@@ -179,6 +191,7 @@ docker ps -l
 
 # Restarting our web application container
 echo --------------------------------2.10: Restarting our web application container---------------------------------
+
 echo -n "# sudo docker start nostalgic_morse"
 wait_for_keypress;
 docker start nostalgic_morse
@@ -191,6 +204,7 @@ docker ps -l
 
 # Removing our web application container
 echo --------------------------------2.11: Removing our web application container---------------------------------
+
 echo -n "# sudo docker rm nostalgic_morse"
 wait_for_keypress;
 docker rm nostalgic_morse
@@ -210,12 +224,14 @@ wait_for_keypress;
 
 # Listing images on the host
 echo --------------------------------3.01: Listing images on the host---------------------------------
+
 echo -n '# sudo docker images'
 wait_for_keypress;
 docker images
 
 # Getting a new image
 echo --------------------------------3.02: Getting a new image---------------------------------
+
 echo -n '# sudo docker pull centos'
 wait_for_keypress;
 docker pull centos
@@ -230,12 +246,14 @@ fi
 
 # Finding images
 echo --------------------------------3.03: Finding images---------------------------------
+
 echo -n '# sudo docker search sinatra'
 wait_for_keypress;
 docker search sinatra
 
 # Pulling our image
 echo --------------------------------3.04: Pulling our image---------------------------------
+
 echo -n '# sudo docker pull training/sinatra'
 wait_for_keypress;
 docker pull training/sinatra
@@ -250,6 +268,7 @@ fi
 
 # Creating our own images
 echo --------------------------------3.05: Creating our own images---------------------------------
+
 echo '# sudo docker run -t -i training/sinatra /bin/bash'
 echo "# type 'gem install json' inside your container"
 echo -n "# type exit when you are done"
@@ -280,6 +299,7 @@ fi
 
 # Building an image from a Dockerfile
 echo --------------------------------3.06: Building an image from a Dockerfile---------------------------------
+
 echo -n "# mkdir sinatra"
 wait_for_keypress;
 mkdir sinatra
@@ -312,6 +332,7 @@ docker build -t $OUR_USER/sinatra:v2 .
 
 # Setting tags on an image
 echo --------------------------------3.07: Setting tags on an image---------------------------------
+
 IMAGE_ID=$( docker images $OUR_USER/sinatra  | grep v2 | awk '{print $3}' )
 echo -n "# sudo docker tag $IMAGE_ID $OUR_USER/sinatra:devel"
 wait_for_keypress;
@@ -323,6 +344,7 @@ docker images $OUR_USER/sinatra
 
 # Image Digests
 echo --------------------------------3.08: Image Digests---------------------------------
+
 echo -n "# sudo docker images --digests | head"
 wait_for_keypress;
 docker images --digests | head
@@ -334,6 +356,7 @@ echo --------------------------------3.09: Push an image to Docker Hub----------
 # Remove an image from the host
 # TODO: remove conteiners that are using this image first
 echo --------------------------------3.10: Remove an image from the host---------------------------------
+
 echo -n "# sudo docker rmi training/sinatra"
 wait_for_keypress;
 docker rmi training/sinatra
@@ -347,6 +370,7 @@ wait_for_keypress;
 
 # The importance of naming
 echo --------------------------------4.01: The importance of naming---------------------------------
+
 echo -n "# sudo docker run -d -P --name web training/webapp python app.py"
 wait_for_keypress;
 docker run -d -P --name web training/webapp python app.py
@@ -357,6 +381,7 @@ docker ps -l
 
 # Communication across links
 echo --------------------------------4.02: Communication across links---------------------------------
+
 echo -n "# sudo docker run -d --name db training/postgres"
 wait_for_keypress;
 docker run -d --name db training/postgres
@@ -379,6 +404,7 @@ docker run --rm --name web2 --link db:db training/webapp env
 
 # Updating the /etc/hosts file
 echo --------------------------------4.03: Updating the /etc/hosts file---------------------------------
+
 echo "# sudo docker run -t -i --rm --link db:webdb training/webapp /bin/bash"
 echo "# type 'cat /etc/hosts'"
 echo "# type 'apt-get install -yqq inetutils-ping'"
@@ -415,20 +441,68 @@ wait_for_keypress;
 # Adding a data volume
 echo --------------------------------5.01: Adding a data volume---------------------------------
 
+echo -n "# sudo docker run -d -P --name web -v /webapp training/webapp python app.py"
+wait_for_keypress;
+docker run -d -P --name web -v /webapp training/webapp python app.py
+
 # Locating a volume
 echo --------------------------------5.02: Locating a volume---------------------------------
+
+echo -n "# sudo docker inspect web"
+wait_for_keypress;
+docker inspect web
 
 # Mount a host directory as a data volume
 echo --------------------------------5.03: Mount a host directory as a data volume---------------------------------
 
+echo -n "# sudo docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py"
+wait_for_keypress;
+docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py
+
+echo -n "# sudo docker run -d -P --name web -v /src/webapp:/opt/webapp:ro training/webapp python app.py"
+wait_for_keypress;
+docker run -d -P --name web -v /src/webapp:/opt/webapp:ro training/webapp python app.py
+
 # Mount a host file as a data volume
 echo --------------------------------5.04: Mount a host file as a data volume---------------------------------
+
+echo -n "# sudo docker run --rm -it -v ~/.bash_history:/.bash_history ubuntu /bin/bash"
+wait_for_keypress;
+docker run --rm -it -v ~/.bash_history:/.bash_history ubuntu /bin/bash
 
 # Creating and mounting a data volume container
 echo --------------------------------5.05: Creating and mounting a data volume container---------------------------------
 
+echo -n "# docker create -v /dbdata --name dbdata training/postgres /bin/true"
+wait_for_keypress;
+docker create -v /dbdata --name dbdata training/postgres /bin/true
+
+echo -n "# docker run -d --volumes-from dbdata --name db1 training/postgres"
+wait_for_keypress;
+docker run -d --volumes-from dbdata --name db1 training/postgres
+
+echo -n "# docker run -d --volumes-from dbdata --name db2 training/postgres"
+wait_for_keypress;
+docker run -d --volumes-from dbdata --name db2 training/postgres
+
+echo -n "# docker run -d --name db3 --volumes-from db1 training/postgres"
+wait_for_keypress;
+docker run -d --name db3 --volumes-from db1 training/postgres
+
 # Backup, restore, or migrate data volumes
 echo --------------------------------5.06: Backup, restore, or migrate data volumes---------------------------------
+
+echo -n "# docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata"
+wait_for_keypress;
+docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+
+echo -n "# docker run -v /dbdata --name dbdata2 ubuntu /bin/bash"
+wait_for_keypress;
+docker run -v /dbdata --name dbdata2 ubuntu /bin/bash
+
+echo -n "# docker run --volumes-from dbdata2 -v $(pwd):/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar"
+wait_for_keypress;
+docker run --volumes-from dbdata2 -v $(pwd):/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar
 
 # https://docs.docker.com/userguide/dockerrepos/
 echo -n "# https://docs.docker.com/userguide/dockerrepos/"
@@ -436,3 +510,7 @@ wait_for_keypress;
 
 # Searching for images
 echo --------------------------------6.01: Searching for images---------------------------------
+
+echo -n "# sudo docker search centos"
+wait_for_keypress;
+docker search centos
