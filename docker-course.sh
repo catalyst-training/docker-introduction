@@ -3,24 +3,49 @@
 # This script has only been tested on Trusty ...
 
 # TODO check the user has run the setup script, if not warn them and exit
-# TODO delete all current docker images on this host before proceeding? This could potentially annoy someone
-# TODO add support for sections so we can catchup to a specific section
-# TODO add support for a command listing which executes no code (deal with variables)
+# TODO implement -l flag
+# TODO implement -c flag
 # TODO move user vars into env, setup via setup.sh
-# flags (interactive and breakpoints)
 
-# cat /etc/os-release
+function usage {
+    echo
+    echo "Usage: sudo ./docker-course.sh [OPTIONS]"
+    echo
+    echo "    -h        this help"
+    echo "    -b        takes a number, indicates that we should stop at this section"
+    echo "    -c        issues the clear command periodicaly"
+    echo "    -l        just list commands don't execute anything"
+    echo "    -i        interactive, requires keypress to run commands"
+    echo
+    exit 1
+}
 
 if [[ $EUID -ne 0 ]]; then
-   echo "Usage: sudo ./docker-course.sh"
-   exit 1
+    usage;
 fi
 
+INTERACTIVE=0
+BREAK=0
+LIST=0
+CLEAR=0
+
+while getopts 'hiclb:' flag; do
+    case "${flag}" in
+        h) usage ;;
+        i) INTERACTIVE=1 ;;
+        c) CLEAR=1 ;;
+        l) LIST=1 ;;
+        b) BREAK="${OPTARG}" ;;
+        *) error "Unexpected option ${flag}" ;;
+    esac
+done
+
+# TODO get these from env
 EDITOR=/usr/bin/vim
 OUR_USER=dojo
 DOCKER_AUTHOR="Donovan Jones"
 DOCKER_EMAIL="donovan@catalyst.net.nz"
-INTERACTIVE=0
+
 function wait_for_keypress {
     if [[ $INTERACTIVE == '1' ]];
     then
@@ -114,6 +139,11 @@ docker stop insane_babbage
 echo -n '$ sudo docker ps'
 wait_for_keypress;
 docker ps
+
+if [[ $BREAK == '1' ]];
+then
+    exit;
+fi
 
 # https://docs.docker.com/userguide/usingdocker/
 echo
@@ -252,6 +282,11 @@ docker stop nostalgic_morse
 echo -n "$ sudo docker rm nostalgic_morse"
 wait_for_keypress;
 docker rm nostalgic_morse
+
+if [[ $BREAK == '2' ]];
+then
+    exit;
+fi
 
 # https://docs.docker.com/userguide/dockerimages/
 echo
@@ -421,6 +456,11 @@ echo -n "$ sudo docker rmi training/sinatra"
 wait_for_keypress;
 docker rmi training/sinatra
 
+if [[ $BREAK == '3' ]];
+then
+    exit;
+fi
+
 # https://docs.docker.com/userguide/dockerlinks/
 echo -n "# https://docs.docker.com/userguide/dockerlinks/"
 wait_for_keypress;
@@ -495,6 +535,11 @@ then
     docker run -t -i --rm --link db:db training/webapp /bin/bash
 else
     docker run --rm --link db:db training/webapp cat /etc/hosts
+fi
+
+if [[ $BREAK == '4' ]];
+then
+    exit;
 fi
 
 # https://docs.docker.com/userguide/dockervolumes/
@@ -584,6 +629,11 @@ echo -n "$ sudo docker run --volumes-from dbdata2 -v $(pwd):/backup ubuntu cd /d
 wait_for_keypress;
 docker run --volumes-from dbdata2 -v $(pwd):/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar
 
+if [[ $BREAK == '5' ]];
+then
+    exit;
+fi
+
 # https://docs.docker.com/userguide/dockerrepos/
 echo -n "# https://docs.docker.com/userguide/dockerrepos/"
 wait_for_keypress;
@@ -595,3 +645,9 @@ echo --------------------------------6.01: Searching for images-----------------
 echo -n "$ sudo docker search centos"
 wait_for_keypress;
 docker search centos
+
+if [[ $BREAK == '6' ]];
+then
+    exit;
+fi
+
