@@ -20,7 +20,7 @@ EDITOR=/usr/bin/vim
 OUR_USER=dojo
 DOCKER_AUTHOR="Donovan Jones"
 DOCKER_EMAIL="donovan@catalyst.net.nz"
-INTERACTIVE=1
+INTERACTIVE=0
 function wait_for_keypress {
     if [[ $INTERACTIVE == '1' ]];
     then
@@ -36,23 +36,29 @@ function wait_for_keypress {
 
 echo "# Cleaning up old containers before we start:"
 # check that these containers don't exist
-for container in insane_babbage nostalgic_morse dbdata web db db1 db2 db3 web1 web2 web3;
+for container in insane_babbage nostalgic_morse dbdata2 dbdata db1 db2 db3 web1 web2 web3 web db;
 do
     # stop any running containers
-    if docker ps | grep -q $container
+    if docker ps | grep -q " $container "
     then
         docker stop $container
     fi
 
     # remove containers
-    if docker ps -a | grep -q $container
+    if docker ps -a | grep -q " $container "
     then
         docker rm $container
     fi
 done
 echo "Cleaning up images before we start:"
-docker rmi -f $( docker images | grep '<none>' | awk '{print $3}' )
-sudo docker rmi $OUR_USER/sinatra:devel
+docker images | tail -n +2 | while read -r line
+do
+    IMAGE_ID=$( echo $line | awk '{ print $3 }' )
+    if echo $line | grep -q '<none>'
+    then
+        docker rmi $IMAGE_ID
+    fi
+done
 
 # https://docs.docker.com/userguide/dockerizing/
 echo -----------------------------------------------------------------
@@ -339,7 +345,7 @@ echo
 echo --------------------------------3.06: Building an image from a Dockerfile---------------------------------
 
 DIRECTORY=$(pwd)/sinatra
-DOCKERFILE=$DIRECTORY/Dockerfile
+DOCKERFILE="$DIRECTORY/Dockerfile"
 echo -n "$ mkdir $DIRECTORY"
 wait_for_keypress;
 if [ ! -d "$DIRECTORY" ]; then
@@ -351,11 +357,12 @@ cd $DIRECTORY
 echo -n "$ touch $DOCKERFILE"
 wait_for_keypress;
 
-if [ -f "$DOCKERFILE" ];
+if [ -f "$DOCKERFILE" ]
 then
     rm $DOCKERFILE
 else
-touch $DOCKERFILE
+    touch $DOCKERFILE
+fi
 
 if [[ $INTERACTIVE == '1' ]];
 then
@@ -384,7 +391,10 @@ echo --------------------------------3.07: Setting tags on an image-------------
 IMAGE_ID=$( docker images $OUR_USER/sinatra  | grep v2 | awk '{print $3}' )
 echo -n "$ sudo docker tag $IMAGE_ID $OUR_USER/sinatra:devel"
 wait_for_keypress;
-docker tag $IMAGE_ID $OUR_USER/sinatra:devel
+if [ ! docker images | awk '{ print $1 $2 }' | grep -q "$OUR_USER/sinatradevel" ]
+then
+    docker tag $IMAGE_ID $OUR_USER/sinatra:devel
+fi
 
 echo -n "$ sudo docker images $OUR_USER/sinatra"
 wait_for_keypress;
