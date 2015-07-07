@@ -89,8 +89,9 @@ then
 fi
 
 # https://docs.docker.com/userguide/dockerizing/
-echo -------------------------------------------------------------------------------------------------------------------
-echo -n "# https://docs.docker.com/userguide/dockerizing/"
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            https://docs.docker.com/userguide/dockerizing/                                       |"
+echo -n "+-----------------------------------------------------------------------------------------------------------------+"
 wait_for_keypress;
 
 # Hello world
@@ -127,7 +128,10 @@ wait_for_keypress;
 
 # Note the use of --name=insane_babbage which gives us a consistent name
 # TODO: check we are not already running insane_babbage before running this
-docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+if [[ ! $LIST == '1' ]];
+then
+    docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+fi
 
 echo -n '$ sudo docker ps'
 wait_for_keypress;
@@ -164,8 +168,9 @@ fi
 
 # https://docs.docker.com/userguide/usingdocker/
 echo
-echo -------------------------------------------------------------------------------------------------------------------
-echo -n "# https://docs.docker.com/userguide/usingdocker/"
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            https://docs.docker.com/userguide/usingdocker/                                       |"
+echo -n "+-----------------------------------------------------------------------------------------------------------------+"
 wait_for_keypress;
 
 # Working with containers
@@ -361,8 +366,9 @@ fi
 
 # https://docs.docker.com/userguide/dockerimages/
 echo
-echo -------------------------------------------------------------------------------------------------------------------
-echo -n "# https://docs.docker.com/userguide/dockerimages/"
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            https://docs.docker.com/userguide/dockerimages/                                      |"
+echo -n "+-----------------------------------------------------------------------------------------------------------------+"
 wait_for_keypress;
 
 # Listing images on the host
@@ -581,7 +587,10 @@ then
 fi
 
 # https://docs.docker.com/userguide/dockerlinks/
-echo -n "# https://docs.docker.com/userguide/dockerlinks/"
+echo
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            https://docs.docker.com/userguide/dockerlinks/                                       |"
+echo -n "+-----------------------------------------------------------------------------------------------------------------+"
 wait_for_keypress;
 
 # TODO: should we run any of the commands in:
@@ -692,7 +701,10 @@ then
 fi
 
 # https://docs.docker.com/userguide/dockervolumes/
-echo -n "# https://docs.docker.com/userguide/dockervolumes/"
+echo
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            https://docs.docker.com/userguide/dockervolumes/                                     |"
+echo -n "+-----------------------------------------------------------------------------------------------------------------+"
 wait_for_keypress;
 
 # Adding a data volume
@@ -826,7 +838,10 @@ then
 fi
 
 # https://docs.docker.com/userguide/dockerrepos/
-echo -n "# https://docs.docker.com/userguide/dockerrepos/"
+echo
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            https://docs.docker.com/userguide/dockerrepos/                                       |"
+echo -n "+-----------------------------------------------------------------------------------------------------------------+"
 wait_for_keypress;
 
 # Searching for images
