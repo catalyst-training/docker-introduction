@@ -13,7 +13,7 @@ function usage {
     echo
     echo "    -h        this help"
     echo "    -b        takes a number, indicates that we should stop at this section"
-    echo "    -c        issues the clear command periodicaly"
+    echo "    -c        issues the clear command periodically"
     echo "    -l        just list commands don't execute anything"
     echo "    -i        interactive, requires keypress to run commands"
     echo
@@ -59,40 +59,43 @@ function wait_for_keypress {
     echo
 }
 
-echo "# Cleaning up old containers before we start:"
-# check that these containers don't exist
-for container in insane_babbage nostalgic_morse dbdata2 dbdata db1 db2 db3 web1 web2 web3 web db;
-do
-    # stop any running containers
-    if docker ps | grep -q " $container "
-    then
-        docker stop $container
-    fi
+if [[ ! $LIST == '1' ]];
+then
+    echo "# Cleaning up old containers before we start:"
+    # check that these containers don't exist
+    for container in insane_babbage nostalgic_morse dbdata2 dbdata db1 db2 db3 web1 web2 web3 web db;
+    do
+        # stop any running containers
+        if docker ps | grep -q " $container "
+        then
+            docker stop $container
+        fi
 
-    # remove containers
-    if docker ps -a | grep -q " $container "
-    then
-        docker rm $container
-    fi
-done
-echo "Cleaning up images before we start:"
-docker images | tail -n +2 | while read -r line
-do
-    IMAGE_ID=$( echo $line | awk '{ print $3 }' )
-    if echo $line | grep -q '<none>'
-    then
-        docker rmi $IMAGE_ID
-    fi
-done
+        # remove containers
+        if docker ps -a | grep -q " $container "
+        then
+            docker rm $container
+        fi
+    done
+    echo "Cleaning up images before we start:"
+    docker images | tail -n +2 | while read -r line
+    do
+        IMAGE_ID=$( echo $line | awk '{ print $3 }' )
+        if echo $line | grep -q '<none>'
+        then
+            docker rmi $IMAGE_ID
+        fi
+    done
+fi
 
 # https://docs.docker.com/userguide/dockerizing/
-echo -----------------------------------------------------------------
+echo -------------------------------------------------------------------------------------------------------------------
 echo -n "# https://docs.docker.com/userguide/dockerizing/"
 wait_for_keypress;
 
 # Hello world
 echo
-echo --------------------------------1.01: Hello world---------------------------------
+echo --------------------------------1.01: Hello world------------------------------------------------------------------
 
 echo -n "$ sudo docker run ubuntu:14.04 /bin/echo 'Hello world'"
 wait_for_keypress;
@@ -105,7 +108,7 @@ fi
 # -i, --interactive=false    Keep STDIN open even if not attached
 # -t, --tty=false            Allocate a pseudo-TTY
 echo
-echo --------------------------------1.02: An interactive container---------------------------------
+echo --------------------------------1.02: An interactive container-----------------------------------------------------
 
 echo "$ sudo docker run -t -i ubuntu:14.04 /bin/bash"
 echo -n "# type exit when you are done looking around"
@@ -117,7 +120,7 @@ fi
 
 # A daemonized Hello world
 echo
-echo --------------------------------1.03: A daemonized Hello world---------------------------------
+echo --------------------------------1.03: A daemonized Hello world-----------------------------------------------------
 
 echo -n '$ sudo docker run --name=insane_babbage -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"'
 wait_for_keypress;
@@ -161,13 +164,13 @@ fi
 
 # https://docs.docker.com/userguide/usingdocker/
 echo
-echo -----------------------------------------------------------------
+echo -------------------------------------------------------------------------------------------------------------------
 echo -n "# https://docs.docker.com/userguide/usingdocker/"
 wait_for_keypress;
 
 # Working with containers
 echo
-echo --------------------------------2.01: Working with containers---------------------------------
+echo --------------------------------2.01: Working with containers------------------------------------------------------
 
 echo -n "$ sudo docker version"
 wait_for_keypress;
@@ -178,7 +181,7 @@ fi
 
 # Get Docker command help
 echo
-echo --------------------------------2.02: Get Docker command help---------------------------------
+echo --------------------------------2.02: Get Docker command help------------------------------------------------------
 
 echo -n "$ docker --help"
 wait_for_keypress;
@@ -195,7 +198,7 @@ fi
 
 # Running a web application in Docker
 echo
-echo --------------------------------2.03: Running a web application in Docker---------------------------------
+echo --------------------------------2.03: Running a web application in Docker------------------------------------------
 
 echo "# Note the use of --name=nostalgic_morse which gives us a consistent name"
 echo "# -P, --publish-all=false    Publish all exposed ports to random ports"
@@ -208,7 +211,7 @@ fi
 
 # Viewing our web application container
 echo
-echo --------------------------------2.04: Viewing our web application container---------------------------------
+echo --------------------------------2.04: Viewing our web application container----------------------------------------
 
 echo -n '$ sudo docker ps -l'
 wait_for_keypress;
@@ -219,7 +222,7 @@ fi
 
 # A network port shortcut
 echo
-echo --------------------------------2.05: A network port shortcut---------------------------------
+echo --------------------------------2.05: A network port shortcut------------------------------------------------------
 
 echo -n "$ sudo docker port nostalgic_morse 5000"
 wait_for_keypress;
@@ -247,7 +250,7 @@ fi
 
 # Viewing the web application’s logs
 echo
-echo --------------------------------2.06: Viewing the web application’s logs---------------------------------
+echo --------------------------------2.06: Viewing the web application’s logs-------------------------------------------
 
 echo "# hit CTRL-C to exit"
 echo -n "$ sudo docker logs -f nostalgic_morse"
@@ -260,7 +263,7 @@ fi
 
 # Looking at our web application container’s processes
 echo
-echo --------------------------------2.07: Looking at our web application container’s processes---------------------------------
+echo --------------------------------2.07: Looking at our web application container’s processes-------------------------
 
 echo -n "$ sudo docker top nostalgic_morse"
 wait_for_keypress;
@@ -271,7 +274,7 @@ fi
 
 # Inspecting our web application container
 echo
-echo --------------------------------2.08: Inspecting our web application container---------------------------------
+echo --------------------------------2.08: Inspecting our web application container-------------------------------------
 
 echo -n "$ sudo docker inspect nostalgic_morse"
 wait_for_keypress;
@@ -289,7 +292,7 @@ fi
 
 # Stopping our web application container
 echo
-echo --------------------------------2.09: Stopping our web application container---------------------------------
+echo --------------------------------2.09: Stopping our web application container---------------------------------------
 
 echo -n "$ sudo docker stop nostalgic_morse"
 wait_for_keypress;
@@ -307,7 +310,7 @@ fi
 
 # Restarting our web application container
 echo
-echo --------------------------------2.10: Restarting our web application container---------------------------------
+echo --------------------------------2.10: Restarting our web application container-------------------------------------
 
 echo -n "$ sudo docker start nostalgic_morse"
 wait_for_keypress;
@@ -327,7 +330,7 @@ fi
 
 # Removing our web application container
 echo
-echo --------------------------------2.11: Removing our web application container---------------------------------
+echo --------------------------------2.11: Removing our web application container---------------------------------------
 
 echo "# we expect this command to fail as the container is still running"
 echo -n "$ sudo docker rm nostalgic_morse"
@@ -358,13 +361,13 @@ fi
 
 # https://docs.docker.com/userguide/dockerimages/
 echo
-echo -----------------------------------------------------------------
+echo -------------------------------------------------------------------------------------------------------------------
 echo -n "# https://docs.docker.com/userguide/dockerimages/"
 wait_for_keypress;
 
 # Listing images on the host
 echo
-echo --------------------------------3.01: Listing images on the host---------------------------------
+echo --------------------------------3.01: Listing images on the host---------------------------------------------------
 
 echo -n '$ sudo docker images'
 wait_for_keypress;
@@ -375,7 +378,7 @@ fi
 
 # Getting a new image
 echo
-echo --------------------------------3.02: Getting a new image---------------------------------
+echo --------------------------------3.02: Getting a new image----------------------------------------------------------
 
 echo -n '$ sudo docker pull centos'
 wait_for_keypress;
@@ -394,7 +397,7 @@ fi
 
 # Finding images
 echo
-echo --------------------------------3.03: Finding images---------------------------------
+echo --------------------------------3.03: Finding images---------------------------------------------------------------
 
 echo -n '$ sudo docker search sinatra'
 wait_for_keypress;
@@ -405,7 +408,7 @@ fi
 
 # Pulling our image
 echo
-echo --------------------------------3.04: Pulling our image---------------------------------
+echo --------------------------------3.04: Pulling our image------------------------------------------------------------
 
 echo -n '$ sudo docker pull training/sinatra'
 wait_for_keypress;
@@ -424,7 +427,7 @@ fi
 
 # Creating our own images
 echo
-echo --------------------------------3.05: Creating our own images---------------------------------
+echo --------------------------------3.05: Creating our own images------------------------------------------------------
 
 echo "# type 'gem install json' inside your container"
 echo "# type exit when you are done"
@@ -466,7 +469,7 @@ fi
 
 # Building an image from a Dockerfile
 echo
-echo --------------------------------3.06: Building an image from a Dockerfile---------------------------------
+echo --------------------------------3.06: Building an image from a Dockerfile------------------------------------------
 
 DIRECTORY=$(pwd)/sinatra
 DOCKERFILE="$DIRECTORY/Dockerfile"
@@ -525,7 +528,7 @@ fi
 
 # Setting tags on an image
 echo
-echo --------------------------------3.07: Setting tags on an image---------------------------------
+echo --------------------------------3.07: Setting tags on an image-----------------------------------------------------
 
 IMAGE_ID=$( docker images $OUR_USER/sinatra  | grep v2 | awk '{print $3}' )
 echo -n "$ sudo docker tag $IMAGE_ID $OUR_USER/sinatra:devel"
@@ -547,7 +550,7 @@ fi
 
 # Image Digests
 echo
-echo --------------------------------3.08: Image Digests---------------------------------
+echo --------------------------------3.08: Image Digests----------------------------------------------------------------
 
 echo -n "$ sudo docker images --digests | head"
 wait_for_keypress;
@@ -558,12 +561,12 @@ fi
 
 # Push an image to Docker Hub
 echo
-echo --------------------------------3.09: Push an image to Docker Hub---------------------------------
+echo --------------------------------3.09: Push an image to Docker Hub--------------------------------------------------
 # TODO: use local registry here
 
 # Remove an image from the host
 # TODO: remove conteiners that are using this image first
-echo --------------------------------3.10: Remove an image from the host---------------------------------
+echo --------------------------------3.10: Remove an image from the host------------------------------------------------
 
 echo -n "$ sudo docker rmi training/sinatra"
 wait_for_keypress;
@@ -586,7 +589,7 @@ wait_for_keypress;
 
 # The importance of naming
 echo
-echo --------------------------------4.01: The importance of naming---------------------------------
+echo --------------------------------4.01: The importance of naming-----------------------------------------------------
 
 echo -n "$ sudo docker run -d -P --name web training/webapp python app.py"
 wait_for_keypress;
@@ -604,7 +607,7 @@ fi
 
 # Communication across links
 echo
-echo --------------------------------4.02: Communication across links---------------------------------
+echo --------------------------------4.02: Communication across links---------------------------------------------------
 
 echo -n "$ sudo docker run -d --name db training/postgres"
 wait_for_keypress;
@@ -643,7 +646,7 @@ fi
 
 # Updating the /etc/hosts file
 echo
-echo --------------------------------4.03: Updating the /etc/hosts file---------------------------------
+echo --------------------------------4.03: Updating the /etc/hosts file-------------------------------------------------
 
 echo "# type 'cat /etc/hosts'"
 echo "# type 'apt-get install -yqq inetutils-ping'"
@@ -694,7 +697,7 @@ wait_for_keypress;
 
 # Adding a data volume
 echo
-echo --------------------------------5.01: Adding a data volume---------------------------------
+echo --------------------------------5.01: Adding a data volume---------------------------------------------------------
 
 if [[ ! $LIST == '1' ]];
 then
@@ -710,7 +713,7 @@ fi
 
 # Locating a volume
 echo
-echo --------------------------------5.02: Locating a volume---------------------------------
+echo --------------------------------5.02: Locating a volume------------------------------------------------------------
 
 echo -n "$ sudo docker inspect web"
 wait_for_keypress;
@@ -721,7 +724,7 @@ fi
 
 # Mount a host directory as a data volume
 echo
-echo --------------------------------5.03: Mount a host directory as a data volume---------------------------------
+echo --------------------------------5.03: Mount a host directory as a data volume--------------------------------------
 
 if [[ ! $LIST == '1' ]];
 then
@@ -749,7 +752,7 @@ fi
 
 # Mount a host file as a data volume
 echo
-echo --------------------------------5.04: Mount a host file as a data volume---------------------------------
+echo --------------------------------5.04: Mount a host file as a data volume-------------------------------------------
 
 # note correction
 echo -n "$ sudo docker run --rm -it -v ~/.bash_history:/root/.bash_history ubuntu /bin/bash"
@@ -761,7 +764,7 @@ fi
 
 # Creating and mounting a data volume container
 echo
-echo --------------------------------5.05: Creating and mounting a data volume container---------------------------------
+echo --------------------------------5.05: Creating and mounting a data volume container--------------------------------
 
 echo -n "$ sudo docker create -v /dbdata --name dbdata training/postgres /bin/true"
 wait_for_keypress;
@@ -793,7 +796,7 @@ fi
 
 # Backup, restore, or migrate data volumes
 echo
-echo --------------------------------5.06: Backup, restore, or migrate data volumes---------------------------------
+echo --------------------------------5.06: Backup, restore, or migrate data volumes-------------------------------------
 
 echo -n "$ sudo docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata"
 wait_for_keypress;
@@ -828,7 +831,7 @@ wait_for_keypress;
 
 # Searching for images
 echo
-echo --------------------------------6.01: Searching for images---------------------------------
+echo --------------------------------6.01: Searching for images---------------------------------------------------------
 
 echo -n "$ sudo docker search centos"
 wait_for_keypress;
