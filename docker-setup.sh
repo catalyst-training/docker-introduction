@@ -10,6 +10,8 @@ then
     exit 1
 fi
 
+cd /tmp
+
 # ensure we have the right sources source
 DOCKER_SOURCE=/etc/apt/sources.list.d/docker.list
 
@@ -28,4 +30,22 @@ if [[ ! $INSTALL_STATUS = 'ok' ]];
 then
     apt-get update
     apt-get install lxc-docker
+fi
+
+# install dockviz
+DOCKVIZ_BIN=/usr/local/bin/dockviz
+if [ ! -f $DOCKVIZ_BIN ];
+then
+    wget https://github.com/justone/dockviz/releases/download/v0.2/dockviz_linux_amd64
+    chmod 755 dockviz_linux_amd64
+    mv dockviz_linux_amd64 $DOCKVIZ_BIN
+fi
+
+# install docker-compose
+COMPOSE_BIN=/usr/local/bin/docker-compose
+if [ ! -f $COMPOSE_BIN ];
+then
+    wget https://github.com/docker/compose/releases/download/1.2.0/docker-compose-linux-x86_64
+    chmod 755 docker-compose-linux-x86_64
+    mv docker-compose-linux-x86_64 $COMPOSE_BIN
 fi
