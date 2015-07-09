@@ -2,10 +2,7 @@
 
 # This script has only been tested on Trusty ...
 
-# TODO check the user has run the setup script, if not warn them and exit
-# TODO implement -l flag
 # TODO implement -c flag
-# TODO move user vars into env, setup via setup.sh
 
 function usage {
     echo
@@ -24,6 +21,14 @@ if [[ $EUID -ne 0 ]]; then
     usage;
 fi
 
+source ${HOME}/.bashrc.training
+
+if [[ -z ${DOCKER_TRAINING_AUTHOR+x} || -z ${DOCKER_TRAINING_EMAIL+x} || -z ${DOCKER_TRAINING_USER+x} || -z ${DOCKER_TRAINING_EDITOR+x} ]];
+then
+    echo "Please run 'source ./user-setup.sh' first";
+    exit;
+fi
+
 INTERACTIVE=0
 BREAK=0
 LIST=0
@@ -39,12 +44,6 @@ while getopts 'hiclb:' flag; do
         *) error "Unexpected option ${flag}" ;;
     esac
 done
-
-# TODO get these from env
-EDITOR=/usr/bin/vim
-OUR_USER=dojo
-DOCKER_AUTHOR="Donovan Jones"
-DOCKER_EMAIL="donovan@catalyst.net.nz"
 
 function wait_for_keypress {
     if [[ $INTERACTIVE == '1' ]];
@@ -451,11 +450,11 @@ fi
 
 CONTAINER_ID=$(docker ps -l -q)
 
-echo -n "$ sudo docker commit -m 'Added json gem' -a \"$DOCKER_AUTHOR\" $CONTAINER_ID $OUR_USER/sinatra:v1"
+echo -n "$ sudo docker commit -m 'Added json gem' -a \"$DOCKER_TRAINING_AUTHOR\" $CONTAINER_ID $DOCKER_TRAINING_USER/sinatra:v1"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker commit -m "Added json gem" -a "$DOCKER_AUTHOR" $CONTAINER_ID $OUR_USER/sinatra:v1
+    docker commit -m "Added json gem" -a "$DOCKER_TRAINING_AUTHOR" $CONTAINER_ID $DOCKER_TRAINING_USER/sinatra:v1
 fi
 
 echo -n '$ sudo docker images'
@@ -466,11 +465,11 @@ then
 fi
 
 echo "# type exit when you are done"
-echo -n "$ sudo docker run -t -i $OUR_USER/sinatra:v1 /bin/bash"
+echo -n "$ sudo docker run -t -i $DOCKER_TRAINING_USER/sinatra:v1 /bin/bash"
 wait_for_keypress;
 if [[ $INTERACTIVE == '1' ]];
 then
-    docker run -t -i $OUR_USER/sinatra:v1 /bin/bash
+    docker run -t -i $DOCKER_TRAINING_USER/sinatra:v1 /bin/bash
 fi
 
 # Building an image from a Dockerfile
@@ -505,13 +504,13 @@ fi
 
 if [[ $INTERACTIVE == '1' ]];
 then
-    $EDITOR Dockerfile
+    $DOCKER_TRAINING_EDITOR Dockerfile
 else
     if [[ ! $LIST == '1' ]];
     then
         echo "# This is a comment
 FROM ubuntu:14.04
-MAINTAINER $DOCKER_AUTHOR <$DOCKER_EMAIL>
+MAINTAINER $DOCKER_TRAINING_AUTHOR <$DOCKER_TRAINING_EMAIL>
 RUN apt-get update && apt-get install -y ruby ruby-dev
 RUN gem install sinatra
 " > Dockerfile
@@ -525,33 +524,33 @@ then
     cat Dockerfile
 fi
 
-echo -n "$ sudo docker build -t $OUR_USER/sinatra:v2 ."
+echo -n "$ sudo docker build -t $DOCKER_TRAINING_USER/sinatra:v2 ."
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker build -t $OUR_USER/sinatra:v2 .
+    docker build -t $DOCKER_TRAINING_USER/sinatra:v2 .
 fi
 
 # Setting tags on an image
 echo
 echo --------------------------------3.07: Setting tags on an image-----------------------------------------------------
 
-IMAGE_ID=$( docker images $OUR_USER/sinatra  | grep v2 | awk '{print $3}' )
-echo -n "$ sudo docker tag $IMAGE_ID $OUR_USER/sinatra:devel"
+IMAGE_ID=$( docker images $DOCKER_TRAINING_USER/sinatra  | grep v2 | awk '{print $3}' )
+echo -n "$ sudo docker tag $IMAGE_ID $DOCKER_TRAINING_USER/sinatra:devel"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    if [ ! docker images | awk '{ print $1 $2 }' | grep -q "$OUR_USER/sinatradevel" ]
+    if [ ! docker images | awk '{ print $1 $2 }' | grep -q "$DOCKER_TRAINING_USER/sinatradevel" ]
     then
-        docker tag $IMAGE_ID $OUR_USER/sinatra:devel
+        docker tag $IMAGE_ID $DOCKER_TRAINING_USER/sinatra:devel
     fi
 fi
 
-echo -n "$ sudo docker images $OUR_USER/sinatra"
+echo -n "$ sudo docker images $DOCKER_TRAINING_USER/sinatra"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker images $OUR_USER/sinatra
+    docker images $DOCKER_TRAINING_USER/sinatra
 fi
 
 # Image Digests
@@ -859,4 +858,3 @@ if [[ $BREAK == '6' ]];
 then
     exit;
 fi
-
