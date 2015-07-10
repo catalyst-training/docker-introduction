@@ -2,17 +2,14 @@
 
 # This script has only been tested on Trusty ...
 
-# TODO implement -c flag
-
 function usage {
     echo
     echo "Usage: sudo ./docker-course.sh [OPTIONS]"
     echo
     echo "    -h        this help"
-    echo "    -b        takes a number, indicates that we should stop at this section"
-    echo "    -c        issues the clear command periodically"
-    echo "    -l        just list commands don't execute anything"
-    echo "    -i        interactive, requires keypress to run commands"
+    echo "    -s        takes an integer, indicates that we should stop at this section"
+    echo "    -r        replay, runs all the commands without user input"
+    echo "    -i        interactive replay, requires keypresses to run commands"
     echo
     exit 1
 }
@@ -31,16 +28,14 @@ fi
 
 INTERACTIVE=0
 BREAK=0
-LIST=0
-CLEAR=0
+LIST=1 # default mode
 
-while getopts 'hiclb:' flag; do
+while getopts 'hirs:' flag; do
     case "${flag}" in
         h) usage ;;
         i) INTERACTIVE=1 ;;
-        c) CLEAR=1 ;;
-        l) LIST=1 ;;
-        b) BREAK="${OPTARG}" ;;
+        r) LIST=0 ;;
+        s) BREAK="${OPTARG}" ;;
         *) error "Unexpected option ${flag}" ;;
     esac
 done
@@ -90,8 +85,7 @@ fi
 # https://docs.docker.com/userguide/dockerizing/
 echo +-----------------------------------------------------------------------------------------------------------------+
 echo "|                            https://docs.docker.com/userguide/dockerizing/                                       |"
-echo -n "+-----------------------------------------------------------------------------------------------------------------+"
-wait_for_keypress;
+echo "+-----------------------------------------------------------------------------------------------------------------+"
 
 # Hello world
 echo
@@ -110,8 +104,9 @@ fi
 echo
 echo --------------------------------1.02: An interactive container-----------------------------------------------------
 
-echo "$ sudo docker run -t -i ubuntu:14.04 /bin/bash"
-echo -n "# type exit when you are done looking around"
+echo "# try this command: 'cat /etc/os-release' inside the container"
+echo "# type exit when you are done looking around"
+echo -n "$ sudo docker run -t -i ubuntu:14.04 /bin/bash"
 wait_for_keypress;
 if [[ $INTERACTIVE == '1' ]];
 then
@@ -169,8 +164,7 @@ fi
 echo
 echo +-----------------------------------------------------------------------------------------------------------------+
 echo "|                            https://docs.docker.com/userguide/usingdocker/                                       |"
-echo -n "+-----------------------------------------------------------------------------------------------------------------+"
-wait_for_keypress;
+echo "+-----------------------------------------------------------------------------------------------------------------+"
 
 # Working with containers
 echo
@@ -367,8 +361,7 @@ fi
 echo
 echo +-----------------------------------------------------------------------------------------------------------------+
 echo "|                            https://docs.docker.com/userguide/dockerimages/                                      |"
-echo -n "+-----------------------------------------------------------------------------------------------------------------+"
-wait_for_keypress;
+echo "+-----------------------------------------------------------------------------------------------------------------+"
 
 # Listing images on the host
 echo
@@ -393,6 +386,7 @@ then
 fi
 
 echo "# type exit when you are done looking around"
+echo "# try this command: 'cat /etc/os-release'"
 echo -n '$ sudo docker run -t -i centos /bin/bash'
 wait_for_keypress;
 if [[ $INTERACTIVE == '1' ]];
@@ -570,7 +564,7 @@ echo --------------------------------3.09: Push an image to Docker Hub----------
 # TODO: use local registry here
 
 # Remove an image from the host
-# TODO: remove conteiners that are using this image first
+# TODO: remove containers that are using this image first
 echo --------------------------------3.10: Remove an image from the host------------------------------------------------
 
 echo -n "$ sudo docker rmi training/sinatra"
@@ -589,8 +583,7 @@ fi
 echo
 echo +-----------------------------------------------------------------------------------------------------------------+
 echo "|                            https://docs.docker.com/userguide/dockerlinks/                                       |"
-echo -n "+-----------------------------------------------------------------------------------------------------------------+"
-wait_for_keypress;
+echo "+-----------------------------------------------------------------------------------------------------------------+"
 
 # TODO: should we run any of the commands in:
 # Connect using network port mapping
@@ -703,8 +696,7 @@ fi
 echo
 echo +-----------------------------------------------------------------------------------------------------------------+
 echo "|                            https://docs.docker.com/userguide/dockervolumes/                                     |"
-echo -n "+-----------------------------------------------------------------------------------------------------------------+"
-wait_for_keypress;
+echo "+-----------------------------------------------------------------------------------------------------------------+"
 
 # Adding a data volume
 echo
@@ -840,8 +832,7 @@ fi
 echo
 echo +-----------------------------------------------------------------------------------------------------------------+
 echo "|                            https://docs.docker.com/userguide/dockerrepos/                                       |"
-echo -n "+-----------------------------------------------------------------------------------------------------------------+"
-wait_for_keypress;
+echo "+-----------------------------------------------------------------------------------------------------------------+"
 
 # Searching for images
 echo
@@ -855,6 +846,71 @@ then
 fi
 
 if [[ $BREAK == '6' ]];
+then
+    exit;
+fi
+
+# Other stuff
+echo
+echo +-----------------------------------------------------------------------------------------------------------------+
+echo "|                            Extra stuff                                                                          |"
+echo "+-----------------------------------------------------------------------------------------------------------------+"
+
+# Diffing images
+echo
+echo --------------------------------6.01: Diffing images---------------------------------------------------------------
+
+echo "# type 'echo flubber > test.txt'"
+echo "# type exit when done"
+echo -n "$ sudo docker run --name=sleepy_cori -it ubuntu:latest /bin/bash"
+wait_for_keypress;
+if [[ $INTERACTIVE == '1' ]];
+then
+    docker run --name=sleepy_cori -it ubuntu:latest /bin/bash
+else
+    if [[ ! $LIST == '1' ]];
+    then
+        docker run --name=sleepy_cori -it ubuntu:latest echo flubber > test.txt
+    fi
+fi
+
+echo -n "$ sudo docker ps -a"
+wait_for_keypress;
+if [[ ! $LIST == '1' ]];
+then
+    docker ps -a
+fi
+
+echo -n "$ sudo docker restart sleepy_cori"
+wait_for_keypress;
+if [[ ! $LIST == '1' ]];
+then
+    docker restart sleepy_cori
+fi
+
+echo -n "$ sudo docker ps"
+wait_for_keypress;
+if [[ ! $LIST == '1' ]];
+then
+    docker ps
+fi
+
+echo "# type 'apt-get install mtr-tiny' in the container"
+echo "# type exit when done"
+echo -n "$ sudo docker attach sleepy_cori"
+wait_for_keypress;
+if [[ ! $LIST == '1' ]];
+then
+    docker attach sleepy_cori
+fi
+
+# Potential new sections:
+# dockviz
+# Docker compose
+# https://docs.docker.com/compose/
+# Kubernetes / compose demo from http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html
+
+if [[ $BREAK == '7' ]];
 then
     exit;
 fi
