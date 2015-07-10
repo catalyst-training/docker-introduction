@@ -49,3 +49,12 @@ then
     chmod 755 docker-compose-linux-x86_64
     mv docker-compose-linux-x86_64 $COMPOSE_BIN
 fi
+
+# install kubectl
+KUBECTL_BIN=/usr/local/bin/kubectl
+if [ ! -f $KUBECTL_BIN ];
+then
+    wget http://storage.googleapis.com/kubernetes-release/release/v0.14.1/bin/linux/amd64/kubectl
+    chmod 755 kubectl
+    mv kubectl $KUBECTL_BIN
+fi
