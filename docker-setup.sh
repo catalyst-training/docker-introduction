@@ -39,6 +39,7 @@ then
     wget https://github.com/justone/dockviz/releases/download/v0.2/dockviz_linux_amd64
     chmod 755 dockviz_linux_amd64
     mv dockviz_linux_amd64 $DOCKVIZ_BIN
+    apt-get install graphviz
 fi
 
 # install docker-compose
