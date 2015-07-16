@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Introduction to Docker - Catalyst Training</title>
+
+        <meta name="author" content="Catalyst">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/catalyst.css" id="theme">
+        <link rel="stylesheet" href="css/font-awesome.css">
+
+        <!-- For syntax highlighting -->
+        <!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+        <link rel="stylesheet" href="lib/css/catalyst-syntax.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <style>
+            /* Add the ability to omit slides from the printed version (has to be after the print include)*/
+            @media print {
+                .reveal .slides section.no-print {
+                    display: none !important;
+                    visibility: hidden !important;
+                }
+            }
+        </style>
+        <style>
+            .reveal h1, .reveal h2, .reveal h3 {
+                color: #ba2025;
+            }
+        </style>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <!-- Please put any custom styles here -->
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <!-- Cover slide -->
+                <section>
+                    <h1 class="catalyst-logo">Catalyst</h1>
+                    <h3>Intro to Docker</h3>
+                    <p class="small-text">
+                        Presented by <a href="#">Donovan Jones</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>This course</h3>
+                    <ul>
+                        <li>Makes use of official docker docs</li>
+                        <li>Largely hands on command line</li>
+                        <li>Assumes no prior docker knowledge</li>
+                        <li>Assumes familiarity with the linux shell</li>
+                        <li>Assumes we are using ubuntu (trusty)</li>
+                        <li>Has some helper scripts</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Aims</h3>
+                    <ul>
+                        <li>Understand how to use docker on the command line</li>
+                        <li>Understand where docker can be used</li>
+                        <li>Appreciation of the larger ecosystem</li>
+                        <li>Get peole thinking about where they could use docker</li>
+                        <li>Get people using the technology</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Why docker?</h3>
+                    <ul>
+                        <li>Lightweight compared to traditional virtualization</li>
+                        <li>Consistency across dev/test/prod</li>
+                        <li>Easy to modify, update and scale</li>
+                        <li>Portable</li>
+                        <li>Dependency encapsulation and decoupling</li>
+                        <li>Enables (requires?) new workflows</li>
+                    </ul>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Lightweight</h2>
+                    <img src="img/docker.png" alt="">
+                </section>
+
+                <section>
+                    <h3>Portability</h3>
+                    <ul>
+                        <li>Any modern Linux (RHEL, CentOS, Ubuntu LTS, etc.)</li>
+                        <li>Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)</li>
+                        <li>Private clouds (OpenStack, Vmware)</li>
+                        <li>Public clouds (AWS, Azure, Rackspace, Google)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Decoupling</h3>
+                    <ul>
+                        <li>Application stack is no longer coupled to machine it is running on</li>
+                        <li>Allows a service to have the most appropriate stack without needing to consider conflicts with and dependencies of other services (eg python versions)</li>
+                        <li>Services can be run in the most optimal location for a given organisation</li>
+                        <li>Services can be upgraded independently</li>
+                        <li>Services boundaries can define areas of responsibility</li>
+                        <li>Configuration is coupled with the application</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Understanding docker</h3>
+                    <p><a href="https://docs.docker.com/introduction/understanding-docker/">https://docs.docker.com/introduction/understanding-docker/</a></p>
+                </section>
+
+                <section>
+                    <h3>Containers and Images</h3>
+                    <ul>
+                        <li>Images</li>
+                            <ul>
+                                <li>Read only template for creating containers</li>
+                                <li>Stored in a registry</li>
+                                <li>Built by you or others</li>
+                            </ul>
+                        <li>Containers</li>
+                            <ul>
+                                <li>Based on an image</li>
+                                <li>An actual running instance</li>
+                                <li>Read write</li>
+                                <li>Encasulates your application and its dependencies</li>
+                            </ul>
+                    </ul>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Containers and Images</h2>
+                    <img src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Simple Workflow</h2>
+                    <img src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png" alt="">
+                </section>
+
+                <section>
+                    <h3>Scripts</h3>
+                    <ul>
+                        <li>Designed to be run on trusty training machines</li>
+                        <li>docker-setup.sh - ensures required software is installed</li>
+                        <li>user-setup.sh - sets up environment variables for our user</li>
+                        <li>docker-course.sh - list or run the course commands</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Setup</h3>
+                    <p>lets setup our environment now</p>
+                    <pre><code data-trim contenteditable>
+cd docker-training
+source ./user-setup.sh
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Course script</h3>
+                    <p>By default this script outputs all the commands you will need to run</p>
+                    <pre><code data-trim contenteditable>
+$ sudo ./docker-course.sh -h
+
+Usage: sudo ./docker-course.sh [OPTIONS]
+
+    -h        this help
+    -s        takes an integer, indicates that we should stop at this section
+    -r        replay, runs all the commands without user input
+    -i        interactive replay, requires keypresses to run commands
+                    </code></pre>
+                    <p>try it now</p>
+                    <pre><code data-trim contenteditable>
+sudo ./docker-course.sh -s 3
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>1: Dockerizing applications</h3>
+<a href="https://docs.docker.com/userguide/dockerizing/">https://docs.docker.com/userguide/dockerizing</a>
+https://docs.docker.com/userguide/dockerizing/
+                </section>
+
+                <section>
+                    <h3>2: Working with containers</h3>
+<a href="https://docs.docker.com/userguide/usingdocker">https://docs.docker.com/userguide/usingdocker</a>
+                </section>
+
+                <section>
+                    <h3>3: Get started with images</h3>
+<a href="https://docs.docker.com/userguide/dockerimages">https://docs.docker.com/userguide/dockerimages</a>
+                </section>
+
+                <section>
+                    <h3>4: Linking containers together</h3>
+<a href="https://docs.docker.com/userguide/dockerlinks">https://docs.docker.com/userguide/dockerlinks</a>
+                </section>
+
+                <section>
+                    <h3>5: Managing data in containers</h3>
+<a href="https://docs.docker.com/userguide/dockervolumes">https://docs.docker.com/userguide/dockervolumes</a>
+                </section>
+
+                <section>
+                    <h3>6: Get started with Docker Hub</h3>
+<a href="https://docs.docker.com/userguide/dockerrepos">https://docs.docker.com/userguide/dockerrepos</a>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Layering (via a Union file system)</h2>
+                    <img src="https://assets.digitalocean.com/articles/docker_ecosystem/Container-Overview.png" alt="">
+                </section>
+
+                <section>
+                    <h3>7: Other commands</h3>
+                    <ul>
+                        <li>docker diff</li>
+                        <li>dockviz</li>
+                    <pre><code data-trim contenteditable>
+sudo dockviz images --tree
+
+sudo dockviz images -d | dot -Tpng -o images.png && eog images.png && rm images.png
+sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png && rm containers.png
+                    </code></pre>
+                        <li>docker compose</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Some Concepts</h3>
+                    <ul>
+                        <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
+                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle not pets</a></li>
+                        <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Microservices</h3>
+                    <ul>
+                        <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
+                        <li>Services can be implemented with entirely different stacks</li>
+                        <li>Services can be developed, maintained, and updated independently</li>
+                        <li>Often use well defined APIs to communicate</li>
+                        <li>If a message bus is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Microservices</h3>
+                    <ul>
+                        <li>Often use a DevOps approch (you build it you run it)</li>
+                        <li>Smart endpoints and dumb pipes</li>
+                        <li>Decentralized Data Management with eventual consistency</li>
+                        <li>Continious integration and delivery</li>
+                        <li>Design for failure (optimize MTTR)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Microservices</h3>
+                    <ul>
+                        <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
+                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/</a></li>
+                        <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Where to start?</h3>
+                    <ul>
+                        <li>Building binaries</li>
+                        <li>Prototypes you can share</li>
+                        <li>Tutorials</li>
+                        <li>Those small snowflakes</li>
+                        <li>Build new functionality as microservices</li>
+                        <li>Existing components that are already largely independent</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Examples</h3>
+                    <ul>
+                        <li><a href="https://blog.docker.com/2015/07/docker-three-ways-devops-3/">https://blog.docker.com/2015/07/docker-three-ways-devops-3/</a></li>
+                        <li><a href="https://github.com/VISIONAI/clouddream">https://github.com/VISIONAI/clouddream</a></li>
+                        <li><a href="https://github.com/CenturyLinkLabs/golang-builder">https://github.com/CenturyLinkLabs/golang-builder</a></li>
+                    </ul>
+                </section>
+
+                <!-- Slide with list items (list items are displayed at once) -->
+                <section>
+                    <h3>Docker ecosystem</h3>
+                    <ul>
+                        <li>An explosion of tools</li>
+                        <li>Hard to keep up</li>
+                        <li>Lets have a quick look</li>
+                    </ul>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Docker ecosystem</h2>
+                    <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
+                </section>
+
+                <section>
+                    <h3>Docker ecosystem - Host OS</h3>
+                    <p>Lightweight operating systems designed to run containers</p>
+                    <ul>
+                        <li><a href="https://coreos.com/">CoreOS</a> (systemd)</li>
+                        <li><a href="http://www.projectatomic.io/">Project Atomic</a> (cut down RHEL)</li>
+                        <li><a href="http://rancher.com/">Rancher</a> (Dockers all the way down)</li>
+                        <li><a href="http://boot2docker.io/">boot2docker</a> (for windows/mac devs)</li>
+                        <li><a href="https://developer.ubuntu.com/en/snappy/">Snappy Ubuntu Core</a> (similar ideas for phones, embedded and IoT)</li>
+                    </ul>
+                </section>
+
+                <!-- Slide with list items (list items are displayed at once) -->
+                <section>
+                    <h3>Security</h3>
+                    <ul>
+                        <li>How do you keep track of all the versions or all the software in all the containers?</li>
+                        <li>The way to apply security updates is to update the base image, then rebuild your application image</li>
+                        <li>If you release often then include an updated base every time you release (plus special releases for heartbleeds)</li>
+                        <li>If you release infrequently then do base update releases of your app</li>
+                        <li>How often do the official base images get updated? (details <a href="https://blog.docker.com/2015/06/understanding-official-repos-docker-hub/">here</a>)</li>
+                        <li><a href="https://titanous.com/posts/docker-insecurity">Image signing</a> (see <a href="https://github.com/docker/notary">notary</a>)</li>
+                        <li><a href="https://securityblog.redhat.com/2014/12/17/container-security-isolation-heaven-or-dependency-hell/">Level of isolation</a></li>
+                        <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/Docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Quick kubernates/docker compose demo</h3>
+                    <p><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">Set up Kubernetes with a docker compose one liner</a></p>
+                </section>
+
+                <section>
+                    <h3>Sources</h3>
+                    <p>Sources of the material used in this course:</p>
+                    <ul>
+                        <li><a href="https://docs.docker.com/">https://docs.docker.com/</a></li>
+                        <li><a href="https://training.docker.com/introduction-to-docker">https://training.docker.com/introduction-to-docker</a></li>
+                        <li><a href="http://alandargan.com/using-vagrant-docker/">http://alandargan.com/using-vagrant-docker/</a></li>
+                        <li><a href="http://blog.octo.com/en/docker-registry-first-steps/">http://blog.octo.com/en/docker-registry-first-steps/</a></li>
+                        <li><a href="https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components">https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components</a></li>
+                        <li><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html</a></li>
+                    </ul>
+
+                </section>
+
+
+                <!-- Section title slide with big colour dot -->
+                <section class="title-slide">
+                    <h2 class="orange">Title goes here</h2>
+                </section>
+
+                <!-- Slide with a large title -->
+                <section>
+                    <h2>Large title</h2>
+                    <aside class="notes">
+                        This will only display in the notes window.
+                    </aside>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Title</h2>
+                    <img src="img/800x400.gif" alt="">
+                </section>
+
+                <!-- Slide with list items (list items are displayed at once) -->
+                <section>
+                    <h3>List title</h3>
+                    <ul>
+                        <li>List item 1</li>
+                        <li><i class="fa fa-camera-retro"></i>List item 2<img class="img-right" src="img/300x400.gif" alt="Placeholder image"></li>
+                        <li class="fa fa-camera-retro">List item 3<img class="img-right" src="img/300x400.gif" alt="Placeholder image"></li>
+                        <li>List item</li>
+                    </ul>
+                </section>
+
+                <!-- Slide with list items (fragmented list items) -->
+                <section>
+                    <h3>Fragmented list</h3>
+                    <ul>
+                        <li class="fragment">List item</li>
+                        <li class="fragment">List item</li>
+                        <li class="fragment">List item <img class="img-centered" src="img/500x200.gif" alt="Placeholder image"></li>
+                    </ul>
+                </section>
+
+                <!-- Slide with vertical slides underneath  -->
+                <section>
+                    <!-- Horizontal slide (This is one the same level as slide above) -->
+                    <section class="title-slide banner-3">
+                        <h2 class="yellow">Title (press down to see vertical slides)</h2>
+                    </section>
+
+                    <!-- The following slides are vertical, use down arrow key to navigate -->
+                    <!-- Centered paragraph  -->
+                    <section>
+                        <h3>Paragraph</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at scelerisque eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam placerat posuere nibh vel dapibus.</p>
+                    </section>
+
+                    <!-- Blockquote  -->
+                    <section>
+                        <h3>Blockquote</h3>
+                        <blockquote class="quotation-marks">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at scelerisque eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam placerat posuere nibh vel dapibus.
+                        </blockquote>
+                    </section>
+
+                    <!-- Nested lists-->
+                    <section>
+                        <h3>Nested lists</h3>
+                            <ul>
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                                    <ul>
+                                        <li>Nested One</li>
+                                        <li>Nested Two</li>
+                                    </ul>
+                            </ul>
+                    </section>
+                </section>
+
+                <!-- Slide with code block -->
+                <section>
+                    <h3>Title</h3>
+                    <p>Some text</p>
+                    <pre><code data-trim contenteditable>
+function linkify( selector ) {
+    if( supports3DTransforms ) {
+
+        var nodes = document.querySelectorAll( selector );
+
+        for( var i = 0, len = nodes.length; i < len; i++ ) {
+            var node = nodes[i];
+
+            if( !node.className ) {
+                node.className += ' roll';
+            }
+        }
+    }
+}
+                    </code></pre>
+                </section>
+
+                <!-- Slide with full background image -->
+                <section data-background="img/800x600.gif">
+                    <h3>Image backgrounds</h3>
+                </section>
+
+                <!-- Slide with Catalyst slogan -->
+                <section class="image-slide">
+                    <img class="cat-slogan-image" src="css/theme/images/freedom-to-innovate.svg" alt="freedom to innovate">
+                </section>
+            </div>
+
+            <div class="footer">
+                <div class="scarf">
+                    <div class="scarf-orange"></div>
+                    <div class="scarf-yellow"></div>
+                    <div class="scarf-blue"></div>
+                    <div class="scarf-green"></div>
+                </div>
+                <div class="footer-inner">
+                    <div>
+                        <!-- NOTE: use only one of these. open-source-technologists is the standard -->
+                        <p class="open-source-technologists">open source technologists</p>
+                        <!-- <p class="freedom-to-innovate">freedom to innovate</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
