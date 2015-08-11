@@ -212,7 +212,6 @@ sudo ./docker-course.sh -s 3
                 <section>
                     <h3>1: Dockerizing applications</h3>
 <a href="https://docs.docker.com/userguide/dockerizing/">https://docs.docker.com/userguide/dockerizing</a>
-https://docs.docker.com/userguide/dockerizing/
                 </section>
 
                 <section>
@@ -247,7 +246,7 @@ https://docs.docker.com/userguide/dockerizing/
                 </section>
 
                 <section>
-                    <h3>7: Other commands</h3>
+                    <h3>7: Layering commands</h3>
                     <ul>
                         <li>docker diff</li>
                         <li>dockviz</li>
@@ -257,7 +256,6 @@ sudo dockviz images --tree
 sudo dockviz images -d | dot -Tpng -o images.png && eog images.png && rm images.png
 sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png && rm containers.png
                     </code></pre>
-                        <li>docker compose</li>
                     </ul>
                 </section>
 
@@ -265,9 +263,31 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                     <h3>Some Concepts</h3>
                     <ul>
                         <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
-                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle not pets</a></li>
+                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
                         <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
                     </ul>
+                </section>
+
+                <section>
+                    <h3>Immutable architecture</h3>
+                    <ul>
+                        <li>Phoenix servers</li>
+                        <li>The environment is defined in code</li>
+                        <li>If you need to change _anything_ you create a new instance and destroy the old one</li>
+                        <li>Docker makes it much more likely you will work in this way</li>
+                    </ul>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Immutable Architecture</h2>
+                    <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
+                </section> 
+
+                <section>
+                    <h3>Microservices</h3>
+                    <p>Cockcrofts definition: Loosely coupled service oriented architecture with bounded contexts</p>
+                    <p>Eric Brewers: Microservice boundaries are language boundaries and team boundaries</p>
                 </section>
 
                 <section>
@@ -276,7 +296,7 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                         <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
                         <li>Services can be implemented with entirely different stacks</li>
                         <li>Services can be developed, maintained, and updated independently</li>
-                        <li>Often use well defined APIs to communicate</li>
+                        <li>Often use well defined REST APIs to communicate</li>
                         <li>If a message bus is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
                     </ul>
                 </section>
@@ -284,25 +304,63 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                 <section>
                     <h3>Microservices</h3>
                     <ul>
-                        <li>Often use a DevOps approch (you build it you run it)</li>
+                        <li>Often use a DevOps approach (you build it you run it)</li>
                         <li>Smart endpoints and dumb pipes</li>
                         <li>Decentralized Data Management with eventual consistency</li>
-                        <li>Continious integration and delivery</li>
+                        <li>Continuous integration and delivery</li>
                         <li>Design for failure (optimize MTTR)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
+                    <ul>
+                        <li>Create a Separate Data Store for Each Microservice</li>
+                        <li>Keep Code at a Similar Level of Maturity</li>
+                        <li>Do a Separate Build for Each Microservice</li>
+                        <li>Deploy in Containers</li>
+                        <li>Treat Servers as Stateless</li>
+                    </ul>
+                </section>
+
+                 <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>CAP</h2>
+                    <img src="http://digbigdata.com/wp-content/uploads/2013/05/media_httpfarm5static_mevIk.png" alt="CAP" height="600" width="800">
+                </section>
+
+                <section>
+                    <h3>Containers and Microservices</h3>
+                    <ul>
+                        <li>Containers do not necessarily map to service or application boundaries</li>
+                        <li>A service will often contain more than one container</li>
+                        <li>A container is more like an OO Class - Brendan Burns @ Dockercon 2015</li>
+                        <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Containers and Microservices: Requirements</h3>
+                    <ul>
+                        <li>Sharing among containers (eg filesystems)</li>
+                        <li>Atomic co-scheduling of containers</li>
+                        <li>Parameterization of containers</li>
+                        <li></li>
                     </ul>
                 </section>
 
                 <section>
                     <h3>Microservices</h3>
                     <ul>
-                        <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
-                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/</a></li>
-                        <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/</a></li>
+                        <li><a href="http://martinfowler.com/articles/microservices.html">Microservices - Martin Fowler</a></li>
+                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Adopting Microservices at Netflix: Lessons for Architectural Design</a></li>
+                        <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">Adopting Microservices at Netflix: Lessons for Team and Process Design</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=e4jr6Ihz4Qo">Kubernetes: The Path to Cloud Native - Eric Brewer - OSCon 2105</a></li>
                     </ul>
                 </section>
 
                 <section>
-                    <h3>Where to start?</h3>
+                    <h3>Containers: Where to start?</h3>
                     <ul>
                         <li>Building binaries</li>
                         <li>Prototypes you can share</li>
@@ -310,16 +368,23 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                         <li>Those small snowflakes</li>
                         <li>Build new functionality as microservices</li>
                         <li>Existing components that are already largely independent</li>
+                        <li>Mix and match, containerise the bits that make sense</li>
                     </ul>
                 </section>
 
                 <section>
                     <h3>Examples</h3>
                     <ul>
-                        <li><a href="https://blog.docker.com/2015/07/docker-three-ways-devops-3/">https://blog.docker.com/2015/07/docker-three-ways-devops-3/</a></li>
-                        <li><a href="https://github.com/VISIONAI/clouddream">https://github.com/VISIONAI/clouddream</a></li>
-                        <li><a href="https://github.com/CenturyLinkLabs/golang-builder">https://github.com/CenturyLinkLabs/golang-builder</a></li>
+                        <li><a href="https://blog.docker.com/2015/07/docker-three-ways-devops-3/">Distributing (scientific) data</a></li>
+                        <li><a href="https://github.com/VISIONAI/clouddream">Distributing clouddream</a></li>
+                        <li><a href="https://github.com/CenturyLinkLabs/golang-builder">Compiling go</a></li>
                     </ul>
+                </section>
+
+                 <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Bosch Dreaming</h2>
+                    <a href="img/Hieronymus_Bosch_003.jpg"><img src="img/Hieronymus_Bosch_003.jpg" alt="Bosch Dream" height="600" width="800"></a>
                 </section>
 
                 <!-- Slide with list items (list items are displayed at once) -->
@@ -350,6 +415,57 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                     </ul>
                 </section>
 
+                <section>
+                    <h3>Docker compose</h3>
+                    <ul>
+                        <li>Written in python rather than go like most of docker</li>
+                        <li>Comparable to vagrant</li>
+                        <li>New lib written in go called <a href="http://rancher.com/our-journey-with-docker-compose-and-the-introduction-of-libcompose/">libcompose</a></li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h3>8: Docker compose</h3>
+                    <a href="https://docs.docker.com/compose/">Overview of Docker Compose</a>
+                </section>
+
+                <section>
+                    <h3>Kubernetes</h3>
+                    <ul>
+                        <li>Started by google</li>
+                        <li>Includes people who worked on borg</li>
+                        <li>Open source project</li>
+                        <li>Cloud Native Computing Foundation</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3><a href="http://blog.arungupta.me/kubernetes-design-patterns/">Pods</a></h3>
+                    <ul>
+                        <li>Co-locate containers</li>
+                        <li>Shared volumes</li>
+                        <li>IP address (important for port space and migration)</li>
+                        <li>Unit of deployment and migration</li>
+                        <li>Easy migration = high utilisation</li>
+                        <li>Scale service by scaling pods</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3><a href="http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html">Patterns for Composite Containers</a></h3>
+                    <ul>
+                        <li>Sidecar containers (eg logger, git synchroniser)</li>
+                        <li>Ambassador containers (local proxy to a service of unknown size)</li>
+                        <li>Adapter containers (normalize and abstract different services)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Quick Kubernetes/docker compose demo</h3>
+                    <p><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">Set up Kubernetes with a docker compose one liner</a></p>
+                </section>
+
                 <!-- Slide with list items (list items are displayed at once) -->
                 <section>
                     <h3>Security</h3>
@@ -366,8 +482,31 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                 </section>
 
                 <section>
-                    <h3>Quick kubernates/docker compose demo</h3>
-                    <p><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">Set up Kubernetes with a docker compose one liner</a></p>
+                    <h3>Next steps</h3>
+                    <ul>
+                        <li>Setup private registry</li>
+                        <li>Students build custom "microservices"</li>
+                        <li>Setup CoreOS on OpenStack</li>
+                        <li>Deploy students microservices and create a www router service</li>
+                        <li>Define service as a kubernetes</li>
+                        <li>Scale and migrate pods (between OpenStack regions?)</li>
+                        <li>Continuous delivery?</li>
+                        <li>Help please!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Next steps</h3>
+                    <ul>
+                        <li>Try setup Kolla ...</li>
+                        <li><a href="http://hackersome.com/p/stackforge/kolla">http://hackersome.com/p/stackforge/kolla</a></li>
+                        <li><a href="http://allthingsopen.com/2014/10/22/a-demonstration-of-kolla-docker-and-kubernetes-based-deployment-of-openstack-services-on-atomic/">http://allthingsopen.com/2014/10/22/a-demonstration-of-kolla-docker-and-kubernetes-based-deployment-of-openstack-services-on-atomic/</a></li>
+                        <li><a href="https://github.com/stackforge/kolla">https://github.com/stackforge/kolla</a></li>
+                        <li><a href="https://www.openstack.org/summit/openstack-paris-summit-2014/session-videos/presentation/docker-all-the-openstack-services">https://www.openstack.org/summit/openstack-paris-summit-2014/session-videos/presentation/docker-all-the-openstack-services</a></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
                 </section>
 
                 <section>
