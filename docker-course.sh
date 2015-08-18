@@ -18,7 +18,8 @@ if [[ $EUID -ne 0 ]]; then
     usage;
 fi
 
-source ${HOME}/.bashrc.training
+# shellcheck disable=SC1090
+source "${HOME}/.bashrc.training"
 
 if [[ -z ${DOCKER_TRAINING_AUTHOR+x} || -z ${DOCKER_TRAINING_EMAIL+x} || -z ${DOCKER_TRAINING_USER+x} || -z ${DOCKER_TRAINING_EDITOR+x} ]];
 then
@@ -74,10 +75,10 @@ then
     echo "Cleaning up images before we start:"
     docker images | tail -n +2 | while read -r line
     do
-        IMAGE_ID=$( echo $line | awk '{ print $3 }' )
-        if echo $line | grep -q '<none>'
+        IMAGE_ID=$( echo "$line" | awk '{ print $3 }' )
+        if echo "$line" | grep -q '<none>'
         then
-            docker rmi $IMAGE_ID
+            docker rmi "$IMAGE_ID"
         fi
     done
 fi
@@ -235,7 +236,7 @@ echo -n "$ curl -s -i http://\$( sudo docker port nostalgic_morse 5000 )/"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    curl -s -i http://$( docker port nostalgic_morse 5000 )/
+    curl -s -i http://"$( docker port nostalgic_morse 5000 )"/
 fi
 echo
 
@@ -448,7 +449,7 @@ echo -n "$ sudo docker commit -m 'Added json gem' -a \"$DOCKER_TRAINING_AUTHOR\"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker commit -m "Added json gem" -a "$DOCKER_TRAINING_AUTHOR" $CONTAINER_ID $DOCKER_TRAINING_USER/sinatra:v1
+    docker commit -m "Added json gem" -a "$DOCKER_TRAINING_AUTHOR" "$CONTAINER_ID" "$DOCKER_TRAINING_USER/sinatra:v1"
 fi
 
 echo -n '$ sudo docker images'
@@ -463,7 +464,7 @@ echo -n "$ sudo docker run -t -i $DOCKER_TRAINING_USER/sinatra:v1 /bin/bash"
 wait_for_keypress;
 if [[ $INTERACTIVE == '1' ]];
 then
-    docker run -t -i $DOCKER_TRAINING_USER/sinatra:v1 /bin/bash
+    docker run -t -i "$DOCKER_TRAINING_USER/sinatra:v1" /bin/bash
 fi
 
 # Building an image from a Dockerfile
@@ -481,7 +482,7 @@ echo -n "$ cd $DIRECTORY"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    cd $DIRECTORY
+    cd "$DIRECTORY" || exit
 fi
 echo -n "$ touch $DOCKERFILE"
 wait_for_keypress;
@@ -490,9 +491,9 @@ if [[ ! $LIST == '1' ]];
 then
     if [ -f "$DOCKERFILE" ]
     then
-        rm $DOCKERFILE
+        rm "$DOCKERFILE"
     else
-        touch $DOCKERFILE
+        touch "$DOCKERFILE"
     fi
 fi
 
@@ -522,21 +523,21 @@ echo -n "$ sudo docker build -t $DOCKER_TRAINING_USER/sinatra:v2 ."
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker build -t $DOCKER_TRAINING_USER/sinatra:v2 .
+    docker build -t "$DOCKER_TRAINING_USER/sinatra:v2" .
 fi
 
 # Setting tags on an image
 echo
 echo --------------------------------3.07: Setting tags on an image-----------------------------------------------------
 
-IMAGE_ID=$( docker images $DOCKER_TRAINING_USER/sinatra  | grep v2 | awk '{print $3}' )
+IMAGE_ID=$( docker images "$DOCKER_TRAINING_USER/sinatra"  | grep v2 | awk '{print $3}' )
 echo -n "$ sudo docker tag $IMAGE_ID $DOCKER_TRAINING_USER/sinatra:devel"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    if [ ! docker images | awk '{ print $1 $2 }' | grep -q "$DOCKER_TRAINING_USER/sinatradevel" ]
+    if ! docker images | awk '{ print $1 $2 }' | grep -q "$DOCKER_TRAINING_USER/sinatradevel";
     then
-        docker tag $IMAGE_ID $DOCKER_TRAINING_USER/sinatra:devel
+        docker tag "$IMAGE_ID" "$DOCKER_TRAINING_USER/sinatra:devel"
     fi
 fi
 
@@ -544,7 +545,7 @@ echo -n "$ sudo docker images $DOCKER_TRAINING_USER/sinatra"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker images $DOCKER_TRAINING_USER/sinatra
+    docker images "$DOCKER_TRAINING_USER/sinatra"
 fi
 
 # Image Digests
@@ -631,7 +632,7 @@ then
     docker run -d -P --name web --link db:db training/webapp python app.py
 fi
 
-echo -n "$ sudo docker inspect -f "{{ .HostConfig.Links }}" web"
+echo -n "$ sudo docker inspect -f \"{{ .HostConfig.Links }}\" web"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
@@ -801,11 +802,11 @@ fi
 echo
 echo --------------------------------5.06: Backup, restore, or migrate data volumes-------------------------------------
 
-echo -n "$ sudo docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata"
+echo -n "$ sudo docker run --volumes-from dbdata -v \"$(pwd)\":/backup ubuntu tar cvf /backup/backup.tar /dbdata"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+    docker run --volumes-from dbdata -v "$(pwd)":/backup ubuntu tar cvf /backup/backup.tar /dbdata
 fi
 
 echo -n "$ sudo docker run -v /dbdata --name dbdata2 ubuntu /bin/bash"
@@ -816,11 +817,11 @@ then
     # why no shell here?
 fi
 
-echo -n "$ sudo docker run --volumes-from dbdata2 -v $(pwd):/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar"
+echo -n "$ sudo docker run --volumes-from dbdata2 -v \"$(pwd)\":/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar"
 wait_for_keypress;
 if [[ ! $LIST == '1' ]];
 then
-    docker run --volumes-from dbdata2 -v $(pwd):/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar
+    docker run --volumes-from dbdata2 -v "$(pwd)":/backup ubuntu cd /dbdata && tar xvf /backup/backup.tar
 fi
 
 if [[ $BREAK == '5' ]];

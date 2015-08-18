@@ -10,7 +10,7 @@ then
     exit 1
 fi
 
-cd /tmp
+cd /tmp || exit
 
 # ensure we have the right sources source
 DOCKER_SOURCE=/etc/apt/sources.list.d/docker.list

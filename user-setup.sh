@@ -2,7 +2,7 @@
 
 # This script will setup some helpful environment variables to save us some typing
 
-if [[ $_ = $0 ]]; then
+if [[ $_ = "$0" ]]; then
     echo
     echo "Usage: source ./user-setup.sh"
     echo
@@ -30,26 +30,26 @@ select opt in "${options[@]}"; do
 done
 
 echo "Please enter your name (eg Lisa Smith):"
-read name
+read -r name
 
 echo "Please enter a username (eg lisas):"
-read user
+read -r user
 
 echo "Please enter your email (eg lisa.smith@gmail.com):"
-read email
+read -r email
 
 echo "export DOCKER_TRAINING_EDITOR=$editor
 export DOCKER_TRAINING_AUTHOR=$name
 export DOCKER_TRAINING_USER=$user
 export DOCKER_TRAINING_EMAIL=$email
-" > ${HOME}/.bashrc.training
+" > "${HOME}/.bashrc.training"
 
 # ensure bashrc.training is sourced from .bashrc
-if ! grep -q "bashrc.training" ${HOME}/.bashrc; then
+if ! grep -q "bashrc.training" "${HOME}/.bashrc"; then
     echo '
-if [ -f ${HOME}/.bashrc.training ]; then
-    source ${HOME}/.bashrc.training
-fi' >> ${HOME}/.bashrc
+if [ -f "${HOME}/.bashrc.training" ]; then
+    source "${HOME}/.bashrc.training"
+fi' >> "${HOME}/.bashrc"
 fi
 
-source ${HOME}/.bashrc.training
+source "${HOME}/.bashrc.training"
