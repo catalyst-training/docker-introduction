@@ -246,9 +246,9 @@ sudo ./docker-course.sh -s 3
                 </section>
 
                 <section>
-                    <h3>7: Layering commands</h3>
+                <section>
+                    <h3>7: Layers</h3>
                     <ul>
-                        <li>docker diff</li>
                         <li>dockviz</li>
                     <pre><code data-trim contenteditable>
 sudo dockviz images --tree
@@ -260,9 +260,122 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                 </section>
 
                 <section>
+                    <h3>7: Docker Diff</h3>
+                    <pre><code data-trim contenteditable>
+$ sudo docker run --name=sleepy_cori -it ubuntu:latest /bin/bash
+root@e888e0fef39e:/# echo flubber > test.txt
+root@e888e0fef39e:/# exit
+
+$ sudo docker ps -l
+CONTAINER ID IMAGE         COMMAND     CREATED        STATUS                    PORTS NAMES
+e888e0fef39e ubuntu:latest "/bin/bash" 57 seconds ago Exited (0) 11 seconds ago       sleepy_cori
+
+$ sudo docker restart sleepy_cori
+sleepy_cori
+
+$ sudo docker attach sleepy_cori
+root@e888e0fef39e:/# 
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>7: Docker Diff</h3>
+                    <pre><code data-trim contenteditable>
+root@e888e0fef39e:/# apt-get install mtr-tiny
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following NEW packages will be installed:
+mtr-tiny
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 41.7 kB of archives.
+After this operation, 126 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main mtr-tiny amd64 0.85-2 [41.7 kB]
+Fetched 41.7 kB in 1s (38.4 kB/s)
+Selecting previously unselected package mtr-tiny.
+(Reading database ... 11528 files and directories currently installed.)
+Preparing to unpack .../mtr-tiny_0.85-2_amd64.deb ...
+Unpacking mtr-tiny (0.85-2) ...
+Setting up mtr-tiny (0.85-2) ...
+root@e888e0fef39e:/# exit
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>7: Docker Diff</h3>
+                    <pre><code data-trim contenteditable>
+$ sudo docker ps -l
+CONTAINER ID IMAGE         COMMAND     CREATED       STATUS                    PORTS NAMES
+e888e0fef39e ubuntu:latest "/bin/bash" 2 minutes ago Exited (0) 25 seconds ago       sleepy_cori
+
+$ sudo docker diff sleepy_cori | head
+C /root
+A /root/.bash_history
+A /test.txt
+C /tmp
+C /usr
+C /usr/bin
+A /usr/bin/mtr
+C /usr/share
+C /usr/share/doc
+A /usr/share/doc/mtr-tiny
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>7: Docker Diff</h3>
+                    <pre><code data-trim contenteditable>
+$ sudo find /var/lib/docker/ -type f -name 'test.txt' -exec md5sum {} \;
+185320c3e9298cdbde3320ec32144980  /var/lib/docker/aufs/diff/e888e0fef39e6f7f249f33f0475e891aaef899cca9ed0ea39d2524e5f06be792/test.txt
+
+$ sudo docker restart sleepy_cori
+sleepy_cori
+
+$ sudo docker exec sleepy_cori md5sum test.txt
+185320c3e9298cdbde3320ec32144980  test.txt
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>7: Docker Diff what is AUFS?</h3>
+                    <ul>
+                        <li>Did you notice /var/lib/docker/aufs?</li>
+                        <li><a href="http://aufs.sourceforge.net/">Advanced Multi Layered Unification Filesystem</a></li>
+                    <pre><code data-trim contenteditable>
+priority = []string{
+"aufs",
+"btrfs",
+"devicemapper",
+"vfs",
+"overlayfs",
+                    </code></pre>
+                        <li>Details <a href="https://developerblog.redhat.com/2014/09/30/overview-storage-scalability-docker/">here</a></li>
+                    </ul>
+                </section>
+
+
+                </section>
+
+                <section>
                     <h3>8: More on Dockerfiles</h3>
-                    <a href="https://docs.docker.com/articles/dockerfile_best-practices/">Dockerfile Best Practices</a>
-                    <a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a>
+                    <ul>
+                        <li><a href="https://docs.docker.com/articles/dockerfile_best-practices/">Dockerfile Best Practices</a></li>
+                        <li><a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>9: Base images</h3>
+                    <ul>
+                        <li>Size is a major consideration ... deploy times ...</li>
+                        <li>FROM empty ...</li>
+                        <li><a href="http://www.busybox.net/">Busybox</a> - 5.6 MB, no package manager</li>
+                        <li><a href="https://www.alpinelinux.org/">Alpine Linux</a> - distribution of choice for minimal containers - 5MB with a package manager</li>
+                        <li><a href="https://hub.docker.com/_/debian/">Debian</a> - Reccomended by Docker, smaller than Ubuntu - 85MB</li>
+                        <li><a href="https://hub.docker.com/_/ubuntu/">Ubuntu</a> - Commonly used but quite big</li>
+                        <li>Language images (<a href="https://hub.docker.com/_/golang/">golang</a>, <a href="https://hub.docker.com/_/python/">python</a> etc.) - Seem to be mostly based on Debian</li>
+                        <li>See <a href="http://www.blang.io/2015/04/18/how-to-build-the-smallest-docker-containers.html">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a></li>
+                    </ul>
                 </section>
 
                 <section>
@@ -496,12 +609,29 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                 </section>
 
                 <section>
+
+                <section>
                     <h3>FAQ</h3>
                     <ul>
                         <li>See the <a href="https://wiki.wgtn.cat-it.co.nz/wiki/Docker/Cookbook">Docker cookbook</a> on the Catalyst wiki</li>
                         <li><a href="http://www.projectatomic.io/blog/2015/08/why-we-dont-let-non-root-users-run-docker-in-centos-fedora-or-rhel/">Why is sudo required?</a></li>
                         <li><a href="http://www.projectatomic.io/blog/2015/07/what-are-docker-none-none-images/">What are the &lt;none&gt;&lt;none&gt; images I see and how can I clean them up?</a></li>
                     </ul>
+                </section>
+
+                <section>
+                    <h3>FAQ</h3>
+                    <p>Whats the story with docker top pids?</p>
+                    <pre><code data-trim contenteditable>
+$ sudo docker top sleepy_cori
+UID  PID   PPID C STIME TTY    TIME     CMD
+root 30136 2379 0 12:29 pts/32 00:00:00 /bin/bash
+
+$ pstree -s -p $(sudo docker top sleepy_cori | tail -1 | awk '{ print $2 }')
+init(1)───docker(2379)───bash(30136)
+                    </code></pre>
+                </section>
+
                 </section>
 
                 <section>
