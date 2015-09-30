@@ -260,6 +260,25 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                 </section>
 
                 <section>
+                    <h3>7: Image layers</h3>
+                    <p><a href="https://imagelayers.io/">https://imagelayers.io/</a><p>
+                </section>
+
+                <section>
+                    <h3>7: Docker history</h3>
+                    <pre><code data-trim contenteditable>
+$ docker history cb7ea125b1fc
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+cb7ea125b1fc        3 months ago        /bin/sh -c gem install sinatra                  18.44 MB
+0c0869a12bcd        3 months ago        /bin/sh -c apt-get update && apt-get install    112.7 MB
+6d4946999d4f        3 months ago        /bin/sh -c #(nop) CMD ["/bin/bash"]             0 B
+9fd3c8c9af32        3 months ago        /bin/sh -c sed -i 's/^#\s*\(deb.*universe\)$/   1.895 kB
+435050075b3f        3 months ago        /bin/sh -c echo '#!/bin/sh' > /usr/sbin/polic   194.5 kB
+428b411c28f0        3 months ago        /bin/sh -c #(nop) ADD file:b3447f4503091bb6bb   188.1 MB
+                    </code></pre>
+                </section>
+
+                <section>
                     <h3>7: Docker Diff</h3>
                     <pre><code data-trim contenteditable>
 $ sudo docker run --name=sleepy_cori -it ubuntu:latest /bin/bash
@@ -374,7 +393,7 @@ priority = []string{
                         <li><a href="https://hub.docker.com/_/debian/">Debian</a> - Reccomended by Docker, smaller than Ubuntu - 85MB</li>
                         <li><a href="https://hub.docker.com/_/ubuntu/">Ubuntu</a> - Commonly used but quite big</li>
                         <li>Language images (<a href="https://hub.docker.com/_/golang/">golang</a>, <a href="https://hub.docker.com/_/python/">python</a> etc.) - Seem to be mostly based on Debian</li>
-                        <li>See <a href="http://www.blang.io/2015/04/18/how-to-build-the-smallest-docker-containers.html">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a></li>
+                        <li>See <a href="http://www.blang.io/2015/04/18/how-to-build-the-smallest-docker-containers.html">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a>, <a href="https://docs.docker.com/articles/baseimages/">3</a></li>
                     </ul>
                 </section>
 
@@ -519,6 +538,7 @@ $ sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[][]' '{ p
                         <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">Adopting Microservices at Netflix: Lessons for Team and Process Design</a></li>
                         <li><a href="https://www.youtube.com/watch?v=e4jr6Ihz4Qo">Kubernetes: The Path to Cloud Native - Eric Brewer - OSCon 2105</a></li>
                         <li>Nginx blog Building Microservices series: <a href="https://www.nginx.com/blog/introduction-to-microservices/">1</a>,<a href="https://www.nginx.com/blog/building-microservices-using-an-api-gateway">2</a>,<a href="https://www.nginx.com/blog/building-microservices-inter-process-communication/">3</a></li>
+                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></li>
                     </ul>
                 </section>
 
@@ -660,6 +680,9 @@ $ sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[][]' '{ p
                         <li>See the <a href="https://wiki.wgtn.cat-it.co.nz/wiki/Docker/Cookbook">Docker cookbook</a> on the Catalyst wiki</li>
                         <li><a href="http://www.projectatomic.io/blog/2015/08/why-we-dont-let-non-root-users-run-docker-in-centos-fedora-or-rhel/">Why is sudo required?</a></li>
                         <li><a href="http://www.projectatomic.io/blog/2015/07/what-are-docker-none-none-images/">What are the &lt;none&gt;&lt;none&gt; images I see and how can I clean them up?</a></li>
+                        <li><a href="https://docs.docker.com/articles/baseimages/">Can I build my own base image?</a></li>
+                        <li><a href="https://stackoverflow.com/questions/24394243/why-are-docker-container-images-so-large">Can I build my own base image?</a></li>
+                        <li>Does each run command create its own layer? - yes see <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">this</a></li>
                     </ul>
                 </section>
 
