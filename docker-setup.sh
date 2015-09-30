@@ -29,7 +29,7 @@ INSTALL_STATUS=$(dpkg -s docker-engine | grep Status | awk '{ print $3 }')
 if [[ ! $INSTALL_STATUS = 'ok' ]];
 then
     apt-get update
-    apt-get install docker-engine
+    apt-get install -y docker-engine
 fi
 
 # install dockviz
@@ -39,7 +39,7 @@ then
     wget https://github.com/justone/dockviz/releases/download/v0.2.1/dockviz_linux_amd64
     chmod 755 dockviz_linux_amd64
     mv dockviz_linux_amd64 $DOCKVIZ_BIN
-    apt-get install graphviz
+    apt-get install -y graphviz
 fi
 
 # install docker-compose
