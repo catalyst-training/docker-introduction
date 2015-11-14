@@ -55,7 +55,19 @@ fi
 KUBECTL_BIN=/usr/local/bin/kubectl
 if [ ! -f $KUBECTL_BIN ];
 then
-    wget http://storage.googleapis.com/kubernetes-release/release/v1.0.3/bin/linux/amd64/kubectl
+    wget http://storage.googleapis.com/kubernetes-release/release/v1.1.1/bin/linux/amd64/kubectl
     chmod 755 kubectl
     mv kubectl $KUBECTL_BIN
 fi
+
+# install sysdig
+SYSDIG_BIN=/usr/bin/sysdig
+if [ ! -f $SYSDIG_BIN ];
+then
+    curl -s https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public | apt-key add -
+    curl -s -o /etc/apt/sources.list.d/draios.list http://download.draios.com/stable/deb/draios.list
+    apt-get update
+    apt-get -y install linux-headers-$(uname -r)
+    apt-get -y install sysdig
+fi
+
