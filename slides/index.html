@@ -695,10 +695,12 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Kubernetes</h3>
                     <ul>
-                        <li>Started by google</li>
-                        <li>Includes people who worked on borg</li>
-                        <li>Open source project</li>
+                        <li>Container orchestrator</li>
+                        <li>Started by Google</li>
+                        <li>Inspired by Borg</li>
+                        <li>Open source project written in Go</li>
                         <li>Cloud Native Computing Foundation</li>
+                        <li>Manage applications not machines</li>
                     </ul>
                 </section>
                 <section>
@@ -725,9 +727,34 @@ search wgtn.cat-it.co.nz lan
                 </section>
 
                  <!-- Managing state -->
+                <section>
                 <section class="image-slide">
-                    <h2>CAP</h2>
+                    <h2>Managing state - CAP</h2>
+                    <p>Managing state can be tricky</p>
                     <img src="http://digbigdata.com/wp-content/uploads/2013/05/media_httpfarm5static_mevIk.png" alt="CAP" height="600" width="800">
+                </section>
+                <section>
+                    <h3>Managing State</h3>
+                    <p>"In a cluster of ephemeral containers application state must exist outside of the containers."</p>
+                    <p>Ian Lewis, Google - <a href="https://speakerdeck.com/ianlewis/in-a-world-of-ephemeral-containers-how-do-we-keep-track-of-things-at-openstack-summit-tokyo">In a World of Ephemeral Containers, How Do We Keep Track of Things? @ OpenStack Summit Tokyo</a> (<a href="https://www.youtube.com/watch?v=aYs7IxMQzgg">video</a>)</p>
+                </section>
+                <section>
+                    <h3>Managing State</h3>
+                    <ul>
+                        <li>Normal Docker volumes are per host</li>
+                        <li>Kubernetes Persistent volumes</li>
+                        <li>Docker Engine 1.9 includes redesigned volume system with more plugins (eg <a href="https://docs.clusterhq.com/en/1.7.1/introduction/what-is-flocker.html">Flocker</a>)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Patterns for Managing State</h3>
+                    <ul>
+                        <li>Outside the cluster (SEP)</li>
+                        <li>Adapted to run in cluster (eg MySQL inside cluster)</li>
+                        <li>Cluster native (eg Cassandra or Riak)</li>
+                        <li><a href="http://vitess.io/">vitess.io</a></li>
+                    </ul>
+                </section>
                 </section>
 
                 <!-- Security -->
@@ -748,8 +775,18 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://titanous.com/posts/docker-insecurity">Image signing</a> (see <a href="https://github.com/docker/notary">notary</a>)</li>
                         <li><a href="https://securityblog.redhat.com/2014/12/17/container-security-isolation-heaven-or-dependency-hell/">Level of isolation</a></li>
                         <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/Docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
-                        <li><a href="https://blog.docker.com/2013/08/containers-docker-how-secure-are-they/">Fundametals</a> (old but informative)</li>
+                        <li><a href="https://blog.docker.com/2013/08/containers-docker-how-secure-are-they/">Fundamentals</a> (old but informative)</li>
                         <li><a href="http://linux-audit.com/docker-security-best-practices-for-your-vessel-and-containers/">Best practices</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Other problems</h3>
+                    <ul>
+                        <li>Not declarative</li>
+                        <li>Not idempotent or repeatable</li>
+                        <li>Pids and spawning issues</li>
+                        <li>Standardisation</li>
+                        <li>See <a href="https://www.youtube.com/watch?v=wpFrkq5XNFM">these</a> <a href="https://www.youtube.com/watch?v=et7BCV_kAUY">talks</a> from systemd.conf</li>
                     </ul>
                 </section>
                 </section>
