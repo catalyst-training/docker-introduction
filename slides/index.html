@@ -379,6 +379,7 @@ priority = []string{
                 </section>
 
                 <section>
+                <section>
                     <h3>8: More on Dockerfiles</h3>
                     <ul>
                         <li><a href="https://docs.docker.com/articles/dockerfile_best-practices/">Dockerfile Best Practices</a></li>
@@ -386,6 +387,118 @@ priority = []string{
                         <li><a href="https://github.com/docker-library/postgres/blob/8a9fbcb40f13ccc7762f278b9df611cabe22d300/9.5/Dockerfile">Postgres Dockerfile</a></li>
                         <li><a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
                     </ul>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <ul>
+                        <li>See <a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/</a> for details</li>
+                        <li>Lets look at some images: <a href="https://imagelayers.io/?images=debian:latest,ubuntu:latest,alpine:latest">https://imagelayers.io/?images=debian:latest,ubuntu:latest,alpine:latest</a></li>
+                    <pre><code data-trim contenteditable>
+$ sudo docker run -i -t debian
+root@0f94a65e7d37:/# exit
+$ sudo docker run -i -t alpine
+Error response from daemon: No command specified
+                    </code></pre>
+                    </ul>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <pre><code data-trim contenteditable>
+$ cat dockerfiles/ping-localhost/Dockerfile
+FROM debian:jessie
+CMD ping localhost
+$ sudo docker build -t demo dockerfiles/ping-localhost
+$ sudo docker run -t demo
+PING localhost (127.0.0.1) 56(84) bytes of data.
+64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.034 ms
+64 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=64 time=0.054 ms
+64 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=64 time=0.064 ms
+$ docker run demo uname -a
+Linux fac4960db319 3.13.0-66-generic #108-Ubuntu SMP Wed Oct 7 15:20:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <ul>
+                        <li>Use CMD when you want the user to have the choice of commands to run</li>
+                        <li>Use ENTRYPOINT when you want to wrap a command</li>
+                        <li>ENTRYPOINT can be overridden with the --entrypoint flag</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <pre><code data-trim contenteditable>
+$ cat dockerfiles/python/Dockerfile
+FROM python
+ENTRYPOINT ["python"]
+$ sudo docker build -t python dockerfiles/python
+Sending build context to Docker daemon 2.048 kB
+Step 0 : FROM python
+---> e7d942e7369d
+Step 1 : ENTRYPOINT python
+---> Using cache
+---> c3b6fc104517
+Successfully built c3b6fc104517
+$ sudo docker run -ti python
+Python 3.5.0 (default, Nov 11 2015, 10:39:25)
+[GCC 4.9.2] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> exit()
+$ sudo docker run --entrypoint uname -t python
+Linux
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <pre><code data-trim contenteditable>
+$ sudo docker run -d demo
+f27197f4370c2981792ab3d09a0620c1c8f7c993cb66770ffc1f1aa6c4dfe021
+$ docker ps -l
+CONTAINER ID IMAGE     COMMAND                 CREATED        STATUS         PORTS NAMES
+f27197f4370c dojo/demo "/bin/sh -c 'ping loc"  11 seconds ago Up 10 seconds        suspicious_leakey
+$ sudo docker exec f27197f4370c ps -f
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 08:21 ?        00:00:00 /bin/sh -c ping localhost
+root         5     1  0 08:21 ?        00:00:00 ping localhost
+root         6     0  0 08:21 ?        00:00:00 ps -f
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <ul>
+                        <li>Shell form vs Exec form</li>
+                        <li>Don't mix and match</li>
+                        <li>Use exec</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <pre><code data-trim contenteditable>
+$ cat dockerfiles/ping-localhost-exec/Dockerfile
+FROM debian:jessie
+CMD ["ping", "localhost"]
+$ sudo docker build -t demo dockerfiles/ping-localhost-exec/
+...
+$ sudo docker run -d demo
+db7526643dbe7ec6d6f27aa707539aa67a3573a8adc7754372d8fce0fe824cfc
+$ sudo docker exec db7526643dbe ps -f
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 08:27 ?        00:00:00 ping localhost
+root         6     0  0 08:27 ?        00:00:00 ps -f
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
+                    <pre><code data-trim contenteditable>
+$ cat dockerfiles/ping-localhost-both/Dockerfile
+FROM debian:jessie
+ENTRYPOINT ["/bin/ping","-c","3"]
+CMD ["localhost"]
+$ sudo docker build -t ping dockerfiles/ping-localhost-both
+$ sudo docker run ping google.com
+$ sudo docker run ping
+                    </code></pre>
+                </section>
                 </section>
 
                 <section>
