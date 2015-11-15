@@ -382,6 +382,8 @@ priority = []string{
                     <h3>8: More on Dockerfiles</h3>
                     <ul>
                         <li><a href="https://docs.docker.com/articles/dockerfile_best-practices/">Dockerfile Best Practices</a></li>
+                        <li><a href="https://github.com/nginxinc/docker-nginx/blob/4e5332fa50a1f8f73657417c6bfe249bbb3b110d/Dockerfile">Nginx Dockerfile</a></li>
+                        <li><a href="https://github.com/docker-library/postgres/blob/8a9fbcb40f13ccc7762f278b9df611cabe22d300/9.5/Dockerfile">Postgres Dockerfile</a></li>
                         <li><a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
                     </ul>
                 </section>
@@ -799,6 +801,7 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://docs.docker.com/articles/baseimages/">Can I build my own base image?</a></li>
                         <li><a href="https://stackoverflow.com/questions/24394243/why-are-docker-container-images-so-large">Why are Docker images so large?</a></li>
                         <li><a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">Does each Dockerfile run command create its own layer?</a></li>
+                        <li><a href="https://blog.docker.com/2015/11/docker-multi-host-networking-ga/">What happened to Docker links?</a></li>
                     </ul>
                 </section>
                 <section>
@@ -819,6 +822,25 @@ init(1)───docker(2379)───bash(30136)
                     <p>Q: Should I include my application source code in the image?</p>
                     <p>A: It depends, some people like to mount application source code as <a href-"http://blog.ionic.io/docker-hot-code-deploys/">volume</a>, other checkout source code when <a href="http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/">building the image</a>.</p>
                     <p>If you are checking out source code in your Dockerfile you need to be aware of <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">how caching works</a>.</p>
+                </section>
+                <section>
+                    <h3>FAQ: Monitoring</h3>
+                    <p>A: How can i monitor my containers?</p>
+                    <p>Q: Try sysdig/csysdig</p>
+                    <ul>
+                        <li>sudo csysdig</li>
+                        <li>hit F2 and choose the Containers view</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>FAQ: Copy vs. Add</h3>
+                    <p>A: Should I use Copy or Add in my Dockerfile?</p>
+                    <p>Q: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
+                </section>
+                <section>
+                    <h3>FAQ: Sending build conte</h3>
+                    <p>A: Should I use Copy or Add in my Dockerfile?</p>
+                    <p>Q: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
                 </section>
                 </section>
 
