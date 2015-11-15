@@ -463,14 +463,17 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Some Concepts</h3>
                     <ul>
+                        <li>Buzzwords ahead!</li>
                         <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
                         <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
                         <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
                     </ul>
                 </section>
 
+                <!-- Immutable Infrastructure -->
                 <section>
-                    <h3>Immutable architecture</h3>
+                <section>
+                    <h3>Immutable Architecture/Infrastructure</h3>
                     <ul>
                         <li>Phoenix servers</li>
                         <li>The environment is defined in code</li>
@@ -479,19 +482,20 @@ search wgtn.cat-it.co.nz lan
                         <li>Procedural vs Declarative</li>
                     </ul>
                 </section>
-
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Immutable Architecture</h2>
                     <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
-                </section> 
+                </section>
+                </section>
 
+                <!-- Microservices -->
+                <section>
                 <section>
                     <h3>Microservices</h3>
                     <p>Cockcrofts definition: Loosely coupled service oriented architecture with bounded contexts</p>
                     <p>Eric Brewers: Microservice boundaries are language boundaries and team boundaries</p>
                 </section>
-
                 <section>
                     <h3>Microservices</h3>
                     <ul>
@@ -502,7 +506,6 @@ search wgtn.cat-it.co.nz lan
                         <li>If a message bus is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
                     </ul>
                 </section>
-
                 <section>
                     <h3>Microservices</h3>
                     <ul>
@@ -513,7 +516,6 @@ search wgtn.cat-it.co.nz lan
                         <li>Design for failure (optimize MTTR)</li>
                     </ul>
                 </section>
-
                 <section>
                     <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
                     <ul>
@@ -524,13 +526,6 @@ search wgtn.cat-it.co.nz lan
                         <li>Treat Servers as Stateless</li>
                     </ul>
                 </section>
-
-                 <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>CAP</h2>
-                    <img src="http://digbigdata.com/wp-content/uploads/2013/05/media_httpfarm5static_mevIk.png" alt="CAP" height="600" width="800">
-                </section>
-
                 <section>
                     <h3>Containers and Microservices</h3>
                     <ul>
@@ -540,7 +535,6 @@ search wgtn.cat-it.co.nz lan
                         <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
                     </ul>
                 </section>
-
                 <section>
                     <h3>Containers and Microservices: Requirements</h3>
                     <ul>
@@ -549,7 +543,6 @@ search wgtn.cat-it.co.nz lan
                         <li>Parameterization of containers</li>
                     </ul>
                 </section>
-
                 <section>
                     <h3>Microservices - Resources</h3>
                     <ul>
@@ -561,7 +554,40 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></li>
                     </ul>
                 </section>
+                </section>
 
+                <section>
+                    <h3>Devops</h3>
+                    <ul>
+                        <li>You build it you run it</li>
+                        <li>With docker it is easier to make a distinction between who "owns" the service and who "owns" the platform the service runs on</li>
+                        <li>Because dev is like production the developer thinks about how it runs in production</li>
+                    </ul>
+                </section>
+
+                 <!-- Continuous delivery -->
+                <section>
+                <section>
+                    <h3>Continuous delivery</h3>
+                    <ul>
+                        <li>Automated Pipeline from developer commit to production deploy</li>
+                        <li>Requires Continuous Integration where every commit triggers all the tests</li>
+                        <li>Requires lots of tests</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Continuous delivery antipatterns</h3>
+                    <ul>
+                        <li>Deploying software manually</li>
+                        <li>Deploying to a production-like environment only after development is complete</li>
+                        <li>Manual configuration of production environments</li>
+                        <li>Docker makes it difficult to do any of these</li>
+                    </ul>
+                </section>
+                </section>
+
+                 <!-- Where to start? -->
+                <section>
                 <section>
                     <h3>Containers: Where to start?</h3>
                     <ul>
@@ -574,7 +600,6 @@ search wgtn.cat-it.co.nz lan
                         <li>Mix and match, containerise the bits that make sense</li>
                     </ul>
                 </section>
-
                 <section>
                     <h3>Examples</h3>
                     <ul>
@@ -583,14 +608,15 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://github.com/CenturyLinkLabs/golang-builder">Compiling go</a></li>
                     </ul>
                 </section>
-
                  <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Bosch Dreaming</h2>
                     <a href="img/Hieronymus_Bosch_003.jpg"><img src="img/Hieronymus_Bosch_003.jpg" alt="Bosch Dream" height="600" width="800"></a>
                 </section>
+                </section>
 
-                <!-- Slide with list items (list items are displayed at once) -->
+                <!-- ecosystem -->
+                <section>
                 <section>
                     <h3>Docker ecosystem</h3>
                     <ul>
@@ -599,13 +625,21 @@ search wgtn.cat-it.co.nz lan
                         <li>Lets have a quick look</li>
                     </ul>
                 </section>
-
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Docker ecosystem</h2>
                     <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
                 </section>
-
+                <section>
+                    <h3>The stack</h3>
+                    <ul>
+                        <li>The LAMP stack equivalent</li>
+                        <li>Container Orchestration Engines</li>
+                        <li>Linux - Docker - COE - ?</li>
+                        <li>Often LDK</li>
+                        <li>Higher level projects build on this stack (eg OpenShift and CloudFoundry)</li>
+                    </ul>
+                </section>
                 <section>
                     <h3>Docker ecosystem - Host OS</h3>
                     <p>Lightweight operating systems designed to run containers</p>
@@ -614,10 +648,22 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="http://www.projectatomic.io/">Project Atomic</a> (cut down RHEL)</li>
                         <li><a href="http://rancher.com/">Rancher</a> (Dockers all the way down)</li>
                         <li><a href="http://boot2docker.io/">boot2docker</a> (for windows/mac devs)</li>
-                        <li><a href="https://developer.ubuntu.com/en/snappy/">Snappy Ubuntu Core</a> (similar ideas for phones, embedded and IoT)</li>
                     </ul>
                 </section>
+                <section>
+                    <h3>Docker ecosystem - Container Orchestration Engines</h3>
+                    <p>Engine for orchestrating container workloads, term comes from the OpenStack Magnum project.</p>
+                    <ul>
+                        <li>Docker Compose</li>
+                        <li>Docker Swarm</li>
+                        <li>Kubernetes</li>
+                        <li>Apache Mesos</li>
+                    </ul>
+                </section>
+                </section>
 
+                <!-- Docker compose -->
+                <section>
                 <section>
                     <h3>Docker compose</h3>
                     <ul>
@@ -627,12 +673,25 @@ search wgtn.cat-it.co.nz lan
                     </ul>
 
                 </section>
-
                 <section>
-                    <h3>8: Docker compose</h3>
+                    <h3>Docker compose</h3>
                     <a href="https://docs.docker.com/compose/">Overview of Docker Compose</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/compose/">(cache)</a>
                 </section>
+                </section>
 
+                <!-- Docker swarm -->
+                <section>
+                    <h3>Docker swarm</h3>
+                    <ul>
+                        <li>Native clustering for Docker</li>
+                        <li>Use standard tools to interact with a cluster of docker engines</li>
+                        <li>Turn a group of Docker engines into a single, virtual Docker engine</li>
+                        <li>Engines can be deployed using docker machine (<a href="http://docs.catalystcloud.io/tutorials.html#create-an-a-cloud-vm-using-docker-machine">example</a>)</li>
+                    </ul>
+                </section>
+
+                <!-- Kubernetes -->
+                <section>
                 <section>
                     <h3>Kubernetes</h3>
                     <ul>
@@ -642,7 +701,6 @@ search wgtn.cat-it.co.nz lan
                         <li>Cloud Native Computing Foundation</li>
                     </ul>
                 </section>
-
                 <section>
                     <h3><a href="http://blog.arungupta.me/kubernetes-design-patterns/">Pods</a></h3>
                     <ul>
@@ -653,6 +711,7 @@ search wgtn.cat-it.co.nz lan
                         <li>Easy migration = high utilisation</li>
                         <li>Scale service by scaling pods</li>
                     </ul>
+                </section>
                 </section>
 
                 <section>
@@ -665,7 +724,13 @@ search wgtn.cat-it.co.nz lan
                     </ul>
                 </section>
 
-                <!-- Slide with list items (list items are displayed at once) -->
+                 <!-- Managing state -->
+                <section class="image-slide">
+                    <h2>CAP</h2>
+                    <img src="http://digbigdata.com/wp-content/uploads/2013/05/media_httpfarm5static_mevIk.png" alt="CAP" height="600" width="800">
+                </section>
+
+                <!-- Security -->
                 <section>
                 <section>
                     <h3>Security</h3>
@@ -712,6 +777,12 @@ $ pstree -s -p $(sudo docker top sleepy_cori | tail -1 | awk '{ print $2 }')
 init(1)───docker(2379)───bash(30136)
                     </code></pre>
                     <p>A: Top pids are host pids not namespaces container pids</p>
+                </section>
+                <section>
+                    <h3>FAQ</h3>
+                    <p>Q: Should I include my application source code in the image?</p>
+                    <p>A: It depends, some people like to mount application source code as <a href-"http://blog.ionic.io/docker-hot-code-deploys/">volume</a>, other checkout source code when <a href="http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/">building the image</a>.</p>
+                    <p>If you are checking out source code in your Dockerfile you need to be aware of <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">how caching works</a>.</p>
                 </section>
                 </section>
 
