@@ -76,7 +76,7 @@
                     <h3>This course</h3>
                     <ul>
                         <li>Makes use of official docker docs</li>
-                        <li>Largely hands on command line</li>
+                        <li>A mix of command line and theory</li>
                         <li>Assumes no prior docker knowledge</li>
                         <li>Assumes familiarity with the linux shell</li>
                         <li>Assumes we are using ubuntu (trusty)</li>
@@ -129,15 +129,11 @@
                         <li>Application stack is no longer coupled to machine it is running on</li>
                         <li>Allows a service to have the most appropriate stack without needing to consider conflicts with and dependencies of other services (eg python versions)</li>
                         <li>Services can be run in the most optimal location for a given organisation</li>
-                        <li>Services can be upgraded independently</li>
+                        <li>Services can be upgraded and scaled independently</li>
                         <li>Services boundaries can define areas of responsibility</li>
                         <li>Configuration is coupled with the application</li>
+                        <li>Service vs. Machine</li>
                     </ul>
-                </section>
-
-                <section>
-                    <h3>Understanding docker</h3>
-                    <p><a href="https://docs.docker.com/introduction/understanding-docker/">https://docs.docker.com/introduction/understanding-docker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/introduction/understanding-docker/">(cache)</a></p>
                 </section>
 
                 <section>
@@ -163,6 +159,11 @@
                 <section class="image-slide">
                     <h2>Containers and Images</h2>
                     <img src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
+                </section>
+
+                <section>
+                    <h3>Understanding docker</h3>
+                    <p><a href="https://docs.docker.com/introduction/understanding-docker/">https://docs.docker.com/introduction/understanding-docker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/introduction/understanding-docker/">(cache)</a></p>
                 </section>
 
                 <!-- Large image slide -->
@@ -260,12 +261,13 @@ sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png &
                 </section>
 
                 <section>
-                    <h3>7: Image layers</h3>
+                    <h3>7: imagelayers.io</h3>
                     <p><a href="https://imagelayers.io/">https://imagelayers.io/</a><p>
                 </section>
 
                 <section>
                     <h3>7: Docker history</h3>
+                    <p>Show the history (layers) of an image</p>
                     <pre><code data-trim contenteditable>
 $ docker history cb7ea125b1fc
 IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
@@ -280,6 +282,7 @@ cb7ea125b1fc        3 months ago        /bin/sh -c gem install sinatra          
 
                 <section>
                     <h3>7: Docker Diff</h3>
+                    <p>Show the differences between a container's filesystem and its base image</p>
                     <pre><code data-trim contenteditable>
 $ sudo docker run --name=sleepy_cori -it ubuntu:latest /bin/bash
 root@e888e0fef39e:/# echo flubber > test.txt
@@ -343,6 +346,7 @@ A /usr/share/doc/mtr-tiny
 
                 <section>
                     <h3>7: Docker Diff</h3>
+                    <p>Show the differences between a container's filesystem and its base image</p>
                     <pre><code data-trim contenteditable>
 $ sudo find /var/lib/docker/ -type f -name 'test.txt' -exec md5sum {} \;
 185320c3e9298cdbde3320ec32144980  /var/lib/docker/aufs/diff/e888e0fef39e6f7f249f33f0475e891aaef899cca9ed0ea39d2524e5f06be792/test.txt
@@ -404,7 +408,7 @@ priority = []string{
                 </section>
 
                 <section>
-                    <h3>8: Docker networking</h3>
+                    <h3>10: Docker networking</h3>
                     <ul>
                         <li>docker0 virtual bridge</li>
                         <li>172.17.42.1/16 by default</li>
@@ -415,11 +419,13 @@ priority = []string{
                     </ul>
                 </section>
                 <section>
-                    <h3>8: Docker networking</h3>
+                    <h3>10: Docker networking</h3>
                     <pre><code data-trim contenteditable>
-# on host
+# try these commands your the host
+# use your own container name
 $ sudo iptables -L
 $ sudo ip addr
+$ sudo docker exec -it stoic_ramanujan findmnt
 $ sudo cat $(sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[][]' '{ print $2 }')
 # Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf(8)
 #     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
@@ -427,16 +433,30 @@ nameserver 192.168.2.92
 search wgtn.cat-it.co.nz lan
                     </code></pre>
                 </section>
+                </section>
+
                 <section>
-                    <h3>8: Docker networking - Random fact</h3>
-                    <pre><code data-trim contenteditable>
-$ sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[' '{ print $2 }' | tr -d ']' | sed -n l
-/var/lib/docker/containers/f1911991f55e1c62d687a2e25caf6ee229f77585c9\
-47053d61f48adf7f4ccb1c/resolv.conf\r$
-$ sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[][]' '{ print $2 }' | sed -n l
-/var/lib/docker/containers/f1911991f55e1c62d687a2e25caf6ee229f77585c9\
-47053d61f48adf7f4ccb1c/resolv.conf$
-                    </code></pre>
+                <section>
+                    <h3>11: Exec vs Attach</h3>
+                    <ul>
+                        <li>Exec is specifically for running new processes in an already started container, be it a shell or some other process</li>
+                        <li>Attach is for attaching to the running process, not for running an extra process in a container</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>11: Exec</h3>
+                    <ul>
+                        <li>The docker exec command runs a <strong>new</strong> command (process) in a running container</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>11: Attach</h3>
+                    <ul>
+                        <li>Attach lets you view or interact with any running container's primary process (pid 1) </li>
+                        <li>You can attach to the same contained process multiple times simultaneously, screen sharing style</li>
+                        <li>View the output of your daemonized process</li>
+                        <li>Not for running a new process in a container</li>
+                    </ul>
                 </section>
                 </section>
 
@@ -645,11 +665,6 @@ $ sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[][]' '{ p
                     </ul>
                 </section>
 
-                <section>
-                    <h3>Quick Kubernetes/docker compose demo</h3>
-                    <p><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">Set up Kubernetes with a docker compose one liner</a></p>
-                </section>
-
                 <!-- Slide with list items (list items are displayed at once) -->
                 <section>
                     <h3>Security</h3>
@@ -678,18 +693,17 @@ $ sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F'[][]' '{ p
                 <section>
                     <h3>FAQ</h3>
                     <ul>
-                        <li>See the <a href="https://wiki.wgtn.cat-it.co.nz/wiki/Docker/Cookbook">Docker cookbook</a> on the Catalyst wiki</li>
                         <li><a href="http://www.projectatomic.io/blog/2015/08/why-we-dont-let-non-root-users-run-docker-in-centos-fedora-or-rhel/">Why is sudo required?</a></li>
                         <li><a href="http://www.projectatomic.io/blog/2015/07/what-are-docker-none-none-images/">What are the &lt;none&gt;&lt;none&gt; images I see and how can I clean them up?</a></li>
                         <li><a href="https://docs.docker.com/articles/baseimages/">Can I build my own base image?</a></li>
-                        <li><a href="https://stackoverflow.com/questions/24394243/why-are-docker-container-images-so-large">Can I build my own base image?</a></li>
-                        <li>Does each run command create its own layer? - yes see <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">this</a></li>
+                        <li><a href="https://stackoverflow.com/questions/24394243/why-are-docker-container-images-so-large">Why are Docker images so large?</a></li>
+                        <li><a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">Does each Dockerfile run command create its own layer?</a></li>
                     </ul>
                 </section>
 
                 <section>
                     <h3>FAQ</h3>
-                    <p>Whats the story with docker top pids?</p>
+                    <p>Q: Whats the story with docker top pids?</p>
                     <pre><code data-trim contenteditable>
 $ sudo docker top sleepy_cori
 UID  PID   PPID C STIME TTY    TIME     CMD
@@ -698,11 +712,16 @@ root 30136 2379 0 12:29 pts/32 00:00:00 /bin/bash
 $ pstree -s -p $(sudo docker top sleepy_cori | tail -1 | awk '{ print $2 }')
 init(1)───docker(2379)───bash(30136)
                     </code></pre>
+                    <p>A: Top pids are host pids not namespaces container pids</p>
                 </section>
 
                 </section>
 
                 <section>
+                <section>
+                    <h3>Next steps</h3>
+                    <p>What would you like to see in an intermediate docker course?</p>
+                </section>
                 <section>
                     <h3>Next steps</h3>
                     <ul>
@@ -710,27 +729,12 @@ init(1)───docker(2379)───bash(30136)
                         <li>Students build custom "microservices"</li>
                         <li>Setup CoreOS on OpenStack</li>
                         <li>Deploy students microservices and create a www router service</li>
-                        <li>Define service as a kubernetes</li>
+                        <li>Define service as a kubernetes pod</li>
                         <li>Scale and migrate pods (between OpenStack regions?)</li>
                         <li>Continuous delivery?</li>
-                        <li>Help please!</li>
+                        <li>Let me know!</li>
                     </ul>
                 </section>
-                <section>
-                    <h3>Next steps</h3>
-                    <p>What would you like to see in an intermediate docker course?</p>
-                </section>
-                </section>
-
-                <section>
-                    <h3>Kolla - OpenStack on Docker</h3>
-                    <ul>
-                        <li>Try setup Kolla ...</li>
-                        <li><a href="http://hackersome.com/p/stackforge/kolla">http://hackersome.com/p/stackforge/kolla</a></li>
-                        <li><a href="http://allthingsopen.com/2014/10/22/a-demonstration-of-kolla-docker-and-kubernetes-based-deployment-of-openstack-services-on-atomic/">http://allthingsopen.com/2014/10/22/a-demonstration-of-kolla-docker-and-kubernetes-based-deployment-of-openstack-services-on-atomic/</a></li>
-                        <li><a href="https://github.com/stackforge/kolla">https://github.com/stackforge/kolla</a></li>
-                        <li><a href="https://www.openstack.org/summit/openstack-paris-summit-2014/session-videos/presentation/docker-all-the-openstack-services">https://www.openstack.org/summit/openstack-paris-summit-2014/session-videos/presentation/docker-all-the-openstack-services</a></li>
-                    </ul>
                 </section>
 
                 <section>
