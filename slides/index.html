@@ -791,6 +791,10 @@ search wgtn.cat-it.co.nz lan
                     <h3>Docker compose</h3>
                     <a href="https://docs.docker.com/compose/">Overview of Docker Compose</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/compose/">(cache)</a>
                 </section>
+                <section>
+                    <h3>Docker compose - hands on</h3>
+                    <a href="https://docs.docker.com/compose/gettingstarted/">Example app</a>
+                </section>
                 </section>
 
                 <!-- Docker swarm -->
@@ -883,6 +887,24 @@ search wgtn.cat-it.co.nz lan
                     </ul>
                 </section>
                 <section>
+                    <h3>Security - Image Signing</h3>
+                    <ul>
+                        <li><a href="https://blog.docker.com/2015/08/content-trust-docker-1-8/">Intoduction to Docker Content Trust</a></li>
+                        <li>Provided by the <a href="https://github.com/docker/notary">Notary</a> open source project</li>
+                        <li>Based on <a href="http://theupdateframework.com/">The Update Framework</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=at72dhg-SZY&feature=youtu.be&t=4873">Video</a></li>
+                        <li><a href="https://docs.docker.com/engine/security/trust/content_trust/">Content Trust Documentation</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Security - Image Vulnerability Scanning</h3>
+                    <ul>
+                        <li><a href="https://coreos.com/blog/vulnerability-analysis-for-containers/">Intoduction to Clair from CoreOS</a></li>
+                        <li><a href="https://github.com/coreos/clair">Clair on github</a></li>
+                        <li>Project Nautilus a new image scanning and vulnerability detection service for Official Repos on Docker Hub</li>
+                    </ul>
+                </section>
+                <section>
                     <h3>Security - Useful links</h3>
                     <ul>
                         <li>How often do the official base images get updated? (details <a href="https://blog.docker.com/2015/06/understanding-official-repos-docker-hub/">here</a>)</li>
@@ -902,6 +924,59 @@ search wgtn.cat-it.co.nz lan
                         <li>Standardisation</li>
                         <li>See <a href="https://www.youtube.com/watch?v=wpFrkq5XNFM">these</a> <a href="https://www.youtube.com/watch?v=et7BCV_kAUY">talks</a> from systemd.conf</li>
                     </ul>
+                </section>
+                </section>
+
+                <section>
+                <section>
+                    <h3>Monitoring</h3>
+                    <p>Q: How can i monitor my containers?</p>
+                    <p>A: Try sysdig/csysdig</p>
+                    <ul>
+                        <li>sudo csysdig</li>
+                        <li>hit F2 and choose the Containers view</li>
+                        <li>can also monitor <a href="http://blog.kubernetes.io/2015/11/monitoring-Kubernetes-with-Sysdig.html">kubernetes</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Monitoring</h3>
+                    <p>Lets build a docker image for some testing:</p>
+                    <pre><code data-trim contenteditable>
+$ cat ~/src/docker-training/dockerfiles/stress-testing/Dockerfile
+$ sudo docker build -t stress-test ~/src/docker-training/dockerfiles/stress-testing/
+$ sudo docker run stress-test stress --help
+$ sudo docker run [DOCKER OPTIONS] stress-test stress [STRESS OPTIONS]
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Monitoring and CPU limits</h3>
+                    <p>Run this command while watching csysdig and htop in other terminals</p>
+                    <pre><code data-trim contenteditable>
+$ sudo docker run --cpuset-cpus=0,1 stress-test stress -c 3
+# in another terminal
+$ sudo csysdig
+# in another terminal
+$ sudo htop
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Monitoring and Memory limits</h3>
+                    <p>Run this command while watching csysdig and htop in other terminals</p>
+                    <pre><code data-trim contenteditable>
+$ sudo docker run -m 512M stress-test stress --vm-bytes 256M -m 4
+# in another terminal
+$ sudo csysdig
+# in another terminal
+$ sudo htop
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Monitoring - check-config</h3>
+                    <p>How to enable limiting swap:</p>
+                    <pre><code data-trim contenteditable>
+$ check-config.sh
+# GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
+                    </code></pre>
                 </section>
                 </section>
 
@@ -937,21 +1012,7 @@ init(1)───docker(2379)───bash(30136)
                     <p>If you are checking out source code in your Dockerfile you need to be aware of <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">how caching works</a>.</p>
                 </section>
                 <section>
-                    <h3>FAQ: Monitoring</h3>
-                    <p>A: How can i monitor my containers?</p>
-                    <p>Q: Try sysdig/csysdig</p>
-                    <ul>
-                        <li>sudo csysdig</li>
-                        <li>hit F2 and choose the Containers view</li>
-                    </ul>
-                </section>
-                <section>
                     <h3>FAQ: Copy vs. Add</h3>
-                    <p>A: Should I use Copy or Add in my Dockerfile?</p>
-                    <p>Q: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
-                </section>
-                <section>
-                    <h3>FAQ: Sending build conte</h3>
                     <p>A: Should I use Copy or Add in my Dockerfile?</p>
                     <p>Q: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
                 </section>
