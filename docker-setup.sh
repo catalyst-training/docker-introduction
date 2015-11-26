@@ -46,7 +46,7 @@ fi
 COMPOSE_BIN=/usr/local/bin/docker-compose
 if [ ! -f $COMPOSE_BIN ];
 then
-    wget https://github.com/docker/compose/releases/download/1.3.3/docker-compose-linux-x86_64
+    wget https://github.com/docker/compose/releases/download/1.5.1/docker-compose-linux-x86_64
     chmod 755 docker-compose-linux-x86_64
     mv docker-compose-linux-x86_64 $COMPOSE_BIN
 fi
@@ -71,3 +71,21 @@ then
     apt-get -y install sysdig
 fi
 
+# install checkconfig
+CHECK_CONFIG_BIN=~/bin/check-config.sh
+USER=$(logname)
+if [ ! -f $CHECK_CONFIG_BIN ];
+then
+    echo installing $CHECK_CONFIG_BIN
+    mkdir -p ~/bin/
+    curl -s -o $CHECK_CONFIG_BIN https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh
+    chown $USER:$USER $CHECK_CONFIG_BIN
+    chmod 744 $CHECK_CONFIG_BIN
+fi
+
+# install htop
+HTOP_BIN=/usr/bin/htop
+if [ ! -f $HTOP_BIN ];
+then
+    apt-get install htop
+fi
