@@ -772,6 +772,7 @@ search wgtn.cat-it.co.nz lan
                         <li>Docker Swarm</li>
                         <li>Kubernetes</li>
                         <li>Apache Mesos</li>
+                        <li><a href="http://radar.oreilly.com/2015/10/swarm-v-fleet-v-kubernetes-v-mesos.html">Swarm v. Fleet v. Kubernetes v. Mesos</a></li>
                     </ul>
                 </section>
                 </section>
@@ -822,7 +823,17 @@ search wgtn.cat-it.co.nz lan
                     </ul>
                 </section>
                 <section>
-                    <h3><a href="http://blog.arungupta.me/kubernetes-design-patterns/">Pods</a></h3>
+                    <h3>Kubernetes Components</h3>
+                    <ul>
+                        <li>Pods - an ephemeral group of co-scheduled containers that together provide a service</li>
+                        <li>Flat Networking Space - each pod has an IP and can talk to other pods, within a pod containers communicate via localhost (need to manage ports)</li>
+                        <li>Labels - Key value pairs, used to label pods and other objects so the scheduler can operate on them</li>
+                        <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
+                        <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Pods/Services</h3>
                     <ul>
                         <li>Co-locate containers</li>
                         <li>Shared volumes</li>
@@ -834,35 +845,74 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 </section>
 
-                <section>
-                    <h3>Patterns for Composite Containers</h3>
-                    <a href="http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html">http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html</a>
-                    <ul>
-                        <li>Sidecar containers (eg logger, git synchroniser)</li>
-                        <li>Ambassador containers (local proxy to a service of unknown size)</li>
-                        <li>Adapter containers (normalize and abstract different services)</li>
-                    </ul>
-                </section>
-
                  <!-- Managing state -->
                 <section>
-                <section class="image-slide">
-                    <h2>Managing state - CAP</h2>
-                    <p>Managing state can be tricky</p>
-                    <img src="http://digbigdata.com/wp-content/uploads/2013/05/media_httpfarm5static_mevIk.png" alt="CAP" height="600" width="800">
-                </section>
                 <section>
                     <h3>Managing State</h3>
                     <p>"In a cluster of ephemeral containers application state must exist outside of the containers."</p>
                     <p>Ian Lewis, Google - <a href="https://speakerdeck.com/ianlewis/in-a-world-of-ephemeral-containers-how-do-we-keep-track-of-things-at-openstack-summit-tokyo">In a World of Ephemeral Containers, How Do We Keep Track of Things? @ OpenStack Summit Tokyo</a> (<a href="https://www.youtube.com/watch?v=aYs7IxMQzgg">video</a>)</p>
                 </section>
                 <section>
-                    <h3>Managing State</h3>
+                    <h3>Initial state</h3>
+                    <p>All containers start with exactly the same state which is derived from the image they are instantiated from.</p>
+                </section>
+                <section>
+                    <h3>What exactly is state?</h3>
+                    <ul>
+                    </ul>
+                </section>
+                <section>
+                    <h3>What exactly is state?</h3>
+                    <ul>
+                        <li>Our Database!</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>What exactly is state?</h3>
+                    <ul>
+                        <li>Our Database!</li>
+                        <li>Filesystem (volumes)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>What exactly is state?</h3>
+                    <ul>
+                        <li>Our Database!</li>
+                        <li>Filesystem (volumes)</li>
+                        <li>Configuration (service discovery)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>What exactly is state?</h3>
+                    <ul>
+                        <li>Our Database!</li>
+                        <li>Filesystem (volumes)</li>
+                        <li>Configuration (service discovery)</li>
+                        <li>Secrets</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>What exactly is state?</h3>
+                    <ul>
+                        <li>Our Database!</li>
+                        <li>Filesystem (volumes)</li>
+                        <li>Configuration (service discovery)</li>
+                        <li>Secrets</li>
+                        <li>Source Code?</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Managing Volumes</h3>
                     <ul>
                         <li>Normal Docker volumes are per host</li>
                         <li>Kubernetes Persistent volumes</li>
                         <li>Docker Engine 1.9 includes redesigned volume system with more plugins (eg <a href="https://docs.clusterhq.com/en/1.7.1/introduction/what-is-flocker.html">Flocker</a>)</li>
                     </ul>
+                </section>
+                <section class="image-slide">
+                    <h2>Managing state - CAP</h2>
+                    <p>Managing state can be tricky</p>
+                    <img src="img/cap.png" alt="CAP" height="600" width="800">
                 </section>
                 <section>
                     <h3>Patterns for Managing State</h3>
@@ -872,6 +922,48 @@ search wgtn.cat-it.co.nz lan
                         <li>Cluster native (eg Cassandra or Riak)</li>
                         <li><a href="http://vitess.io/">vitess.io</a></li>
                     </ul>
+                </section>
+                </section>
+
+                <section>
+                <section>
+                    <h3>Patterns for Composite Containers</h3>
+                    <p>
+                    <a href="http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html">http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html</a> (<a href=blog/">local</a>).
+                    </p>
+                    <ul>
+                        <li>Sidecar containers (eg logger, git synchroniser)</li>
+                        <li>Ambassador containers (local proxy to a service of unknown size)</li>
+                        <li>Adapter containers (normalize and abstract different services)</li>
+                    </ul>
+                </section>
+                <section class="image-slide">
+                    <h2>Sidecar containers</h2>
+                    <ul>
+                        <li>Modular and pluggable</li>
+                        <li>Reuse sidecar for different frontends</li>
+                        <li>Different team can maintain the sidecar</li>
+                        <li>Lower complexity inside specific containers</li>
+                    </ul>
+                    <img src="img/sidecar.png" alt="Sidecar">
+                </section>
+                <section class="image-slide">
+                    <h2>Ambassador containers</h2>
+                    <ul>
+                        <li>Its a proxy ...</li>
+                        <li>The solution behind the proxy can be as simple or complicated as the environment requires</li>
+                        <li>Also modular, reuse, lower complexity per container</li>
+                    </ul>
+                    <img src="img/ambassador.png" alt="Ambassador">
+                </section>
+                <section class="image-slide">
+                    <h2>Adapter containers</h2>
+                    <ul>
+                        <li>When containers want to talk to other systems</li>
+                        <li>Use adaptors to translate so that neither ends needs native support for each other protocols</li>
+                        <li>eg, monitoring systems, convert from app specific output to monitoring system format</li>
+                    </ul>
+                    <img src="img/adapter.png" alt="Adapter">
                 </section>
                 </section>
 
@@ -930,7 +1022,7 @@ search wgtn.cat-it.co.nz lan
                 <section>
                 <section>
                     <h3>Monitoring</h3>
-                    <p>Q: How can i monitor my containers?</p>
+                    <p>Q: How can I monitor my containers?</p>
                     <p>A: Try sysdig/csysdig</p>
                     <ul>
                         <li>sudo csysdig</li>
@@ -1008,13 +1100,58 @@ init(1)───docker(2379)───bash(30136)
                 <section>
                     <h3>FAQ</h3>
                     <p>Q: Should I include my application source code in the image?</p>
-                    <p>A: It depends, some people like to mount application source code as <a href-"http://blog.ionic.io/docker-hot-code-deploys/">volume</a>, other checkout source code when <a href="http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/">building the image</a>.</p>
+                    <p>A: It depends, some people like to mount application source code as <a href-"http://blog.ionic.io/docker-hot-code-deploys/">volume</a>, others checkout source code when <a href="http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/">building the image</a>.</p>
                     <p>If you are checking out source code in your Dockerfile you need to be aware of <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">how caching works</a>.</p>
                 </section>
                 <section>
                     <h3>FAQ: Copy vs. Add</h3>
-                    <p>A: Should I use Copy or Add in my Dockerfile?</p>
-                    <p>Q: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
+                    <p>Q: Should I use Copy or Add in my Dockerfile?</p>
+                    <p>A: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
+                </section>
+                <section>
+                    <h3>FAQ: Docker on the Catalyst Cloud</h3>
+                    <p>Q: Whats the easiest way to use docker on the Catalyst Cloud?</p>
+                    <p>A: Have a look at <a href="http://docs.catalystcloud.io/tutorials.html#using-docker-machine-on-the-catalyst-cloud">this tutorial</a> on how to use docker machine to provision docker engines on the the Catalyst Cloud</p>
+                </section>
+                <section>
+                    <h3>FAQ: Stop vs. Remove</h3>
+                    <p>Q: Are container really ephemeral?</p>
+                    <p>A: Stopping a container does not delete its filesystem, it will still be there in /var/lib/docker when you start it again. You need to call docker rm to delete a container</p>
+                </section>
+                <section>
+                    <h3>FAQ: Mounting volumes in running containers</h3>
+                    <p>Q: Can I mount a volume in a running container?</p>
+                    <p>A: Its <a href="https://github.com/docker/docker/issues/9849">not currently supported</a> by the CLI but there are some <a href="https://jpetazzo.github.io/2015/01/13/docker-mount-dynamic-volumes/">hacks</a> out there.</p>
+                </section>
+                <section>
+                    <h3>FAQ: History</h3>
+                    <p>Q: Can you tell me more about the history of containers and their underlying technologies?</p>
+                    <p>A: Watch <a href="https://www.youtube.com/watch?v=YsYzMPptB-k">this talk</a> by Kernel developer James Bottomley at the Tokyo OpenStack summit</p>
+                </section>
+                <section>
+                    <h3>FAQ: Exec vs. shell CMD</h3>
+                    <p>Q: Why is it better to use the exec version rather than the shell version of CMD/ENTRYPOINT?</p>
+                    <p>A: As our command is not pid 1 we cannot send POSIX signals to our command</p>
+                    <p>A: /bin/sh may not be available in minimal containers</p>
+                    <p>More info <a href="https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd/">here</a></p>
+                    <p>More info about signals <a href="https://labs.ctl.io/gracefully-stopping-docker-containers/">here</a></p>
+                </section>
+                <section>
+                    <h3>FAQ: Docker log rotation</h3>
+                    <p>Q: Is logfile rotation configurable?</p>
+                    <p>A: <a href="https://docs.docker.com/engine/reference/logging/overview/">Yes</a>.</p>
+                </section>
+                <section>
+                    <h3>FAQ: Digest broken?</h3>
+                    <p>Q: Why does the digest command not work?</p>
+                    <p>A: You tell me ...</p>
+                </section>
+                <section>
+                    <h3>FAQ: Digest broken?</h3>
+                    <p>Q: Why do you see so many commands chained together on Dockerfile RUN lines?</p>
+                    <p>A: There used to be a limited number of layers (was 42 now 127)</p>
+                    <p>A: Minimising layers is <a href="https://docs.docker.com/engine/articles/dockerfile_best-practices/">encouraged</a></p>
+                    <p>A: Multiple RUN lines can lead to caching related <a href="https://docs.docker.com/engine/articles/dockerfile_best-practices/">problems</a></p>
                 </section>
                 </section>
 
@@ -1030,7 +1167,7 @@ init(1)───docker(2379)───bash(30136)
                         <li>Students build custom "microservices"</li>
                         <li>Setup CoreOS on OpenStack</li>
                         <li>Deploy students microservices and create a www router service</li>
-                        <li>Define service as a kubernetes pod</li>
+                        <li>Define service as a kubernetes pod/service</li>
                         <li>Scale and migrate pods (between OpenStack regions?)</li>
                         <li>Continuous delivery?</li>
                         <li>Let me know!</li>
