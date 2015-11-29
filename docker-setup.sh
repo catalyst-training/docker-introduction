@@ -15,12 +15,18 @@ cd /tmp || exit
 # ensure we have the right sources source
 DOCKER_SOURCE=/etc/apt/sources.list.d/docker.list
 
+# Source OS versions
+source /etc/lsb-release
+
 if [ ! -f $DOCKER_SOURCE ];
 then
     # fetch the repository key
     apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-    echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > $DOCKER_SOURCE
+    if [ ! -z $DISTRIB_CODENAME ]; then
+        echo "deb https://apt.dockerproject.org/repo ubuntu-${DISTRIB_CODENAME} main" > $DOCKER_SOURCE
+    fi
+
 fi
 
 # ensure we have docker installed
@@ -30,6 +36,15 @@ if [[ ! $INSTALL_STATUS = 'ok' ]];
 then
     apt-get update
     apt-get install -y docker-engine
+fi
+
+# ensure we have curl installed
+INSTALL_STATUS=$(dpkg -s curl | grep Status | awk '{ print $3 }')
+
+if [[ ! $INSTALL_STATUS = 'ok' ]];
+then
+    apt-get update
+    apt-get install -y curl
 fi
 
 # install dockviz
