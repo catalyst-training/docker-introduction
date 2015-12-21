@@ -111,6 +111,7 @@
                 <section class="image-slide">
                     <h2>Lightweight</h2>
                     <img src="img/docker.png" alt="">
+                    <aside class="notes">Remember: Docker containers are all tied to the same kernel.</aside>
                 </section>
 
                 <section>
@@ -134,6 +135,7 @@
                         <li>Configuration is coupled with the application</li>
                         <li>Service vs. Machine</li>
                     </ul>
+                    <aside class="notes">Scale services, not machines. You *can* treat machines like cattle, not pets.</aside>
                 </section>
 
                 <section>
@@ -153,6 +155,7 @@
                                 <li>Encasulates your application and its dependencies</li>
                             </ul>
                     </ul>
+                    <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
                 </section>
 
                 <!-- Large image slide -->
@@ -164,12 +167,30 @@
                 <section>
                     <h3>Understanding docker</h3>
                     <p><a href="https://docs.docker.com/introduction/understanding-docker/">https://docs.docker.com/introduction/understanding-docker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/introduction/understanding-docker/">(cache)</a></p>
+                    <aside class="notes"><ul>
+                      <li>Expalin architecture diagram (Commands and components).</li>
+                      <li>Client vs daemon.</li>
+                      <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
+                      <li>Docker's use of UFS separates it from other container solutions.</li>
+                      <li>Execute the "docker run" command and go through the list of steps it does.
+                        <ul>
+                          <li>Use sudo, unless you are in the docker group (because of kernel feature permissions)</li>
+                          <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
+                        </ul></li>
+                      <li>Namespaces => isolation of filesystem and kernel features.</li>
+                      <li>Control groups => resource limiting.</li>
+                      <li>Different container format avaialble, default is libcontainer</li>
+                    </ul></aside>
                 </section>
 
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Simple Workflow</h2>
                     <img src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png" alt="">
+                    <aside class="notes"><ul>
+                      <li>Docker workflows are comparable to Git workflows.</li>
+                      <li>Always specify tags (or SHAs).</li>
+                    </ul></aside>
                 </section>
 
                 <section>
@@ -213,31 +234,112 @@ sudo ./docker-course.sh -s 3
                 <section>
                     <h3>1: Dockerizing applications</h3>
 <a href="https://docs.docker.com/userguide/dockerizing/">https://docs.docker.com/userguide/dockerizing</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerizing">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>Run simple container.</li>
+                      <li>Run interactive container.</li>
+                      <li>Run daemonized container.</li>
+                      <li>Talk about container IDs.</li>
+                      <li>docker ps (with -a for non-running containers)</li>
+                      <li>Talk about container names (automatic, and set).</li>
+                      <li>docker logs {container} (with -f to follow continuing output)</li>
+                      <li>docker stop {container}</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>2: Working with containers</h3>
 <a href="https://docs.docker.com/userguide/usingdocker">https://docs.docker.com/userguide/usingdocker</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/usingdocker">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>docker version</li>
+                      <li>Help: docker [command] --help</li>
+                      <li>Run web server, explain -P for auto port-mapping.</li>
+                      <li>Only non-official images have slashes in the name (which is the DockerHub account name)</li>
+                      <li>Docker client defaults to DockerHub, but it can be made to point to another registry (but it is difficult).</li>
+                      <li>docker ps "-l" option for last running container.</li>
+                      <li>Note PORTS in docker ps output</li>
+                      <li>And use -p for custom mappings.</li>
+                      <li>docker port {container} 5000</li>
+                      <li>docker logs -f {container} (For web app logs)</li>
+                      <li>docker top {container} (To view top output for processes in container (with PIDs of the host, not the container))</li>
+                      <li>docker inspect {container} (For container info)</li>
+                      <li>docker {start, stop, restart}</li>
+                      <li>Ports auto-allocated with -P may be different after restart.</li>
+                      <li>docker rm (with stop first)</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>3: Get started with images</h3>
 <a href="https://docs.docker.com/userguide/dockerimages">https://docs.docker.com/userguide/dockerimages</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerimages">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>docker images (To list images)</li>
+                      <li>Careful not to chew up space with too many images.</li>
+                      <li>An image is a base image, plus all FS layers on top.</li>
+                      <li>Talk about tags (default tag when none is specified is latest)</li>
+                      <li>docker pull centos (Pulling independent of running)</li>
+                      <li>docker search sinatra</li>
+                      <li>docker pull training/sinatra</li>
+                      <li>Run the container, make changes, run commit.</li>
+                      <li>commit creates a new image using a read-only version of the UFS layer the changes were made to.</li>
+                      <li>Generally better to use a Dockerfile (it must have that name)</li>
+                      <li>Create sinatra folder+Dockerfile, and explain contents</li>
+                      <li>Each instruction in a Dockerfile creates a new layer.</li>
+                      <li>docker build</li>
+                      <li>Everything in the same directory as the Dockerfile is sent to the Docker daemon as "context" (so don't put a Dockerfile in your home directory).</li>
+                      <li>To keep image sizes small, remove apt-cache (in the same instruction as installing dependencies), and remove other unnecessary cruft before it is added in a layer.</li>
+                      <li>Max layers: 127</li>
+                      <li>docker tag (To tag an image)</li>
+                      <li>Digests don't seem to work correctly, and seem to overlap with SHA IDs.</li>
+                      <li>You can push to DockerHub</li>
+                      <li>docker rmi (To remove images, not to be confused with rm for containers)</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>4: Networking containers</h3>
 <a href="https://docs.docker.com/engine/userguide/networkingcontainers/">https://docs.docker.com/engine/userguide/networkingcontainers/</a> (new in 1.9 was <a href="https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/">dockerlinks</a>)
+                    <aside class="notes"><ul>
+                      <li>Networking used to be handled through "Docker links" (one way exposing of ports between containers), which are now deprecated.</li>
+                      <li>docker run --name (Naming a container)</li>
+                      <li>You can create networks for your containers to sit on (specifying a driver (e.g. bridge driver on local machine, overlay driver across machines))</li>
+                      <li>You'll want to create your own networks to isolate containers from each other in more complex setups.</li>
+                      <li>List networks with: docker network ls</li>
+                      <li>"bridge" is a special network that all cotnainers are added to by default.</li>
+                      <li>You can "docker inspect {network}" to find out container IP addresses</li>
+                      <li>docker network create</li>
+                      <li>docker network connect/disconnect</li>
+                      <li>Start a container on a network with --net</li>
+                      <li>Inspect a container to see network information (it can be on multiple networks).</li>
+                      <li>Start 2 containers on the same network, and ping each other.</li>
+                      <li>When you connect a container to a network, docker updates /etc/hosts on the other hosts so they can refer to it by its container name.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>5: Managing data in containers</h3>
 <a href="https://docs.docker.com/userguide/dockervolumes">https://docs.docker.com/userguide/dockervolumes</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockervolumes">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>Data volumes are like the "mount" command; they bypass the UFS.</li>
+                      <li>You can mount a directory from the host, or just a standalone volume.</li>
+                      <li>docker run -v /webapp OR specify in Dockerfile</li>
+                      <li>You can set read-only permissions on a volume (:ro).</li>
+                      <li>A container's volumes are not deleted when it is deleted.</li>
+                      <li>docker inspect {container} (To see volume info under "Mounts")</li>
+                      <li>docker run -v /src/webapp:/opt/webapp</li>
+                      <li>host_directory:container_directory</li>
+                      <li>You can mount individual files</li>
+                      <li>Pattern: Put all your data volumes in a single container, then use --volumes-from to share them with other containers. This means that you can safely delete the other containers without losing a container with a reference to the volume.</li>
+                      <li>To remove volumes along with a container, use: docker rm -v</li>
+                      <li>Removing a container without removing volumes will create dangling volumes which will need to be manually deleted.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>6: Get started with Docker Hub</h3>
 <a href="https://docs.docker.com/userguide/dockerrepos">https://docs.docker.com/userguide/dockerrepos</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerrepos">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>DockerHub has similar webhook and automation capabilities to GitHub.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
@@ -257,11 +359,13 @@ sudo dockviz images -d | dot -Tpng -o images.png && eog images.png && rm images.
 sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png && rm containers.png
                     </code></pre>
                     </ul>
+                    <aside class="notes">Local tool to visualise layers.</aside>
                 </section>
 
                 <section>
                     <h3>7: imagelayers.io</h3>
-                    <p><a href="https://imagelayers.io/">https://imagelayers.io/</a><p>
+                    <p><a href="https://imagelayers.io/?images=java:latest,golang:latest,node:latest,python:latest,php:latest,ruby:latest">https://imagelayers.io/</a><p>
+                    <aside class="notes">Service to visualise layers.</aside>
                 </section>
 
                 <section>
@@ -295,8 +399,9 @@ $ sudo docker restart sleepy_cori
 sleepy_cori
 
 $ sudo docker attach sleepy_cori
-root@e888e0fef39e:/# 
+root@e888e0fef39e:/#
                     </code></pre>
+                    <aside class="notes">Make changes to a container.</aside>
                 </section>
 
                 <section>
@@ -320,6 +425,7 @@ Unpacking mtr-tiny (0.85-2) ...
 Setting up mtr-tiny (0.85-2) ...
 root@e888e0fef39e:/# exit
                     </code></pre>
+                    <aside class="notes">Make more changes to a container.</aside>
                 </section>
 
                 <section>
@@ -341,6 +447,7 @@ C /usr/share
 C /usr/share/doc
 A /usr/share/doc/mtr-tiny
                     </code></pre>
+                    <aside class="notes">View changes to a container.</aside>
                 </section>
 
                 <section>
@@ -356,6 +463,7 @@ sleepy_cori
 $ sudo docker exec sleepy_cori md5sum test.txt
 185320c3e9298cdbde3320ec32144980  test.txt
                     </code></pre>
+                    <aside class="notes">Show that files inside container can be found in the host filesystem.</aside>
                 </section>
 
                 <section>
@@ -373,6 +481,7 @@ priority = []string{
                     </code></pre>
                         <li>Details <a href="https://developerblog.redhat.com/2014/09/30/overview-storage-scalability-docker/">here</a></li>
                     </ul>
+                    <aside class="notes">Different UFS available, priority order shown above. The first available on a system will be used, but it is overridable. Not all OS distributions can use them all.</aside>
                 </section>
 
 
