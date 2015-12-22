@@ -496,6 +496,20 @@ priority = []string{
                         <li><a href="https://github.com/docker-library/postgres/blob/8a9fbcb40f13ccc7762f278b9df611cabe22d300/9.5/Dockerfile">Postgres Dockerfile</a></li>
                         <li><a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li><strong>Dockerfile Best Practices</strong></li>
+                      <li>Go over main points in recommendations</li>
+                      <li>Explain layer caching, and cache-busting with changed lines and --no-cache=true</li>
+                      <li>Never run apt-get upgrade or dist-upgrade (they may not work in a container), always depend on the base image to be updated.</li>
+                      <li>Look at apt-get recommendations (update in same instruction, version pinning, clearing apt lists)</li>
+                      <li>Prefer COPY instead of ADD (which has fancy features such as remote URLs and tar expansion)</li>
+                      <li><strong>ENTRYPOINT vs CMD</strong></li>
+                      <li>CMD is overriden by whatever the user supplies as the command.</li>
+                      <li>ENTRYPOINT prefixes the command, so is good as a "wrapping command" for other subcommands. E.g. git</li>
+                      <li>ENTRYPOINT can be overriden with --entrypoint</li>
+                      <li>CMD can be used to contain default options for the ENTRYPOINT</li>
+                      <li>Prefer CMD/ENTRYPOINT exec form (["/bin/ping" "-c" "3"]) over shell form ("ping -c 3", which is executed as "/bin/sh -c ping -c 3") so that the process itself is PID 1, not the shell (useful for Docker control signals).</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
@@ -616,11 +630,11 @@ $ sudo docker run ping
                         <li>Size is a major consideration ... deploy times ...</li>
                         <li>FROM empty ...</li>
                         <li><a href="http://www.busybox.net/">Busybox</a> - 5.6 MB, no package manager</li>
-                        <li><a href="https://www.alpinelinux.org/">Alpine Linux</a> - distribution of choice for minimal containers - 5MB with a package manager</li>
+                        <li><a href="https://www.alpinelinux.org/">Alpine Linux</a> - distribution of choice for minimal containers - 5MB with a package manager (based on busybox)</li>
                         <li><a href="https://hub.docker.com/_/debian/">Debian</a> - Reccomended by Docker, smaller than Ubuntu - 85MB</li>
                         <li><a href="https://hub.docker.com/_/ubuntu/">Ubuntu</a> - Commonly used but quite big</li>
                         <li>Language images (<a href="https://hub.docker.com/_/golang/">golang</a>, <a href="https://hub.docker.com/_/python/">python</a> etc.) - Seem to be mostly based on Debian</li>
-                        <li>See <a href="http://www.blang.io/2015/04/18/how-to-build-the-smallest-docker-containers.html">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a>, <a href="https://docs.docker.com/articles/baseimages/">3</a></li>
+                        <li>See <a href="http://www.blang.io/posts/2015-04_how-to-build-the-smallest-docker-containers">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a>, <a href="https://docs.docker.com/articles/baseimages/">3</a></li>
                     </ul>
                 </section>
 
@@ -628,6 +642,10 @@ $ sudo docker run ping
                 <section>
                     <h3>10: Docker networking</h3>
                     <img src="http://www.linuxjournal.com/files/linuxjournal.com/ufiles/imagecache/large-550px-centered/u1002061/11833f1.png" alt="Docker networking">
+                    <aside class="notes"><ul>
+                      <li>Docker starts a "docker0" virtual bridge to handle host-container communication.</li>
+                      <li>When a container starts, Docker creates a virtual interface on the host (e.g. veth9999999), which is connected to the eth0 interface of the container.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
@@ -637,8 +655,8 @@ $ sudo docker run ping
                         <li>172.17.42.1/16 by default</li>
                         <li>Part of the 172.16.0.0/12 RFC 1918 space</li>
                         <li>Sets up virtual ether net ports on the host (eg veth31a763b)</li>
-                        <li>Sets up a Docker Chain in iptables</li>
-                        <li>Mounts hosts /etc/resolv.conf and /etc/hosts</li>
+                        <li>Sets up a DOCKER Chain in iptables</li>
+                        <li>Mounts hosts /etc/resolv.conf and /etc/hosts in containers</li>
                     </ul>
                 </section>
                 <section>
@@ -655,6 +673,7 @@ $ sudo cat $(sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F
 nameserver 192.168.2.92
 search wgtn.cat-it.co.nz lan
                     </code></pre>
+                    <aside class="notes">Shows that the resolv.conf is mounted in the container, as well as iptables rules.</aside>
                 </section>
                 </section>
 
@@ -691,6 +710,11 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
                         <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Immutable architecture: Instead of mutating an instance, replace it with a new one.</li>
+                      <li>Pets (nursed back to health) vs. Cattle (replaced when sick)</li>
+                      <li>Snowflake (unique) vs. Phoenix (constantly rising from the ashes of its predecessor)</li>
+                    </ul></aside>
                 </section>
 
                 <!-- Immutable Infrastructure -->
@@ -704,6 +728,7 @@ search wgtn.cat-it.co.nz lan
                         <li>Docker makes it much more likely you will work in this way</li>
                         <li>Procedural vs Declarative</li>
                     </ul>
+                    <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
                 </section>
                 <!-- Large image slide -->
                 <section class="image-slide">
@@ -726,8 +751,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Services can be implemented with entirely different stacks</li>
                         <li>Services can be developed, maintained, and updated independently</li>
                         <li>Often use well defined REST APIs to communicate</li>
-                        <li>If a message bus is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
+                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Microservices</h3>
@@ -736,8 +764,9 @@ search wgtn.cat-it.co.nz lan
                         <li>Smart endpoints and dumb pipes</li>
                         <li>Decentralized Data Management with eventual consistency</li>
                         <li>Continuous integration and delivery</li>
-                        <li>Design for failure (optimize MTTR)</li>
+                        <li>Design for failure (optimize MTTR (mean-time-to-repair))</li>
                     </ul>
+                    <aside class="notes">Smart endpoints and dumb pipes: Communication mediums should be as simple/dumb as possible (e.g. simple message queue, REST); the logic should be in the app.</aside>
                 </section>
                 <section>
                     <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
@@ -748,6 +777,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Deploy in Containers</li>
                         <li>Treat Servers as Stateless</li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Separate data stores: Use the best DBMS and schema for each service.</li>
+                      <li>When doing new development, create a new microservice, rather than extending the existing one (so that you don't break it or make it less performant). You can merge the microservices later if needed.</li>
+                      <li>Stateless: Cattle, not pets.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Containers and Microservices</h3>
@@ -757,6 +791,7 @@ search wgtn.cat-it.co.nz lan
                         <li>A container is more like an OO Class - Brendan Burns @ Dockercon 2015</li>
                         <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
                     </ul>
+                    <aside class="notes">Containers are great for microservices, because they simplify the task of deploying many individual services, each with their own requirements.</aside>
                 </section>
                 <section>
                     <h3>Containers and Microservices: Requirements</h3>
@@ -765,6 +800,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Atomic co-scheduling of containers</li>
                         <li>Parameterization of containers</li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Volumes</li>
+                      <li>Being able to spin up a bunch of containers together.</li>
+                      <li>Parameters through environment variables for different environments.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Microservices - Resources</h3>
