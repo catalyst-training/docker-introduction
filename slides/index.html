@@ -802,7 +802,7 @@ search wgtn.cat-it.co.nz lan
                     </ul>
                     <aside class="notes"><ul>
                       <li>Volumes</li>
-                      <li>Being able to spin up a bunch of containers together.</li>
+                      <li>Being able to spin up a bunch of containers together as a unit.</li>
                       <li>Parameters through environment variables for different environments.</li>
                     </ul></aside>
                 </section>
@@ -837,6 +837,10 @@ search wgtn.cat-it.co.nz lan
                         <li>Requires Continuous Integration where every commit triggers all the tests</li>
                         <li>Requires lots of tests</li>
                     </ul>
+                </section>
+                <section>
+                  <h3>Continuous delivery</h3>
+                  <img src="img/ci-diagram.png" alt="Continuous delivery">
                 </section>
                 <section>
                     <h3>Continuous delivery antipatterns</h3>
@@ -892,6 +896,12 @@ search wgtn.cat-it.co.nz lan
                 <section class="image-slide">
                     <h2>Docker ecosystem</h2>
                     <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
+                    <aside class="notes"><ul>
+                      <li>Orchestration: Managing the lifecycle of containers (starting, stopping, etc.) and distributing them across hosts in a cluster.</li>
+                      <li>Service Discovery: Manage directories of where services running in containers can find each other in a cluster of hosts.</li>
+                      <li>Networking: Virtual networks across hosts in a cluster</li>
+                      <li>Linux: Underlying Linux technologies that Docker uses.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>The stack</h3>
@@ -899,7 +909,7 @@ search wgtn.cat-it.co.nz lan
                         <li>The LAMP stack equivalent</li>
                         <li>Container Orchestration Engines</li>
                         <li>Linux - Docker - COE - ?</li>
-                        <li>Often LDK</li>
+                        <li>Often LDK (Linux - Docker - Kubernetes)</li>
                         <li>Higher level projects build on this stack (eg OpenShift and CloudFoundry)</li>
                     </ul>
                 </section>
@@ -916,11 +926,25 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Docker ecosystem - Container Orchestration Engines</h3>
                     <p>Engine for orchestrating container workloads, term comes from the OpenStack Magnum project.</p>
+                    <p>There are two main classes of orchestration tooling:</p>
                     <ul>
-                        <li>Docker Compose</li>
-                        <li>Docker Swarm</li>
-                        <li>Kubernetes</li>
-                        <li>Apache Mesos</li>
+                        <li><strong>Simple orchestration tools</strong> for deploying on pet servers</li>
+                        <li><strong>Distributed schedulers</strong> for deploying on cattle server farms</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Simple orchestration tools</h3>
+                    <ul>
+                        <li>Tools to simply deploy containers onto servers.</li>
+                        <li>Simple way to get many benefits of Docker in production.</li>
+                        <li>E.g. Centurion, Helios, Docker modules for Ansible and Puppet.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Distributed schedulers</h3>
+                    <ul>
+                        <li>Make a cluster appear to be a single computer.</li>
+                        <li>More complex, but have more of the benefits associated with immutable infrastructure, etc.</li>
                         <li><a href="http://radar.oreilly.com/2015/10/swarm-v-fleet-v-kubernetes-v-mesos.html">Swarm v. Fleet v. Kubernetes v. Mesos</a></li>
                     </ul>
                 </section>
@@ -931,9 +955,11 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Docker compose</h3>
                     <ul>
+                        <li>Mainly used for spinning up multi-container development/testing environments.</li>
                         <li>Written in python rather than go like most of docker</li>
                         <li>Comparable to vagrant</li>
                         <li>New lib written in go called <a href="http://rancher.com/our-journey-with-docker-compose-and-the-introduction-of-libcompose/">libcompose</a></li>
+                        <li>Lots of documentation will mention (now obsolete) links, you can generally just remove links configuration.</li>
                     </ul>
 
                 </section>
@@ -965,7 +991,7 @@ search wgtn.cat-it.co.nz lan
                     <ul>
                         <li>Container orchestrator</li>
                         <li>Started by Google</li>
-                        <li>Inspired by Borg</li>
+                        <li>Inspired by Borg (Google's cluster management system)</li>
                         <li>Open source project written in Go</li>
                         <li>Cloud Native Computing Foundation</li>
                         <li>Manage applications not machines</li>
@@ -980,6 +1006,10 @@ search wgtn.cat-it.co.nz lan
                         <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
                         <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
                     </ul>
+                </section>
+                <section>
+                  <h3>Kubernetes Overview</h3>
+                  <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
                 </section>
                 <section>
                     <h3>Pods/Services</h3>
@@ -1062,12 +1092,17 @@ search wgtn.cat-it.co.nz lan
                     <h2>Managing state - CAP</h2>
                     <p>Managing state can be tricky</p>
                     <img src="img/cap.png" alt="CAP" height="600" width="800">
+                    <aside class="notes">
+                      Managing state in clustered environments is not
+                      unique to Docker. There are many database
+                      solutions, each with its own pros and cons.
+                    </aside>
                 </section>
                 <section>
                     <h3>Patterns for Managing State</h3>
                     <ul>
                         <li>Outside the cluster (SEP)</li>
-                        <li>Adapted to run in cluster (eg MySQL inside cluster)</li>
+                        <li>Adapted to run in cluster (eg MySQL inside cluster with data volume for persistence)</li>
                         <li>Cluster native (eg Cassandra or Riak)</li>
                         <li><a href="http://vitess.io/">vitess.io</a></li>
                     </ul>
@@ -1095,6 +1130,18 @@ search wgtn.cat-it.co.nz lan
                         <li>Lower complexity inside specific containers</li>
                     </ul>
                     <img src="img/sidecar.png" alt="Sidecar">
+                    <aside class="notes">
+                      Sidecar containers provide re-usable
+                      functionality that enhances
+                      another container.
+                      <br>
+                      The example here shows a webserver container server files from
+                      a data volume. The data volume is shared with a
+                      sidecar container that synchronises the files
+                      with a Git repository, thus providing Git
+                      push-to-deploy. The sidecar can be re-used to
+                      provide git-syncing in other contexts.
+                    </aside>
                 </section>
                 <section class="image-slide">
                     <h2>Ambassador containers</h2>
@@ -1104,6 +1151,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Also modular, reuse, lower complexity per container</li>
                     </ul>
                     <img src="img/ambassador.png" alt="Ambassador">
+                    <aside class="notes">
+                      Example is of an ambassador container to act
+                      like a normal redis server, while it is really a
+                      proxy for a redis cluster.
+                    </aside>
                 </section>
                 <section class="image-slide">
                     <h2>Adapter containers</h2>
@@ -1113,6 +1165,12 @@ search wgtn.cat-it.co.nz lan
                         <li>eg, monitoring systems, convert from app specific output to monitoring system format</li>
                     </ul>
                     <img src="img/adapter.png" alt="Adapter">
+                    <aside class="notes">
+                      In the example, the redis logs are converted
+                      into a standard format by an adapter container,
+                      so that the monitoring system only needs to know
+                      the standard format that all adapters provide.
+                    </aside>
                 </section>
                 </section>
 
@@ -1136,6 +1194,11 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://www.youtube.com/watch?v=at72dhg-SZY&feature=youtu.be&t=4873">Video</a></li>
                         <li><a href="https://docs.docker.com/engine/security/trust/content_trust/">Content Trust Documentation</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Notary is a general purpose tool for signing files.</li>
+                      <li>You can enable "Docker Content Trust" so that you can sign images that other Docker uses can verify.</li>
+                      <li>Currently only available with DockerHub.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Security - Image Vulnerability Scanning</h3>
@@ -1154,14 +1217,24 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/Docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
                         <li><a href="https://blog.docker.com/2013/08/containers-docker-how-secure-are-they/">Fundamentals</a> (old but informative)</li>
                         <li><a href="http://linux-audit.com/docker-security-best-practices-for-your-vessel-and-containers/">Best practices</a></li>
+                        <li><a href="https://securityblog.redhat.com/2014/12/18/before-you-initiate-a-docker-pull/">Securely downloading containers</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Information about official repos</li>
+                      <li>Existing issues with image verification.</li>
+                      <li>Limitations of containers (Shared kernel etc.)</li>
+                      <li>Whitepaper on container security</li>
+                      <li>Explanation of how Docker works, security implications, and comparisons to VMs and other containerization systems.</li>
+                      <li>Best practice recommendations</li>
+                      <li>Problems with Docker pull (auto-unpacking), and how to work around it.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Other problems</h3>
                     <ul>
-                        <li>Not declarative</li>
-                        <li>Not idempotent or repeatable</li>
-                        <li>Pids and spawning issues</li>
+                        <li>Not declarative (Dockerfiles)</li>
+                        <li>Not idempotent or repeatable (E.g. apt-get install)</li>
+                        <li><a href="https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/">Pids and spawning issues</a> (Zombie processes)</li>
                         <li>Standardisation</li>
                         <li>See <a href="https://www.youtube.com/watch?v=wpFrkq5XNFM">these</a> <a href="https://www.youtube.com/watch?v=et7BCV_kAUY">talks</a> from systemd.conf</li>
                     </ul>
@@ -1178,6 +1251,7 @@ search wgtn.cat-it.co.nz lan
                         <li>hit F2 and choose the Containers view</li>
                         <li>can also monitor <a href="http://blog.kubernetes.io/2015/11/monitoring-Kubernetes-with-Sysdig.html">kubernetes</a></li>
                     </ul>
+                    <aside class="notes">csysdig has a curses UI.</aside>
                 </section>
                 <section>
                     <h3>Monitoring</h3>
@@ -1199,6 +1273,11 @@ $ sudo csysdig
 # in another terminal
 $ sudo htop
                     </code></pre>
+                    <aside class="notes">
+                      Here we limit Docker to using the first 2 CPUs (0 and 1).
+                      <br>
+                      htop shows usage per CPU.
+                    </aside>
                 </section>
                 <section>
                     <h3>Monitoring and Memory limits</h3>
@@ -1210,12 +1289,16 @@ $ sudo csysdig
 # in another terminal
 $ sudo htop
                     </code></pre>
+                    <aside class="notes">
+                      Limit the container to 512MB of RAM and 512MB of swap.
+                    </aside>
                 </section>
                 <section>
                     <h3>Monitoring - check-config</h3>
-                    <p>How to enable limiting swap:</p>
+                    <p>How to enable swap limiting:</p>
                     <pre><code data-trim contenteditable>
-$ check-config.sh
+$ check-config.sh # Check that the kernel supports it.
+# Edit /etc/default/grub:
 # GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
                     </code></pre>
                 </section>
@@ -1232,6 +1315,14 @@ $ check-config.sh
                         <li><a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">Does each Dockerfile run command create its own layer?</a></li>
                         <li><a href="https://blog.docker.com/2015/11/docker-multi-host-networking-ga/">What happened to Docker links?</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>sudo is required for kernel features</li>
+                      <li>Dangling images (name has been re-used for another image).</li>
+                      <li>There is a guide</li>
+                      <li>All dependencies from all layers, clean up package manager files to reduce size.</li>
+                      <li>Yes</li>
+                      <li>Docker's networking has been re-worked to not use links.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>FAQ</h3>
