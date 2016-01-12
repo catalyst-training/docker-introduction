@@ -1036,6 +1036,7 @@ search wgtn.cat-it.co.nz lan
                 <section>
                   <h3>Kubernetes Overview</h3>
                   <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
+                  <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
                 </section>
                 <section>
                     <h3>Pods/Services</h3>
