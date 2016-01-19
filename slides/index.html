@@ -73,6 +73,14 @@
                 </section>
 
                 <section>
+                    <h3>Administrivia</h3>
+                    <ul>
+                      <li>Bathrooms</li>
+                      <li>Fire exits</li>
+                    </ul>
+                </section>
+
+                <section>
                     <h3>This course</h3>
                     <ul>
                         <li>Makes use of official docker docs</li>
@@ -96,6 +104,24 @@
                 </section>
 
                 <section>
+                    <h3>What is docker?</h3>
+                    <p>Docker is an open-source platform for creating,
+                    running, and distributing software "containers"
+                    that bundle software applications with all of
+                    their dependencies.</p>
+                    <ul>
+                      <li>Linux containers are not new, but Docker
+                      makes it easier to use them.</li>
+                      <li>Containers are intended to do for software
+                      deployment what the shipping container did for
+                      the shipping industry.</li>
+                      <li>Containers are comparable to virtual
+                      machines, but there are important differences.</li>
+                    </ul>
+                </section>
+
+
+                <section>
                     <h3>Why docker?</h3>
                     <ul>
                         <li>Lightweight compared to traditional virtualization</li>
@@ -111,6 +137,7 @@
                 <section class="image-slide">
                     <h2>Lightweight</h2>
                     <img src="img/docker.png" alt="">
+                    <aside class="notes">Remember: Docker containers are all tied to the same kernel.</aside>
                 </section>
 
                 <section>
@@ -134,6 +161,7 @@
                         <li>Configuration is coupled with the application</li>
                         <li>Service vs. Machine</li>
                     </ul>
+                    <aside class="notes">Scale services, not machines. You *can* treat machines like cattle, not pets.</aside>
                 </section>
 
                 <section>
@@ -153,6 +181,7 @@
                                 <li>Encasulates your application and its dependencies</li>
                             </ul>
                     </ul>
+                    <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
                 </section>
 
                 <!-- Large image slide -->
@@ -164,12 +193,30 @@
                 <section>
                     <h3>Understanding docker</h3>
                     <p><a href="https://docs.docker.com/introduction/understanding-docker/">https://docs.docker.com/introduction/understanding-docker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/introduction/understanding-docker/">(cache)</a></p>
+                    <aside class="notes"><ul>
+                      <li>Expalin architecture diagram (Commands and components).</li>
+                      <li>Client vs daemon.</li>
+                      <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
+                      <li>Docker's use of UFS separates it from other container solutions.</li>
+                      <li>Execute the "docker run" command and go through the list of steps it does.
+                        <ul>
+                          <li>Use sudo, unless you are in the docker group (because of kernel feature permissions)</li>
+                          <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
+                        </ul></li>
+                      <li>Namespaces => isolation of filesystem and kernel features.</li>
+                      <li>Control groups => resource limiting.</li>
+                      <li>Different container format avaialble, default is libcontainer</li>
+                    </ul></aside>
                 </section>
 
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Simple Workflow</h2>
                     <img src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png" alt="">
+                    <aside class="notes"><ul>
+                      <li>Docker workflows are comparable to Git workflows.</li>
+                      <li>Always specify tags (or SHAs).</li>
+                    </ul></aside>
                 </section>
 
                 <section>
@@ -213,31 +260,112 @@ sudo ./docker-course.sh -s 3
                 <section>
                     <h3>1: Dockerizing applications</h3>
 <a href="https://docs.docker.com/userguide/dockerizing/">https://docs.docker.com/userguide/dockerizing</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerizing">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>Run simple container.</li>
+                      <li>Run interactive container.</li>
+                      <li>Run daemonized container.</li>
+                      <li>Talk about container IDs.</li>
+                      <li>docker ps (with -a for non-running containers)</li>
+                      <li>Talk about container names (automatic, and set).</li>
+                      <li>docker logs {container} (with -f to follow continuing output)</li>
+                      <li>docker stop {container}</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>2: Working with containers</h3>
 <a href="https://docs.docker.com/userguide/usingdocker">https://docs.docker.com/userguide/usingdocker</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/usingdocker">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>docker version</li>
+                      <li>Help: docker [command] --help</li>
+                      <li>Run web server, explain -P for auto port-mapping.</li>
+                      <li>Only non-official images have slashes in the name (which is the DockerHub account name)</li>
+                      <li>Docker client defaults to DockerHub, but it can be made to point to another registry (but it is difficult).</li>
+                      <li>docker ps "-l" option for last running container.</li>
+                      <li>Note PORTS in docker ps output</li>
+                      <li>And use -p for custom mappings.</li>
+                      <li>docker port {container} 5000</li>
+                      <li>docker logs -f {container} (For web app logs)</li>
+                      <li>docker top {container} (To view top output for processes in container (with PIDs of the host, not the container))</li>
+                      <li>docker inspect {container} (For container info)</li>
+                      <li>docker {start, stop, restart}</li>
+                      <li>Ports auto-allocated with -P may be different after restart.</li>
+                      <li>docker rm (with stop first)</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>3: Get started with images</h3>
 <a href="https://docs.docker.com/userguide/dockerimages">https://docs.docker.com/userguide/dockerimages</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerimages">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>docker images (To list images)</li>
+                      <li>Careful not to chew up space with too many images.</li>
+                      <li>An image is a base image, plus all FS layers on top.</li>
+                      <li>Talk about tags (default tag when none is specified is latest)</li>
+                      <li>docker pull centos (Pulling independent of running)</li>
+                      <li>docker search sinatra</li>
+                      <li>docker pull training/sinatra</li>
+                      <li>Run the container, make changes, run commit.</li>
+                      <li>commit creates a new image using a read-only version of the UFS layer the changes were made to.</li>
+                      <li>Generally better to use a Dockerfile (it must have that name)</li>
+                      <li>Create sinatra folder+Dockerfile, and explain contents</li>
+                      <li>Each instruction in a Dockerfile creates a new layer.</li>
+                      <li>docker build</li>
+                      <li>Everything in the same directory as the Dockerfile is sent to the Docker daemon as "context" (so don't put a Dockerfile in your home directory).</li>
+                      <li>To keep image sizes small, remove apt-cache (in the same instruction as installing dependencies), and remove other unnecessary cruft before it is added in a layer.</li>
+                      <li>Max layers: 127</li>
+                      <li>docker tag (To tag an image)</li>
+                      <li>Digests don't seem to work correctly, and seem to overlap with SHA IDs.</li>
+                      <li>You can push to DockerHub</li>
+                      <li>docker rmi (To remove images, not to be confused with rm for containers)</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>4: Networking containers</h3>
 <a href="https://docs.docker.com/engine/userguide/networkingcontainers/">https://docs.docker.com/engine/userguide/networkingcontainers/</a> (new in 1.9 was <a href="https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/">dockerlinks</a>)
+                    <aside class="notes"><ul>
+                      <li>Networking used to be handled through "Docker links" (one way exposing of ports between containers), which are now deprecated.</li>
+                      <li>docker run --name (Naming a container)</li>
+                      <li>You can create networks for your containers to sit on (specifying a driver (e.g. bridge driver on local machine, overlay driver across machines))</li>
+                      <li>You'll want to create your own networks to isolate containers from each other in more complex setups.</li>
+                      <li>List networks with: docker network ls</li>
+                      <li>"bridge" is a special network that all cotnainers are added to by default.</li>
+                      <li>You can "docker inspect {network}" to find out container IP addresses</li>
+                      <li>docker network create</li>
+                      <li>docker network connect/disconnect</li>
+                      <li>Start a container on a network with --net</li>
+                      <li>Inspect a container to see network information (it can be on multiple networks).</li>
+                      <li>Start 2 containers on the same network, and ping each other.</li>
+                      <li>When you connect a container to a network, docker updates /etc/hosts on the other hosts so they can refer to it by its container name.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>5: Managing data in containers</h3>
 <a href="https://docs.docker.com/userguide/dockervolumes">https://docs.docker.com/userguide/dockervolumes</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockervolumes">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>Data volumes are like the "mount" command; they bypass the UFS.</li>
+                      <li>You can mount a directory from the host, or just a standalone volume.</li>
+                      <li>docker run -v /webapp OR specify in Dockerfile</li>
+                      <li>You can set read-only permissions on a volume (:ro).</li>
+                      <li>A container's volumes are not deleted when it is deleted.</li>
+                      <li>docker inspect {container} (To see volume info under "Mounts")</li>
+                      <li>docker run -v /src/webapp:/opt/webapp</li>
+                      <li>host_directory:container_directory</li>
+                      <li>You can mount individual files</li>
+                      <li>Pattern: Put all your data volumes in a single container, then use --volumes-from to share them with other containers. This means that you can safely delete the other containers without losing a container with a reference to the volume.</li>
+                      <li>To remove volumes along with a container, use: docker rm -v</li>
+                      <li>Removing a container without removing volumes will create dangling volumes which will need to be manually deleted.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
                     <h3>6: Get started with Docker Hub</h3>
 <a href="https://docs.docker.com/userguide/dockerrepos">https://docs.docker.com/userguide/dockerrepos</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerrepos">(cache)</a>
+                    <aside class="notes"><ul>
+                      <li>DockerHub has similar webhook and automation capabilities to GitHub.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
@@ -257,11 +385,13 @@ sudo dockviz images -d | dot -Tpng -o images.png && eog images.png && rm images.
 sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png && rm containers.png
                     </code></pre>
                     </ul>
+                    <aside class="notes">Local tool to visualise layers.</aside>
                 </section>
 
                 <section>
                     <h3>7: imagelayers.io</h3>
-                    <p><a href="https://imagelayers.io/">https://imagelayers.io/</a><p>
+                    <p><a href="https://imagelayers.io/?images=java:latest,golang:latest,node:latest,python:latest,php:latest,ruby:latest">https://imagelayers.io/</a><p>
+                    <aside class="notes">Service to visualise layers.</aside>
                 </section>
 
                 <section>
@@ -295,8 +425,9 @@ $ sudo docker restart sleepy_cori
 sleepy_cori
 
 $ sudo docker attach sleepy_cori
-root@e888e0fef39e:/# 
+root@e888e0fef39e:/#
                     </code></pre>
+                    <aside class="notes">Make changes to a container.</aside>
                 </section>
 
                 <section>
@@ -320,6 +451,7 @@ Unpacking mtr-tiny (0.85-2) ...
 Setting up mtr-tiny (0.85-2) ...
 root@e888e0fef39e:/# exit
                     </code></pre>
+                    <aside class="notes">Make more changes to a container.</aside>
                 </section>
 
                 <section>
@@ -341,6 +473,7 @@ C /usr/share
 C /usr/share/doc
 A /usr/share/doc/mtr-tiny
                     </code></pre>
+                    <aside class="notes">View changes to a container.</aside>
                 </section>
 
                 <section>
@@ -356,6 +489,7 @@ sleepy_cori
 $ sudo docker exec sleepy_cori md5sum test.txt
 185320c3e9298cdbde3320ec32144980  test.txt
                     </code></pre>
+                    <aside class="notes">Show that files inside container can be found in the host filesystem.</aside>
                 </section>
 
                 <section>
@@ -373,6 +507,7 @@ priority = []string{
                     </code></pre>
                         <li>Details <a href="https://developerblog.redhat.com/2014/09/30/overview-storage-scalability-docker/">here</a></li>
                     </ul>
+                    <aside class="notes">Different UFS available, priority order shown above. The first available on a system will be used, but it is overridable. Not all OS distributions can use them all.</aside>
                 </section>
 
 
@@ -387,6 +522,20 @@ priority = []string{
                         <li><a href="https://github.com/docker-library/postgres/blob/8a9fbcb40f13ccc7762f278b9df611cabe22d300/9.5/Dockerfile">Postgres Dockerfile</a></li>
                         <li><a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li><strong>Dockerfile Best Practices</strong></li>
+                      <li>Go over main points in recommendations</li>
+                      <li>Explain layer caching, and cache-busting with changed lines and --no-cache=true</li>
+                      <li>Never run apt-get upgrade or dist-upgrade (they may not work in a container), always depend on the base image to be updated.</li>
+                      <li>Look at apt-get recommendations (update in same instruction, version pinning, clearing apt lists)</li>
+                      <li>Prefer COPY instead of ADD (which has fancy features such as remote URLs and tar expansion)</li>
+                      <li><strong>ENTRYPOINT vs CMD</strong></li>
+                      <li>CMD is overriden by whatever the user supplies as the command.</li>
+                      <li>ENTRYPOINT prefixes the command, so is good as a "wrapping command" for other subcommands. E.g. git</li>
+                      <li>ENTRYPOINT can be overriden with --entrypoint</li>
+                      <li>CMD can be used to contain default options for the ENTRYPOINT</li>
+                      <li>Prefer CMD/ENTRYPOINT exec form (["/bin/ping" "-c" "3"]) over shell form ("ping -c 3", which is executed as "/bin/sh -c ping -c 3") so that the process itself is PID 1, not the shell (useful for Docker control signals).</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
@@ -507,11 +656,11 @@ $ sudo docker run ping
                         <li>Size is a major consideration ... deploy times ...</li>
                         <li>FROM empty ...</li>
                         <li><a href="http://www.busybox.net/">Busybox</a> - 5.6 MB, no package manager</li>
-                        <li><a href="https://www.alpinelinux.org/">Alpine Linux</a> - distribution of choice for minimal containers - 5MB with a package manager</li>
+                        <li><a href="https://www.alpinelinux.org/">Alpine Linux</a> - distribution of choice for minimal containers - 5MB with a package manager (based on busybox)</li>
                         <li><a href="https://hub.docker.com/_/debian/">Debian</a> - Reccomended by Docker, smaller than Ubuntu - 85MB</li>
                         <li><a href="https://hub.docker.com/_/ubuntu/">Ubuntu</a> - Commonly used but quite big</li>
                         <li>Language images (<a href="https://hub.docker.com/_/golang/">golang</a>, <a href="https://hub.docker.com/_/python/">python</a> etc.) - Seem to be mostly based on Debian</li>
-                        <li>See <a href="http://www.blang.io/2015/04/18/how-to-build-the-smallest-docker-containers.html">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a>, <a href="https://docs.docker.com/articles/baseimages/">3</a></li>
+                        <li>See <a href="http://www.blang.io/posts/2015-04_how-to-build-the-smallest-docker-containers">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a>, <a href="https://docs.docker.com/articles/baseimages/">3</a></li>
                     </ul>
                 </section>
 
@@ -519,6 +668,10 @@ $ sudo docker run ping
                 <section>
                     <h3>10: Docker networking</h3>
                     <img src="http://www.linuxjournal.com/files/linuxjournal.com/ufiles/imagecache/large-550px-centered/u1002061/11833f1.png" alt="Docker networking">
+                    <aside class="notes"><ul>
+                      <li>Docker starts a "docker0" virtual bridge to handle host-container communication.</li>
+                      <li>When a container starts, Docker creates a virtual interface on the host (e.g. veth9999999), which is connected to the eth0 interface of the container.</li>
+                    </ul></aside>
                 </section>
 
                 <section>
@@ -528,8 +681,8 @@ $ sudo docker run ping
                         <li>172.17.42.1/16 by default</li>
                         <li>Part of the 172.16.0.0/12 RFC 1918 space</li>
                         <li>Sets up virtual ether net ports on the host (eg veth31a763b)</li>
-                        <li>Sets up a Docker Chain in iptables</li>
-                        <li>Mounts hosts /etc/resolv.conf and /etc/hosts</li>
+                        <li>Sets up a DOCKER Chain in iptables</li>
+                        <li>Mounts hosts /etc/resolv.conf and /etc/hosts in containers</li>
                     </ul>
                 </section>
                 <section>
@@ -546,6 +699,7 @@ $ sudo cat $(sudo docker exec -it stoic_ramanujan findmnt | grep resolv | awk -F
 nameserver 192.168.2.92
 search wgtn.cat-it.co.nz lan
                     </code></pre>
+                    <aside class="notes">Shows that the resolv.conf is mounted in the container, as well as iptables rules.</aside>
                 </section>
                 </section>
 
@@ -582,6 +736,11 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
                         <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Immutable architecture: Instead of mutating an instance, replace it with a new one.</li>
+                      <li>Pets (nursed back to health) vs. Cattle (replaced when sick)</li>
+                      <li>Snowflake (unique) vs. Phoenix (constantly rising from the ashes of its predecessor)</li>
+                    </ul></aside>
                 </section>
 
                 <!-- Immutable Infrastructure -->
@@ -595,6 +754,7 @@ search wgtn.cat-it.co.nz lan
                         <li>Docker makes it much more likely you will work in this way</li>
                         <li>Procedural vs Declarative</li>
                     </ul>
+                    <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
                 </section>
                 <!-- Large image slide -->
                 <section class="image-slide">
@@ -617,8 +777,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Services can be implemented with entirely different stacks</li>
                         <li>Services can be developed, maintained, and updated independently</li>
                         <li>Often use well defined REST APIs to communicate</li>
-                        <li>If a message bus is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
+                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Microservices</h3>
@@ -627,8 +790,9 @@ search wgtn.cat-it.co.nz lan
                         <li>Smart endpoints and dumb pipes</li>
                         <li>Decentralized Data Management with eventual consistency</li>
                         <li>Continuous integration and delivery</li>
-                        <li>Design for failure (optimize MTTR)</li>
+                        <li>Design for failure (optimize MTTR (mean-time-to-repair))</li>
                     </ul>
+                    <aside class="notes">Smart endpoints and dumb pipes: Communication mediums should be as simple/dumb as possible (e.g. simple message queue, REST); the logic should be in the app.</aside>
                 </section>
                 <section>
                     <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
@@ -639,6 +803,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Deploy in Containers</li>
                         <li>Treat Servers as Stateless</li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Separate data stores: Use the best DBMS and schema for each service.</li>
+                      <li>When doing new development, create a new microservice, rather than extending the existing one (so that you don't break it or make it less performant). You can merge the microservices later if needed.</li>
+                      <li>Stateless: Cattle, not pets.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Containers and Microservices</h3>
@@ -648,6 +817,7 @@ search wgtn.cat-it.co.nz lan
                         <li>A container is more like an OO Class - Brendan Burns @ Dockercon 2015</li>
                         <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
                     </ul>
+                    <aside class="notes">Containers are great for microservices, because they simplify the task of deploying many individual services, each with their own requirements.</aside>
                 </section>
                 <section>
                     <h3>Containers and Microservices: Requirements</h3>
@@ -656,6 +826,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Atomic co-scheduling of containers</li>
                         <li>Parameterization of containers</li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Volumes</li>
+                      <li>Being able to spin up a bunch of containers together as a unit.</li>
+                      <li>Parameters through environment variables for different environments.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Microservices - Resources</h3>
@@ -688,6 +863,10 @@ search wgtn.cat-it.co.nz lan
                         <li>Requires Continuous Integration where every commit triggers all the tests</li>
                         <li>Requires lots of tests</li>
                     </ul>
+                </section>
+                <section>
+                  <h3>Continuous delivery</h3>
+                  <img src="img/ci-diagram.png" alt="Continuous delivery">
                 </section>
                 <section>
                     <h3>Continuous delivery antipatterns</h3>
@@ -743,6 +922,12 @@ search wgtn.cat-it.co.nz lan
                 <section class="image-slide">
                     <h2>Docker ecosystem</h2>
                     <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
+                    <aside class="notes"><ul>
+                      <li>Orchestration: Managing the lifecycle of containers (starting, stopping, etc.) and distributing them across hosts in a cluster.</li>
+                      <li>Service Discovery: Manage directories of where services running in containers can find each other in a cluster of hosts.</li>
+                      <li>Networking: Virtual networks across hosts in a cluster</li>
+                      <li>Linux: Underlying Linux technologies that Docker uses.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>The stack</h3>
@@ -750,7 +935,7 @@ search wgtn.cat-it.co.nz lan
                         <li>The LAMP stack equivalent</li>
                         <li>Container Orchestration Engines</li>
                         <li>Linux - Docker - COE - ?</li>
-                        <li>Often LDK</li>
+                        <li>Often LDK (Linux - Docker - Kubernetes)</li>
                         <li>Higher level projects build on this stack (eg OpenShift and CloudFoundry)</li>
                     </ul>
                 </section>
@@ -767,11 +952,29 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Docker ecosystem - Container Orchestration Engines</h3>
                     <p>Engine for orchestrating container workloads, term comes from the OpenStack Magnum project.</p>
+                    <p>There are two main classes of orchestration tooling:</p>
                     <ul>
-                        <li>Docker Compose</li>
-                        <li>Docker Swarm</li>
-                        <li>Kubernetes</li>
-                        <li>Apache Mesos</li>
+                        <li><strong>Simple orchestration tools</strong> for deploying on pet servers</li>
+                        <li><strong>Distributed schedulers</strong> for deploying on cattle server farms</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Simple orchestration tools</h3>
+                    <ul>
+                        <li>Tools to simply deploy containers onto servers.</li>
+                        <li>Simple way to get many benefits of Docker in production.</li>
+                        <li>E.g. Centurion, Helios, Docker modules for Ansible and Puppet.</li>
+                    </ul>
+                </section>
+                <section>
+                  <h3>Docker + Ansible Deployments</h3>
+                  <img src="img/docker-ansible-diagram.png" height="600">
+                </section>
+                <section>
+                    <h3>Distributed schedulers</h3>
+                    <ul>
+                        <li>Make a cluster appear to be a single computer.</li>
+                        <li>More complex, but have more of the benefits associated with immutable infrastructure, etc.</li>
                         <li><a href="http://radar.oreilly.com/2015/10/swarm-v-fleet-v-kubernetes-v-mesos.html">Swarm v. Fleet v. Kubernetes v. Mesos</a></li>
                     </ul>
                 </section>
@@ -782,9 +985,11 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Docker compose</h3>
                     <ul>
+                        <li>Mainly used for spinning up multi-container development/testing environments.</li>
                         <li>Written in python rather than go like most of docker</li>
                         <li>Comparable to vagrant</li>
                         <li>New lib written in go called <a href="http://rancher.com/our-journey-with-docker-compose-and-the-introduction-of-libcompose/">libcompose</a></li>
+                        <li>Lots of documentation will mention (now obsolete) links, you can generally just remove links configuration.</li>
                     </ul>
 
                 </section>
@@ -816,7 +1021,7 @@ search wgtn.cat-it.co.nz lan
                     <ul>
                         <li>Container orchestrator</li>
                         <li>Started by Google</li>
-                        <li>Inspired by Borg</li>
+                        <li>Inspired by Borg (Google's cluster management system)</li>
                         <li>Open source project written in Go</li>
                         <li>Cloud Native Computing Foundation</li>
                         <li>Manage applications not machines</li>
@@ -831,6 +1036,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
                         <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
                     </ul>
+                </section>
+                <section>
+                  <h3>Kubernetes Overview</h3>
+                  <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
+                  <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
                 </section>
                 <section>
                     <h3>Pods/Services</h3>
@@ -913,12 +1123,17 @@ search wgtn.cat-it.co.nz lan
                     <h2>Managing state - CAP</h2>
                     <p>Managing state can be tricky</p>
                     <img src="img/cap.png" alt="CAP" height="600" width="800">
+                    <aside class="notes">
+                      Managing state in clustered environments is not
+                      unique to Docker. There are many database
+                      solutions, each with its own pros and cons.
+                    </aside>
                 </section>
                 <section>
                     <h3>Patterns for Managing State</h3>
                     <ul>
                         <li>Outside the cluster (SEP)</li>
-                        <li>Adapted to run in cluster (eg MySQL inside cluster)</li>
+                        <li>Adapted to run in cluster (eg MySQL inside cluster with data volume for persistence)</li>
                         <li>Cluster native (eg Cassandra or Riak)</li>
                         <li><a href="http://vitess.io/">vitess.io</a></li>
                     </ul>
@@ -946,6 +1161,18 @@ search wgtn.cat-it.co.nz lan
                         <li>Lower complexity inside specific containers</li>
                     </ul>
                     <img src="img/sidecar.png" alt="Sidecar">
+                    <aside class="notes">
+                      Sidecar containers provide re-usable
+                      functionality that enhances
+                      another container.
+                      <br>
+                      The example here shows a webserver container server files from
+                      a data volume. The data volume is shared with a
+                      sidecar container that synchronises the files
+                      with a Git repository, thus providing Git
+                      push-to-deploy. The sidecar can be re-used to
+                      provide git-syncing in other contexts.
+                    </aside>
                 </section>
                 <section class="image-slide">
                     <h2>Ambassador containers</h2>
@@ -955,6 +1182,11 @@ search wgtn.cat-it.co.nz lan
                         <li>Also modular, reuse, lower complexity per container</li>
                     </ul>
                     <img src="img/ambassador.png" alt="Ambassador">
+                    <aside class="notes">
+                      Example is of an ambassador container to act
+                      like a normal redis server, while it is really a
+                      proxy for a redis cluster.
+                    </aside>
                 </section>
                 <section class="image-slide">
                     <h2>Adapter containers</h2>
@@ -964,6 +1196,12 @@ search wgtn.cat-it.co.nz lan
                         <li>eg, monitoring systems, convert from app specific output to monitoring system format</li>
                     </ul>
                     <img src="img/adapter.png" alt="Adapter">
+                    <aside class="notes">
+                      In the example, the redis logs are converted
+                      into a standard format by an adapter container,
+                      so that the monitoring system only needs to know
+                      the standard format that all adapters provide.
+                    </aside>
                 </section>
                 </section>
 
@@ -987,6 +1225,11 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://www.youtube.com/watch?v=at72dhg-SZY&feature=youtu.be&t=4873">Video</a></li>
                         <li><a href="https://docs.docker.com/engine/security/trust/content_trust/">Content Trust Documentation</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Notary is a general purpose tool for signing files.</li>
+                      <li>You can enable "Docker Content Trust" so that you can sign images that other Docker uses can verify.</li>
+                      <li>Currently only available with DockerHub.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Security - Image Vulnerability Scanning</h3>
@@ -1005,14 +1248,24 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/Docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
                         <li><a href="https://blog.docker.com/2013/08/containers-docker-how-secure-are-they/">Fundamentals</a> (old but informative)</li>
                         <li><a href="http://linux-audit.com/docker-security-best-practices-for-your-vessel-and-containers/">Best practices</a></li>
+                        <li><a href="https://securityblog.redhat.com/2014/12/18/before-you-initiate-a-docker-pull/">Securely downloading containers</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>Information about official repos</li>
+                      <li>Existing issues with image verification.</li>
+                      <li>Limitations of containers (Shared kernel etc.)</li>
+                      <li>Whitepaper on container security</li>
+                      <li>Explanation of how Docker works, security implications, and comparisons to VMs and other containerization systems.</li>
+                      <li>Best practice recommendations</li>
+                      <li>Problems with Docker pull (auto-unpacking), and how to work around it.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>Other problems</h3>
                     <ul>
-                        <li>Not declarative</li>
-                        <li>Not idempotent or repeatable</li>
-                        <li>Pids and spawning issues</li>
+                        <li>Not declarative (Dockerfiles)</li>
+                        <li>Not idempotent or repeatable (E.g. apt-get install)</li>
+                        <li><a href="https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/">Pids and spawning issues</a> (Zombie processes)</li>
                         <li>Standardisation</li>
                         <li>See <a href="https://www.youtube.com/watch?v=wpFrkq5XNFM">these</a> <a href="https://www.youtube.com/watch?v=et7BCV_kAUY">talks</a> from systemd.conf</li>
                     </ul>
@@ -1029,6 +1282,7 @@ search wgtn.cat-it.co.nz lan
                         <li>hit F2 and choose the Containers view</li>
                         <li>can also monitor <a href="http://blog.kubernetes.io/2015/11/monitoring-Kubernetes-with-Sysdig.html">kubernetes</a></li>
                     </ul>
+                    <aside class="notes">csysdig has a curses UI.</aside>
                 </section>
                 <section>
                     <h3>Monitoring</h3>
@@ -1050,6 +1304,11 @@ $ sudo csysdig
 # in another terminal
 $ sudo htop
                     </code></pre>
+                    <aside class="notes">
+                      Here we limit Docker to using the first 2 CPUs (0 and 1).
+                      <br>
+                      htop shows usage per CPU.
+                    </aside>
                 </section>
                 <section>
                     <h3>Monitoring and Memory limits</h3>
@@ -1061,12 +1320,16 @@ $ sudo csysdig
 # in another terminal
 $ sudo htop
                     </code></pre>
+                    <aside class="notes">
+                      Limit the container to 512MB of RAM and 512MB of swap.
+                    </aside>
                 </section>
                 <section>
                     <h3>Monitoring - check-config</h3>
-                    <p>How to enable limiting swap:</p>
+                    <p>How to enable swap limiting:</p>
                     <pre><code data-trim contenteditable>
-$ check-config.sh
+$ check-config.sh # Check that the kernel supports it.
+# Edit /etc/default/grub:
 # GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
                     </code></pre>
                 </section>
@@ -1083,6 +1346,14 @@ $ check-config.sh
                         <li><a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">Does each Dockerfile run command create its own layer?</a></li>
                         <li><a href="https://blog.docker.com/2015/11/docker-multi-host-networking-ga/">What happened to Docker links?</a></li>
                     </ul>
+                    <aside class="notes"><ul>
+                      <li>sudo is required for kernel features</li>
+                      <li>Dangling images (name has been re-used for another image).</li>
+                      <li>There is a guide</li>
+                      <li>All dependencies from all layers, clean up package manager files to reduce size.</li>
+                      <li>Yes</li>
+                      <li>Docker's networking has been re-worked to not use links.</li>
+                    </ul></aside>
                 </section>
                 <section>
                     <h3>FAQ</h3>
