@@ -193,12 +193,23 @@
                 <section>
                     <h3>Why Docker?</h3>
                     <ul>
-                        <li>Lightweight compared to traditional virtualization</li>
+                        <li>Containers generally lightweight compared to traditional virtualization</li>
                         <li>Consistency across dev/test/prod</li>
                         <li>Easy to modify, update and scale</li>
                         <li>Dependency encapsulation and decoupling</li>
                         <li>Enables (requires?) new workflows</li>
                     </ul>
+                </section>
+                <section>
+                    <h3>Docker Portability</h3>
+
+                    <ul>
+                        <li>Any modern Linux (RHEL, CentOS, Ubuntu LTS, etc.), OSX, Windows</li>
+                        <li>Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)</li>
+                        <li>Private clouds (OpenStack, Vmware)</li>
+                        <li>Public clouds (AWS, Azure, Rackspace, Google)</li>
+                    </ul>
+
                 </section>
                 <section>
                     <h3>Docker popularity</h3>
@@ -222,16 +233,10 @@
                       <li>Always specify tags (or SHAs).</li>
                     </ul></aside>
                 </section>
+
                 <section>
-                    <h3>Docker Portability</h3>
-
-                    <ul>
-                        <li>Any modern Linux (RHEL, CentOS, Ubuntu LTS, etc.), OSX, Windows</li>
-                        <li>Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)</li>
-                        <li>Private clouds (OpenStack, Vmware)</li>
-                        <li>Public clouds (AWS, Azure, Rackspace, Google)</li>
-                    </ul>
-
+                    <h3>Docker architecture</h3>
+                    <img src="img/architecture.svg" alt="Ambassador">
                 </section>
 
                 <section>
@@ -296,9 +301,9 @@
                     <h3>Scripts</h3>
                     <ul>
                         <li>Designed to be run on trusty training machines</li>
-                        <li>Docker-setup.sh - ensures required software is installed</li>
+                        <li>docker-setup.sh - ensures required software is installed</li>
                         <li>user-setup.sh - sets up environment variables for our user</li>
-                        <li>Docker-course.sh - list or run the course commands</li>
+                        <li>docker-course.sh - list or run the course commands</li>
                     </ul>
                 </section>
 
@@ -315,9 +320,9 @@ source ./user-setup.sh
                     <h3>Course script</h3>
                     <p>By default this script outputs all the commands you will need to run</p>
                     <pre><code data-trim contenteditable>
-$ sudo ./Docker-course.sh -h
+$ sudo ./docker-course.sh -h
 
-Usage: sudo ./Docker-course.sh [OPTIONS]
+Usage: sudo ./docker-course.sh [OPTIONS]
 
     -h        this help
     -s        takes an integer, indicates that we should stop at this section
@@ -326,75 +331,27 @@ Usage: sudo ./Docker-course.sh [OPTIONS]
                     </code></pre>
                     <p>try it now</p>
                     <pre><code data-trim contenteditable>
-sudo ./Docker-course.sh -s 3
+sudo ./docker-course.sh -s 3
                     </code></pre>
                 </section>
-<section>
-    <section>
-        <h3>1: Dockerizing applications</h3>
-        <a
-            href="https://docs.docker.com/engine/tutorials/dockerizing/">https://docs.docker.com/engine/tutorials/dockerizing/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/userguide/Dockerizing">(cache)</a>
-        <aside class="notes"><ul>
-                <li>Run simple container.</li>
-                <li>Run interactive container.</li>
-                <li>Run daemonized container.</li>
-                <li>Talk about container IDs.</li>
-                <li>Docker ps (with -a for non-running containers)</li>
-                <li>Talk about container names (automatic, and set).</li>
-                <li>Docker logs {container} (with -f to follow continuing output)</li>
-                <li>Docker stop {container}</li>
-            </ul></aside>
-    </section>
-    <section>
-        <h3>Basic Docker Examples</h3>
-        <ul>
-            <li>Run "Hello, World" in a container</li>
-            <li>Interact with a container</li>
-            <li>Daemonise a container</li>
-        </ul>
-    </section>
-    <section>
-        <h3>More Examples</h3>
-    </section>
 
-                    <section>
-                        <h3>Persist changes to a container</h3>
-                        <pre>$ docker run -t -i ubuntu:14.04 /bin/bash
-
-root@69079aaaaab1:/# apt-get update
-
-$ docker commit 69079aaaaab1 ubuntu:update
-13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
-
-$ docker images
-REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE
-ubuntu update 13132d42da3c 5 days ago 213 MB
-
-$ docker diff &lt;container&gt;
-                        </pre>
-
-                    </section>
-                    <section>
-                        <h3>Saving an image as tar for sharing</h3>
-                        <pre>$ docker ps -a
-
-CONTAINER ID IMAGE COMMAND CREATED ... NAMES
-77d9619a7a71 ubuntu:14.04 "/bin/bash" 10 seconds ago ... high_shockley
-
-$ docker export 77d9619a7a71 > update.tar
-$ ls
-update.tar
-
-$ docker import - update &lt; update.tar
-157bcbb5fdfce0e7c10ef67ebdba737a491214708a5f266a3c74aa6b0cfde078
-
-$ docker images
-REPOSITORY TAG IMAGE ID ... VIRTUAL SIZE
-update latest 157bcbb5fdfc ... 188.1 MB
-                        </pre>
-                    </section>
-
+                <section>
+                    <h3>1: Dockerizing applications</h3>
+                    <a
+                           href="https://docs.docker.com/engine/tutorials/dockerizing/">https://docs.docker.com/engine/tutorials/dockerizing/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerizing">(cache)</a>
+                       <aside class="notes"><ul>
+                               <li>Run simple container.</li>
+                               <li>Run interactive container.</li>
+                               <li>Run daemonized container.</li>
+                               <li>Talk about container IDs.</li>
+                               <li>Docker ps (with -a for non-running containers)</li>
+                               <li>Talk about container names (automatic, and set).</li>
+                               <li>Docker logs {container} (with -f to follow continuing output)</li>
+                               <li>Docker stop {container}</li>
+                           </ul></aside>
                 </section>
+
+
                 
 
 
@@ -402,7 +359,7 @@ update latest 157bcbb5fdfc ... 188.1 MB
                     <section>
                         <h3>2: Working with containers</h3>
                         <a
-                            href="https://docs.docker.com/engine/tutorials/usingdocker/">https://docs.docker.com/engine/tutorials/usingdocker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/userguide/usingDocker">(cache)</a>
+                            href="https://docs.docker.com/engine/tutorials/usingdocker/">https://docs.docker.com/engine/tutorials/usingdocker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/usingdocker">(cache)</a>
                         <aside class="notes"><ul>
                                 <li>Docker version</li>
                                 <li>Help: Docker [command] --help</li>
@@ -478,7 +435,7 @@ $ docker rm myflaskapp
                 <section>
                     <h3>3: Get started with images</h3>
 <a
-    href="https://docs.docker.com/engine/tutorials/dockerimages/">https://docs.docker.com/engine/tutorials/dockerimages/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/userguide/Dockerimages">(cache)</a>
+    href="https://docs.docker.com/engine/tutorials/dockerimages/">https://docs.docker.com/engine/tutorials/dockerimages/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerimages">(cache)</a>
                     <aside class="notes"><ul>
                       <li>Docker images (To list images)</li>
                       <li>Careful not to chew up space with too many images.</li>
@@ -506,7 +463,7 @@ $ docker rm myflaskapp
                 <section>
                     <h3>4: Networking containers</h3>
 <a
-    href="https://docs.docker.com/engine/tutorials/networkingcontainers/">https://docs.docker.com/engine/tutorials/networkingcontainers/</a> (new in 1.9 was <a href="https://docs.Docker.com/engine/userguide/networking/default_network/Dockerlinks/">Dockerlinks</a>)
+    href="https://docs.docker.com/engine/tutorials/networkingcontainers/">https://docs.docker.com/engine/tutorials/networkingcontainers/</a> (new in 1.9 was <a href="https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/">Dockerlinks</a>)
                     <aside class="notes"><ul>
                       <li>Networking used to be handled through "Docker links" (one way exposing of ports between containers), which are now deprecated.</li>
                       <li>Docker run --name (Naming a container)</li>
@@ -527,7 +484,7 @@ $ docker rm myflaskapp
                 <section>
                     <h3>5: Managing data in containers</h3>
 <a
-    href="https://docs.docker.com/engine/tutorials/dockervolumes/">https://docs.docker.com/engine/tutorials/dockervolumes/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/userguide/Dockervolumes">(cache)</a>
+    href="https://docs.docker.com/engine/tutorials/dockervolumes/">https://docs.docker.com/engine/tutorials/dockervolumes/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockervolumes">(cache)</a>
                     <aside class="notes"><ul>
                       <li>Data volumes are like the "mount" command; they bypass the UFS.</li>
                       <li>You can mount a directory from the host, or just a standalone volume.</li>
@@ -547,26 +504,12 @@ $ docker rm myflaskapp
                 <section>
                     <h3>6: Get started with Docker Hub</h3>
 <a
-    href="https://docs.docker.com/engine/tutorials/dockerrepos/">https://docs.docker.com/engine/tutorials/dockerrepos/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/userguide/Dockerrepos">(cache)</a>
+    href="https://docs.docker.com/engine/tutorials/dockerrepos/">https://docs.docker.com/engine/tutorials/dockerrepos/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerrepos">(cache)</a>
                     <aside class="notes"><ul>
                       <li>DockerHub has similar webhook and automation capabilities to GitHub.</li>
                     </ul></aside>
                 </section>
 
-<!--
-   -                <section>
-   -                    <h3>Quick Docker Tutorial</h3>
-   -
-   -                    <ul>
-   -                        <li>Installation and running "<a
-   -                           href="https://docs.Docker.com/engine/getstarted/step_one">Hello, World</a>" in Docker</li>
-   -                        <li>Intro to <a href="https://docs.Docker.com/engine/getstarted/step_three/">Docker Hub</a></li>
-   -                        <li><a href="https://docs.Docker.com/engine/getstarted/step_four/">Build an image</a></li>
-   -                        <li><a href="https://docs.Docker.com/engine/getstarted/step_five/">Create</a> a Docker Hub account</li>
-   -                        <li><a href="https://docs.Docker.com/engine/getstarted/step_six/">Push an image</a> to Docker Hub</li>
-   -                    </ul>
-   -                </section>
-   -->
 
 <!--
    -                <section>
@@ -624,7 +567,7 @@ $ docker rm myflaskapp
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>7: Layering (via a Union file system)</h2>
-                    <img src="https://assets.digitalocean.com/articles/Docker_ecosystem/Container-Overview.png" alt="">
+                    <img src="https://assets.digitalocean.com/articles/docker_ecosystem/Container-Overview.png" alt="">
                 </section>
                 <section>
                     <h3>7: Layers</h3>
@@ -732,8 +675,8 @@ A /usr/share/doc/mtr-tiny
                     <h3>7: Docker Diff</h3>
                     <p>Show the differences between a container's filesystem and its base image</p>
                     <pre><code data-trim contenteditable>
-$ sudo find /var/lib/Docker/ -type f -name 'test.txt' -exec md5sum {} \;
-185320c3e9298cdbde3320ec32144980  /var/lib/Docker/aufs/diff/e888e0fef39e6f7f249f33f0475e891aaef899cca9ed0ea39d2524e5f06be792/test.txt
+$ sudo find /var/lib/docker/ -type f -name 'test.txt' -exec md5sum {} \;
+185320c3e9298cdbde3320ec32144980  /var/lib/docker/aufs/diff/e888e0fef39e6f7f249f33f0475e891aaef899cca9ed0ea39d2524e5f06be792/test.txt
 
 $ sudo docker restart sleepy_cori
 sleepy_cori
@@ -747,7 +690,7 @@ $ sudo docker exec sleepy_cori md5sum test.txt
                 <section>
                     <h3>7: Docker Diff what is AUFS?</h3>
                     <ul>
-                        <li>Did you notice /var/lib/Docker/aufs?</li>
+                        <li>Did you notice /var/lib/docker/aufs?</li>
                         <li><a href="http://aufs.sourceforge.net/">Advanced Multi Layered Unification Filesystem</a></li>
                     <pre><code data-trim contenteditable>
 priority = []string{
@@ -757,7 +700,7 @@ priority = []string{
 "vfs",
 "overlayfs",
                     </code></pre>
-                        <li>Details <a href="https://developerblog.redhat.com/2014/09/30/overview-storage-scalability-Docker/">here</a></li>
+                        <li>Details <a href="https://developerblog.redhat.com/2014/09/30/overview-storage-scalability-docker/">here</a></li>
                     </ul>
                     <aside class="notes">Different UFS available, priority order shown above. The first available on a system will be used, but it is overridable. Not all OS distributions can use them all.</aside>
                 </section>
@@ -769,10 +712,11 @@ priority = []string{
                 <section>
                     <h3>8: More on Dockerfiles</h3>
                     <ul>
-                        <li><a href="https://docs.Docker.com/articles/Dockerfile_best-practices/">Dockerfile Best Practices</a></li>
-                        <li><a href="https://github.com/nginxinc/Docker-nginx/blob/4e5332fa50a1f8f73657417c6bfe249bbb3b110d/Dockerfile">Nginx Dockerfile</a></li>
-                        <li><a href="https://github.com/Docker-library/postgres/blob/8a9fbcb40f13ccc7762f278b9df611cabe22d300/9.5/Dockerfile">Postgres Dockerfile</a></li>
-                        <li><a href="https://labs.ctl.io/Dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
+                        <li><a
+                                href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Dockerfile Best Practices</a></li>
+                        <li><a href="https://github.com/nginxinc/docker-nginx/blob/4e5332fa50a1f8f73657417c6bfe249bbb3b110d/dockerfile">Nginx Dockerfile</a></li>
+                        <li><a href="https://github.com/docker-library/postgres/blob/8a9fbcb40f13ccc7762f278b9df611cabe22d300/9.5/dockerfile">Postgres Dockerfile</a></li>
+                        <li><a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">ENTRYPOINT vs CMD</a></li>
                     </ul>
                     <aside class="notes"><ul>
                       <li><strong>Dockerfile Best Practices</strong></li>
@@ -792,7 +736,7 @@ priority = []string{
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
                     <ul>
-                        <li>See <a href="https://labs.ctl.io/Dockerfile-entrypoint-vs-cmd/">https://labs.ctl.io/Dockerfile-entrypoint-vs-cmd/</a> for details</li>
+                        <li>See <a href="https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/">https://labs.ctl.io/dockerfile-entrypoint-vs-cmd/</a> for details</li>
                         <li>Lets look at some images: <a href="https://imagelayers.io/?images=debian:latest,ubuntu:latest,alpine:latest">https://imagelayers.io/?images=debian:latest,ubuntu:latest,alpine:latest</a></li>
                     <pre><code data-trim contenteditable>
 $ sudo docker run -i -t debian
@@ -805,16 +749,16 @@ Error response from daemon: No command specified
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
                     <pre><code data-trim contenteditable>
-$ cat Dockerfiles/ping-localhost/Dockerfile
+$ cat dockerfiles/ping-localhost/dockerfile
 FROM debian:jessie
 CMD ping localhost
-$ sudo docker build -t demo Dockerfiles/ping-localhost
+$ sudo docker build -t demo dockerfiles/ping-localhost
 $ sudo docker run -t demo
 PING localhost (127.0.0.1) 56(84) bytes of data.
 64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.034 ms
 64 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=64 time=0.054 ms
 64 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=64 time=0.064 ms
-$ Docker run demo uname -a
+$ docker run demo uname -a
 Linux fac4960db319 3.13.0-66-generic #108-Ubuntu SMP Wed Oct 7 15:20:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
                     </code></pre>
                 </section>
@@ -829,11 +773,11 @@ Linux fac4960db319 3.13.0-66-generic #108-Ubuntu SMP Wed Oct 7 15:20:27 UTC 2015
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
                     <pre><code data-trim contenteditable>
-$ cat Dockerfiles/python/Dockerfile
+$ cat dockerfiles/python/dockerfile
 FROM python
 ENTRYPOINT ["python"]
-$ sudo docker build -t python Dockerfiles/python
-Sending build context to Docker daemon 2.048 kB
+$ sudo docker build -t python dockerfiles/python
+Sending build context to docker daemon 2.048 kB
 Step 0 : FROM python
 ---> e7d942e7369d
 Step 1 : ENTRYPOINT python
@@ -854,7 +798,7 @@ Linux
                     <pre><code data-trim contenteditable>
 $ sudo docker run -d demo
 f27197f4370c2981792ab3d09a0620c1c8f7c993cb66770ffc1f1aa6c4dfe021
-$ Docker ps -l
+$ docker ps -l
 CONTAINER ID IMAGE     COMMAND                 CREATED        STATUS         PORTS NAMES
 f27197f4370c dojo/demo "/bin/sh -c 'ping loc"  11 seconds ago Up 10 seconds        suspicious_leakey
 $ sudo docker exec f27197f4370c ps -f
@@ -875,10 +819,10 @@ root         6     0  0 08:21 ?        00:00:00 ps -f
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
                     <pre><code data-trim contenteditable>
-$ cat Dockerfiles/ping-localhost-exec/Dockerfile
+$ cat dockerfiles/ping-localhost-exec/dockerfile
 FROM debian:jessie
 CMD ["ping", "localhost"]
-$ sudo docker build -t demo Dockerfiles/ping-localhost-exec/
+$ sudo docker build -t demo dockerfiles/ping-localhost-exec/
 ...
 $ sudo docker run -d demo
 db7526643dbe7ec6d6f27aa707539aa67a3573a8adc7754372d8fce0fe824cfc
@@ -891,11 +835,11 @@ root         6     0  0 08:27 ?        00:00:00 ps -f
                 <section>
                     <h3>8: Dockerfiles: ENTRYPOINT vs CMD</h3>
                     <pre><code data-trim contenteditable>
-$ cat Dockerfiles/ping-localhost-both/Dockerfile
+$ cat dockerfiles/ping-localhost-both/dockerfile
 FROM debian:jessie
 ENTRYPOINT ["/bin/ping","-c","3"]
 CMD ["localhost"]
-$ sudo docker build -t ping Dockerfiles/ping-localhost-both
+$ sudo docker build -t ping dockerfiles/ping-localhost-both
 $ sudo docker run ping google.com
 $ sudo docker run ping
                     </code></pre>
@@ -909,19 +853,19 @@ $ sudo docker run ping
                         <li>FROM empty ...</li>
                         <li><a href="http://www.busybox.net/">Busybox</a> - 5.6 MB, no package manager</li>
                         <li><a href="https://www.alpinelinux.org/">Alpine Linux</a> - distribution of choice for minimal containers - 5MB with a package manager (based on busybox)</li>
-                        <li><a href="https://hub.Docker.com/_/debian/">Debian</a> - Reccomended by Docker, smaller than Ubuntu - 85MB</li>
-                        <li><a href="https://hub.Docker.com/_/ubuntu/">Ubuntu</a> - Commonly used but quite big</li>
-                        <li>Language images (<a href="https://hub.Docker.com/_/golang/">golang</a>, <a href="https://hub.Docker.com/_/python/">python</a> etc.) - Seem to be mostly based on Debian</li>
-                        <li>See <a href="http://www.blang.io/posts/2015-04_how-to-build-the-smallest-Docker-containers">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-Docker-containers-alpine-linux">2</a>, <a href="https://docs.Docker.com/articles/baseimages/">3</a></li>
+                        <li><a href="https://hub.docker.com/_/debian/">Debian</a> - Reccomended by Docker, smaller than Ubuntu - 85MB</li>
+                        <li><a href="https://hub.docker.com/_/ubuntu/">Ubuntu</a> - Commonly used but quite big</li>
+                        <li>Language images (<a href="https://hub.docker.com/_/golang/">golang</a>, <a href="https://hub.docker.com/_/python/">python</a> etc.) - Seem to be mostly based on Debian</li>
+                        <li>See <a href="http://www.blang.io/posts/2015-04_how-to-build-the-smallest-docker-containers">1</a>, <a href="http://www.livewyer.com/blog/2015/02/24/slimming-down-your-docker-containers-alpine-linux">2</a>, <a href="https://docs.docker.com/articles/baseimages/">3</a></li>
                     </ul>
                 </section>
 
                 <section>
                 <section>
                     <h3>10: Docker networking</h3>
-                    <img src="http://www.linuxjournal.com/files/linuxjournal.com/ufiles/imagecache/large-550px-centered/u1002061/11833f1.png" alt="Docker networking">
+                    <img src="http://www.linuxjournal.com/files/linuxjournal.com/ufiles/imagecache/large-550px-centered/u1002061/11833f1.png" alt="docker networking">
                     <aside class="notes"><ul>
-                      <li>Docker starts a "Docker0" virtual bridge to handle host-container communication.</li>
+                      <li>docker starts a "docker0" virtual bridge to handle host-container communication.</li>
                       <li>When a container starts, Docker creates a virtual interface on the host (e.g. veth9999999), which is connected to the eth0 interface of the container.</li>
                     </ul></aside>
                 </section>
@@ -929,7 +873,7 @@ $ sudo docker run ping
                 <section>
                     <h3>10: Docker networking</h3>
                     <ul>
-                        <li>Docker0 virtual bridge</li>
+                        <li>docker0 virtual bridge</li>
                         <li>172.17.42.1/16 by default</li>
                         <li>Part of the 172.16.0.0/12 RFC 1918 space</li>
                         <li>Sets up virtual ether net ports on the host (eg veth31a763b)</li>
@@ -1148,7 +1092,7 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Examples</h3>
                     <ul>
-                        <li><a href="https://blog.Docker.com/2015/07/Docker-three-ways-devops-3/">Distributing (scientific) data</a></li>
+                        <li><a href="https://blog.docker.com/2015/07/docker-three-ways-devops-3/">Distributing (scientific) data</a></li>
                         <li><a href="https://github.com/VISIONAI/clouddream">Distributing clouddream</a></li>
                         <li><a href="https://github.com/CenturyLinkLabs/golang-builder">Compiling go</a></li>
                     </ul>
@@ -1173,7 +1117,7 @@ search wgtn.cat-it.co.nz lan
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Docker ecosystem</h2>
-                    <img src="img/Docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
+                    <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
                     <aside class="notes"><ul>
                       <li>Orchestration: Managing the lifecycle of containers (starting, stopping, etc.) and distributing them across hosts in a cluster.</li>
                       <li>Service Discovery: Manage directories of where services running in containers can find each other in a cluster of hosts.</li>
@@ -1240,18 +1184,18 @@ search wgtn.cat-it.co.nz lan
                         <li>Mainly used for spinning up multi-container development/testing environments.</li>
                         <li>Written in python rather than go like most of Docker</li>
                         <li>Comparable to vagrant</li>
-                        <li>New lib written in go called <a href="http://rancher.com/our-journey-with-Docker-compose-and-the-introduction-of-libcompose/">libcompose</a></li>
+                        <li>New lib written in go called <a href="http://rancher.com/our-journey-with-docker-compose-and-the-introduction-of-libcompose/">libcompose</a></li>
                         <li>Lots of documentation will mention (now obsolete) links, you can generally just remove links configuration.</li>
                     </ul>
 
                 </section>
                 <section>
                     <h3>Docker compose</h3>
-                    <a href="https://docs.Docker.com/compose/">Overview of Docker Compose</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/compose/">(cache)</a>
+                    <a href="https://docs.docker.com/compose/">Overview of Docker Compose</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/compose/">(cache)</a>
                 </section>
                 <section>
                     <h3>Docker compose - hands on</h3>
-                    <a href="https://docs.Docker.com/compose/gettingstarted/">Example app</a>
+                    <a href="https://docs.docker.com/compose/gettingstarted/">Example app</a>
                 </section>
                 </section>
 
@@ -1262,7 +1206,7 @@ search wgtn.cat-it.co.nz lan
                         <li>Native clustering for Docker</li>
                         <li>Use standard tools to interact with a cluster of Docker engines</li>
                         <li>Turn a group of Docker engines into a single, virtual Docker engine</li>
-                        <li>Engines can be deployed using Docker machine (<a href="http://docs.catalystcloud.io/tutorials.html#create-an-a-cloud-vm-using-Docker-machine">example</a>)</li>
+                        <li>Engines can be deployed using Docker machine (<a href="http://docs.catalystcloud.io/tutorials.html#create-an-a-cloud-vm-using-docker-machine">example</a>)</li>
                     </ul>
                 </section>
 
@@ -1471,11 +1415,11 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Security - Image Signing</h3>
                     <ul>
-                        <li><a href="https://blog.Docker.com/2015/08/content-trust-Docker-1-8/">Intoduction to Docker Content Trust</a></li>
-                        <li>Provided by the <a href="https://github.com/Docker/notary">Notary</a> open source project</li>
+                        <li><a href="https://blog.Docker.com/2015/08/content-trust-docker-1-8/">Intoduction to Docker Content Trust</a></li>
+                        <li>Provided by the <a href="https://github.com/docker/notary">Notary</a> open source project</li>
                         <li>Based on <a href="http://theupdateframework.com/">The Update Framework</a></li>
                         <li><a href="https://www.youtube.com/watch?v=at72dhg-SZY&feature=youtu.be&t=4873">Video</a></li>
-                        <li><a href="https://docs.Docker.com/engine/security/trust/content_trust/">Content Trust Documentation</a></li>
+                        <li><a href="https://docs.docker.com/engine/security/trust/content_trust/">Content Trust Documentation</a></li>
                     </ul>
                     <aside class="notes"><ul>
                       <li>Notary is a general purpose tool for signing files.</li>
@@ -1494,7 +1438,7 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Security - Useful links</h3>
                     <ul>
-                        <li>How often do the official base images get updated? (details <a href="https://blog.Docker.com/2015/06/understanding-official-repos-Docker-hub/">here</a>)</li>
+                        <li>How often do the official base images get updated? (details <a href="https://blog.docker.com/2015/06/understanding-official-repos-Docker-hub/">here</a>)</li>
                         <li><a href="https://titanous.com/posts/Docker-insecurity">Image signing</a> (see <a href="https://github.com/Docker/notary">notary</a>)</li>
                         <li><a href="https://securityblog.redhat.com/2014/12/17/container-security-isolation-heaven-or-dependency-hell/">Level of isolation</a></li>
                         <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/Docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
@@ -1639,7 +1583,7 @@ init(1)───Docker(2379)───bash(30136)
                 <section>
                     <h3>FAQ: Stop vs. Remove</h3>
                     <p>Q: Are container really ephemeral?</p>
-                    <p>A: Stopping a container does not delete its filesystem, it will still be there in /var/lib/Docker when you start it again. You need to call Docker rm to delete a container</p>
+                    <p>A: Stopping a container does not delete its filesystem, it will still be there in /var/lib/docker when you start it again. You need to call Docker rm to delete a container</p>
                 </section>
                 <section>
                     <h3>FAQ: Mounting volumes in running containers</h3>
@@ -1712,6 +1656,54 @@ init(1)───Docker(2379)───bash(30136)
                     </ul>
 
                 </section>
+    <section>
+        <h3>Basic Docker Examples</h3>
+        <ul>
+            <li>Run "Hello, World" in a container</li>
+            <li>Interact with a container</li>
+            <li>Daemonise a container</li>
+        </ul>
+    </section>
+    <section>
+        <h3>More Examples</h3>
+    </section>
+
+                    <section>
+                        <h3>Persist changes to a container</h3>
+                        <pre>$ docker run -t -i ubuntu:14.04 /bin/bash
+
+root@69079aaaaab1:/# apt-get update
+
+$ docker commit 69079aaaaab1 ubuntu:update
+13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
+
+$ docker images
+REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE
+ubuntu update 13132d42da3c 5 days ago 213 MB
+
+$ docker diff &lt;container&gt;
+                        </pre>
+
+                    </section>
+                    <section>
+                        <h3>Saving an image as tar for sharing</h3>
+                        <pre>$ docker ps -a
+
+CONTAINER ID IMAGE COMMAND CREATED ... NAMES
+77d9619a7a71 ubuntu:14.04 "/bin/bash" 10 seconds ago ... high_shockley
+
+$ docker export 77d9619a7a71 > update.tar
+$ ls
+update.tar
+
+$ docker import - update &lt; update.tar
+157bcbb5fdfce0e7c10ef67ebdba737a491214708a5f266a3c74aa6b0cfde078
+
+$ docker images
+REPOSITORY TAG IMAGE ID ... VIRTUAL SIZE
+update latest 157bcbb5fdfc ... 188.1 MB
+                        </pre>
+                    </section>
         </div>
 
 
