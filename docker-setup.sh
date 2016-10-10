@@ -61,7 +61,7 @@ fi
 COMPOSE_BIN=/usr/local/bin/docker-compose
 if [ ! -f $COMPOSE_BIN ];
 then
-    wget https://github.com/docker/compose/releases/download/1.5.1/docker-compose-linux-x86_64
+    wget https://github.com/docker/compose/releases/download/1.8.1/docker-compose-linux-x86_64
     chmod 755 docker-compose-linux-x86_64
     mv docker-compose-linux-x86_64 $COMPOSE_BIN
 fi
