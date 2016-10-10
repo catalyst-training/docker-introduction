@@ -180,11 +180,11 @@
                             running, and distributing software "containers"
                             that bundle software applications with all of
                             their dependencies.
-                       <ul>
+
                             <li><a href="https://docs.docker.com/engine/understanding-docker/#what-is-the-docker-platform">Docker Platform</a></li>
 
                             <li><a href="https://docs.docker.com/engine/understanding-docker/#what-is-docker-engine">Docker Engine</a></li>
-                        </ul> </li>
+                        </li>
                         
                     </ul>
                 </section>
@@ -238,10 +238,6 @@
                     <img src="img/engine-components-flow.png" alt="Ambassador">
                 </section>
 
-                <section>
-                    <h3>Docker architecture</h3>
-                    <img src="img/architecture.svg" alt="Ambassador">
-                </section>
 
                 <section>
                     <h3>Components of Docker</h3>
@@ -313,6 +309,12 @@
                 </section>
 
                 <section>
+                    <h3>Checkout code and examples</h3>
+                    <pre><code data-trim contenteditable>
+    $ git clone https://github.com/heytrav/docker-training
+                    </code></pre>
+                </section>
+                <section>
                     <h3>Setup</h3>
                     <p>lets setup our environment now</p>
                     <pre><code data-trim contenteditable>
@@ -320,7 +322,21 @@ cd docker-training
 source ./user-setup.sh
                     </code></pre>
                 </section>
+                <section>
+                    <h3>Install Docker</h3>
+                    <pre><code data-trim contenteditable>
+    $ sudo ./docker-setup.sh
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Docker architecture</h3>
+                    <pre>
+    $ ps waux | grep docker 
+    $ sudo docker images
+                    </pre>
 
+                    <img src="img/architecture.svg" alt="Architecture">
+                </section>
                 <section>
                     <h3>Course script</h3>
                     <p>By default this script outputs all the commands you will need to run</p>
