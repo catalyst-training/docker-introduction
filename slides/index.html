@@ -105,14 +105,14 @@
                 <section>
                     <h3>Understanding Docker</h3>
                     <p><a
-                        href="https://docs.docker.com/engine/understanding-docker/">https://docs.docker.com/engine/understanding-docker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.Docker.com/introduction/understanding-Docker/">(cache)</a></p>
+                        href="https://docs.docker.com/engine/understanding-docker/">https://docs.docker.com/engine/understanding-docker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/introduction/understanding-docker/">(cache)</a></p>
                     <aside class="notes">
                         <ul>
                       <li>Expalin architecture diagram (Commands and components).</li>
                       <li>Client vs daemon.</li>
                       <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
                       <li>Docker's use of UFS separates it from other container solutions.</li>
-                      <li>Execute the "Docker run" command and go through the list of steps it does.
+                      <li>Execute the "docker run" command and go through the list of steps it does.
                         <ul>
                           <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
                           <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
@@ -165,7 +165,7 @@
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Lightweight</h2>
-                    <img src="img/Docker.png" alt="">
+                    <img src="img/docker.png" alt="">
                     <aside class="notes">Remember: Docker containers are all tied to the same kernel.</aside>
                 </section>
 
@@ -266,7 +266,7 @@
                 <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Containers and Images</h2>
-                    <img src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
+                    <img src="http://alandargan.com/wp-content/uploads/2014/11/docker2.png" alt="">
                 </section>
 <section>
                     <h3>Components of Docker</h3>
@@ -311,7 +311,7 @@
                     <h3>Setup</h3>
                     <p>lets setup our environment now</p>
                     <pre><code data-trim contenteditable>
-cd Docker-training
+cd docker-training
 source ./user-setup.sh
                     </code></pre>
                 </section>
@@ -344,10 +344,10 @@ sudo ./docker-course.sh -s 3
                                <li>Run interactive container.</li>
                                <li>Run daemonized container.</li>
                                <li>Talk about container IDs.</li>
-                               <li>Docker ps (with -a for non-running containers)</li>
+                               <li>docker ps (with -a for non-running containers)</li>
                                <li>Talk about container names (automatic, and set).</li>
-                               <li>Docker logs {container} (with -f to follow continuing output)</li>
-                               <li>Docker stop {container}</li>
+                               <li>docker logs {container} (with -f to follow continuing output)</li>
+                               <li>docker stop {container}</li>
                            </ul></aside>
                 </section>
 
@@ -362,20 +362,20 @@ sudo ./docker-course.sh -s 3
                             href="https://docs.docker.com/engine/tutorials/usingdocker/">https://docs.docker.com/engine/tutorials/usingdocker/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/usingdocker">(cache)</a>
                         <aside class="notes"><ul>
                                 <li>Docker version</li>
-                                <li>Help: Docker [command] --help</li>
+                                <li>Help: docker [command] --help</li>
                                 <li>Run web server, explain -P for auto port-mapping.</li>
                                 <li>Only non-official images have slashes in the name (which is the DockerHub account name)</li>
                                 <li>Docker client defaults to DockerHub, but it can be made to point to another registry (but it is difficult).</li>
-                                <li>Docker ps "-l" option for last running container.</li>
-                                <li>Note PORTS in Docker ps output</li>
+                                <li>docker ps "-l" option for last running container.</li>
+                                <li>Note PORTS in docker ps output</li>
                                 <li>And use -p for custom mappings.</li>
                                 <li>Docker port {container} 5000</li>
-                                <li>Docker logs -f {container} (For web app logs)</li>
-                                <li>Docker top {container} (To view top output for processes in container (with PIDs of the host, not the container))</li>
-                                <li>Docker inspect {container} (For container info)</li>
-                                <li>Docker {start, stop, restart}</li>
+                                <li>docker logs -f {container} (For web app logs)</li>
+                                <li>docker top {container} (To view top output for processes in container (with PIDs of the host, not the container))</li>
+                                <li>docker inspect {container} (For container info)</li>
+                                <li>docker {start, stop, restart}</li>
                                 <li>Ports auto-allocated with -P may be different after restart.</li>
-                                <li>Docker rm (with stop first)</li>
+                                <li>docker rm (with stop first)</li>
                             </ul></aside>
                     </section>
 
@@ -437,26 +437,26 @@ $ docker rm myflaskapp
 <a
     href="https://docs.docker.com/engine/tutorials/dockerimages/">https://docs.docker.com/engine/tutorials/dockerimages/</a> <a href="http://webcache.googleusercontent.com/search?q=cache:https://docs.docker.com/userguide/dockerimages">(cache)</a>
                     <aside class="notes"><ul>
-                      <li>Docker images (To list images)</li>
+                      <li>docker images (To list images)</li>
                       <li>Careful not to chew up space with too many images.</li>
                       <li>An image is a base image, plus all FS layers on top.</li>
                       <li>Talk about tags (default tag when none is specified is latest)</li>
-                      <li>Docker pull centos (Pulling independent of running)</li>
-                      <li>Docker search sinatra</li>
-                      <li>Docker pull training/sinatra</li>
+                      <li>docker pull centos (Pulling independent of running)</li>
+                      <li>docker search sinatra</li>
+                      <li>docker pull training/sinatra</li>
                       <li>Run the container, make changes, run commit.</li>
                       <li>commit creates a new image using a read-only version of the UFS layer the changes were made to.</li>
                       <li>Generally better to use a Dockerfile (it must have that name)</li>
                       <li>Create sinatra folder+Dockerfile, and explain contents</li>
                       <li>Each instruction in a Dockerfile creates a new layer.</li>
-                      <li>Docker build</li>
+                      <li>docker build</li>
                       <li>Everything in the same directory as the Dockerfile is sent to the Docker daemon as "context" (so don't put a Dockerfile in your home directory).</li>
                       <li>To keep image sizes small, remove apt-cache (in the same instruction as installing dependencies), and remove other unnecessary cruft before it is added in a layer.</li>
                       <li>Max layers: 127</li>
-                      <li>Docker tag (To tag an image)</li>
+                      <li>docker tag (To tag an image)</li>
                       <li>Digests don't seem to work correctly, and seem to overlap with SHA IDs.</li>
                       <li>You can push to DockerHub</li>
-                      <li>Docker rmi (To remove images, not to be confused with rm for containers)</li>
+                      <li>docker rmi (To remove images, not to be confused with rm for containers)</li>
                     </ul></aside>
                 </section>
 
@@ -466,14 +466,14 @@ $ docker rm myflaskapp
     href="https://docs.docker.com/engine/tutorials/networkingcontainers/">https://docs.docker.com/engine/tutorials/networkingcontainers/</a> (new in 1.9 was <a href="https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/">Dockerlinks</a>)
                     <aside class="notes"><ul>
                       <li>Networking used to be handled through "Docker links" (one way exposing of ports between containers), which are now deprecated.</li>
-                      <li>Docker run --name (Naming a container)</li>
+                      <li>docker run --name (Naming a container)</li>
                       <li>You can create networks for your containers to sit on (specifying a driver (e.g. bridge driver on local machine, overlay driver across machines))</li>
                       <li>You'll want to create your own networks to isolate containers from each other in more complex setups.</li>
-                      <li>List networks with: Docker network ls</li>
+                      <li>List networks with: docker network ls</li>
                       <li>"bridge" is a special network that all cotnainers are added to by default.</li>
-                      <li>You can "Docker inspect {network}" to find out container IP addresses</li>
-                      <li>Docker network create</li>
-                      <li>Docker network connect/disconnect</li>
+                      <li>You can "docker inspect {network}" to find out container IP addresses</li>
+                      <li>docker network create</li>
+                      <li>docker network connect/disconnect</li>
                       <li>Start a container on a network with --net</li>
                       <li>Inspect a container to see network information (it can be on multiple networks).</li>
                       <li>Start 2 containers on the same network, and ping each other.</li>
@@ -488,15 +488,15 @@ $ docker rm myflaskapp
                     <aside class="notes"><ul>
                       <li>Data volumes are like the "mount" command; they bypass the UFS.</li>
                       <li>You can mount a directory from the host, or just a standalone volume.</li>
-                      <li>Docker run -v /webapp OR specify in Dockerfile</li>
+                      <li>docker run -v /webapp OR specify in Dockerfile</li>
                       <li>You can set read-only permissions on a volume (:ro).</li>
                       <li>A container's volumes are not deleted when it is deleted.</li>
-                      <li>Docker inspect {container} (To see volume info under "Mounts")</li>
-                      <li>Docker run -v /src/webapp:/opt/webapp</li>
+                      <li>docker inspect {container} (To see volume info under "Mounts")</li>
+                      <li>docker run -v /src/webapp:/opt/webapp</li>
                       <li>host_directory:container_directory</li>
                       <li>You can mount individual files</li>
                       <li>Pattern: Put all your data volumes in a single container, then use --volumes-from to share them with other containers. This means that you can safely delete the other containers without losing a container with a reference to the volume.</li>
-                      <li>To remove volumes along with a container, use: Docker rm -v</li>
+                      <li>To remove volumes along with a container, use: docker rm -v</li>
                       <li>Removing a container without removing volumes will create dangling volumes which will need to be manually deleted.</li>
                     </ul></aside>
                 </section>
@@ -1142,7 +1142,7 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://coreos.com/">CoreOS</a> (systemd)</li>
                         <li><a href="http://www.projectatomic.io/">Project Atomic</a> (cut down RHEL)</li>
                         <li><a href="http://rancher.com/">Rancher</a> (Dockers all the way down)</li>
-                        <li><a href="http://boot2Docker.io/">boot2Docker</a> (for windows/mac devs)</li>
+                        <li><a href="http://boot2docker.io/">boot2docker</a> (for windows/mac devs)</li>
                     </ul>
                 </section>
                 <section>
@@ -1164,7 +1164,7 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 <section>
                   <h3>Docker + Ansible Deployments</h3>
-                  <img src="img/Docker-ansible-diagram.png" height="600">
+                  <img src="img/docker-ansible-diagram.png" height="600">
                 </section>
                 <section>
                     <h3>Distributed schedulers</h3>
@@ -1415,7 +1415,7 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Security - Image Signing</h3>
                     <ul>
-                        <li><a href="https://blog.Docker.com/2015/08/content-trust-docker-1-8/">Intoduction to Docker Content Trust</a></li>
+                        <li><a href="https://blog.docker.com/2015/08/content-trust-docker-1-8/">Intoduction to Docker Content Trust</a></li>
                         <li>Provided by the <a href="https://github.com/docker/notary">Notary</a> open source project</li>
                         <li>Based on <a href="http://theupdateframework.com/">The Update Framework</a></li>
                         <li><a href="https://www.youtube.com/watch?v=at72dhg-SZY&feature=youtu.be&t=4873">Video</a></li>
@@ -1438,13 +1438,13 @@ search wgtn.cat-it.co.nz lan
                 <section>
                     <h3>Security - Useful links</h3>
                     <ul>
-                        <li>How often do the official base images get updated? (details <a href="https://blog.docker.com/2015/06/understanding-official-repos-Docker-hub/">here</a>)</li>
-                        <li><a href="https://titanous.com/posts/Docker-insecurity">Image signing</a> (see <a href="https://github.com/Docker/notary">notary</a>)</li>
+                        <li>How often do the official base images get updated? (details <a href="https://blog.docker.com/2015/06/understanding-official-repos-docker-hub/">here</a>)</li>
+                        <li><a href="https://titanous.com/posts/docker-insecurity">Image signing</a> (see <a href="https://github.com/docker/notary">notary</a>)</li>
                         <li><a href="https://securityblog.redhat.com/2014/12/17/container-security-isolation-heaven-or-dependency-hell/">Level of isolation</a></li>
-                        <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/Docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
-                        <li><a href="https://blog.Docker.com/2013/08/containers-Docker-how-secure-are-they/">Fundamentals</a> (old but informative)</li>
-                        <li><a href="http://linux-audit.com/Docker-security-best-practices-for-your-vessel-and-containers/">Best practices</a></li>
-                        <li><a href="https://securityblog.redhat.com/2014/12/18/before-you-initiate-a-Docker-pull/">Securely downloading containers</a></li>
+                        <li><a href="https://d3oypxn00j2a10.cloudfront.net/assets/img/docker%20Security/WP_Intro_to_container_security_03.20.2015.pdf">Introduction to Container Security</a> Whitepaper</li>
+                        <li><a href="https://blog.docker.com/2013/08/containers-docker-how-secure-are-they/">Fundamentals</a> (old but informative)</li>
+                        <li><a href="http://linux-audit.com/docker-security-best-practices-for-your-vessel-and-containers/">Best practices</a></li>
+                        <li><a href="https://securityblog.redhat.com/2014/12/18/before-you-initiate-a-docker-pull/">Securely downloading containers</a></li>
                     </ul>
                     <aside class="notes"><ul>
                       <li>Information about official repos</li>
@@ -1461,7 +1461,7 @@ search wgtn.cat-it.co.nz lan
                     <ul>
                         <li>Not declarative (Dockerfiles)</li>
                         <li>Not idempotent or repeatable (E.g. apt-get install)</li>
-                        <li><a href="https://blog.phusion.nl/2015/01/20/Docker-and-the-pid-1-zombie-reaping-problem/">Pids and spawning issues</a> (Zombie processes)</li>
+                        <li><a href="https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/">Pids and spawning issues</a> (Zombie processes)</li>
                         <li>Standardisation</li>
                         <li>See <a href="https://www.youtube.com/watch?v=wpFrkq5XNFM">these</a> <a href="https://www.youtube.com/watch?v=et7BCV_kAUY">talks</a> from systemd.conf</li>
                     </ul>
@@ -1484,8 +1484,8 @@ search wgtn.cat-it.co.nz lan
                     <h3>Monitoring</h3>
                     <p>Lets build a Docker image for some testing:</p>
                     <pre><code data-trim contenteditable>
-$ cat ~/src/Docker-training/Dockerfiles/stress-testing/Dockerfile
-$ sudo docker build -t stress-test ~/src/Docker-training/Dockerfiles/stress-testing/
+$ cat ~/src/docker-training/dockerfiles/stress-testing/dockerfile
+$ sudo docker build -t stress-test ~/src/docker-training/dockerfiles/stress-testing/
 $ sudo docker run stress-test stress --help
 $ sudo docker run [DOCKER OPTIONS] stress-test stress [STRESS OPTIONS]
                     </code></pre>
@@ -1535,12 +1535,12 @@ $ check-config.sh # Check that the kernel supports it.
                 <section>
                     <h3>FAQ</h3>
                     <ul>
-                        <li><a href="http://www.projectatomic.io/blog/2015/08/why-we-dont-let-non-root-users-run-Docker-in-centos-fedora-or-rhel/">Why is sudo required?</a></li>
-                        <li><a href="http://www.projectatomic.io/blog/2015/07/what-are-Docker-none-none-images/">What are the &lt;none&gt;&lt;none&gt; images I see and how can I clean them up?</a></li>
-                        <li><a href="https://docs.Docker.com/articles/baseimages/">Can I build my own base image?</a></li>
-                        <li><a href="https://stackoverflow.com/questions/24394243/why-are-Docker-container-images-so-large">Why are Docker images so large?</a></li>
-                        <li><a href="http://thenewstack.io/understanding-the-Docker-cache-for-faster-builds/">Does each Dockerfile run command create its own layer?</a></li>
-                        <li><a href="https://blog.Docker.com/2015/11/Docker-multi-host-networking-ga/">What happened to Docker links?</a></li>
+                        <li><a href="http://www.projectatomic.io/blog/2015/08/why-we-dont-let-non-root-users-run-docker-in-centos-fedora-or-rhel/">Why is sudo required?</a></li>
+                        <li><a href="http://www.projectatomic.io/blog/2015/07/what-are-docker-none-none-images/">What are the &lt;none&gt;&lt;none&gt; images I see and how can I clean them up?</a></li>
+                        <li><a href="https://docs.docker.com/articles/baseimages/">Can I build my own base image?</a></li>
+                        <li><a href="https://stackoverflow.com/questions/24394243/why-are-docker-container-images-so-large">Why are Docker images so large?</a></li>
+                        <li><a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">Does each Dockerfile run command create its own layer?</a></li>
+                        <li><a href="https://blog.docker.com/2015/11/docker-multi-host-networking-ga/">What happened to Docker links?</a></li>
                     </ul>
                     <aside class="notes"><ul>
                       <li>sudo is required for kernel features</li>
@@ -1560,25 +1560,25 @@ UID  PID   PPID C STIME TTY    TIME     CMD
 root 30136 2379 0 12:29 pts/32 00:00:00 /bin/bash
 
 $ pstree -s -p $(sudo docker top sleepy_cori | tail -1 | awk '{ print $2 }')
-init(1)───Docker(2379)───bash(30136)
+init(1)───docker(2379)───bash(30136)
                     </code></pre>
                     <p>A: Top pids are host pids not namespaces container pids</p>
                 </section>
                 <section>
                     <h3>FAQ</h3>
                     <p>Q: Should I include my application source code in the image?</p>
-                    <p>A: It depends, some people like to mount application source code as <a href-"http://blog.ionic.io/Docker-hot-code-deploys/">volume</a>, others checkout source code when <a href="http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-Docker-container-images/">building the image</a>.</p>
-                    <p>If you are checking out source code in your Dockerfile you need to be aware of <a href="http://thenewstack.io/understanding-the-Docker-cache-for-faster-builds/">how caching works</a>.</p>
+                    <p>A: It depends, some people like to mount application source code as <a href-"http://blog.ionic.io/docker-hot-code-deploys/">volume</a>, others checkout source code when <a href="http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/">building the image</a>.</p>
+                    <p>If you are checking out source code in your Dockerfile you need to be aware of <a href="http://thenewstack.io/understanding-the-docker-cache-for-faster-builds/">how caching works</a>.</p>
                 </section>
                 <section>
                     <h3>FAQ: Copy vs. Add</h3>
                     <p>Q: Should I use Copy or Add in my Dockerfile?</p>
-                    <p>A: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/Dockerfile-add-vs-copy/">here</a>).</p>
+                    <p>A: Use copy unless you actually need the magic add provides (details <a href="https://labs.ctl.io/dockerfile-add-vs-copy/">here</a>).</p>
                 </section>
                 <section>
                     <h3>FAQ: Docker on the Catalyst Cloud</h3>
                     <p>Q: Whats the easiest way to use Docker on the Catalyst Cloud?</p>
-                    <p>A: Have a look at <a href="http://docs.catalystcloud.io/tutorials.html#using-Docker-machine-on-the-catalyst-cloud">this tutorial</a> on how to use Docker machine to provision Docker engines on the the Catalyst Cloud</p>
+                    <p>A: Have a look at <a href="http://docs.catalystcloud.io/tutorials.html#using-docker-machine-on-the-catalyst-cloud">this tutorial</a> on how to use Docker machine to provision Docker engines on the the Catalyst Cloud</p>
                 </section>
                 <section>
                     <h3>FAQ: Stop vs. Remove</h3>
@@ -1588,7 +1588,7 @@ init(1)───Docker(2379)───bash(30136)
                 <section>
                     <h3>FAQ: Mounting volumes in running containers</h3>
                     <p>Q: Can I mount a volume in a running container?</p>
-                    <p>A: Its <a href="https://github.com/Docker/Docker/issues/9849">not currently supported</a> by the CLI but there are some <a href="https://jpetazzo.github.io/2015/01/13/Docker-mount-dynamic-volumes/">hacks</a> out there.</p>
+                    <p>A: Its <a href="https://github.com/docker/docker/issues/9849">not currently supported</a> by the CLI but there are some <a href="https://jpetazzo.github.io/2015/01/13/docker-mount-dynamic-volumes/">hacks</a> out there.</p>
                 </section>
                 <section>
                     <h3>FAQ: History</h3>
@@ -1600,13 +1600,13 @@ init(1)───Docker(2379)───bash(30136)
                     <p>Q: Why is it better to use the exec version rather than the shell version of CMD/ENTRYPOINT?</p>
                     <p>A: As our command is not pid 1 we cannot send POSIX signals to our command</p>
                     <p>A: /bin/sh may not be available in minimal containers</p>
-                    <p>More info <a href="https://www.ctl.io/developers/blog/post/Dockerfile-entrypoint-vs-cmd/">here</a></p>
-                    <p>More info about signals <a href="https://labs.ctl.io/gracefully-stopping-Docker-containers/">here</a></p>
+                    <p>More info <a href="https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd/">here</a></p>
+                    <p>More info about signals <a href="https://labs.ctl.io/gracefully-stopping-docker-containers/">here</a></p>
                 </section>
                 <section>
                     <h3>FAQ: Docker log rotation</h3>
                     <p>Q: Is logfile rotation configurable?</p>
-                    <p>A: <a href="https://docs.Docker.com/engine/reference/logging/overview/">Yes</a>.</p>
+                    <p>A: <a href="https://docs.docker.com/engine/reference/logging/overview/">Yes</a>.</p>
                 </section>
                 <section>
                     <h3>FAQ: Digest broken?</h3>
@@ -1617,8 +1617,8 @@ init(1)───Docker(2379)───bash(30136)
                     <h3>FAQ: RUN command chaining</h3>
                     <p>Q: Why do you see so many commands chained together on Dockerfile RUN lines?</p>
                     <p>A: There used to be a limited number of layers (was 42 now 127)</p>
-                    <p>A: Minimising layers is <a href="https://docs.Docker.com/engine/articles/Dockerfile_best-practices/">encouraged</a></p>
-                    <p>A: Multiple RUN lines can lead to caching related <a href="https://docs.Docker.com/engine/articles/Dockerfile_best-practices/">problems</a></p>
+                    <p>A: Minimising layers is <a href="https://docs.docker.com/engine/articles/dockerfile_best-practices/">encouraged</a></p>
+                    <p>A: Multiple RUN lines can lead to caching related <a href="https://docs.docker.com/engine/articles/dockerfile_best-practices/">problems</a></p>
                 </section>
                 </section>
 
@@ -1646,13 +1646,13 @@ init(1)───Docker(2379)───bash(30136)
                     <h3>Sources</h3>
                     <p>Sources of the material used in this course:</p>
                     <ul>
-                        <li><a href="https://docs.Docker.com/">https://docs.Docker.com/</a></li>
-                        <li><a href="https://training.Docker.com/introduction-to-Docker">https://training.Docker.com/introduction-to-Docker</a></li>
-                        <li><a href="http://alandargan.com/using-vagrant-Docker/">http://alandargan.com/using-vagrant-Docker/</a></li>
-                        <li><a href="http://blog.octo.com/en/Docker-registry-first-steps/">http://blog.octo.com/en/Docker-registry-first-steps/</a></li>
-                        <li><a href="https://www.digitalocean.com/community/tutorials/the-Docker-ecosystem-an-introduction-to-common-components">https://www.digitalocean.com/community/tutorials/the-Docker-ecosystem-an-introduction-to-common-components</a></li>
-                        <li><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-Docker-compose-one-liner.html">http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-Docker-compose-one-liner.html</a></li>
-                        <li><a href="http://www.linuxjournal.com/content/concerning-containers-connections-Docker-networking">http://www.linuxjournal.com/content/concerning-containers-connections-Docker-networking</a></li>
+                        <li><a href="https://docs.docker.com/">https://docs.docker.com/</a></li>
+                        <li><a href="https://training.docker.com/introduction-to-docker">https://training.docker.com/introduction-to-docker</a></li>
+                        <li><a href="http://alandargan.com/using-vagrant-docker/">http://alandargan.com/using-vagrant-docker/</a></li>
+                        <li><a href="http://blog.octo.com/en/docker-registry-first-steps/">http://blog.octo.com/en/docker-registry-first-steps/</a></li>
+                        <li><a href="https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components">https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components</a></li>
+                        <li><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html</a></li>
+                        <li><a href="http://www.linuxjournal.com/content/concerning-containers-connections-docker-networking">http://www.linuxjournal.com/content/concerning-containers-connections-docker-networking</a></li>
                     </ul>
 
                 </section>
