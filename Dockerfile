@@ -7,4 +7,4 @@ RUN npm i
 
 EXPOSE 8000
 
-CMD ["grunt", "serve"]
+CMD ["./node_modules/grunt/bin/grunt", "serve"]
