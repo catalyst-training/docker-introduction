@@ -5,4 +5,6 @@ COPY slides /opt/docker-intro/
 
 RUN npm i
 
+EXPOSE 8000
+
 CMD ["npm", "start"]
