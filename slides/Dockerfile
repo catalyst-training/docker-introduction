@@ -4,7 +4,7 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 RUN chmod +x /usr/local/bin/dumb-init
 
 WORKDIR /opt/docker-intro
-COPY slides /opt/docker-intro/
+COPY . /opt/docker-intro/
 
 RUN npm i
 
