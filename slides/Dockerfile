@@ -5,7 +5,7 @@ RUN chmod +x /usr/local/bin/dumb-init
 
 WORKDIR /opt/docker-intro
 COPY . /opt/docker-intro
-RUN npm install -g
+RUN npm install
 
 
 EXPOSE 8000
