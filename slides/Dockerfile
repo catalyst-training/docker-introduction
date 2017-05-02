@@ -4,13 +4,9 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 RUN chmod +x /usr/local/bin/dumb-init
 
 WORKDIR /opt/docker-intro
-COPY package.json /opt/docker-intro
-RUN npm install
+COPY . /opt/docker-intro
+RUN npm install -g
 
-WORKDIR /opt/docker-intro/slides
-COPY . /opt/docker-intro/slides
-
-RUN npm i
 
 EXPOSE 8000
 
