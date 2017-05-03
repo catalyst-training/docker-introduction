@@ -1,2 +1,0 @@
-FROM python
-ENTRYPOINT ["python"]

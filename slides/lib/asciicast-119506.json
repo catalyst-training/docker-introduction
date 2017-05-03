@@ -1,0 +1,438 @@
+{
+  "version": 1,
+  "width": 174,
+  "height": 22,
+  "duration": 57.869089,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "screen-256color",
+    "SHELL": "/bin/zsh"
+  },
+  "stdout": [
+    [
+      1.645226,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r\u001bk~/flask-app\u001b\\"
+    ],
+    [
+      0.086034,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[01;32m➜  \u001b[36mflask-app\u001b[00m \u001b[K"
+    ],
+    [
+      0.00035,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      4.8e-05,
+      "\u001b[?2004h"
+    ],
+    [
+      0.572383,
+      "d"
+    ],
+    [
+      0.206605,
+      "\bdo"
+    ],
+    [
+      0.134817,
+      "c"
+    ],
+    [
+      0.124083,
+      "k"
+    ],
+    [
+      0.143908,
+      "e"
+    ],
+    [
+      0.148767,
+      "r"
+    ],
+    [
+      0.171314,
+      " "
+    ],
+    [
+      0.128451,
+      "b"
+    ],
+    [
+      0.160344,
+      "u"
+    ],
+    [
+      0.123363,
+      "i"
+    ],
+    [
+      0.136577,
+      "l"
+    ],
+    [
+      0.571319,
+      "d"
+    ],
+    [
+      0.43626,
+      " "
+    ],
+    [
+      0.2502,
+      "-"
+    ],
+    [
+      0.178924,
+      "t"
+    ],
+    [
+      0.171657,
+      " "
+    ],
+    [
+      1.076774,
+      "h"
+    ],
+    [
+      0.145112,
+      "e"
+    ],
+    [
+      0.155227,
+      "y"
+    ],
+    [
+      0.133962,
+      "t"
+    ],
+    [
+      0.205836,
+      "r"
+    ],
+    [
+      0.102935,
+      "a"
+    ],
+    [
+      0.194149,
+      "v"
+    ],
+    [
+      0.381707,
+      "/"
+    ],
+    [
+      0.205977,
+      "m"
+    ],
+    [
+      0.252867,
+      "y"
+    ],
+    [
+      0.452652,
+      "f"
+    ],
+    [
+      0.170454,
+      "i"
+    ],
+    [
+      0.104798,
+      "r"
+    ],
+    [
+      0.153149,
+      "s"
+    ],
+    [
+      0.20087,
+      "t"
+    ],
+    [
+      0.175869,
+      "a"
+    ],
+    [
+      0.214688,
+      "p"
+    ],
+    [
+      0.18387,
+      "p"
+    ],
+    [
+      0.154523,
+      " "
+    ],
+    [
+      0.658278,
+      "."
+    ],
+    [
+      0.717554,
+      "\u001b[?1l\u001b>\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.209308,
+      "Sending build context to Docker daemon 8.192 kB\r\r\r\n"
+    ],
+    [
+      0.614984,
+      "Step 1/8 : FROM alpine:3.5\r\n"
+    ],
+    [
+      3.919009,
+      "3.5: Pulling from library/alpine\r\nDigest: sha256:58e1a1bb75db1b5a24a462dd5e2915277ea06438c3f105138f97eb53149673c4\r\n"
+    ],
+    [
+      0.067452,
+      "Status: Downloaded newer image for alpine:3.5\r\n"
+    ],
+    [
+      0.010917,
+      " ---> 4a415e366388\r\nStep 2/8 : RUN apk add --update py2-pip\r\n"
+    ],
+    [
+      0.406099,
+      " ---> Running in a882d6e9cc6e\r\n"
+    ],
+    [
+      1.390917,
+      "fetch http://dl-cdn.alpinelinux.org/alpine/v3.5/main/x86_64/APKINDEX.tar.gz\r\n"
+    ],
+    [
+      1.923257,
+      "fetch http://dl-cdn.alpinelinux.org/alpine/v3.5/community/x86_64/APKINDEX.tar.gz\r\n"
+    ],
+    [
+      0.512933,
+      "(1/12) Installing libbz2 (1.0.6-r5)\r\n"
+    ],
+    [
+      0.091532,
+      "(2/12) Installing expat (2.2.0-r0)\r\n"
+    ],
+    [
+      0.191096,
+      "(3/12) Installing libffi (3.2.1-r2)\r\n"
+    ],
+    [
+      0.116571,
+      "(4/12) Installing gdbm (1.12-r0)\r\n"
+    ],
+    [
+      0.174879,
+      "(5/12) Installing ncurses-terminfo-base (6.0-r7)\r\n"
+    ],
+    [
+      0.150982,
+      "(6/12) Installing ncurses-terminfo (6.0-r7)\r\n"
+    ],
+    [
+      2.477466,
+      "(7/12) Installing ncurses-libs (6.0-r7)\r\n"
+    ],
+    [
+      0.247073,
+      "(8/12) Installing readline (6.3.008-r4)\r\n"
+    ],
+    [
+      0.173315,
+      "(9/12) Installing sqlite-libs (3.15.2-r0)\r\n"
+    ],
+    [
+      0.4585,
+      "(10/12) Installing python2 (2.7.13-r0)\r\n"
+    ],
+    [
+      6.412311,
+      "(11/12) Installing py-setuptools (29.0.1-r0)\r\n"
+    ],
+    [
+      0.568515,
+      "(12/12) Installing py2-pip (9.0.0-r1)\r\n"
+    ],
+    [
+      1.466841,
+      "Executing busybox-1.25.1-r0.trigger\r\n"
+    ],
+    [
+      0.159069,
+      "OK: 61 MiB in 23 packages\r\n"
+    ],
+    [
+      4.556149,
+      " ---> 04886f8f3d7c\r\n"
+    ],
+    [
+      0.37407,
+      "Removing intermediate container a882d6e9cc6e\r\nStep 3/8 : COPY requirements.txt /usr/src/app/\r\n"
+    ],
+    [
+      1.114018,
+      " ---> 0610cc798756\r\n"
+    ],
+    [
+      0.092383,
+      "Removing intermediate container 88a506213610\r\nStep 4/8 : RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt\r\n"
+    ],
+    [
+      0.354053,
+      " ---> Running in 5b8223272e94\r\n"
+    ],
+    [
+      2.167034,
+      "Collecting Flask==0.10.1 (from -r /usr/src/app/requirements.txt (line 1))\r\n"
+    ],
+    [
+      0.673064,
+      "  Downloading Flask-0.10.1.tar.gz (544kB)\r\n"
+    ],
+    [
+      0.812847,
+      "Collecting Werkzeug>=0.7 (from Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))\r\n"
+    ],
+    [
+      0.189266,
+      "  Downloading Werkzeug-0.12.1-py2.py3-none-any.whl (312kB)\r\n"
+    ],
+    [
+      0.168996,
+      "Collecting Jinja2>=2.4 (from Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))\r\n"
+    ],
+    [
+      0.114366,
+      "  Downloading Jinja2-2.9.6-py2.py3-none-any.whl (340kB)\r\n"
+    ],
+    [
+      0.239859,
+      "Collecting itsdangerous>=0.21 (from Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))\r\n"
+    ],
+    [
+      0.08971,
+      "  Downloading itsdangerous-0.24.tar.gz (46kB)\r\n"
+    ],
+    [
+      0.510315,
+      "Collecting MarkupSafe>=0.23 (from Jinja2>=2.4->Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))\r\n"
+    ],
+    [
+      0.147932,
+      "  Downloading MarkupSafe-1.0.tar.gz\r\n"
+    ],
+    [
+      0.503858,
+      "Installing collected packages: Werkzeug, MarkupSafe, Jinja2, itsdangerous, Flask\r\n"
+    ],
+    [
+      0.556692,
+      "  Running setup.py install for MarkupSafe: started\r\n"
+    ],
+    [
+      0.801942,
+      "    Running setup.py install for MarkupSafe: finished with status 'done'\r\n"
+    ],
+    [
+      0.135851,
+      "  Running setup.py install for itsdangerous: started\r\n"
+    ],
+    [
+      0.370739,
+      "    Running setup.py install for itsdangerous: finished with status 'done'\r\n"
+    ],
+    [
+      0.008566,
+      "  Running setup.py install for Flask: started\r\n"
+    ],
+    [
+      0.689575,
+      "    Running setup.py install for Flask: finished with status 'done'\r\n"
+    ],
+    [
+      0.048658,
+      "Successfully installed Flask-0.10.1 Jinja2-2.9.6 MarkupSafe-1.0 Werkzeug-0.12.1 itsdangerous-0.24\r\n"
+    ],
+    [
+      0.301268,
+      "\u001b[91mYou are using pip version 9.0.0, however version 9.0.1 is available.\r\nYou should consider upgrading via the 'pip install --upgrade pip' command.\r\n\u001b[0m"
+    ],
+    [
+      1.652189,
+      " ---> 3c2666f8f0e4\r\n"
+    ],
+    [
+      0.148084,
+      "Removing intermediate container 5b8223272e94\r\n"
+    ],
+    [
+      0.00034,
+      "Step 5/8 : COPY app.py /usr/src/app/\r\n"
+    ],
+    [
+      1.247896,
+      " ---> 18db2d11accf\r\n"
+    ],
+    [
+      0.065693,
+      "Removing intermediate container 3593c8e30e4e\r\nStep 6/8 : COPY templates/index.html /usr/src/app/templates/\r\n"
+    ],
+    [
+      0.913881,
+      " ---> 0f95b9e4f971\r\n"
+    ],
+    [
+      0.073882,
+      "Removing intermediate container 9437212b37fa\r\nStep 7/8 : EXPOSE 5000\r\n"
+    ],
+    [
+      0.306104,
+      " ---> Running in b48943382549\r\n"
+    ],
+    [
+      0.439691,
+      " ---> e4d5b5e63d30\r\n"
+    ],
+    [
+      0.099025,
+      "Removing intermediate container b48943382549\r\nStep 8/8 : CMD python /usr/src/app/app.py\r\n"
+    ],
+    [
+      0.338789,
+      " ---> Running in d755c03920b1\r\n"
+    ],
+    [
+      0.513478,
+      " ---> 3383dded280d\r\n"
+    ],
+    [
+      0.09017,
+      "Removing intermediate container d755c03920b1\r\n"
+    ],
+    [
+      0.045264,
+      "Successfully built 3383dded280d\r\n"
+    ],
+    [
+      0.007481,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.00125,
+      "\u001bk~/flask-app\u001b\\"
+    ],
+    [
+      0.084181,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[01;32m➜  \u001b[36mflask-app\u001b[00m \u001b[K"
+    ],
+    [
+      5.1e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      3.562208,
+      "\u001b[?2004l\r\r\n"
+    ]
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "command": null,
+  "env": {
+    "SHELL": "/bin/bash",
+    "TERM": "screen-256color"
+  },
+  "title": null,
+  "height": 16,
+  "width": 107,
+  "version": 1,
+  "duration": 8.000000,
+  "stdout": [
+    [
+      0.027027,
+      "\u001b[01;32mubuntu@manager1-trainingpc\u001b[00m:\u001b[01;34m~\u001b[00m$ "
+    ],
+    [
+      1.66166,
+      "d"
+    ],
+    [
+      0.120513,
+      "o"
+    ],
+    [
+      0.089366,
+      "c"
+    ],
+    [
+      0.149998,
+      "k"
+    ],
+    [
+      0.140113,
+      "e"
+    ],
+    [
+      0.160203,
+      "r"
+    ],
+    [
+      0.169351,
+      " "
+    ],
+    [
+      0.740269,
+      "s"
+    ],
+    [
+      0.31949,
+      "w"
+    ],
+    [
+      0.190605,
+      "a"
+    ],
+    [
+      0.200707,
+      "r"
+    ],
+    [
+      0.449895,
+      "m"
+    ],
+    [
+      0.220426,
+      " "
+    ],
+    [
+      0.26957,
+      "i"
+    ],
+    [
+      0.18925,
+      "n"
+    ],
+    [
+      0.230538,
+      "i"
+    ],
+    [
+      0.20911,
+      "t"
+    ],
+    [
+      0.810798,
+      "\r\n"
+    ],
+    [
+      0.669568,
+      "Swarm initialized: current node (d1av3sf7qxmlbgtsc3jjpfw7b) is now a manager.\r\n\r\n"
+    ],
+    [
+      0.003837,
+      "To add a worker to this swarm, run the following command:\r\n\r\n    docker swarm join \\\r\n    --token SWMTKN-1-12ffzfi8ecbk7420j3ill7u0fwww31qrm63egsyznftv0rp99r-7j6k8emsis34yl2yjv6of6rx7 \\\r\n    192.168.99.100:2377\r\n\r\nTo add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.\r\n\r\n\u001b[01;32mubuntu@manager1-trainingpc\u001b[00m:\u001b[01;34m~\u001b[00m$ "
+    ],
+    [
+        0.8,
+        "\r\n"
+    ]
+  ]
+}

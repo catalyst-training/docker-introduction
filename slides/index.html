@@ -16,10 +16,11 @@
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/catalyst.css" id="theme">
         <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/asciinema-player.css">
 
         <!-- For syntax highlighting -->
-        <!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
-        <link rel="stylesheet" href="lib/css/catalyst-syntax.css">
+        <!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+        <link rel="stylesheet" href="lib/css/solarized-light.css">
 
         <!-- If the query includes 'print-pdf', include the PDF print sheet -->
         <script>
@@ -84,12 +85,16 @@
                     <h3>This course</h3>
                     <ul>
                         <li>Makes use of official Docker docs</li>
+                        <li>Based on Docker version 1.13.1</li>
                         <li>A mix of command line and theory</li>
                         <li>Assumes no prior Docker knowledge</li>
                         <li>Assumes familiarity with the linux shell</li>
-                        <li>Assumes we are using ubuntu (trusty)</li>
-                        <li>Has some helper scripts</li>
+                        <li>Assumes we are using ubuntu 14.04 (trusty)</li>
                     </ul>
+                    <aside class="notes">
+                        Introductory course so we'll start out with basic material
+                        that some people may already be familiar with.
+                    </aside>
                 </section>
 
                 <section>
@@ -98,232 +103,1742 @@
                         <li>Understand how to use Docker on the command line</li>
                         <li>Understand where Docker can be used</li>
                         <li>Appreciation of the larger ecosystem</li>
-                        <li>Get peole thinking about where they could use Docker</li>
-                        <li>Get people using the technology</li>
+                        <li>Get people thinking about where they could use Docker</li>
                     </ul>
-                </section>
                 
-                <section>
-                    <section>
-                        <h2>Run our first Docker image</h2>
-                    </section>
-                    <section>
-                        <h3>
-                            Pull an image 
-                        </h3>
-<script type="text/javascript" src="https://asciinema.org/a/118779.js"
-data-autoplay="1" data-loop="1" data-size="small" data-speed="2" id="asciicast-118779" async></script>
-                    </section>
-                    <section>
-                        <pre>docker image ls
-REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-alpine                 latest              c51f86c28340        4 weeks ago         1.109 MB
-hello-world             latest              690ed74de00f        5 months ago        960 B
-                        </pre>
-                    </section>
-
-
-                </section>
-
-
-
-                <section>
-                    <h3>Understanding Docker</h3>
-                    <p><a
-                        href="https://docs.docker.com/engine/docker-overview/">https://docs.docker.com/engine/docker-overview/</a>
-                    <a href="https://docs.docker.com/engine/docker-overview/">(cache)</a></p>
                     <aside class="notes">
-                        <ul>
-                      <li>Expalin architecture diagram (Commands and components).</li>
-                      <li>Client vs daemon.</li>
-                      <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
-                      <li>Docker's use of UFS separates it from other container solutions.</li>
-                      <li>Execute the "docker run" command and go through the list of steps it does.
-                        <ul>
-                          <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
-                          <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
-                        </ul></li>
-                      <li>Namespaces => isolation of filesystem and kernel features.</li>
-                      <li>Control groups => resource limiting.</li>
-                      <li>Different container format avaialble, default is libcontainer</li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>What is containerization?</h3>
-                    <ul>
-                        <li>
-                            An operating system level virtualization method for
-                            running distributed applications without launching an
-                            entire VM.
-                        </li>
-                        <li>
-                            Multiple isolated systems run on a single host and
-                            access a single kernel
-                        </li>
-                        <li>
-                            Key benefits:
-                            <ul>
-                                <li>Lightweight - Places less strain on overall resources.</li>
-                                <li>Efficiency gains in storage, CPU</li>
-                                <li>Portability
-                                    <aside class="notes">
-                                        Same application container can run on any system or cloud.
-                                    </aside>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                        think about how you can use docker in dev, testing,
+                        deploying code
+                    </aside>
                 </section>
                 
+                  <section>
+
+                    <section>
+                      <h2>
+                        Introduction to containers
+                      </h2>
+                    </section>
+
+                  <section>
+                      <h3>What is containerization?</h3>
+                      <ul>
+                          <li>
+                              An operating system level virtualization method for
+                              running distributed applications without launching an
+                              entire VM.
+                          </li>
+                          <li>
+                              Multiple isolated systems run on a single host and
+                              access a single kernel
+                          </li>
+                          <li>
+                              Key benefits:
+                              <ul>
+                                  <li>Lightweight - Places less strain on overall resources.</li>
+                                  <li>Efficiency gains in storage, CPU</li>
+                                  <li>Portability
+                                      <aside class="notes">
+                                          Same application container can run on any system or cloud.
+                                      </aside>
+                                  </li>
+                              </ul>
+                          </li>
+                      </ul>
+                      <aside class="notes">
+                          <ul>
+                              <li>Virtualisation as running OS on another OS</li>
+                              <li>
+                                  Usually running a particular OS type/version on a host machine
+                                  <ul>
+                                      <li>Windows on Linux</li>
+                                      <li>Linux on windows</li>
+                                  </ul>
+                              </li>
+                              <li>VMWare, VirtualBox, Vagrant</li>
+                          </ul>
+                      </aside>
+                      
+                      
+                  </section>
+
+                  <section class="image-slide">
+                      <h2>Lightweight</h2>
+                      <img src="img/docker.png" alt="">
+                      <aside class="notes">
+                          <ul>
+                              <li>Virtual machines run guest operating systems (note OS layer)</li>
+                              <li>Resource intensive</li>
+                              <li>
+                                  Resulting disk image and application state entanglement of
+                                  <ul>
+                                      <li>OS Settings</li>
+                                      <li>System dependencies</li>
+                                      <li>OS patches</li>
+                                  </ul>
+                              </li>
+                          </ul>
+                      </aside>
+                  </section>
+                  <section>
+                      <h3>
+                          Benefits of Containers: Resources
+                      </h3>
+                      <ul>
+                          <li>Containers share a kernel</li>
+                          <li>Container image only contains
+                              <ul>
+                                  <li>executable</li>
+                                  <li>application dependencies</li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </section>
+
                 <section>
-                    <h3>Decoupling</h3>
+                    <h3>Benefits of Containers: Decoupling</h3>
                     <ul>
-                        <li>Application stack is no longer coupled to machine it is running on</li>
-                        <li>Allows a service to have the most appropriate stack without needing to consider conflicts with and dependencies of other services (eg python versions)</li>
-                        <li>Services can be run in the most optimal location for a given organisation</li>
-                        <li>Services can be upgraded and scaled independently</li>
-                        <li>Services boundaries can define areas of responsibility</li>
+                        <li>Application stack not coupled to host machine</li>
+                        <!--<li>Allows a service to have the most appropriate stack without needing to consider conflicts with and dependencies of other services (eg python versions)</li>-->
+                        <li>Scale and upgrade services independently</li>
                         <li>Configuration is coupled with the application</li>
-                        <li>Service vs. Machine</li>
+                        <li>Treat services like cattle instead of pets </li>
                     </ul>
                     <aside class="notes">Scale services, not machines. You *can* treat machines like cattle, not pets.</aside>
                 </section>
-                <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Lightweight</h2>
-                    <img src="img/docker.png" alt="">
-                    <aside class="notes">Remember: Docker containers are all tied to the same kernel.</aside>
-                </section>
-
-
-
-                
-                
-                <section>
-                    <h3>What is Docker?</h3>
-                    <ul>
-                        <li>Docker is an open-source platform for creating,
+                  </section>
+                  <section>
+                    <section>
+                      <h2>
+                        Introduction to Docker
+                      </h2>
+<aside class="notes">
+                            Docker is an open-source platform for creating,
                             running, and distributing software "containers"
                             that bundle software applications with all of
                             their dependencies.
+                        </aside>
+                    </section>
 
-                            <li><a href="https://docs.docker.com/engine/understanding-docker/#what-is-the-docker-platform">Docker Platform</a></li>
+                    
 
-                            <li><a href="https://docs.docker.com/engine/understanding-docker/#what-is-docker-engine">Docker Engine</a></li>
-                        </li>
+                    <section>
+                        <h3>The Docker Platform</h3>
                         
+                        <ul>
+                            <li>Develop your application and its supporting components using containers.</li>
+                            <li>The container becomes the unit for distributing and testing your application.</li>
+                            <li>Deploy application to staging/production environments</li>
+                        </ul>
+                        <aside class="notes">
+                            <p>
+                            Docker has created a platform that makes it easy
+                            to create and distribute containerised
+                            applications
+                            </p>
+                        
+                        <p>
+                        The collective tooling that enables you to...
+                        </p>    <ul>
+                                <li>Provides the ability to package and run an application in a loosely
+                                isolated environment called a container. </li>
+                                <li>The isolation and security allow you to run many containers simultaneously on a given host. </li>
+                                <li>They don’t need the extra load of a hypervisor, but run directly within the host machine’s kernel. </li>
+                                <li>Can run more containers on a given hardware combination than using virtual machines.</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+                    <section>
+                        <h3>The Docker Engine</h3>
+                        <aside class="notes">
+                            <p>
+                            Client server application
+                            </p>
+                            <p>
+                            The CLI uses the Docker REST API to control or
+                            interact with the Docker daemon through scripting or
+                            direct CLI commands. Many other Docker applications
+                            use the underlying API and CLI.
+                            </p>
+                            <p>
+                            The daemon creates and manages Docker objects, such as
+                            images, containers, networks, and volumes.
+                            </p>
+                        </aside>
+                        <ul>
+                            <li>A server which is a type of long-running program called a daemon process (the dockerd command).</li>
+                            <li>A REST API which specifies interfaces that programs can use to talk to the daemon and instruct it what to do.</li>
+                            <li>A command line interface (CLI) client (the docker command).</li>
+                        </ul>
+                        <img src="img/engine-components-flow.png" alt="Docker Engine">
+                    </section>
+                    <section>
+                        <h3>Uses of Docker</h3>
+                        <ul>
+                            <li>Fast consistent delivery of applications </li>
+                            <li>Responsive deployment and scaling</li>
+                            <li>Running more workloads on same hardware</li>
+                        </ul>
+                        <aside class="notes">
+                            <ul>
+                                <li>Standardised environment across development, testing, production</li>
+                                <li>Ideal for CI/CD workflows</li>
+                                <li>Containers can run on multiple environments</li>
+                                <li>Portability and Lightweight make scaling easy</li>
+                                <li>Can run more on the same hardware</li>
+                            </ul>
+                        </aside>
+
+                    
+                        
+
+                    </section>
+                  
+
+                    <!--<section>
+                        <h3>Docker popularity</h3>
+                        <ul>
+                            <li>Linux containers are not new, but Docker makes it easier to build and ship them.</li>
+                            <li>Containers are intended to do for software deployment what the shipping container did for the shipping industry.</li>
+                            <li>Containers are comparable to virtual machines, but there are important differences.</li>
+                        </ul>
+                    </section>-->
+                    <section>
+                        <h3>Docker Portability</h3>
+
+                        <ul>
+                            <li>Most modern operating systems
+                                <ul>
+                                    <li>Linux (RHEL, CentOS, Ubuntu LTS, etc.)</li>
+                                    <li>OSX </li>
+                                    <li>Windows</li>
+                                </ul>
+                            </li>
+                            <li>Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)</li>
+                            <li>Private clouds (OpenStack, Vmware)</li>
+                            <li>Public clouds (AWS, Azure, Rackspace, Google)</li>
+                        </ul>
+
+                    </section>
+
+                <!--<section>
+                                    <h3>Components of Docker</h3>
+                                    <ul>
+                                        <li>Images</li>
+                                            <ul>
+                                                <li>Read only template for creating containers</li>
+                                                <li>
+                                                    Can be built and distributed (by anyone)
+                                                </li>
+                                                <li>Can be based on or extended by other
+                                                    images</li>
+                                            </ul>
+                                        <li>Containers</li>
+                                            <ul>
+                                                <li>An actual running instance of an image</li>
+                                                <li>Read write</li>
+                                                <li>Encasulates your application and its dependencies</li>
+                                            </ul>
+                                        <li>Registries
+                                            <ul>
+                                                <li>Repository of images</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
+                                </section>-->
+
+
+                  <section>
+                      <h3>Why Docker?</h3>
+                      <ul>
+                          <li>Containers generally lightweight compared to traditional virtualization</li>
+                          <li>Consistency across dev/test/prod</li>
+                          <li>Easy to modify, update and scale</li>
+                          <li>Dependency encapsulation and decoupling</li>
+                          <li>Enables new workflows</li>
+                      </ul>
+                  </section>
+
+                  <section class="image-slide">
+                      <h2>Developer workflow</h2>
+                      <img
+                      src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png"
+                      alt="Developer workflow">
+                      <aside class="notes"><ul>
+                        <li>Docker workflows are comparable to Git workflows.</li>
+                        <li>Always specify tags (or SHAs).</li>
+                      </ul></aside>
+                  </section>
+
+                  <section>
+                    <h3>Docker Hub</h3>
+                    <ul>
+                      <li>Canonical home of official docker images</li>
+                      <li>Contains >100K docker images (private, public, official)</li>
+                      <li>Free, so let's <a href="https://hub.docker.com/">sign up</a> </li>
                     </ul>
+                  </section>
+                  </section>
+                <section>
+                    <section>
+                        <h2>Running Docker</h2>
+                    </section>
+                    <section>
+                      <h3>
+                        Run the <code>docker</code> client
+                      </h3>
+                      <pre><code>$ docker&lt;ENTER&gt;
+
+    Usage:  docker COMMAND
+
+    A self-sufficient runtime for containers
+
+    Options:
+          --config string      Location of client config files (default "/Users/travis/.docker")
+      -D, --debug              Enable debug mode
+          --help               Print usage
+    .
+    .</code></pre>
+                    </section>
+                    
+                    <section>
+                        <h3>
+                            Exercise: Hello world
+                        </h3>
+                        <pre><code>$ docker run hello-world</code></pre>
+<asciinema-player autoplay="1" loop="loop" font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-122666.json" cols="150" rows="15"></asciinema-player>
+                    </section>
+                    
+                    <!--<section>
+                      <h3>
+                        Exercise: Pull and run course slides image
+                      </h3>
+                      <pre><code>$ docker pull heytrav/docker-introduction-slides</code></pre>
+<script type="text/javascript"   src="https://asciinema.org/a/119466.js" id="asciicast-119466" id="asciicast-119450"
+data-autoplay="1" data-loop="1" data-size="small" data-speed="1" async></script>
+                    </section>-->
+                    
+                    <section>
+                      <h3>
+                        Exercise: Pull and run course slides image
+                      </h3>
+                      <pre><code>$ docker run --name docker-intro --rm \
+        -p 8000:8000 heytrav/docker-introduction-slides:may-30</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
+<p>
+<a href="http://localhost:8000">View course slides</a>
+</p>
+                    </section>
+
+
+                  <section>
+                    <h3>
+                      Exercise: Start a shell
+                    </h3>
+                     <pre><code>$ docker run alpine /bin/sh</code></pre> 
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
+                    <ul>
+                      <li>Docker starts alpine image</li>
+                      <li>Runs shell command</li>
+                      <li>Exits immediately</li>
+                      <li>Require <code>-i -t</code> flag</li>
+                    </ul>
+                  </section>
+
+
+
+                    
+                  <section>
+                    <h3>
+                      Exercise: Start an <em>interactive</em> shell
+                    </h3>
+                    <pre><code>$ docker run -it alpine /bin/sh</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119490.json" cols="174" rows="5"></asciinema-player>
+                    <ul>
+                      <li>Docker starts alpine image</li>
+                      <li>Runs shell command</li>
+                      <li>Execute commands inside container</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>
+                      Exercise: Run detached container
+                    </h3>
+                    <pre><code>$ docker run --rm --name static-site -e AUTHOR="YOUR NAME" \
+    -d -p 8081:80 dockersamples/static-site</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-122718.json" cols="120" rows="8"></asciinema-player>
+                    <ul>
+                      <li><code>-d</code> creates container with process detached from terminal</li>
+                      <li><code>-p</code> publish container with external port 8081 mapped to internal port 80</li>
+                      <li><code>-e</code> pass AUTHOR environment variable into container</li>
+                      <li><code>--name</code> the container "static-site"</li>
+                      <li>Go to <a href="http://localhost:8081">http://localhost:8081</a> in your browser</li>
+                    </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li>Have users stop (<code>docker stop static-site</code>) and start this container with the exact same line</li>
+                            <li>Have them run again with the <code>--rm</code> flag</li>
+                        </ul>
+                    </aside>
+
+                  </section>
+
+
+                  <!--<section>
+                      <h3>
+                          Create, run and delete containers 
+                      </h3>
+                      <pre><code>$ docker create -P --expose=1234 python:2.7 \
+                                    python -m SimpleHTTPServer 1234
+
+a842945e2414132011ae704b0c4a4184acc4016d199dfd4e7181c9b89092de13
+
+$ docker ps -a
+CONTAINER ID  IMAGE       COMMAND              CREATED       ... NAMES
+a842945e2414  python:2.7  python -m SimpleHTT 8 seconds ago ... fervent_hodgkin
+
+$ docker start &lt;CONTAINER_ID&gt;
+a842945e2414
+
+$ docker kill &lt;CONTAINER_ID&gt;
+a842945e2414
+$ docker rm &lt;CONTAINER_ID&gt;
+a842945e2414
+$ docker ps -a
+                      </code></pre>
+
+                      <aside class="notes">
+                          Instead of using docker run, it's possible to create a
+                          container and run it in separate steps using the create,
+                          and start commands.
+                      </aside>
+
+                  </section>-->
+
+                  
+                  <section>
+                      <h2>General purpose commands</h2>
+                  </section>
+                  <section>
+                      <h3>Get command documentation</h3>
+                      <ul>
+                          <li>Just typing <code>docker</code> returns list of commands</li>
+                          <li>Calling any command with <code>-h</code> flag displays some docs</li>
+                          <li>Comprehensive online docs on <a href="https://docs.docker.com/edge/engine/reference/commandline/docker/">Docker website</a></li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>
+                          Docker version
+                      </h3>
+
+                      <pre><code>$ docker --version
+Docker version 17.03.1-ce, build c6d412e</code></pre>
+                  </section>
+
+                  <section>
+                    <h3>List local images</h3>
+                    <pre><code>$ docker image ls</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119494.json" cols="174" rows="7"></asciinema-player>
+                  </section>
+                  
+                  <section>
+                    <h3>List running containers</h3>
+                    <pre><code>$ docker ps</code></pre>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/asciicast-119497.json" cols="174"
+     rows="5"></asciinema-player>
+                  </section>
+                  <section>
+                    <h3><code>docker ps</code></h3>
+
+                    <pre><code>Options:
+-a, --all             Show all containers (default shows just running)
+-f, --filter filter   Filter output based on conditions provided
+    --format string   Pretty-print containers using a Go template
+    --help            Print usage
+-n, --last int        Show n last created containers (includes all states) (default -1)
+-l, --latest          Show the latest created container (includes all states)
+    --no-trunc        Don't truncate output
+-q, --quiet           Only display numeric IDs
+-s, --size            Display total file sizes</code></pre>
+                    <p>More examples</p>
+                    <dl>
+                        <dt><code>docker ps -a</code></dt>
+                        <dd>Show all containers (also not running)</dd>
+                        <dt><code>docker ps -a --filter 'exited=0'</code></dt>
+                        <dd>Filter all containers by exit code</dd>
+                    </dl>
+                    <p>
+                    See <a href="https://docs.docker.com/engine/reference/commandline/ps/">online documentation</a>
+                    </p>
+                  </section>
+
+                  <section>
+                      <h3>View container logs</h3>
+                      <pre><code>$ docker logs</code></pre>
+<!--<script  data-autoplay="1" data-loop="1" data-size="small" data-speed="1" type="text/javascript" src="https://asciinema.org/a/122552.js" id="asciicast-122552" async></script>-->
+ <asciinema-player autoplay="1" loop="1" font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-122552.json" cols="170" rows="14"></asciinema-player>
+<ul>
+    <li><code>-f</code> flag to watch logs in realtime</li>
+</ul>
+<p>
+See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online documentation</a>
+</p>
+                  </section>
+                  <section>
+                      <h3>Enter a running container</h3>
+
+                      <pre><code>$ docker exec OPTIONS &lt;CONTAINER NAME&gt;</code></pre>
+
+<asciinema-player  autoplay="1" loop="1" font-size="medium"
+   theme="solarized-light" speed="1" src="lib/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
+<ul>
+    <li>Can be useful for debugging</li>
+</ul>
+<p>
+See <a href="https://docs.docker.com/engine/reference/commandline/exec/">online documentation</a>
+</p>
+                  </section>
+
+
+
+                  <section>
+                    <h3>Exercise: Stop a running container</h3>
+                    <pre><code>$ docker stop &lt;CONTAINER_ID&gt;</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119499.json" cols="174" rows="4"></asciinema-player>
+                  </section>
+                  <section>
+                    <h2>Exercise: Clean up</h2>
+                    <pre><code>$ docker stop $NAME
+$ docker rm $NAME</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119504.json" cols="200" rows="18"></asciinema-player>
+                  </section>
+
                 </section>
+
 
 
                 <section>
-                    <h3>Why Docker?</h3>
-                    <ul>
-                        <li>Containers generally lightweight compared to traditional virtualization</li>
-                        <li>Consistency across dev/test/prod</li>
-                        <li>Easy to modify, update and scale</li>
-                        <li>Dependency encapsulation and decoupling</li>
-                        <li>Enables (requires?) new workflows</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Docker Portability</h3>
+                  <section>
+                    <h2>Docker in a nutshell</h2>
+                  </section>
+                    <!--<section>
+                        <h3>Components of Docker</h3>
+                        <ul>
+                            <li>Images
+                                <ul>
+                                    <li>The build component</li>
+                                    <li>Distributable <em>artefact</em></li>
+                                </ul>
+                            </li>
+                            <li>Containers
+                                <ul>
+                                    <li>The run component</li>
+                                </ul>
+                            </li>
+                                
+                            <li>Registries
+                                <ul>
+                                    <li>The distribution component</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
+                    </section>-->
+                    <section class="image-slide">
+                        <h3>Components of Docker</h3>
+                        <img
+                        src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
+                        <aside class="notes"><ul>
+                                <li>Images
+                                    <ul>
+                                        <li>The build component</li>
+                                        <li>Distributable <em>artefact</em></li>
+                                    </ul>
+                                </li>
+                                <li>Containers
+                                    <ul>
+                                        <li>The run component</li>
+                                    </ul>
+                                </li>
 
-                    <ul>
-                        <li>Any modern Linux (RHEL, CentOS, Ubuntu LTS, etc.), OSX, Windows</li>
-                        <li>Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)</li>
-                        <li>Private clouds (OpenStack, Vmware)</li>
-                        <li>Public clouds (AWS, Azure, Rackspace, Google)</li>
-                    </ul>
+                                <li>Registries
+                                    <ul>
+                                        <li>The distribution component</li>
+                                    </ul>
+                                </li>
+                            </ul></aside>
+                    </section>
+                    <section>
+                        <h3>
+                            Underlying technology
+                        </h3>
+                        <dl>
+                            <dt>Go</dt><dd>Implementation language developed by Google</dd>
+                            <dt>Namespaces</dt><dd>Provide isolated workspace, or <em>container</em></dd>
+                            <dt>cgroups</dt><dd>limit application to specific set of resources </dd>
+                            <dt>UnionFS</dt><dd>building blocks for containers </dd>
+                            <dt>Container format</dt><dd> Combined namespaces,
+                            cgroups and UnionFS</dd>
+                        </dl>
 
-                </section>
-                <section>
-                    <h3>Docker popularity</h3>
-                    <ul>
-                        <li>Linux containers are not new, but Docker
-                            makes it easier to build and ship them.</li>
-                        <li>Containers are intended to do for software
-                            deployment what the shipping container did for
-                            the shipping industry.</li>
-                        <li>Containers are comparable to virtual
-                            machines, but there are important differences.</li>
-                    </ul>
-                </section>
+                        <aside class="notes"><dl>
+                               <dt>Namespace</dt> <dd>
+                                    provides layer of isolation. Each container
+                                    runs in isolated namepsace and only has access to
+                                    components in that namespace
+                                </dd>
+                                <dt>cgroup</dt> 
+                                <dd>
+                                allow Docker Engine to share available
+                                hardware resources to containers and
+                                optionally enforce limits and constraints. For
+                                example, you can limit the memory available to
+                                a specific container.
+                                </dd>
+                                <dt>Union Filesystem</dt>
+                                <dd>
+                                operate by creating layers, making them very
+                                lightweight and fast. currently supports AUFS,
+                                btrfs, vfs, device mapper
+                                </dd>
+                                <dt>Container format</dt>
+                                <dd>
+                                libcontainer is default. In the future will
+                                integrate with Solaris Zones, BSD Jails
+                                </dd>
 
+                            </dl></aside>
+                    </section>
+
+                    <section>
+                      <h3>Behind the scenes</h3>
+                      <ul>
+                        <li>User types docker commands</li>
+                        <li>Docker client contacts docker daemon</li>
+                        <li>Docker daemon checks if image exists</li>
+                        <li>Docker daemon downloads image from docker registry
+                        if it does not exist</li>
+                        <li>Docker daemon runs container using image</li>
+                      </ul>
+                    </section>
+                  <section>
+                    <h3>Docker architecture</h3>
+
+                    <img src="img/architecture.svg" alt="Architecture">
+                    <aside class="notes">
+                      <ul>
+                        <li>Expalin architecture diagram (Commands and components).</li>
+                        <li>Client vs daemon.</li>
+                        <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
+                        <li>Docker's use of UFS separates it from other container solutions.</li>
+                        <li>Execute the "docker run" command and go through the list of steps it does.
+                          <ul>
+                            <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
+                            <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
+                          </ul></li>
+                          <li>Namespaces => isolation of filesystem and kernel features.</li>
+                          <li>Control groups => resource limiting.</li>
+                          <li>Different container format avaialble, default is libcontainer</li>
+                      </ul></aside>
+                    <aside class="notes">
+                        <ul>
+                            <li>Docker client talks to Docker Daemon</li>
+                            <li>Docker Daemon does heavy lifting</li>
+                            <li>
+                                Client and daemon 
+                                <ul>
+                                    <li>can run on the same system</li>
+                                    <li>communicate using REST API</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </aside>
+                    
+                  </section>
                 <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Simple Workflow</h2>
-                    <img src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png" alt="">
+
+
+                </section>
+
+                
+
+                <section>
+                  <section>
+                    <h2>Images and Containers</h2>
+
+                    <aside class="notes">
+                        Understanding how Docker manages the data within your images and containers will help you understand the best way to design your containers and Dockerize your applications, and avoid performance problems along the way
+                    </aside>
+                  </section>
+
+                  <section>
+                    <h3>Docker images</h3>
+                    <ul>
+                      <li>Images are the basis of containers</li>
+                      <li>An image is a <em>readonly</em> file system similar to tar archive</li>
+                      <li><em>Distributable</em> artefact of Docker</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>Types of images</h3>
+                    <dl>
+                      <dt>Official Base Image</dt> <dd>Images that have no parent (alpine, ubuntu, debian)</dd>
+                      <dt>Base Image</dt> <dd>Can be any image (official or otherwise) that is used to build a new image</dd>
+                      <dt>Child Images</dt> <dd>Build on base images and add functionality (this is the type you'll build)</dd>
+                    </dl>
+
+                  </section>
+                  <section>
+                      <h3>Layering of images</h3>
+                      <ul>
+                          <li>Images are <em>layered</em></li>
+                          <li>
+                              Images always consist of an <em>official base image</em>
+                              <ul>
+                                  <li>ubuntu:14.04</li>
+                                  <li>alpine:latest</li>
+                              </ul>
+                              <li>Any child image built by adding layers on top of base</li>
+                              <li>Each successive layer is set of differences to preceding layer</li>
+                          </li>
+                      </ul>
+                  </section>
+<section>
+                        <h3>Exercise: Create a basic image</h3>
+                        <pre><code>$ docker run -t -i ubuntu:16.04 /bin/bash
+
+root@69079aaaaab1:/$ apt-get update 
+root@69079aaaaab1:/$ exit
+
+$ docker commit 69079aaaaab1 ubuntu:update
+13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
+
+$ docker image ls
+$ docker diff 69079aaaaab1
+$ docker history ubuntu:16.04
+$ docker history ubuntu:update</code></pre>
+                        <ul>
+                            <li>Created a new layer (cache files added by apt)</li>
+                            <li>Not an ideal way to create images</li>
+                        </ul>
+                        <aside class="notes">
+                            <ul>
+                                <li>If you'd like to keep changes made inside a container, it is possible to save them by committing the container.</li>
+                                <li>Commiting creates a new image (ubuntu:update)</li>
+                                <li>Now after the running container is stopped, it's possible to run again using ubuntu:update</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                  <section>
+                    <h3>Create images with a <em>Dockerfile</em></h3>
+                      <ul>
+                          <li>A text file. Usually named <code>Dockerfile</code></li>
+                          <li>Sequential instructions for building a Docker image</li>
+                          <li>From top to bottom, each instruction creates a layer on the previous</li>
+                          <li>A very simple Dockerfile:</li>
+                      </ul>
+                      
+                      <pre><code class="dockerfile">FROM ubuntu:15.10
+COPY . /app
+RUN make /app
+CMD python /app/app.py</code></pre>
+                      <aside class="notes">
+                          Basically the Dockerfile is like a bash script. It
+                          contains instructions for sequentially building an
+                          image. Some instructions apply to running the image in a
+                          container.
+                      </aside>
+                      
+                  </section>
+                  <section>
+                    <h3>Structure of a Dockerfile</h3>
+                    <ul>
+                      <li>Tell Docker which base image to use<pre><code class="dockerfile">FROM ubuntu:15.10</code></pre></li>
+                      <li>A number of commands telling docker how to build image
+                          <pre><code class="dockerfile">COPY . /app
+RUN make /app</code></pre>
+                      </li>
+                      <li>Optionally tell Docker what command to run when the
+                          container is started<pre><code class="dockerfile">CMD python /app/app.py</code></pre></li>
+                          
+                    </ul>
+                  </section>
+                  <section>
+                      <h3>Image layers</h3>
+                      <img src="img/container-layers.jpg"/>
+                  </section>
+
+                  <section>
+                      <h3>Container layering</h3>
+                      <ul>
+                          <li>Container creates its own read/write layer on top of image</li>
+                          <li>Multiple containers each have own read/write layer, but can share the actual image</li>
+                      </ul>
+                      <img src="img/sharing-layers.jpg"/>
+                      <aside class="notes">
+                          <ul>
+                              <li>Difference between containers and images is top writable layer</li>
+                              <li>All writes to container stored here</li>
+                              <li>Lost when container deleted</li>
+                          </ul>
+                      </aside>
+
+                  </section>
+                  <section>
+                      <h3>Sharing image layers</h3>
+                      <ul>
+                          <li>Images will share any common layers</li>
+                          <li>
+                              Applies to 
+                              <ul>
+                                  <li>Images pulled from Docker </li>
+                                  <li>Images you build yourself</li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>Exercise: Build images with common layers</h3>
+                      <p>
+                      <code>~/docker-introduction/sample-code/layering</code>
+                      </p>
+                      <p>
+                      <code>Dockerfile.base</code>
+
+
+                      <pre><code class="dockerfile">FROM ubuntu:16.10
+COPY . /app</code></pre>
+                      </p>
+
+                      <p>
+                      <code>Dockerfile</code>
+
+
+                      <pre><code class="dockerfile">FROM acme/my-base-image:1.0
+CMD /app/hello.sh</code></pre>
+                      </p>
+
+                      <p>
+                      <code>hello.sh</code>
+
+                      <pre><code class="bash">#!/bin/sh
+echo "Hello world"</code></pre>
+                      </p>
+
+                  </section>
+                  <section>
+                      <h3>Build base image</h3>
+                      <p>
+                      <pre><code>$ docker build -t acme/my-base-image:1.0 -f Dockerfile.base .</code></pre>
+                      </p>
+<asciinema-player autoplay="1"  font-size="medium" speed="3"
+    theme="solarized-light" src="lib/asciicast-122488.json" loop="loop" cols="136" rows="18"></asciinema-player>
+                  </section>
+                  <section>
+                      <h3>Build child image</h3>
+                      <p>
+                      <pre><code>$ docker build -t acme/my-final-image:1.0 -f Dockerfile .</code></pre>
+                      </p>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-122489.json" cols="136" rows="14"></asciinema-player>
+                  </section>
+                  <section>
+                      <h3>Compare base and final image</h3>
+                      <ul>
+                          <li>The final image should contain all the same layers as the base image </li>
+                          <li>One additional layer: the last line of the Dockerfile</li>
+                      </ul>
+                      <pre><code>$ docker history acme/my-base-image:1.0
+$ docker history acme/my-final-image:1.0
+IMAGE         ...                                        SIZE 
+5932655b26aa  ...   #(nop)  CMD ["/bin/sh" "-c" "/a...   0 B&lt;--new layer
+2f723f94263a  ...   #(nop) COPY dir:dd75f285798cdc9...   106 B
+8d4c9ae219d0  ...   #(nop)  CMD ["/bin/bash"]            0 B
+&lt;missing&gt;     ...   mkdir -p /run/systemd && echo '...   7 B
+&lt;missing&gt;     ...   sed -i 's/^#\s*\(deb.*universe\...   2.78 kB
+&lt;missing&gt;     ...   rm -rf /var/lib/apt/lists/*          0 B
+&lt;missing&gt;     ...   set -xe   && echo '#!/bin/sh' >...   745 B
+&lt;missing&gt;     ...   #(nop) ADD file:9e2eabb7b05f940...   106 MB
+                      </code></pre>
+                  </section>
+
+
+                  <section>
+                    <h3>Images and Tags</h3>
+                    <ul>
+                      <li>Tags specify a particular version of an image<pre><code>$ docker pull ubuntu:14.04</code></pre></li>
+                      <li>Default to <em>latest</em>. In most cases this is a LTS version<pre><code>$ docker pull ubuntu</code></pre></li>
+                        <li>Registries like Docker Hub contain >> 100K images<pre><code>$ docker search ubuntu</code></pre></li>
+
+                    </ul>
+                  </section>
+                  
+
+
+                    <!--<section>
+                        <h3>Exercise: Saving an image as tar for sharing</h3>
+                        <pre><code>$ docker ps -a
+
+CONTAINER ID IMAGE COMMAND CREATED ... NAMES
+77d9619a7a71 ubuntu:16.04 "/bin/bash" 10 seconds ago ... high_shockley
+
+$ docker export 77d9619a7a71 > update.tar
+$ ls
+update.tar
+
+$ docker import - update &lt; update.tar
+157bcbb5fdfce0e7c10ef67ebdba737a491214708a5f266a3c74aa6b0cfde078
+
+$ docker images
+REPOSITORY TAG IMAGE ID ... VIRTUAL SIZE
+update latest 157bcbb5fdfc ... 188.1 MB
+                        </code></pre>
+                        <aside class="notes">Note: This is not the way it would be done in practice</aside>
+                    </section>-->
+                </section>
+                <section>
+                    <section>
+                        <h2>Dockerising applications</h2>
+                    </section>
+                  <section>
+                    <h3>Dockerfile directives</h3>
+                    <dl>
+                      <dt>FROM          </dt>      <dd>Tell Docker which base image to use (alpine, ubuntu)</dd>
+                      <dt>WORKDIR       </dt>      <dd>set the working directory (will be created if doesn't exist)</dd>
+                      <dt>COPY          </dt>      <dd>copy files from build environment into image</dd>
+                    </dl>
+                  </section>
+
+                  <section>
+                    <h3>Dockerfile directives (continued)</h3>
+                    <dl>
+                      <dt>RUN           </dt>      <dd>execute a command (i.e. bash command)</dd>
+                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
+                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
+                      <dt>CMD/ENTRYPOINT</dt>      <dd>command to execute when container starts</dd>
+                    </dl>
+                  </section>
+
+                  <section>
+                    <h3>Create web application in Docker </h3>
+                    <ul>
+                      <li>Create a small web app based on Python Flask</li>
+                      <li>Write a Dockerfile</li>
+                      <li>Build an image</li>
+                      <li>Run the image</li>
+                      <li>Upload image do Docker Registry</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>Step 1. Set up the web app</h3>
+                    <ul>
+                      <li>Under <code>~/docker-introduction/sample-code/flask-app</code>
+                        <dl>
+                          <dt>app.py</dt> <dd>A simple flask application for displaying cat pictures</dd>
+                          <dt>requirements.txt</dt> <dd>list of dependencies for flask</dd>
+                          <dt>templates/index.html</dt> <dd>A jinja2 template</dd>
+                          <dt>Dockerfile</dt><dd>Instructions for building a Docker image</dd>
+                        </dl>
+                      </li>
+                    </ul>
+
+                  </section>
+
+
+
+                  <section>
+                    <h3>Writing a Dockerfile</h3>
+                    <ul>
+                      <li>In the sample-code/flask-app folder</li>
+                      <li>Start your favourite editor (gedit, vi, emacs, etc.)</li>
+                      <li>Create a file called Dockerfile</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                      <h3>Our Dockerfile</h3>
+                    <pre><code>FROM alpine:3.5
+
+# Install python and pip
+RUN apk add --update py2-pip
+
+# install Python modules needed by the Python app
+COPY requirements.txt /usr/src/app/
+RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
+
+# copy files required for the app to run
+COPY app.py /usr/src/app/
+COPY templates/index.html /usr/src/app/templates/
+
+# tell the port number the container should expose
+EXPOSE 5000
+
+CMD ["python", "/usr/src/app/app.py"]</code></pre>
+                  </section>
+
+                  <section>
+                    <h3>
+                      Build a Docker image
+                    </h3>
+                    <pre><code>$ cd ~/docker-introduction/sample-code/flask-app 
+$ docker build -t YOURNAME/myfirstapp .</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119506.json" cols="174" rows="22"></asciinema-player>
+<p>
+Note: please replace YOURNAME with your Docker Hub username
+</p>
+                  </section>
+
+                  <section>
+                    <h3>
+                      Run your image
+                    </h3>
+                    <pre><code>$ docker run -p 8888:5000 --name myfirstapp YOURNAME/myfirstapp</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119510.json" cols="174" rows="11"></asciinema-player>
+                    ...Now open <a href="http://localhost:8888">your test webapp</a>
+                  </section>
+
+
+                  <section>
+                      <h3>Login to docker</h3>
+                      <pre><code>$ docker login</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120558.json" cols="138" rows="11"></asciinema-player>
+                  </section>
+
+                  <section>
+                    <h3>
+                      Push our first image
+                    </h3>
+                    <pre><code>$ docker push YOURNAME/myfirstapp</code></pre>
+
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119547.json" cols="174" rows="12"></asciinema-player>
+                  </section>
+
+
+
+
+                  <section>
+                    <h3>Summary</h3>
+                    <ul>
+                      <li>Wrote a small web application</li>
+                      <li>Used Dockerfile to create an image</li>
+                      <li>Pushed image to upstream registry</li>
+                    </ul>
+                    <aside class="notes">
+                      <ul>
+                        <li>Docker allowed us to create and test an app on an arbitrary OS without physical hardware</li>
+                        <li>Create an artefact which we can share with coworkers, test and deploy</li>
+                      </ul>
+                    </aside>
+                  </section>
+
+
+                  <!-- Large image slide -->
+                </section>
+                <section>
+                    <section>
+                        <h2>Dockerfile best practices</h2>
+                    </section>
+
+                    <section>
+                        <h3>General guidelines</h3>
+                        <ul>
+                            <li>Containers should be as ephemeral as possible</li>
+                            <li>Use a <code>.dockerignore</code> file</li>
+                            <li>Avoid installing unnecessary packages</li>
+                            <li>Minimise concerns <ul><li>Avoid multiple processes/apps in one container</li></ul></li>
+                        </ul>
+                        <aside class="notes">
+                            <ul><li>
+                                    By ephemeral is meant that a container can be built, stopped, destroyed and rebuilt with minimal setup and configuration
+                                </li>
+                                <li>dockerignore to avoid copying in unneeded stuff (.git subdirectory)</li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section>
+                        <h3>General guidelines</h3>
+                        <ul>
+                            <li>Use current official repositories in FROM as base image
+								<ul>
+									<li>debian 124 MB</li>
+									<li>ubuntu 117 MB</li>
+									<li>alpine 3.99 MB</li>
+									<li>busybox 1.11 MB</li>
+								</ul>
+</li>
+                            <li>Minimize Layers</li>
+                            <li>Sort multiline arguments</li>
+                            <li>Split complex RUN statement on separate lines with backslashes</li>
+                            <li>Run apt-get update and apt-get install in same RUN </li>
+                            <li>Run clean up in same line whenever possible</li>
+                        </ul>
+
+                    </section>
+
+                    <section>
+                        <h3>
+                            Minimising layers
+                        </h3>
+                        <pre><code>$ docker pull heytrav/example-1
+$ docker pull heytrav/example-2
+$ docker pull heytrav/example-3
+$ docker image ls | grep example
+$ docker history heytrav/example-3
+$ docker history heytrav/example-2
+$ docker history heytrav/example-1
+                        </code></pre>
+                        <dl>
+                            <dt>example-1</dt><dd><a href="https://gist.github.com/heytrav/c82a81b41c359368b41c124bc730b58a">Remove cache files in same layer</a></dd>
+                            <dt>example-2</dt><dd><a href="https://gist.github.com/heytrav/6bda2ff27b63da0e103538d377a94364">Remove cache files in next layer</a></dd>
+                            <dt>example-3</dt><dd><a href="https://gist.github.com/heytrav/54360dfcffa2de105a85fc71a0254b20">Install libs without removing cache</a></dd>
+                        </dl>
+                        <aside class="notes">
+                            <ul>
+                                <li>apt update in same line to force update when new package is added</li>
+                                <li>Demonstrate importance of cleaning up in RUN commands.</li>
+                                <li>Best to remove extra unneeded files in same line</li>
+                            </ul>
+                        </aside>
+
+                    
+                    </section>
+					
+                    
+                    
+                    <section>
+                        <h3>ADD vs COPY</h3>
+                        <pre><code class="dockerfile">ADD somefile.tar.gz /                    # add tar into directory 
+
+ADD . /usr/path/                         # copy file to directory
+
+ADD http://domain.com/some/file.txt .    # download file from web
+
+ADD http://domain.com/some/file.tar.gz . # same thing (doesn't unpack tar.gz)
+
+COPY . /usr/local/bin                    # copy files to /usr/local/bin</code></pre>
+                        <ul>
+                            <li>Both <em>copy</em> things into image</li>
+                            <li>ADD does a bit of magic: <ul><li>unpacks tars</li> <li>downloads files</li> <li>copies files</li></ul></li>
+                            <li>ADD considered inconsistent and not transparent</li>
+                            <li>Recommend to only use COPY and never ADD</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            CMD
+                        </h3>
+                        <ul>
+                            <li>Used to run software contained by image</li>
+                            <li>Should be run in form <ul><li><code>CMD ["executable", "param1", "param2", ..]</code></li></ul></li>
+                            <li>Or in form that creates interactive shell like
+                                <ul><li><code>CMD ["python"]</code></li><li><code>CMD ["/bin/bash"]</code></li></ul></li>
+                            <li>Avoid <ul><li><code>CMD "executable param1 param2 ..."</code></li></ul></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>ENTRYPOINT</h3>
+                        <pre><code class="dockerfile">ENTRYPOINT ["python", "manage.py"]
+CMD ["test"]</code></pre>
+                        <ul>
+                            <li>When used in conjunction with CMD:
+                                <ul><li>Set base command with ENTRYPOINT</li>
+                                    <li>Use CMD to set default argument</li> </ul></li> 
+                            <li>Will just run tests when container is run with no params <ul><li><code>docker run myimage</code></li></ul></li>
+                            <li>Can override by passing argument to container
+                                <ul><li><code>docker run myimage runserver</code></li></ul></li>
+                            <li>For more see <a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Dockerfile Best practices</a></li>
+                        </ul>
+                        <aside class="notes">
+                            <ul>
+                                <li>Use CMD when you want the user to have the choice of commands to run</li>
+                                <li>Use ENTRYPOINT when you want to wrap a command</li>
+                                <li>ENTRYPOINT can be overridden with the --entrypoint flag</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                </section>
+
+                <!--<section>
+                <section>
+                    <h3>Microservices</h3>
+                    <p>Cockcrofts definition: Loosely coupled service oriented architecture with bounded contexts</p>
+                    <p>Eric Brewers: Microservice boundaries are language boundaries and team boundaries</p>
+                </section>
+                <section>
+                    <h3>Microservices</h3>
+                    <ul>
+                        <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
+                        <li>Services can be implemented with entirely different stacks</li>
+                        <li>Services can be developed, maintained, and updated independently</li>
+                        <li>Often use well defined REST APIs to communicate</li>
+                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
+                    </ul>
                     <aside class="notes"><ul>
-                      <li>Docker workflows are comparable to Git workflows.</li>
-                      <li>Always specify tags (or SHAs).</li>
+                      <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
                     </ul></aside>
                 </section>
                 <section>
-                    <h3>Docker Engine</h3>
-                    <img src="img/engine-components-flow.png" alt="Ambassador">
+                    <h3>Microservices</h3>
+                    <ul>
+                        <li>Often use a DevOps approach (you build it you run it)</li>
+                        <li>Smart endpoints and dumb pipes</li>
+                        <li>Decentralized Data Management with eventual consistency</li>
+                        <li>Continuous integration and delivery</li>
+                        <li>Design for failure (optimize MTTR (mean-time-to-repair))</li>
+                    </ul>
+                    <aside class="notes">Smart endpoints and dumb pipes: Communication mediums should be as simple/dumb as possible (e.g. simple message queue, REST); the logic should be in the app.</aside>
                 </section>
+                <section>
+                    <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
+                    <ul>
+                        <li>Create a Separate Data Store for Each Microservice</li>
+                        <li>Keep Code at a Similar Level of Maturity</li>
+                        <li>Do a Separate Build for Each Microservice</li>
+                        <li>Deploy in Containers</li>
+                        <li>Treat Servers as Stateless</li>
+                    </ul>
+                    <aside class="notes"><ul>
+                      <li>Separate data stores: Use the best DBMS and schema for each service.</li>
+                      <li>When doing new development, create a new microservice, rather than extending the existing one (so that you don't break it or make it less performant). You can merge the microservices later if needed.</li>
+                      <li>Stateless: Cattle, not pets.</li>
+                    </ul></aside>
+                </section>
+                <section>
+                    <h3>Containers and Microservices</h3>
+                    <ul>
+                        <li>Containers do not necessarily map to service or application boundaries</li>
+                        <li>A service will often contain more than one container</li>
+                        <li>A container is more like an OO Class - Brendan Burns @ Dockercon 2015</li>
+                        <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
+                    </ul>
+                    <aside class="notes">Containers are great for microservices, because they simplify the task of deploying many individual services, each with their own requirements.</aside>
+                </section>
+                <section>
+                    <h3>Containers and Microservices: Requirements</h3>
+                    <ul>
+                        <li>Sharing among containers (eg filesystems)</li>
+                        <li>Atomic co-scheduling of containers</li>
+                        <li>Parameterization of containers</li>
+                    </ul>
+                    <aside class="notes"><ul>
+                      <li>Volumes</li>
+                      <li>Being able to spin up a bunch of containers together as a unit.</li>
+                      <li>Parameters through environment variables for different environments.</li>
+                    </ul></aside>
+                </section>
+                <section>
+                    <h3>Microservices - Resources</h3>
+                    <ul>
+                        <li><a href="http://martinfowler.com/articles/microservices.html">Microservices - Martin Fowler</a></li>
+                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Adopting Microservices at Netflix: Lessons for Architectural Design</a></li>
+                        <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">Adopting Microservices at Netflix: Lessons for Team and Process Design</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=e4jr6Ihz4Qo">Kubernetes: The Path to Cloud Native - Eric Brewer - OSCon 2105</a></li>
+                        <li>Nginx blog Building Microservices series: <a href="https://www.nginx.com/blog/introduction-to-microservices/">1</a>,<a href="https://www.nginx.com/blog/building-microservices-using-an-api-gateway">2</a>,<a href="https://www.nginx.com/blog/building-microservices-inter-process-communication/">3</a></li>
+                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></li>
+                    </ul>
+                </section>
+                </section>-->
+                <section>
+                  <section>
+                    <h2>Multi-container Applications as Microservices</h2>
+                  </section>
+
+                <section>
+                    <h3>Microservices</h3>
+                    <ul>
+                        <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
+                        <li>Services can be implemented with entirely different stacks</li>
+                        <li>Services can be developed, maintained, and updated independently</li>
+                        <li>Often use well defined REST APIs to communicate</li>
+                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
+                    </ul>
+                    <aside class="notes"><ul>
+                      <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
+                    </ul></aside>
+                </section>
+                  <section>
+                      <h3>Build a voting app</h3>
+                              <pre><code>$ cd ~/example-voting-app</code></pre>
+                      <ul>
+                          <li>Python web application</li>
+                          <li>Redis queue</li>
+                          <li>.NET worker</li>
+                          <li>Postgres DB with a data volume</li>
+                          <li>Node.js app to show votes in real time</li>
+                          <li>Clone the repo and change directories into it
+                          </li>
+                      </ul>
+                  </section>
+
+                  <section>
+                      <h3>Defining multi container apps</h3>
+                      <ul>
+                          <li>
+                              Microservice architecture encourages apps run in isolation
+                              <ul>
+                                  <li>Webapp</li>
+                                  <li>Database</li>
+                                  <li>Nginx</li>
+                                  <li>Backend code</li>
+                              </ul>
+                          </li>
+
+                        <li>Easier to scale components</li>
+                        <li>Easier to replace components</li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>Running <em>linked</em> containers.</h3>
+
+                      <pre><code>$ docker run -d --name="database" -v ~/data:/var/lib/data postgres:9.3
+$ docker run -d --name="redis" redis
+$ docker run -d --link database:database --link redis:redis \ 
+      -p 8000:8000 YOURNAME/pythonwebapp </code></pre>                  
+                      <ul>
+                          <li><code>--name</code> flag to specify name of container</li>
+                          <li><code>--link</code> flag to tell docker to bridge two or more containers</li>
+                          <li>This works, but gets very unwieldy as number of apps and interactions increases.</li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>Docker Compose file</h3>
+                      <ul>
+                          <li>See <a href="https://github.com/dockersamples/example-voting-app/blob/master/docker-stack.yml">example from repo</a></li>
+                            <li>A <code>yaml</code> file that specifies       
+                                <ul>
+                                    <li>which services to run</li>
+                                    <li>how to network them</li>
+                                    <li>mount file volumes</li>
+                                    <li>..and a lot more</li>
+                                </ul>
+                            </li> 
+                
+                      </ul>
+                  </section>
+
+                  <section>
+                      <h3>Running services in Swarm Mode</h3>
+                      <ul>
+                          <li>Swarm Mode added to Docker in 1.12</li>
+                          <li>Cluster management and orchestration features embedded in Docker</li>
+                          <li>Can run applications on one or more machines</li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>Initiate a Swarm</h3>
+                      <pre><code>$ cd example-voting-app
+$ docker swarm init</code></pre>
+                  </section>
+
+                  <section>
+                      <h3>Deploy the stack</h3>
+                      <pre><code>$ docker stack deploy --compose-file docker-stack.yml vote</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119595.json" cols="174" rows="15"></asciinema-player>
+                  </section>
+
+                  <section>
+                      <h3>Verify stack is running</h3>
+                      <pre><code>$ docker stack ps vote</code></pre>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119596.json" cols="174" rows="15"></asciinema-player>
+Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
+a look at the <a href="http://localhost:5001">results</a>.
+                  </section>
+
+                  <section>
+                      <h3>Modify vote app</h3>
+                      <ul>
+                          <li>Open up <code>app.py</code> </li>
+                          <li>On lines 8 & 9, modify vote options</li>
+                          <li>Build image</li>
+                          <li>Push to Docker Hub</li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>Change vote options</h3>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120556.json" cols="138" rows="21"></asciinema-player>
+                  </section>
+                  <section>
+                      <h3>Build image</h3>
+                      <p>
+                      In example-voting-app...
+                      </p>
+
+                      <pre><code>$ docker build -t YOURNAME/vote vote</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-120557.json" cols="138"
+    rows="15"></asciinema-player>
+                  </section>
+
+                  <section>
+                      <h3>Push changes to Docker Hub</h3>
+                      <pre><code>$ docker push YOURNAME/vote</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-120559.json" cols="138"
+    rows="15"></asciinema-player>
+                  </section>
+
+                    <section>
+                        <h3>Update a service</h3>
+                        <pre><code>$ docker service update --image YOURNAME/vote vote_vote</code></pre>
+<p>
+Now go to the <a href="http://localhost:5000">voting app</a> and see what
+changed
+</p>
+                    </section>
+
+                    <section>
+                        <h3>Remove Swarm Stack</h3>
+                        <pre><code>$ docker stack rm vote</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-120569.json" cols="130"
+    rows="15"></asciinema-player>
+                    </section>
+                  <section>
+                      <h3>Summary</h3>
+                      <ul>
+                          <li>Deployed a set of services on our local host</li>
+                          <li>Docker created a couple networks (front-tier, back-tier)</li>
+                          <li>Some services running multiple instances</li>
+                          <li>Next, we'll look at doing this across multiple machines</li>
+                      </ul>
+                  </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Running apps in the cloud</h2>
+                    </section>
 
 
                 <section>
-                    <h3>Components of Docker</h3>
+                    <h3>Some Concepts</h3>
                     <ul>
-                        <li>Images
-                            <ul>
-                                <li>The build component</li>
-                            </ul>
-                        </li>
-                        <li>Containers
-                            <ul>
-                                <li>The run component</li>
-                            </ul>
-                        </li>
+                        <li>Buzzwords ahead!</li>
+                        <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
+                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
+                        <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
+                    </ul>
+                    <aside class="notes"><ul>
+                      <li>Immutable architecture: Instead of mutating an instance, replace it with a new one.</li>
+                      <li>Pets (nursed back to health) vs. Cattle (replaced when sick)</li>
+                      <li>Snowflake (unique) vs. Phoenix (constantly rising from the ashes of its predecessor)</li>
+                    </ul></aside>
+                </section>
+
+                <section>
+                    <h3>Immutable Architecture/Infrastructure</h3>
+                    <ul>
+                        <li>Phoenix servers</li>
+                        <li>The environment is defined in code</li>
+                        <li>If you need to change <em>anything</em> you create a new instance and destroy the old one</li>
+                        <li>Docker makes it much more likely you will work in this way</li>
+                        <li>Procedural vs Declarative</li>
+                    </ul>
+                    <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
+                </section>
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Immutable Architecture</h2>
+                    <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
+                </section>
+
+
+                    <section>
+                        <h3>Deploying to Catalyst Cloud</h3>
+                        <ul>
+                            <li>Deploy the voting app to Catalyst Cloud</li>
+                            <li>Source the RC file</li>
+                        </ul><pre><code>$ source ~/os-training.catalyst.net.nz-openrc.sh</code></pre>
+                    </section>
+                    <section>
+                        <h3>Introducing Ansible</h3>
+                        <ul>
+                            <li>DevOps swiss army knife</li>
+                            <li>Python based tool set</li>
+                            <li>Lots of uses: 
+                                <ul>
+                                    <li>server/cluster management </li>
+                                    <li>deploy code </li>
+                                    <li>install packages</li>
+                                </ul>
+                            <li>Follow <a
+                                    href="http://docs.catalystcloud.io/first-instance/ansible.html#install-ansible">instructions</a>
+                                for <ul><li>installing ansible</li> <li>activating python venv</li></ul></li>
+                            </li>
+                        </ul>
                             
-                        <li>Registries
-                            <ul>
-                                <li>The distribution component</li>
+                    </section>
+                    <section>
+                        <h3>Where we should be now..</h3>
+                        <ul><li>In your home directory you should have
+                                <ul>
+                                    <li>a folder named <em>docker-introduction</em></li>
+                                    <li>a folder named <em>example-voting-app</em></li>
+                                    <li>a folder named <em>catalystcloud-ansible</em></li>
+                                </ul>
+
+                            </li>
+                            <li>Should have downloaded <code>os-training.catalyst.net.nz-openrc.sh</code> (somewhere)</li>
+                            <li>Should have ansible installed</li>
+                            <li>Should have activated and sourced a python virtualenv <ul><li><code>(ansible-env)</code> should appear at beginning of line in your shell</li></ul> </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Create a cluster</h3>
+                        <pre><code>$ cd ~/catalystcloud-ansible/example-playbooks/docker-swarm-mode
+$ ansible-playbook -K create-swarm-hosts.yaml</code></pre>
+                    </section>
+
+                    <section>
+                        <h3>Create Swarm</h3>
+
+                         <pre><code>$ ssh manager&lt;TAB&gt;&lt;ENTER&gt;
+$ docker swarm init</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120530.json" cols="107" rows="12"></asciinema-player>
+
+<p>
+Copy the <code>docker swarm join ...</code> command that is output
+</p>
+
+
+
+
+                    </section>
+                    <section>
+                        <h3>Join Worker Nodes</h3>
+                        <p>
+                        Paste the command from the manager node onto command
+                        line.
+                        </p>
+
+                        <pre><code>$ ssh worker1&lt;TAB&gt;&lt;ENTER&gt;
+$ docker swarm join --token $TOKEN  192.168.99.100:2377</code></pre>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120531.json" cols="107" rows="10"></asciinema-player>
+<p>Repeat this for <code>worker2</code></p>
+                    </section>
+
+                    <section>
+                        <h3>Check nodes</h3>
+                        <pre><code>$ docker node ls</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-120532.json" cols="107" rows="6"></asciinema-player>
+                    </section>
+
+                    <section>
+                        <h3>Voting app (again)</h3>
+                        <p>
+                        Upload docker-stack.yaml to manager node
+                        </p>
+                        <pre><code>$ cd ~/example-voting-app
+$ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
+                    </section>
+                    <section>
+                        <h3>Deploy application</h3>
+                        <pre><code>$ docker stack deploy -c docker-stack.yml vote</code></pre>
+<script  data-autoplay="1" data-loop="1" data-size="small" data-speed="1" type="text/javascript" src="https://asciinema.org/a/120533.js" id="asciicast-120533" async></script>
+                    </section>
+                    <section>
+                        <h3>Monitor deploy progress</h3>
+                        <pre><code>$ docker stack ps vote</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-120540.json" cols="199" rows="11"></asciinema-player>
+                        <pre><code>$ docker service ls</code></pre>
+                    </section>
+                    <section>
+                        <h3>Let's Vote!</h3>
+                        <dl>
+                            <dt><a href="http://voting.app:5000">Vote</a></dt>           
+                            <dd>To vote</dd>
+                            <dt><a href="http://voting.app:5001">Results</a></dt>
+                            <dd>To see results</dd>
+                            <dt><a href="http://voting.app:8080">Visualizer</a></dt>
+                            <dd>To visualise running containers</dd>
+                        </dl>
+                    </section>
+                    <section>
+                        <h3>Scale services</h3>
+                        <pre><code>$ docker service scale vote_vote=3</code></pre>
+                        <p>
+                        Look at the changes in the <a href="http://voting.app:8080">visualizer</a>
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3>Update a service</h3>
+                        <pre><code>$ docker service update --image YOURNAME/vote vote_vote</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-120564.json" cols="146"
+    rows="10"></asciinema-player>
+<p>
+Now go to the <a href="http://voting.app:5000">voting app</a> and verify the change
+</p>
+                    </section>
+                
+                    <section>
+                        <h3>Drain a node</h3>
+                        <pre><code>$ docker node update --availability drain worker1</code></pre>
+                        <ul>
+                            <li>
+                                Sometimes necessary to take host offline
+                                <ul>
+                                    <li>Planned maintenance</li>
+                                </ul>
+                            </li>
+
+                            <li>Prevents node from receiving new tasks</li>
+                            <li>Manager stops tasks running on node and launches replicas on active nodes</li>
+                        </ul>
+                        <aside class="notes">
+                            This might be necessary if you need to do maintenance
+                            on a particular host
+                        </aside>
+                    </section>
+                    <section>
+                        <h3>
+                            Return node to service
+                        </h3>
+                        <pre><code>$ docker node update --availability active worker1</code></pre>
+                        <ul>
+                            <li>during a service update to scale up</li>
+                            <li>during a rolling update</li>
+                            <li>when you set another node to Drain availability</li>
+                            <li>when a task fails on another active node</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Summary</h3>
+                        <ul>
+                            <li>
+                                Created a cluster with a cloud provider using ansible
+                                <ul>
+                                    <li>1 manager node</li>
+                                    <li>2 worker nodes</li>
+                                </ul>
+                            </li>
+                            <li>Deployed microservice for voting app in Docker Swarm</li>
+                            <li>Scaled service from 2 to 3 services</li>
+                            <li>Rolling-Updated image</li>
+                        </ul>
+
+
+                    </section>
+                    <section>
+                        <h3>Tear down your cluster</h3>
+                        <pre><code>$ ansible-playbook -K remove-swarm-hosts.yaml</code></pre>
+                    </section>
+
+                </section>
+
+                
+                
+
+
+                <section>
+                    <section>
+                        <h2>Wrap up</h2>
+                    </section>
+
+                <section>
+                    <h3>Docker ecosystem</h3>
+                    <ul>
+                        <li>An explosion of tools</li>
+                        <li>Hard to keep up</li>
+                        <li>Lets have a quick look</li>
+                    </ul>
+                </section>
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Docker ecosystem</h2>
+                    <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
+                    <aside class="notes"><ul>
+                      <li>Orchestration: Managing the lifecycle of containers (starting, stopping, etc.) and distributing them across hosts in a cluster.</li>
+                      <li>Service Discovery: Manage directories of where services running in containers can find each other in a cluster of hosts.</li>
+                      <li>Networking: Virtual networks across hosts in a cluster</li>
+                      <li>Linux: Underlying Linux technologies that Docker uses.</li>
+                    </ul></aside>
+                </section>
+
+                <section>
+                    <h3>Competing technologies</h3>
+                    <ul>
+                        <li>Rocket (CoreOS)</li>
+                        <li>Serverless (FaaS) <ul>
+                                <li>Lambda (AWS)</li> 
+                                <li>Azure Functions (Microsoft)</li>
+                                <li>Google cloud functions</li>
+                                <li>iron.io</li>
                             </ul>
                         </li>
                     </ul>
-                    <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
                 </section>
+                <section>
+                    <h3>Kubernetes</h3>
+                    <ul>
+                        <li>Container orchestrator</li>
+                        <li>Started by Google</li>
+                        <li>Inspired by Borg (Google's cluster management system)</li>
+                        <li>Open source project written in Go</li>
+                        <li>Cloud Native Computing Foundation</li>
+                        <li>Manage applications not machines</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Kubernetes Components</h3>
+                    <ul>
+                        <li>Pods - an ephemeral group of co-scheduled containers that together provide a service</li>
+                        <li>Flat Networking Space - each pod has an IP and can talk to other pods, within a pod containers communicate via localhost (need to manage ports)</li>
+                        <li>Labels - Key value pairs, used to label pods and other objects so the scheduler can operate on them</li>
+                        <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
+                        <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
+                    </ul>
+                </section>
+                <section>
+                  <h3>Kubernetes Overview</h3>
+                  <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
+                  <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
+                </section>
+                <section>
+                    <h3>Pods/Services</h3>
+                    <ul>
+                        <li>Co-locate containers</li>
+                        <li>Shared volumes</li>
+                        <li>IP address (important for port space and migration)</li>
+                        <li>Unit of deployment and migration</li>
+                        <li>Easy migration = high utilisation</li>
+                        <li>Scale service by scaling pods</li>
+                    </ul>
+                </section>
+                
+                </section>
+
+                <section>
+                    <section>
+                        <h3>The end</h3>
+                    </section>
+                </section>
+
+
                 
 
                 <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Containers and Images</h2>
-                    <img
-                    src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
-                </section>
-<section>
-                    <h3>Components of Docker</h3>
-                    <ul>
-                        <li>Images</li>
-                            <ul>
-                                <li>Read only template for creating containers</li>
-                                <li>
-                                    Can be built and distributed (by anyone)
-                                </li>
-                                <li>Can be based on or extended by other
-                                    images</li>
-                            </ul>
-                        <li>Containers</li>
-                            <ul>
-                                <li>An actual running instance of an image</li>
-                                <li>Read write</li>
-                                <li>Encasulates your application and its dependencies</li>
-                            </ul>
-                        <li>Registries
-                            <ul>
-                                <li>Repository of images</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
-                </section>
 
                 
-
+<!--
                 <section>
                     <h3>Scripts</h3>
                     <ul>
@@ -353,15 +1868,6 @@ source ./user-setup.sh
                     <pre><code data-trim contenteditable>
     $ sudo ./docker-setup.sh
                     </code></pre>
-                </section>
-                <section>
-                    <h3>Docker architecture</h3>
-                    <pre>
-    $ ps waux | grep docker 
-    $ sudo docker images
-                    </pre>
-
-                    <img src="img/architecture.svg" alt="Architecture">
                 </section>
                 <section>
                     <h3>Course script</h3>
@@ -558,202 +2064,9 @@ $ docker rm myflaskapp
                 </section>
 
 
-<!--
-   -                <section>
-   -                    <section>
-   -                        <h2>Cookbook Examples</h2>
-   -                    </section>
-   -
-   -                    <section>
-   -                        <h3>Run Hello world in busy box</h3>
-   -                        <pre> $ docker run busybox echo hello world 
-   -                        
-   -Unable to find image 'busybox' locally
-   -busybox:latest: The image you are pulling has been verified
-   -511136ea3c5a: Pull complete
-   -df7546f9f060: Pull complete
-   -e433a6c5b276: Pull complete
-   -e72ac664f4f0: Pull complete
-   -Status: Downloaded newer image for busybox:latest
-   -hello world
-   -                        </pre>
-   -                    </section>
-   -
-   -                    <section>
-   -                        <h3>Run a container in detached mode</h3>
-   -                        <pre>$ docker run -d  -p 1234:1234 python:3.5 python -u -m http.server 1234
-   -Unable to find image 'python:3.5' locally
-   -3.5: Pulling from library/python
-   -8ad8b3f87b37: Pull complete
-   -751fe39c4d34: Pull complete
-   -ae3b77eefc06: Pull complete
-   -7783aac582ec: Pull complete
-   -b7fc86da4ddd: Pull complete
-   -25af1114570f: Pull complete
-   -fa675d7a898c: Pull complete
-   -Digest: sha256:e73edc3b2c53fd775473ab99056a331dd719f914a8e8bd4e0a2e97bf1c95524e
-   -Status: Downloaded newer image for python:3.5
-   -b207c64501437c7f70c7d5fc6dacc2280cb860d67b966f03b98ce725ce23d128
-   -                        </pre>
-   -
-   -                    </section>
-   -                    <section>
-   -                        <h3>Run a container in detached mode</h3>
-   -                        <pre>$ docker ps
-   -
-   -CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
-   -62e9b7c9be5b        python:3.5          "python -u -m http.se"   5 seconds ago       Up 4 seconds        0.0.0.0:1234->1234/tcp   berserk_murdock
-   -
-   -$ docker logs -f <container>                        
-   -                        </pre>
-   -                    </section>
-   -
-   -                </section>
-   -->
-                <section>
-                <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>7: Layering (via a Union file system)</h2>
-                    <img src="https://assets.digitalocean.com/articles/docker_ecosystem/Container-Overview.png" alt="">
-                </section>
-                <section>
-                    <h3>7: Layers</h3>
-                    <ul>
-                        <li>dockviz</li>
-                    <pre><code data-trim contenteditable>
-sudo dockviz images --tree
-
-sudo dockviz images -d | dot -Tpng -o images.png && eog images.png && rm images.png
-sudo dockviz containers -d | dot -Tpng -o containers.png && eog containers.png && rm containers.png
-                    </code></pre>
-                    </ul>
-                    <aside class="notes">Local tool to visualise layers.</aside>
-                </section>
-
-                <section>
-                    <h3>7: imagelayers.io</h3>
-                    <p><a href="https://imagelayers.io/?images=java:latest,golang:latest,node:latest,python:latest,php:latest,ruby:latest">https://imagelayers.io/</a><p>
-                    <aside class="notes">Service to visualise layers.</aside>
-                </section>
-
-                <section>
-                    <h3>7: Docker history</h3>
-                    <p>Show the history (layers) of an image</p>
-                    <pre><code data-trim contenteditable>
-$ docker history cb7ea125b1fc
-IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
-cb7ea125b1fc        3 months ago        /bin/sh -c gem install sinatra                  18.44 MB
-0c0869a12bcd        3 months ago        /bin/sh -c apt-get update && apt-get install    112.7 MB
-6d4946999d4f        3 months ago        /bin/sh -c #(nop) CMD ["/bin/bash"]             0 B
-9fd3c8c9af32        3 months ago        /bin/sh -c sed -i 's/^#\s*\(deb.*universe\)$/   1.895 kB
-435050075b3f        3 months ago        /bin/sh -c echo '#!/bin/sh' > /usr/sbin/polic   194.5 kB
-428b411c28f0        3 months ago        /bin/sh -c #(nop) ADD file:b3447f4503091bb6bb   188.1 MB
-                    </code></pre>
-                </section>
-
-                <section>
-                    <h3>7: Docker Diff</h3>
-                    <p>Show the differences between a container's filesystem and its base image</p>
-                    <pre><code data-trim contenteditable>
-$ sudo docker run --name=sleepy_cori -it ubuntu:latest /bin/bash
-root@e888e0fef39e:/# echo flubber > test.txt
-root@e888e0fef39e:/# exit
-
-$ sudo docker ps -l
-CONTAINER ID IMAGE         COMMAND     CREATED        STATUS                    PORTS NAMES
-e888e0fef39e ubuntu:latest "/bin/bash" 57 seconds ago Exited (0) 11 seconds ago       sleepy_cori
-
-$ sudo docker restart sleepy_cori
-sleepy_cori
-
-$ sudo docker attach sleepy_cori
-root@e888e0fef39e:/#
-                    </code></pre>
-                    <aside class="notes">Make changes to a container.</aside>
-                </section>
-
-                <section>
-                    <h3>7: Docker Diff</h3>
-                    <pre><code data-trim contenteditable>
-root@e888e0fef39e:/# apt-get install mtr-tiny
-Reading package lists... Done
-Building dependency tree
-Reading state information... Done
-The following NEW packages will be installed:
-mtr-tiny
-0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-Need to get 41.7 kB of archives.
-After this operation, 126 kB of additional disk space will be used.
-Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main mtr-tiny amd64 0.85-2 [41.7 kB]
-Fetched 41.7 kB in 1s (38.4 kB/s)
-Selecting previously unselected package mtr-tiny.
-(Reading database ... 11528 files and directories currently installed.)
-Preparing to unpack .../mtr-tiny_0.85-2_amd64.deb ...
-Unpacking mtr-tiny (0.85-2) ...
-Setting up mtr-tiny (0.85-2) ...
-root@e888e0fef39e:/# exit
-                    </code></pre>
-                    <aside class="notes">Make more changes to a container.</aside>
-                </section>
-
-                <section>
-                    <h3>7: Docker Diff</h3>
-                    <pre><code data-trim contenteditable>
-$ sudo docker ps -l
-CONTAINER ID IMAGE         COMMAND     CREATED       STATUS                    PORTS NAMES
-e888e0fef39e ubuntu:latest "/bin/bash" 2 minutes ago Exited (0) 25 seconds ago       sleepy_cori
-
-$ sudo docker diff sleepy_cori | head
-C /root
-A /root/.bash_history
-A /test.txt
-C /tmp
-C /usr
-C /usr/bin
-A /usr/bin/mtr
-C /usr/share
-C /usr/share/doc
-A /usr/share/doc/mtr-tiny
-                    </code></pre>
-                    <aside class="notes">View changes to a container.</aside>
-                </section>
-
-                <section>
-                    <h3>7: Docker Diff</h3>
-                    <p>Show the differences between a container's filesystem and its base image</p>
-                    <pre><code data-trim contenteditable>
-$ sudo find /var/lib/docker/ -type f -name 'test.txt' -exec md5sum {} \;
-185320c3e9298cdbde3320ec32144980  /var/lib/docker/aufs/diff/e888e0fef39e6f7f249f33f0475e891aaef899cca9ed0ea39d2524e5f06be792/test.txt
-
-$ sudo docker restart sleepy_cori
-sleepy_cori
-
-$ sudo docker exec sleepy_cori md5sum test.txt
-185320c3e9298cdbde3320ec32144980  test.txt
-                    </code></pre>
-                    <aside class="notes">Show that files inside container can be found in the host filesystem.</aside>
-                </section>
-
-                <section>
-                    <h3>7: Docker Diff what is AUFS?</h3>
-                    <ul>
-                        <li>Did you notice /var/lib/docker/aufs?</li>
-                        <li><a href="http://aufs.sourceforge.net/">Advanced Multi Layered Unification Filesystem</a></li>
-                    <pre><code data-trim contenteditable>
-priority = []string{
-"aufs",
-"btrfs",
-"devicemapper",
-"vfs",
-"overlayfs",
-                    </code></pre>
-                        <li>Details <a href="https://developerblog.redhat.com/2014/09/30/overview-storage-scalability-docker/">here</a></li>
-                    </ul>
-                    <aside class="notes">Different UFS available, priority order shown above. The first available on a system will be used, but it is overridable. Not all OS distributions can use them all.</aside>
-                </section>
-
-
-                </section>
+[>
+   -                
+   <]
 
                 <section>
                 <section>
@@ -826,10 +2139,10 @@ ENTRYPOINT ["python"]
 $ sudo docker build -t python dockerfiles/python
 Sending build context to docker daemon 2.048 kB
 Step 0 : FROM python
----> e7d942e7369d
+-<] e7d942e7369d
 Step 1 : ENTRYPOINT python
----> Using cache
----> c3b6fc104517
+-<] Using cache
+-<] c3b6fc104517
 Successfully built c3b6fc104517
 $ sudo docker run -ti python
 Python 3.5.0 (default, Nov 11 2015, 10:39:25)
@@ -971,122 +2284,10 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 </section>
 
-                <section>
-                    <h3>Some Concepts</h3>
-                    <ul>
-                        <li>Buzzwords ahead!</li>
-                        <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
-                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
-                        <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li>Immutable architecture: Instead of mutating an instance, replace it with a new one.</li>
-                      <li>Pets (nursed back to health) vs. Cattle (replaced when sick)</li>
-                      <li>Snowflake (unique) vs. Phoenix (constantly rising from the ashes of its predecessor)</li>
-                    </ul></aside>
-                </section>
 
-                <!-- Immutable Infrastructure -->
-                <section>
-                <section>
-                    <h3>Immutable Architecture/Infrastructure</h3>
-                    <ul>
-                        <li>Phoenix servers</li>
-                        <li>The environment is defined in code</li>
-                        <li>If you need to change _anything_ you create a new instance and destroy the old one</li>
-                        <li>Docker makes it much more likely you will work in this way</li>
-                        <li>Procedural vs Declarative</li>
-                    </ul>
-                    <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
-                </section>
-                <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Immutable Architecture</h2>
-                    <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
-                </section>
-                </section>
+                [> Immutable Infrastructure <]
 
-                <!-- Microservices -->
-                <section>
-                <section>
-                    <h3>Microservices</h3>
-                    <p>Cockcrofts definition: Loosely coupled service oriented architecture with bounded contexts</p>
-                    <p>Eric Brewers: Microservice boundaries are language boundaries and team boundaries</p>
-                </section>
-                <section>
-                    <h3>Microservices</h3>
-                    <ul>
-                        <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
-                        <li>Services can be implemented with entirely different stacks</li>
-                        <li>Services can be developed, maintained, and updated independently</li>
-                        <li>Often use well defined REST APIs to communicate</li>
-                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>Microservices</h3>
-                    <ul>
-                        <li>Often use a DevOps approach (you build it you run it)</li>
-                        <li>Smart endpoints and dumb pipes</li>
-                        <li>Decentralized Data Management with eventual consistency</li>
-                        <li>Continuous integration and delivery</li>
-                        <li>Design for failure (optimize MTTR (mean-time-to-repair))</li>
-                    </ul>
-                    <aside class="notes">Smart endpoints and dumb pipes: Communication mediums should be as simple/dumb as possible (e.g. simple message queue, REST); the logic should be in the app.</aside>
-                </section>
-                <section>
-                    <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
-                    <ul>
-                        <li>Create a Separate Data Store for Each Microservice</li>
-                        <li>Keep Code at a Similar Level of Maturity</li>
-                        <li>Do a Separate Build for Each Microservice</li>
-                        <li>Deploy in Containers</li>
-                        <li>Treat Servers as Stateless</li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li>Separate data stores: Use the best DBMS and schema for each service.</li>
-                      <li>When doing new development, create a new microservice, rather than extending the existing one (so that you don't break it or make it less performant). You can merge the microservices later if needed.</li>
-                      <li>Stateless: Cattle, not pets.</li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>Containers and Microservices</h3>
-                    <ul>
-                        <li>Containers do not necessarily map to service or application boundaries</li>
-                        <li>A service will often contain more than one container</li>
-                        <li>A container is more like an OO Class - Brendan Burns @ Dockercon 2015</li>
-                        <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
-                    </ul>
-                    <aside class="notes">Containers are great for microservices, because they simplify the task of deploying many individual services, each with their own requirements.</aside>
-                </section>
-                <section>
-                    <h3>Containers and Microservices: Requirements</h3>
-                    <ul>
-                        <li>Sharing among containers (eg filesystems)</li>
-                        <li>Atomic co-scheduling of containers</li>
-                        <li>Parameterization of containers</li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li>Volumes</li>
-                      <li>Being able to spin up a bunch of containers together as a unit.</li>
-                      <li>Parameters through environment variables for different environments.</li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>Microservices - Resources</h3>
-                    <ul>
-                        <li><a href="http://martinfowler.com/articles/microservices.html">Microservices - Martin Fowler</a></li>
-                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Adopting Microservices at Netflix: Lessons for Architectural Design</a></li>
-                        <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">Adopting Microservices at Netflix: Lessons for Team and Process Design</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=e4jr6Ihz4Qo">Kubernetes: The Path to Cloud Native - Eric Brewer - OSCon 2105</a></li>
-                        <li>Nginx blog Building Microservices series: <a href="https://www.nginx.com/blog/introduction-to-microservices/">1</a>,<a href="https://www.nginx.com/blog/building-microservices-using-an-api-gateway">2</a>,<a href="https://www.nginx.com/blog/building-microservices-inter-process-communication/">3</a></li>
-                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></li>
-                    </ul>
-                </section>
-                </section>
+                [> Microservices <]
 
                 <section>
                     <h3>Devops</h3>
@@ -1097,7 +2298,7 @@ search wgtn.cat-it.co.nz lan
                     </ul>
                 </section>
 
-                 <!-- Continuous delivery -->
+                 [> Continuous delivery <]
                 <section>
                 <section>
                     <h3>Continuous delivery</h3>
@@ -1122,7 +2323,7 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 </section>
 
-                 <!-- Where to start? -->
+                 [> Where to start? <]
                 <section>
                 <section>
                     <h3>Containers: Where to start?</h3>
@@ -1144,34 +2345,15 @@ search wgtn.cat-it.co.nz lan
                         <li><a href="https://github.com/CenturyLinkLabs/golang-builder">Compiling go</a></li>
                     </ul>
                 </section>
-                 <!-- Large image slide -->
+                 [> Large image slide <]
                 <section class="image-slide">
                     <h2>Bosch Dreaming</h2>
                     <a href="img/Hieronymus_Bosch_003.jpg"><img src="img/Hieronymus_Bosch_003.jpg" alt="Bosch Dream" height="600" width="800"></a>
                 </section>
                 </section>
 
-                <!-- ecosystem -->
+                [> ecosystem <]
                 <section>
-                <section>
-                    <h3>Docker ecosystem</h3>
-                    <ul>
-                        <li>An explosion of tools</li>
-                        <li>Hard to keep up</li>
-                        <li>Lets have a quick look</li>
-                    </ul>
-                </section>
-                <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Docker ecosystem</h2>
-                    <img src="img/docker-ecosystem.png" alt="Docker Ecosystem" height="600" width="800">
-                    <aside class="notes"><ul>
-                      <li>Orchestration: Managing the lifecycle of containers (starting, stopping, etc.) and distributing them across hosts in a cluster.</li>
-                      <li>Service Discovery: Manage directories of where services running in containers can find each other in a cluster of hosts.</li>
-                      <li>Networking: Virtual networks across hosts in a cluster</li>
-                      <li>Linux: Underlying Linux technologies that Docker uses.</li>
-                    </ul></aside>
-                </section>
                 <section>
                     <h3>The stack</h3>
                     <ul>
@@ -1223,7 +2405,7 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 </section>
 
-                <!-- Docker compose -->
+                [> Docker compose <]
                 <section>
                 <section>
                     <h3>Docker compose</h3>
@@ -1246,7 +2428,7 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 </section>
 
-                <!-- Docker swarm -->
+                [> Docker swarm <]
                 <section>
                     <h3>Docker swarm</h3>
                     <ul>
@@ -1257,48 +2439,10 @@ search wgtn.cat-it.co.nz lan
                     </ul>
                 </section>
 
-                <!-- Kubernetes -->
-                <section>
-                <section>
-                    <h3>Kubernetes</h3>
-                    <ul>
-                        <li>Container orchestrator</li>
-                        <li>Started by Google</li>
-                        <li>Inspired by Borg (Google's cluster management system)</li>
-                        <li>Open source project written in Go</li>
-                        <li>Cloud Native Computing Foundation</li>
-                        <li>Manage applications not machines</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Kubernetes Components</h3>
-                    <ul>
-                        <li>Pods - an ephemeral group of co-scheduled containers that together provide a service</li>
-                        <li>Flat Networking Space - each pod has an IP and can talk to other pods, within a pod containers communicate via localhost (need to manage ports)</li>
-                        <li>Labels - Key value pairs, used to label pods and other objects so the scheduler can operate on them</li>
-                        <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
-                        <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
-                    </ul>
-                </section>
-                <section>
-                  <h3>Kubernetes Overview</h3>
-                  <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
-                  <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
-                </section>
-                <section>
-                    <h3>Pods/Services</h3>
-                    <ul>
-                        <li>Co-locate containers</li>
-                        <li>Shared volumes</li>
-                        <li>IP address (important for port space and migration)</li>
-                        <li>Unit of deployment and migration</li>
-                        <li>Easy migration = high utilisation</li>
-                        <li>Scale service by scaling pods</li>
-                    </ul>
-                </section>
-                </section>
+                [> Kubernetes <]
+                <section></section>
 
-                 <!-- Managing state -->
+                 [> Managing state <]
                 <section>
                 <section>
                     <h3>Managing State</h3>
@@ -1448,7 +2592,7 @@ search wgtn.cat-it.co.nz lan
                 </section>
                 </section>
 
-                <!-- Security -->
+                [> Security <]
                 <section>
                 <section>
                     <h3>Security</h3>
@@ -1693,6 +2837,7 @@ init(1)───docker(2379)───bash(30136)
                     <h3>Sources</h3>
                     <p>Sources of the material used in this course:</p>
                     <ul>
+                        <li><a href="https://github.com/docker/labs/blob/master/beginner/chapters/webapps.md">Webapps with Docker</a></li>
                         <li><a href="https://docs.docker.com/">https://docs.docker.com/</a></li>
                         <li><a href="https://training.docker.com/introduction-to-docker">https://training.docker.com/introduction-to-docker</a></li>
                         <li><a href="http://alandargan.com/using-vagrant-docker/">http://alandargan.com/using-vagrant-docker/</a></li>
@@ -1713,49 +2858,14 @@ init(1)───docker(2379)───bash(30136)
     </section>
     <section>
         <h3>More Examples</h3>
-    </section>
+    </section>-->
 
-                    <section>
-                        <h3>Persist changes to a container</h3>
-                        <pre>$ docker run -t -i ubuntu:14.04 /bin/bash
-
-root@69079aaaaab1:/# apt-get update
-
-$ docker commit 69079aaaaab1 ubuntu:update
-13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
-
-$ docker images
-REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE
-ubuntu update 13132d42da3c 5 days ago 213 MB
-
-$ docker diff &lt;container&gt;
-                        </pre>
-
-                    </section>
-                    <section>
-                        <h3>Saving an image as tar for sharing</h3>
-                        <pre>$ docker ps -a
-
-CONTAINER ID IMAGE COMMAND CREATED ... NAMES
-77d9619a7a71 ubuntu:14.04 "/bin/bash" 10 seconds ago ... high_shockley
-
-$ docker export 77d9619a7a71 > update.tar
-$ ls
-update.tar
-
-$ docker import - update &lt; update.tar
-157bcbb5fdfce0e7c10ef67ebdba737a491214708a5f266a3c74aa6b0cfde078
-
-$ docker images
-REPOSITORY TAG IMAGE ID ... VIRTUAL SIZE
-update latest 157bcbb5fdfc ... 188.1 MB
-                        </pre>
-                    </section>
         </div>
 
 
         <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.js"></script>
+        <script src="js/asciinema-player.js"></script>
 
         <script>
 

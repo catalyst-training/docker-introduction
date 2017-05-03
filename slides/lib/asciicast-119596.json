@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "width": 174,
+  "height": 15,
+  "duration": 7.885087,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "xterm-256color",
+    "SHELL": "/bin/zsh"
+  },
+  "stdout": [
+    [
+      2.198568,
+      "\u001b[1m\u001b[7m%\u001b[27m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.161299,
+      "\r\n\u001b[34mmaster \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+    ],
+    [
+      0.001221,
+      "\u001b]2;travis@stuff-air: ~/repos/example-voting-app\u0007"
+    ],
+    [
+      0.001903,
+      "\u001b]1;..le-voting-app\u0007"
+    ],
+    [
+      0.056899,
+      "\r\u001b[0m\u001b[27m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[165Cmaster\u001b[171D"
+    ],
+    [
+      0.000113,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      0.456926,
+      "d"
+    ],
+    [
+      0.164523,
+      "\bdo"
+    ],
+    [
+      0.224535,
+      "c"
+    ],
+    [
+      0.12155,
+      "k"
+    ],
+    [
+      0.174121,
+      "e"
+    ],
+    [
+      0.170825,
+      "r"
+    ],
+    [
+      0.138895,
+      " "
+    ],
+    [
+      0.184709,
+      "s"
+    ],
+    [
+      0.208979,
+      "t"
+    ],
+    [
+      0.119693,
+      "a"
+    ],
+    [
+      0.32961,
+      "c"
+    ],
+    [
+      0.156552,
+      "k"
+    ],
+    [
+      0.168545,
+      " "
+    ],
+    [
+      0.263545,
+      "p"
+    ],
+    [
+      0.11932,
+      "s"
+    ],
+    [
+      0.092746,
+      " "
+    ],
+    [
+      0.22105,
+      "v"
+    ],
+    [
+      0.131602,
+      "o"
+    ],
+    [
+      0.15047,
+      "t"
+    ],
+    [
+      0.142539,
+      "e"
+    ],
+    [
+      0.320967,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      0.000112,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.012234,
+      "\u001b]2;docker stack ps vote\u0007\u001b]1;docker\u0007"
+    ],
+    [
+      0.119641,
+      "ID            NAME               IMAGE                                         NODE  DESIRED STATE  CURRENT STATE             ERROR  PORTS\r\nyrne55ga1a3w  vote_visualizer.1  dockersamples/visualizer:stable"
+    ],
+    [
+      8.2e-05,
+      "               moby  Running        Preparing 27 seconds ago         \r\nm913iug3gdk1  vote_worker.1      dockersamples/examplevotingapp_worker:latest  moby  Running        Preparing 30 seconds ago         \r\nvge0kgavpwjs  vote_result.1      dockersamples/examplevotingapp_result:before  moby  Running        Preparing 34 seconds ago         \r\n0x611ri80ojx  vote_vote.1        dockersamples/examplevotingapp_vote:before    moby  Running        Running 33 seconds ago           \r\n2hhbc3mn7q6o  vote_db.1          postgres:9.4                                  moby  Running        Running 38 seconds ago           \r\nvorgzzxh7iig  vote_redis.1       redis:alpine                                  moby  Running        Running 40 seconds ago           \r\nq8qhgffjob9b  vote_vote.2        dockersamples/examplevotingapp_vote:before    moby  Running        Running 34 seconds ago           \r\nkzneyiaro9dk  vote_redis.2       redis:alpine                                  moby  Running        Running 40 seconds ago           \r\n"
+    ],
+    [
+      0.00252,
+      "\u001b[1m\u001b[7m%\u001b[27m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.069876,
+      "\r\n\u001b[34mmaster \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+    ],
+    [
+      0.000226,
+      "\u001b]2;travis@stuff-air: ~/repos/example-voting-app\u0007"
+    ],
+    [
+      0.000161,
+      "\u001b]1;..le-voting-app\u0007"
+    ],
+    [
+      0.045486,
+      "\r\u001b[0m\u001b[27m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[165Cmaster\u001b[171D"
+    ],
+    [
+      5.1e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.078724,
+      "\u001b[?2004l\r\r\n"
+    ]
+  ]
+}

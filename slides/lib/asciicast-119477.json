@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "width": 150,
+  "height": 19,
+  "duration": 12.177062,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "screen-256color",
+    "SHELL": "/bin/zsh"
+  },
+  "stdout": [
+    [
+      1.494819,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                     \r \r\u001bk~\u001b\\"
+    ],
+    [
+      0.064144,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[01;32m➜  \u001b[36m~\u001b[00m \u001b[K"
+    ],
+    [
+      0.000184,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      4.2e-05,
+      "\u001b[?2004h"
+    ],
+    [
+      1.434214,
+      "\u001b[3mdocker run -p 8080:8000 heytrav/docker-introduction-slides\u001b[23m"
+    ],
+    [
+      1.337134,
+      "\u001b[58D\u001b[23md\u001b[23mo\u001b[23mc\u001b[23mk\u001b[23me\u001b[23mr\u001b[23m \u001b[23mr\u001b[23mu\u001b[23mn\u001b[23m \u001b[23m-\u001b[23mp\u001b[23m \u001b[23m8\u001b[23m0\u001b[23m8\u001b[23m0\u001b[23m:\u001b[23m8\u001b[23m0\u001b[23m0\u001b[23m0\u001b[23m \u001b[23mh\u001b[23me\u001b[23my\u001b[23mt\u001b[23mr\u001b[23ma\u001b[23mv\u001b[23m/\u001b[23md\u001b[23mo\u001b[23mc\u001b[23mk\u001b[23me\u001b[23mr\u001b[23m-\u001b[23mi\u001b[23mn\u001b[23mt\u001b[23mr\u001b[23mo\u001b[23md\u001b[23mu\u001b[23mc\u001b[23mt\u001b[23mi\u001b[23mo\u001b[23mn\u001b[23m-\u001b[23ms\u001b[23ml\u001b[23mi\u001b[23md\u001b[23me\u001b[23ms"
+    ],
+    [
+      4.4e-05,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      0.000147,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      1.58167,
+      "npm"
+    ],
+    [
+      0.001315,
+      " info it worked if it ends with"
+    ],
+    [
+      0.000519,
+      " ok\r\nnpm info using npm@3.10.10\r\n"
+    ],
+    [
+      0.000453,
+      "npm info "
+    ],
+    [
+      0.00032,
+      "using node@v6.10.2\r\n"
+    ],
+    [
+      0.299094,
+      "npm info lifecycle reveal.js@3.5.0~prestart: reveal.js@3.5.0\r\n"
+    ],
+    [
+      0.008553,
+      "npm"
+    ],
+    [
+      0.000553,
+      " info lifecycle reveal.js@3.5.0~start: reveal.js@3.5.0\r\n"
+    ],
+    [
+      0.005649,
+      "\r\n> reveal.js@3.5.0 start /opt/docker-intro\r\n> grunt serve\r\n\r\n"
+    ],
+    [
+      1.4417,
+      "Running \"connect:server\" (connect) task\r\n"
+    ],
+    [
+      0.028842,
+      "Started connect web server on http://localhost:8000\r\n"
+    ],
+    [
+      0.014171,
+      "\r\nRunning \"watch\" task\r\n"
+    ],
+    [
+      0.001261,
+      "Waiting...\r\n"
+    ],
+    [
+        3.0,
+        "\r\n"
+    ]
+  ]
+}
