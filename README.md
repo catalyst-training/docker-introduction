@@ -11,10 +11,6 @@ from Docker Hub.
 
 [![asciicast](https://asciinema.org/a/119477.png)](https://asciinema.org/a/119477?autoplay=1&loop=1)
 
-```
-docker run -d -p 8000:8000 --rm --name docker-intro \
-    heytrav/docker-introduction-slides
-```
 
 The slides can be viewed locally by navigating to
 [http://localhost:8000](http://localhost:8000) in your browser.
