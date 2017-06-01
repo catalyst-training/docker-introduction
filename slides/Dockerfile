@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:6.10-alpine
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
 RUN chmod +x /usr/local/bin/dumb-init
