@@ -9,7 +9,10 @@ Presentation and tutorials for an introduction to docker.  This repository inclu
 The presentation is available as a docker image that can be pulled directly
 from Docker Hub. 
 
-[![asciicast](https://asciinema.org/a/119477.png)](https://asciinema.org/a/119477?autoplay=1&loop=1)
+```
+docker run -d --rm --name docker-intro -p 8000:8000 \
+    heytrav/docker-introduction-slides
+```
 
 
 The slides can be viewed locally by navigating to
