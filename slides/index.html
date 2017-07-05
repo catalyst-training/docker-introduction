@@ -1246,6 +1246,7 @@ Note: please replace YOURNAME with your Docker Hub username
 
                     </section>
 
+                    
                     <section>
                         <h3>apt-get</h3>
                         <div style="width:100%">
@@ -1253,20 +1254,20 @@ Note: please replace YOURNAME with your Docker Hub username
 $ docker build  -t bad-apt-example -f Dockerfile.bad .
 $ docker build  -t good-apt-example -f Dockerfile.good .
                             </code></pre>
-                        </div><div style="float:left;width:50%">
+                        </div>
+                        <div style="float:left;width:50%">
                             <p>
                             Bad
                             </p>
                         <pre><code>FROM ubuntu:latest
 
 RUN apt-get update
-#RUN apt-get install -y curl
-RUN apt-get install -y dpkg-sig
-RUN apt-get install -y libcap-dev
-RUN apt-get install -y libsqlite3-dev
-RUN apt-get install -y mercurial
-RUN apt-get install -y reprepro
-RUN rm -rf /var/lib/apt/lists/*</code></pre>
+RUN apt-get install -y curl</code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code>FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y nginx</code></pre>
                         </div>
                         <div style="float:left;width:50%">
                             <p>
@@ -1275,14 +1276,11 @@ RUN rm -rf /var/lib/apt/lists/*</code></pre>
                         <pre><code>FROM ubuntu:latest
 
 RUN apt-get update \
-  && apt-get install -y \
-#    curl \
-    dpkg-sig \
-    libcap-dev \
-    libsqlite3-dev \
-    mercurial \
-    reprepro \
-  && rm -rf /var/lib/apt/lists/*</code></pre>
+  && apt-get install -y curl</code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code>FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y curl nginx</code></pre>
                         </div>
                         
                     </section>
