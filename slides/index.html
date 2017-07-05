@@ -722,6 +722,65 @@ $ docker rm $NAME</code></pre>
                     </section>
 
                     <section>
+                        <h3>Namespaces</h3>
+
+                        <div style="float:left;width:50%">
+                            <ul>
+                                <li>Restrict visibility</li>
+                                <li>Processes inside a namespace should only see that namespace</li>
+                                <li>
+                                    Namespaces:
+                                    <ul>
+                                        <li>pid</li>
+                                        <li>mnt</li>
+                                        <li>user</li>
+                                        <li>ipc</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="float:right;width:50%">
+                            <img src="img/docker-namespaces.png"
+                                 alt="Namespaces"/>
+                        </div>
+
+                    </section>
+                    <section>
+                        <h3>Cgroups</h3>
+
+                        <div style="float:left;width:50%">
+                            <ul>
+                                <li>Restrict usage</li>
+                                <li>Highly flexible; fine tuned</li>
+                                <li>
+                                    Cgroups:
+                                    <ul>
+                                        <li>cpu</li>
+                                        <li>memory</li>
+                                        <li>devices</li>
+                                        <li>pids</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="float:right;width:50%">
+                            <img src="img/cgroups.svg"
+                                 alt="cgroups"/>
+                        </div>
+
+                    </section>
+
+                    <section>
+                        <h3>Combining the two</h3>
+                        <p>
+                        A running container represents a combination of
+                        namespace and sets of cgroups
+                        </p>
+                        <img src="img/namespace-cgroup-combined.svg"
+                             alt="Combined namespaces cgroups" />
+                    </section>
+
+                    <section>
                       <h3>Behind the scenes</h3>
                       <ul>
                         <li>User types docker commands</li>
@@ -2845,6 +2904,7 @@ init(1)───docker(2379)───bash(30136)
                         <li><a href="https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components">https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components</a></li>
                         <li><a href="http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html">http://radar.oreilly.com/2015/07/set-up-kubernetes-with-a-docker-compose-one-liner.html</a></li>
                         <li><a href="http://www.linuxjournal.com/content/concerning-containers-connections-docker-networking">http://www.linuxjournal.com/content/concerning-containers-connections-docker-networking</a></li>
+                        <li><a href="https://www.slideshare.net/brendangregg/container-performance-analysis"><em>Container Performance Analysis</em>. Brendan Greg</a></li>
                     </ul>
 
                 </section>
