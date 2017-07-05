@@ -476,7 +476,7 @@ data-autoplay="1" data-loop="1" data-size="small" data-speed="1" async></script>
                     <ul>
                       <li><code>-d</code> creates container with process detached from terminal</li>
                       <li><code>-p</code> publish container with external port 8081 mapped to internal port 80</li>
-                      <li><code>-e</code> pass AUTHOR environment variable into container</li>
+                      <li><code>-e</code> pass environment variable into container</li>
                       <li><code>--name</code> the container "static-site"</li>
                       <li>Go to <a href="http://localhost:8081">http://localhost:8081</a> in your browser</li>
                     </ul>
@@ -1237,13 +1237,99 @@ Note: please replace YOURNAME with your Docker Hub username
 									<li>busybox 1.11 MB</li>
 								</ul>
 </li>
-                            <li>Minimize Layers</li>
+                            <li>Minimise Layers</li>
                             <li>Sort multiline arguments</li>
                             <li>Split complex RUN statement on separate lines with backslashes</li>
                             <li>Run apt-get update and apt-get install in same RUN </li>
                             <li>Run clean up in same line whenever possible</li>
                         </ul>
 
+                    </section>
+
+                    <section>
+                        <h3>apt-get</h3>
+                        <div style="width:100%">
+                            <pre><code>$ cd docker-introduction/sample-code/apt-get
+$ docker build  -t bad-apt-example -f Dockerfile.bad .
+$ docker build  -t good-apt-example -f Dockerfile.good .
+                            </code></pre>
+                        </div><div style="float:left;width:50%">
+                            <p>
+                            Bad
+                            </p>
+                        <pre><code>FROM ubuntu:latest
+
+RUN apt-get update
+#RUN apt-get install -y curl
+RUN apt-get install -y dpkg-sig
+RUN apt-get install -y libcap-dev
+RUN apt-get install -y libsqlite3-dev
+RUN apt-get install -y mercurial
+RUN apt-get install -y reprepro
+RUN rm -rf /var/lib/apt/lists/*</code></pre>
+                        </div>
+                        <div style="float:left;width:50%">
+                            <p>
+                            Good
+                            </p>
+                        <pre><code>FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y \
+#    curl \
+    dpkg-sig \
+    libcap-dev \
+    libsqlite3-dev \
+    mercurial \
+    reprepro \
+  && rm -rf /var/lib/apt/lists/*</code></pre>
+                        </div>
+                        
+                    </section>
+
+                    <section>
+                        <h3>
+                            Minimise Layers
+                        </h3>
+                        <p>
+                        Remove non-essential files when possible.
+                        </p>
+
+                        <div style="width:50%;float:left">
+                        <p>Image size: 471 MB</p>
+                            <pre><code>FROM ubuntu:latest
+
+RUN apt-get update \ 
+ && apt-get install -y \
+    aufs-tools \
+    automake \
+    build-essential \
+    curl \
+    dpkg-sig \
+    libcap-dev \
+    libsqlite3-dev \
+    mercurial \
+    reprepro</code></pre>
+                        </div>
+                        
+
+                        <div style="float:left;width:50%">
+                            <p>Image size: 430 MB</p>
+                            <pre><code>FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y \
+    aufs-tools \
+    automake \
+    build-essential \
+    curl \
+    dpkg-sig \
+    libcap-dev \
+    libsqlite3-dev \
+    mercurial \
+    reprepro \
+&& rm -rf /var/lib/apt/lists/*</code></pre>
+                        </div>
                     </section>
 
                     <section>
