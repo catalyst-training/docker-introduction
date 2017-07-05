@@ -1249,40 +1249,45 @@ Note: please replace YOURNAME with your Docker Hub username
                     
                     <section>
                         <h3>Layer caching</h3>
-                        
-                            <p>Compare two ways to build an image</p>
                         <div style="width:100%">
                             <div style="float:left;width:50%">
-                                <pre><code>FROM ubuntu:latest
-
+                                <pre><code class="dockerfile"># Example 1
+FROM ubuntu:latest
 RUN apt-get update
 RUN apt-get install -y curl
 #RUN apt-get install -y nginx</code></pre>
 
                             </div>
                             <div style="float:left;width:50%">
-                                <pre><code>FROM ubuntu:latest
-
+                                <pre><code class="dockerfile"># Example 2
+FROM ubuntu:latest
 RUN apt-get update \
   && apt-get install -y curl #nginx</code></pre>
                             </div>
                         </div>
-                        <div style="width:100%;float:left" >
+                        <div style="width:100%;float:left" class="fragment"
+                            data-fragment-index="0" >
                             <pre><code>$ cd docker-introduction/sample-code/apt-get
 $ docker build  -t bad-apt-example -f Dockerfile.bad .
 $ docker build  -t good-apt-example -f Dockerfile.good .
                             </code></pre>
                         </div>
-                        <ul style="width:100%;float:left" class="fragment"
-                            data-fragment-index="1">
-                            <li>Uncomment nginx line and run build command again</li>
-                            <li> Only rebuilds from layer that was <em>changed</em></li>
-                            <li>
-                               Left example: <code>apt-get update</code> does not refresh index
+                        <ul>
+                            <li class="fragment"
+                                data-fragment-index="1">Uncomment nginx line
+                                and run <code>docker build</code> again</li>
+                            <li class="fragment" data-fragment-index="2">Only rebuilds from layer that was <em>changed</em></li>
+                            <li class="fragment"
+                                data-fragment-index="3">Example 1: <code>apt-get update</code> does not refresh index
                                 <ul>
                                     <li>Can miss important patches</li>
                                     <li>apt repos might change</li>
                                 </ul>
+                                <li class="fragment" data-fragment-index="4">
+                                    Best to combine apt-get update and install
+                                    packages to force apt to refresh index
+                                    (Example 2)
+                                </li>
                             </li>
                         </ul>
                         
@@ -1332,53 +1337,40 @@ RUN apt-get update \
 && rm -rf /var/lib/apt/lists/*</code></pre>
                         </div>
                     </section>
-
+                    
                     <section>
-                        <h3>
-                            Minimising layers
-                        </h3>
-                        <pre><code>$ docker pull heytrav/example-1
-$ docker pull heytrav/example-2
-$ docker pull heytrav/example-3
-$ docker image ls | grep example
-$ docker history heytrav/example-3
-$ docker history heytrav/example-2
-$ docker history heytrav/example-1
-                        </code></pre>
-                        <dl>
-                            <dt>example-1</dt><dd><a href="https://gist.github.com/heytrav/c82a81b41c359368b41c124bc730b58a">Remove cache files in same layer</a></dd>
-                            <dt>example-2</dt><dd><a href="https://gist.github.com/heytrav/6bda2ff27b63da0e103538d377a94364">Remove cache files in next layer</a></dd>
-                            <dt>example-3</dt><dd><a href="https://gist.github.com/heytrav/54360dfcffa2de105a85fc71a0254b20">Install libs without removing cache</a></dd>
-                        </dl>
-                        <aside class="notes">
-                            <ul>
-                                <li>apt update in same line to force update when new package is added</li>
-                                <li>Demonstrate importance of cleaning up in RUN commands.</li>
-                                <li>Best to remove extra unneeded files in same line</li>
-                            </ul>
-                        </aside>
-
-                    
+                        <h3>ADD</h3>
+                        <ul style="width:80%">
+                            <li class="fragment" data-fragment-index="0">Copies files to a directory
+                                <pre><code>ADD . /usr/path/</code></pre>
+                            </li>
+                            <li class="fragment" data-fragment-index="1">Downloads file from web <pre><code>ADD http://domain.com/file.txt /usr/path/</code></pre></li>
+                            <li class="fragment"
+                                data-fragment-index="2">Unpack archives into
+                                directory<pre><code>ADD file.tar /usr/path/ </code></pre></li>
+                            <li class="fragment"
+                                data-fragment-index="3">However, does not
+                                unpack remote archives. This will just put
+                                <code>file.tar</code> in
+                                <code>/usr/path/</code><pre><code>ADD http://domain.com/file.tar /usr/path/ </code></pre></li>
+                        </ul>
                     </section>
-					
-                    
                     
                     <section>
                         <h3>ADD vs COPY</h3>
-                        <pre><code class="dockerfile">ADD somefile.tar.gz /                    # add tar into directory 
-
-ADD . /usr/path/                         # copy file to directory
-
-ADD http://domain.com/some/file.txt .    # download file from web
-
-ADD http://domain.com/some/file.tar.gz . # same thing (doesn't unpack tar.gz)
-
-COPY . /usr/local/bin                    # copy files to /usr/local/bin</code></pre>
-                        <ul>
-                            <li>Both <em>copy</em> things into image</li>
-                            <li>ADD does a bit of magic: <ul><li>unpacks tars</li> <li>downloads files</li> <li>copies files</li></ul></li>
-                            <li>ADD considered inconsistent and not transparent</li>
-                            <li>Recommend to only use COPY and never ADD</li>
+                        
+                        <ul style="width:100%">
+                            <li class="fragment" data-fragment-index="0">Problem with ADD <pre><code>ADD http://domain.com/big.tar.gz /usr/path/ # large intermediate layer
+RUN cd /usr/path && tar -xvf big.tar.gz \
+   && rm big.tar.gz</code></pre> 
+                                <ul><li>Increased overall image size</li></ul></li>
+                            <li class="fragment" data-fragment-index="1">Better solution:
+                                <pre><code>RUN curl -SL http://domain.com/big.tar.gz  \ 
+   | tar -xJC /usr/path</code></pre>
+                            <ul class="fragment" data-fragment-index="2"><li>Smaller image size</li></ul>
+                            </li>
+                            <li class="fragment" data-fragment-index="3">COPY only copies files <pre><code>COPY . /usr/path/</code></pre></li>
+                            <li class="fragment" data-fragment-index="4">Recommend to only use COPY and never ADD</li>
                         </ul>
                     </section>
                     <section>

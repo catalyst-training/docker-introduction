@@ -1,5 +1,7 @@
+# Example 1
 FROM ubuntu:latest
 
 RUN apt-get update
 RUN apt-get install -y curl
 #RUN apt-get install -y nginx
+# Uncommenting nginx will not cause docker to re-run apt-get update.
