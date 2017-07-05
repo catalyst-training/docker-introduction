@@ -1248,40 +1248,43 @@ Note: please replace YOURNAME with your Docker Hub username
 
                     
                     <section>
-                        <h3>apt-get</h3>
+                        <h3>Layer caching</h3>
+                        
+                            <p>Compare two ways to build an image</p>
                         <div style="width:100%">
+                            <div style="float:left;width:50%">
+                                <pre><code>FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y curl
+#RUN apt-get install -y nginx</code></pre>
+
+                            </div>
+                            <div style="float:left;width:50%">
+                                <pre><code>FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y curl #nginx</code></pre>
+                            </div>
+                        </div>
+                        <div style="width:100%;float:left" >
                             <pre><code>$ cd docker-introduction/sample-code/apt-get
 $ docker build  -t bad-apt-example -f Dockerfile.bad .
 $ docker build  -t good-apt-example -f Dockerfile.good .
                             </code></pre>
                         </div>
-                        <div style="float:left;width:50%">
-                            <p>
-                            Bad
-                            </p>
-                        <pre><code>FROM ubuntu:latest
-
-RUN apt-get update
-RUN apt-get install -y curl</code></pre>
-                        <pre class="fragment" data-fragment-index="1"><code>FROM ubuntu:latest
-
-RUN apt-get update
-RUN apt-get install -y curl
-RUN apt-get install -y nginx</code></pre>
-                        </div>
-                        <div style="float:left;width:50%">
-                            <p>
-                            Good
-                            </p>
-                        <pre><code>FROM ubuntu:latest
-
-RUN apt-get update \
-  && apt-get install -y curl</code></pre>
-                        <pre class="fragment" data-fragment-index="1"><code>FROM ubuntu:latest
-
-RUN apt-get update \
-  && apt-get install -y curl nginx</code></pre>
-                        </div>
+                        <ul style="width:100%;float:left" class="fragment"
+                            data-fragment-index="1">
+                            <li>Uncomment nginx line and run build command again</li>
+                            <li> Only rebuilds from layer that was <em>changed</em></li>
+                            <li>
+                               Left example: <code>apt-get update</code> does not refresh index
+                                <ul>
+                                    <li>Can miss important patches</li>
+                                    <li>apt repos might change</li>
+                                </ul>
+                            </li>
+                        </ul>
                         
                     </section>
 
