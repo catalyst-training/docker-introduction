@@ -1491,93 +1491,202 @@ CMD ["test"]</code></pre>
                 </section>-->
                 <section>
                   <section>
-                    <h2>Multi-container Applications as Microservices</h2>
+                    <h2>Docker and Microservices</h2>
                   </section>
 
                 <section>
                     <h3>Microservices</h3>
-                    <ul>
-                        <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
-                        <li>Services can be implemented with entirely different stacks</li>
-                        <li>Services can be developed, maintained, and updated independently</li>
-                        <li>Often use well defined REST APIs to communicate</li>
-                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
-                    </ul>
+                    <div style="float:left;width:50%">
+                      <ul>
+                        <li>A suite of small decoupled applications</li>
+                        <li>Developed independently</li>
+                        <li>Deployed and updated independently</li>
+                        <li>Scaled independently</li>
+                        <li>Enforces modularity</li>
+                        <li class="fragment" data-fragment-index="0">Docker containers fit with microservice architecture</li>
+
+                      </ul>
+                    </div>
+                    <div style="float:left;width:50%">
+                      <img src="img/microservice-basic.png" />
+                    </div>
                     <aside class="notes"><ul>
+                        <li>
+                          Compare to a monolith application which has grown with
+                          time
+                        </li>
                       <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
                     </ul></aside>
                 </section>
                   <section>
                       <h3>Build a voting app</h3>
-                              <pre><code>$ cd ~/example-voting-app</code></pre>
-                      <ul>
-                          <li>Python web application</li>
-                          <li>Redis queue</li>
-                          <li>.NET worker</li>
-                          <li>Postgres DB with a data volume</li>
-                          <li>Node.js app to show votes in real time</li>
-                          <li>Clone the repo and change directories into it
-                          </li>
-                      </ul>
+                              <div style="width:50%;float:left">
+                                <ul>
+                                  <li>Python web application</li>
+                                  <li>Redis queue</li>
+                                  <li>.NET worker</li>
+                                  <li>Postgres DB with a data volume</li>
+                                  <li>Node.js app to show votes in real time</li>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div style="float:left;width:50%">
+                                <img src="img/voting-app.png" alt="Voting application"/>
+                              </div>
                   </section>
 
                   <section>
-                      <h3>Defining multi container apps</h3>
-                      <ul>
-                          <li>
-                              Microservice architecture encourages apps run in isolation
-                              <ul>
-                                  <li>Webapp</li>
-                                  <li>Database</li>
-                                  <li>Nginx</li>
-                                  <li>Backend code</li>
-                              </ul>
-                          </li>
-
-                        <li>Easier to scale components</li>
-                        <li>Easier to replace components</li>
-                      </ul>
+                    <h3>
+                      Build vote app components
+                    </h3>
+                    <pre><code>$ cd ~/example-voting-app
+$ docker build -t vote vote
+$ docker build -t result result
+$ docker build -t worker worker</code></pre>
                   </section>
                   <section>
-                      <h3>Running <em>linked</em> containers.</h3>
+                    <h3>Run service containers</h3>
+                    <pre><code>$ docker run --rm -d -p 6379:6379 --name redis redis:alpine
+$ docker run --rm -d --name db postgres:9.4 </code></pre>                  
+                    <ul>
+                      <li>Redis to act as message bus for microservices</li>
+                      <li>Postgres for storage of voting results</li>
+                    </ul>
+                  </section>
+                  <section>
+                      <h3>Run microservices</h3>
 
-                      <pre><code>$ docker run -d --name="database" -v ~/data:/var/lib/data postgres:9.3
-$ docker run -d --name="redis" redis
-$ docker run -d --link database:database --link redis:redis \ 
-      -p 8000:8000 YOURNAME/pythonwebapp </code></pre>                  
+                      <pre><code>$ docker run --rm -d --name vote --link redis \
+   --link db -v $PWD/vote:/app  -p 5000:80 vote
+$ docker run --rm -d --name worker --link redis --link db worker
+$ docker run --rm -d --name result -v $PWD/result:/app \
+   --link db -p 5001:80 -p 5858:5858 result nodemon --debug server.js</code></pre>                  
                       <ul>
                           <li><code>--name</code> flag to specify name of container</li>
                           <li><code>--link</code> flag to tell docker to bridge two or more containers</li>
-                          <li>This works, but gets very unwieldy as number of apps and interactions increases.</li>
+                          <li>Voting app: <a href="http://localhost:5000">http://localhost:5000</a></li>
+                          <li>Results app: <a href="http://localhost:5001">http://localhost:5001</a></li>
                       </ul>
                   </section>
                   <section>
-                      <h3>Docker Compose file</h3>
-                      <ul>
-                          <li>See <a href="https://github.com/dockersamples/example-voting-app/blob/master/docker-stack.yml">example from repo</a></li>
-                            <li>A <code>yaml</code> file that specifies       
-                                <ul>
-                                    <li>which services to run</li>
-                                    <li>how to network them</li>
-                                    <li>mount file volumes</li>
-                                    <li>..and a lot more</li>
-                                </ul>
-                            </li> 
-                
-                      </ul>
+                    <h3>Disadvantages of this approach</h3>
+                    <ul>
+                      <li>Tedious to type commands</li>
+                      <li>Can't scale individual services</li>
+                      <li>Better to use orchestration platforms</li>
+                    </ul>
+                  </section>
+                </section>  
+
+                <section>
+                  <section>
+                    <h2>Container Orchestration</h2>
                   </section>
 
                   <section>
-                      <h3>Running services in Swarm Mode</h3>
-                      <ul>
-                          <li>Swarm Mode added to Docker in 1.12</li>
-                          <li>Cluster management and orchestration features embedded in Docker</li>
-                          <li>Can run applications on one or more machines</li>
-                      </ul>
+                    <h3>
+                      Container orchestration 
+                    </h3>
+                    <ul>
+                      <li>Manage deployment and life-cycle of containers</li>
+                      <li>..across multiple machines</li>
+                      <li>Networking between containers (microservices)</li>
+                      <li>Scaling microservices</li>
+                      
+                      <li>Frameworks for container orchestration
+                        <ul>
+                          <li>Docker Swarm</li>
+                          <li>Kubernetes</li>
+                        </ul>
+                      </li>
+
+                    </ul>
                   </section>
                   <section>
+                      <h3>Docker Swarm</h3>
+                      <div style="float:left;width:50%"><ul>
+                          <li>Standard since Docker 1.12</li>
+                          <li>Manage containers across multiple machines
+                            <ul>
+                              <li>Scaling services</li>
+                              <li>Healthchecks</li>
+                              <li>Load balancing</li>
+                            </ul>
+                          </li>
+                        </ul></div>
+                        <div style="float:left;width:50%">
+                          <img src="img/dockerswarm.png" alt="Docker swarm"/>
+                        </div>
+                  </section>
+                  <section>
+                    <h3>Docker Swarm</h3>
+                    <ul>
+                      <li>Two types of machines or <em>nodes</em>
+                        <ul>
+                          <li>1 or more <em>manager</em> nodes</li>
+                          <li>0 or more <em>worker</em> nodes</li>
+                        </ul>
+                      </li>
+                      <li>Managers control global state of cluster</li>
+                        <ul>
+                          <li>Raft Consensus Algorithm</li>
+                          <li>If one manager fails, any other should take over
+                        </ul>
+                      </li>
+                      
+                    </ul>
+                    <img src="img/swarm-cluster-orchestration.png" />
+                  </section>
+                  <section>
+
+                    <img src="img/voting-app-swarm.png" alt="Docker swarm"/>
+                  </section>
+                  <section>
+                      <h3>Docker Compose file</h3>
+                      <div style="float:left;width:50%"><ul>
+                          <li>Configure our services with a <em>compose file</em></li>
+                          <li>yaml syntax</li>
+                          <li>Specifies
+                            <ul>
+                              <li>services to run</li>
+                            <li>scaling</li> 
+                              <li>network</li>
+                              <li>mount file volumes</li>
+                              <li>..and a lot more</li>
+                            </ul>
+                          </li> 
+
+                        </ul></div>
+   <div style="float:left;width:50%"><pre><code># stack.yml
+version: "3.3" 
+services:
+  db:
+    image: postgres:9.4
+    .
+    .
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 3
+
+  vote:
+    image: vote:latest
+    depends_on:
+      - redis
+      - db
+     deploy:
+      replicas: 6
+      update_config:
+         delay: 5s
+         parallelism: 1
+    .
+    .</code></pre></div>                  
+                  </section>
+
+                  
+                  <section>
                       <h3>Initiate a Swarm</h3>
-                      <pre><code>$ cd example-voting-app
+                      <pre><code>$ cd ~/example-voting-app
 $ docker swarm init</code></pre>
                   </section>
 
@@ -1614,23 +1723,18 @@ a look at the <a href="http://localhost:5001">results</a>.
                       In example-voting-app...
                       </p>
 
-                      <pre><code>$ docker build -t YOURNAME/vote vote</code></pre>
+                      <pre><code>$ docker build -t vote:v2 vote</code></pre>
+                      <p>Note: please replace YOURNAME with your docker hub  ;)</p>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-120557.json" cols="138"
     rows="15"></asciinema-player>
                   </section>
 
-                  <section>
-                      <h3>Push changes to Docker Hub</h3>
-                      <pre><code>$ docker push YOURNAME/vote</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-120559.json" cols="138"
-    rows="15"></asciinema-player>
-                  </section>
+                  
 
                     <section>
                         <h3>Update a service</h3>
-                        <pre><code>$ docker service update --image YOURNAME/vote vote_vote</code></pre>
+                        <pre><code>$ docker service update --image vote:v2 vote_vote</code></pre>
 <p>
 Now go to the <a href="http://localhost:5000">voting app</a> and see what
 changed
@@ -1818,7 +1922,7 @@ $ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
 
                     <section>
                         <h3>Update a service</h3>
-                        <pre><code>$ docker service update --image YOURNAME/vote vote_vote</code></pre>
+                        <pre><code>$ docker service update --image heytrav/vote vote_vote</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-120564.json" cols="146"
     rows="10"></asciinema-player>
