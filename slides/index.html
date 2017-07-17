@@ -1204,9 +1204,17 @@ Note: please replace YOURNAME with your Docker Hub username
 
 
                   <section>
-                      <h3>Login to docker</h3>
-                      <pre><code>$ docker login</code></pre>
+                      <h3>Login to a registry</h3>
+
+                      <pre><code>$ docker login &lt;registry url&gt;</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120558.json" cols="138" rows="11"></asciinema-player>
+<ul>
+
+  <li>If registry not specified, logs into hub.docker.com</li>
+  <li>Adds session to <code>~/.docker/config</code></li>
+  <li>Can log in to multiple registries</li>
+
+</ul>
                   </section>
 
                   <section>
