@@ -1732,6 +1732,43 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
 
                     </ul>
                   </section>
+                <section>
+                    <h3>Kubernetes</h3>
+                    <ul>
+                        <li>Container orchestrator</li>
+                        <li>Started by Google</li>
+                        <li>Inspired by Borg (Google's cluster management system)</li>
+                        <li>Open source project written in Go</li>
+                        <li>Cloud Native Computing Foundation</li>
+                        <li>Manage applications not machines</li>
+                    </ul>
+                </section>
+                <section>
+                  <h3>Kubernetes Overview</h3>
+                  <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
+                  <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
+                </section>
+                <section>
+                    <h3>Kubernetes Components</h3>
+                    <ul>
+                        <li>Pods - an ephemeral group of co-scheduled containers that together provide a service</li>
+                        <li>Flat Networking Space - each pod has an IP and can talk to other pods, within a pod containers communicate via localhost (need to manage ports)</li>
+                        <li>Labels - Key value pairs, used to label pods and other objects so the scheduler can operate on them</li>
+                        <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
+                        <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
+                    </ul>
+                </section>
+                <!--<section>
+                    <h3>Pods/Services</h3>
+                    <ul>
+                        <li>Co-locate containers</li>
+                        <li>Shared volumes</li>
+                        <li>IP address (important for port space and migration)</li>
+                        <li>Unit of deployment and migration</li>
+                        <li>Easy migration = high utilisation</li>
+                        <li>Scale service by scaling pods</li>
+                    </ul>
+                </section>-->
                   <section>
                       <h3>Docker Swarm</h3>
                       <div style="float:left;width:50%"><ul>
@@ -1765,7 +1802,6 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                       </li>
                       
                     </ul>
-                    <img src="img/swarm-cluster-orchestration.png" />
                   </section>
                   <section>
 
@@ -1775,14 +1811,18 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                       <h3>Docker Compose file</h3>
                       <div style="float:left;width:50%"><ul>
                           <li>Configure our services with a <em>compose file</em></li>
+                          <li>A type of <em>service contract</em></li>
                           <li>yaml syntax</li>
                           <li>Specifies
                             <ul>
-                              <li>services to run</li>
+                              <li>which services to run</li>
                             <li>scaling</li> 
                               <li>network</li>
                               <li>mount file volumes</li>
-                              <li>..and a lot more</li>
+
+                              <li>healthchecks</li>
+                              <li>environment variables</li>
+                              <li>secrets</li>
                             </ul>
                           </li> 
 
@@ -1816,8 +1856,12 @@ services:
                   
                   <section>
                       <h3>Initiate a Swarm</h3>
-                      <pre><code>$ cd ~/example-voting-app
-$ docker swarm init</code></pre>
+                      <pre><code>$ docker swarm init
+$ cd ~/example-voting-app</code></pre>
+                      <ul>
+                          <li><code>docker swarm init</code> puts your machine in <em>swarm mode</em></li>
+                          <li>Only need to do once to create manager node</li>
+                      </ul>
                   </section>
 
                   <section>
@@ -1828,7 +1872,7 @@ $ docker swarm init</code></pre>
 
                   <section>
                       <h3>Verify stack is running</h3>
-                      <pre style="width:100%"><code>$ docker stack ps vote</code></pre>
+                      <pre style="width:100%"><code>$ watch docker stack ps vote</code></pre>
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119596.json" cols="174" rows="15"></asciinema-player>
 Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
 a look at the <a href="http://localhost:5001">results</a>.
@@ -1840,7 +1884,7 @@ a look at the <a href="http://localhost:5001">results</a>.
                           <li>Open up <code>app.py</code> </li>
                           <li>On lines 8 & 9, modify vote options</li>
                           <li>Build image</li>
-                          <li>Push to Docker Hub</li>
+                          <li>Push to Docker Hub (optional)</li>
                       </ul>
                   </section>
                   <section>
@@ -1895,45 +1939,74 @@ changed
                         <h2>Running apps in the cloud</h2>
                     </section>
 
-
-
-
-                    <section>
-                        <h3>Deploying to Catalyst Cloud</h3>
+                  <section>
+                    <h3>Goals</h3>
+                    <ul>
+                      <li class="fragment" data-fragment-index="0">Set up cluster of multiple machines
+                      <ul><li>Catalyst Cloud (OpenStack)</li></ul></li>
+                      <li class="fragment" data-fragment-index="1">Install docker </li>
+                      <li class="fragment" data-fragment-index="2">Initialise a swarm</li>
+                      <li class="fragment" data-fragment-index="3">Deploy our voting app</li>
+                       <li class="fragment" data-fragment-index="4">Run through a few typical scenarios
+                           <ul>
+                               <li>Rolling update with <em>vote:v2</em></li>
+                               <li>Drain node for maintenance</li>
+                           </ul>
+                       </li> 
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>Setting up cluster</h3>
+                    <div style="float:left;width:50%">
                         <ul>
-                            <li>Deploy the voting app to Catalyst Cloud</li>
-                            <li>Source the RC file</li>
-                        </ul><pre><code>$ source ~/os-training.catalyst.net.nz-openrc.sh</code></pre>
-                    </section>
-                    <section>
-                        <h3>Introducing Ansible</h3>
-                        <ul>
-                            <li>DevOps swiss army knife</li>
-                            <li>Python based tool set</li>
-                            <li>Lots of uses: 
+                            <li class="fragment" data-fragment-index="0">
+                                Manually setting up a cluster is complicated
                                 <ul>
-                                    <li>server/cluster management </li>
-                                    <li>deploy code </li>
-                                    <li>install packages</li>
+                                    <li>networking</li>
+                                    <li>router(s)</li>
+                                    <li>security groups</li>
                                 </ul>
-                            <li>Follow <a
-                                    href="http://docs.catalystcloud.io/first-instance/ansible.html#install-ansible">instructions</a>
-                                for <ul><li>installing ansible</li> <li>activating python venv</li></ul></li>
+                            </li>
+                            <li class="fragment" data-fragment-index="1">
+                                Automation tools:
+                                <ul>
+                                    <li>Chef</li>
+                                    <li>Puppet</li>
+                                    <li>Terraform</li>
+                                    <li>Ansble</li>
+                                </ul>
                             </li>
                         </ul>
-                            
-                    </section>
-                    <section>
-                        <h3>Where we should be now..</h3>
-                        <ul><li>In your home directory you should have
-                                <ul>
-                                    <li>a folder named <em>docker-introduction</em></li>
-                                    <li>a folder named <em>example-voting-app</em></li>
-                                    <li>a folder named <em>catalystcloud-ansible</em></li>
-                                </ul>
+                    </div>
+                    <div style="width:50%;float:left">
+                        <img  class="fragment"
+                        data-fragment-index="0"src="img/open-stack-swarm.png" />
+                    </div>
 
-                            </li>
-                            <li>Should have downloaded <code>os-training.catalyst.net.nz-openrc.sh</code> (somewhere)</li>
+                  </section>
+                    <section>
+                        <h3>Ansible</h3>
+                        <ul>
+                            <li>Python based tool set</li>
+                            <li>Automate devops tasks
+                                <ul>
+                                    <li>server/cluster management </li>
+                                    <li>installing packages</li>
+                                    <li>deploying code </li>
+                                    <li>managing config</li>
+                                </ul>
+                        </ul>
+                        </section>        
+                    
+                    <section>
+                        <h3>Setup steps</h3>
+                        <pre class="fragment" data-fragment-index="0"><code>$ cd ~/catalystcloud-ansible
+$ ./install-ansible.sh
+.
+.
+$ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code>$ source ~/os-training.catalyst.net.nz-openrc.sh</code></pre>
+                        <ul class="fragment" data-fragment-index="2">
                             <li>Should have ansible installed</li>
                             <li>Should have activated and sourced a python virtualenv <ul><li><code>(ansible-env)</code> should appear at beginning of line in your shell</li></ul> </li>
                         </ul>
@@ -1981,7 +2054,7 @@ $ docker swarm join --token $TOKEN  192.168.99.100:2377</code></pre>
                     </section>
 
                     <section>
-                        <h3>Voting app (again)</h3>
+                        <h3>Deploying voting app</h3>
                         <p>
                         Upload docker-stack.yaml to manager node
                         </p>
@@ -1995,7 +2068,7 @@ $ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
                     </section>
                     <section>
                         <h3>Monitor deploy progress</h3>
-                        <pre><code>$ docker stack ps vote</code></pre>
+                        <pre><code>$ watch docker stack ps vote</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-120540.json" cols="199" rows="11"></asciinema-player>
                         <pre><code>$ docker service ls</code></pre>
@@ -2028,6 +2101,24 @@ $ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
 <p>
 Now go to the <a href="http://voting.app:5000">voting app</a> and verify the change
 </p>
+                    </section>
+                    <section>
+                        <h3>Developer workflow</h3>
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">Push code to repository</li>
+                            <li class="fragment" data-fragment-index="1">Continuous Integration (CI) system runs tests (assume they pass) </li>
+                            <li class="fragment" data-fragment-index="2">Automate image build &amp; push to a docker registry</li>
+                            <li class="fragment" data-fragment-index="3">Manually/automatically run <code>docker service update</code></li>
+                            <li class="fragment"
+                                data-fragment-index="4">Easy to setup with existing services
+                                <ul>
+                                    <li><a href="https://github.com">GitHub</a></li>
+                                    <li><a href="https://circleci.com">CircleCI</a></li>
+                                    <li>GitLab</li>
+                                    <li><a href="https://quay.io">Quay.io</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </section>
                 
                     <section>
@@ -2125,43 +2216,6 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                                 <li>iron.io</li>
                             </ul>
                         </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Kubernetes</h3>
-                    <ul>
-                        <li>Container orchestrator</li>
-                        <li>Started by Google</li>
-                        <li>Inspired by Borg (Google's cluster management system)</li>
-                        <li>Open source project written in Go</li>
-                        <li>Cloud Native Computing Foundation</li>
-                        <li>Manage applications not machines</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Kubernetes Components</h3>
-                    <ul>
-                        <li>Pods - an ephemeral group of co-scheduled containers that together provide a service</li>
-                        <li>Flat Networking Space - each pod has an IP and can talk to other pods, within a pod containers communicate via localhost (need to manage ports)</li>
-                        <li>Labels - Key value pairs, used to label pods and other objects so the scheduler can operate on them</li>
-                        <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
-                        <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
-                    </ul>
-                </section>
-                <section>
-                  <h3>Kubernetes Overview</h3>
-                  <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
-                  <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
-                </section>
-                <section>
-                    <h3>Pods/Services</h3>
-                    <ul>
-                        <li>Co-locate containers</li>
-                        <li>Shared volumes</li>
-                        <li>IP address (important for port space and migration)</li>
-                        <li>Unit of deployment and migration</li>
-                        <li>Easy migration = high utilisation</li>
-                        <li>Scale service by scaling pods</li>
                     </ul>
                 </section>
                 
