@@ -924,6 +924,7 @@ $ docker history ubuntu:update</code></pre>
                         <ul>
                             <li>Created a new layer (cache files added by apt)</li>
                             <li>Not an ideal way to create images</li>
+                            <li>Better to create images using a Dockerfile</li>
                         </ul>
                         <aside class="notes">
                             <ul>
@@ -940,14 +941,14 @@ $ docker history ubuntu:update</code></pre>
                       <ul>
                           <li>A text file. Usually named <code>Dockerfile</code></li>
                           <li>Sequential instructions for building a Docker image</li>
-                          <li>From top to bottom, each instruction creates a layer on the previous</li>
-                          <li>A very simple Dockerfile:</li>
+                          <li>Each instruction creates a layer on the previous</li>
+                          <li>A very simple Dockerfile with 4 layers:</li>
                       </ul>
                       
                       <pre><code class="dockerfile">FROM ubuntu:15.10
 COPY . /app
 RUN make /app
-CMD python /app/app.py</code></pre>
+CMD ["python", "/app/app.py"]</code></pre>
                       <aside class="notes">
                           Basically the Dockerfile is like a bash script. It
                           contains instructions for sequentially building an
@@ -965,10 +966,98 @@ CMD python /app/app.py</code></pre>
 RUN make /app</code></pre>
                       </li>
                       <li>Optionally tell Docker what command to run when the
-                          container is started<pre><code class="dockerfile">CMD python /app/app.py</code></pre></li>
+                          container is started<pre><code
+                                     class="dockerfile">CMD ["python", "/app/app.py"]</code></pre></li>
                           
                     </ul>
                   </section>
+                  <section>
+                    <h2>Common Dockerfile Instructions</h2>
+                    <h3>...a non-exhaustive list</h3>
+                  </section>
+                  <section>
+                    <h4>FROM</h4>
+                    <p>Define the base image for a new image</p>
+                    <pre><code>FROM ubuntu:17.04</code></pre>
+
+                    <pre><code>FROM debian # :latest implicit</code></pre>
+
+                    <pre><code>FROM my-custom-image:1.2.3</code></pre>
+                  </section>
+                  <section>
+
+                    <h4>RUN</h4>
+                    <pre><code>RUN apt-get update && apt-get install python3</code></pre>
+                    <pre><code>RUN mkdir -p /usr/local/myapp && cd /usr/local/myapp</code></pre>
+                    <pre><code>RUN make all</code></pre>
+                    <pre><code>RUN curl https://domain.com/somebig.tar | tar -xv | /bin/sh</code></pre>
+                    <p>Execute shell commands for building image</p>
+                  </section>
+                  <section>
+                    <h4>WORKDIR</h4>
+                    <pre><code>WORKDIR /usr/local/myapp</code></pre>
+                    <ul>
+                      <li>Create a directory to start in when container runs</li>
+                      <li>Will be created if does not exist</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h4>COPY</h4>
+                    <pre><code>COPY package.json /usr/local/myapp</code></pre>
+                    <pre><code>COPY . /usr/share/www</code></pre>
+                    <p>Copy files from build directory into image</p>
+                  </section>
+                  <section>
+                    <h4>ENTRYPOINT</h4>
+                    <pre><code>ENTRYPOINT ["node", "index.js"]</code></pre>
+                    <pre><code>ENTRYPOINT ["python3", "app.py"]</code></pre>
+                    <pre><code>ENTRYPOINT python3 app.py</code></pre>
+                    <ul>
+                      <li>Configure container to run executable by default</li>
+                      <li>Preferred to use JSON array syntax (best practices)</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h4>CMD</h4>
+                    <pre><code>CMD ["node", "index.js"]</code></pre>
+                    <pre><code>ENTRYPOINT ["python3", "manage.py"]
+CMD ["test"]</code></pre>
+                    <ul>
+                      <li>Provide defaults to executable</li>
+                      <li>or provide executable</li>
+                      <li>Also, preferred to use JSON array syntax (best practices)</li>
+                      <li>Last argument to <code>docker run</code> overrides <code>CMD</code></li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h4>ENTRYPOINT &amp; CMD</h4>
+                    <p>Hypothetical application</p>
+                    <pre><code>FROM ubuntu:latest
+.
+.
+ENTRYPOINT ["./base-script"]
+CMD ["test"]</code></pre>
+                    <pre><code>$ docker run my-image</code></pre>
+                    By default this image will just pass <code>test</code> as
+                    argument to <code>base-script</code> to run unit tests by
+                    default
+                    <pre><code>$ docker run my-image server</code></pre>
+                    Passing argument at the end tells it to override CMD and
+                    execute with <code>server</code> to run server feature
+                  </section>
+
+
+
+                  <section>
+                    <h3>more Dockerfile instructions </h3>
+                    <dl>
+                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
+                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
+                      <dt>HEALTHCHECK CMD</dt>  <dd>Check container health by running command at regular intervals inside container</dd>
+                    </dl>
+                  </section>
+
                   <section>
                       <h3>Image layers</h3>
                       <img src="img/container-layers.jpg"/>
@@ -1080,50 +1169,11 @@ IMAGE         ...                                        SIZE
                   
 
 
-                    <!--<section>
-                        <h3>Exercise: Saving an image as tar for sharing</h3>
-                        <pre><code>$ docker ps -a
-
-CONTAINER ID IMAGE COMMAND CREATED ... NAMES
-77d9619a7a71 ubuntu:16.04 "/bin/bash" 10 seconds ago ... high_shockley
-
-$ docker export 77d9619a7a71 > update.tar
-$ ls
-update.tar
-
-$ docker import - update &lt; update.tar
-157bcbb5fdfce0e7c10ef67ebdba737a491214708a5f266a3c74aa6b0cfde078
-
-$ docker images
-REPOSITORY TAG IMAGE ID ... VIRTUAL SIZE
-update latest 157bcbb5fdfc ... 188.1 MB
-                        </code></pre>
-                        <aside class="notes">Note: This is not the way it would be done in practice</aside>
-                    </section>-->
                 </section>
                 <section>
                     <section>
                         <h2>Dockerising applications</h2>
                     </section>
-                  <section>
-                    <h3>Dockerfile directives</h3>
-                    <dl>
-                      <dt>FROM          </dt>      <dd>Tell Docker which base image to use (alpine, ubuntu)</dd>
-                      <dt>WORKDIR       </dt>      <dd>set the working directory (will be created if doesn't exist)</dd>
-                      <dt>COPY          </dt>      <dd>copy files from build environment into image</dd>
-                    </dl>
-                  </section>
-
-                  <section>
-                    <h3>Dockerfile directives (continued)</h3>
-                    <dl>
-                      <dt>RUN           </dt>      <dd>execute a command (i.e. bash command)</dd>
-                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
-                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
-                      <dt>CMD/ENTRYPOINT</dt>      <dd>command to execute when container starts</dd>
-                    </dl>
-                  </section>
-
                   <section>
                     <h3>Create web application in Docker </h3>
                     <ul>
@@ -1152,15 +1202,6 @@ update latest 157bcbb5fdfc ... 188.1 MB
 
 
                   <section>
-                    <h3>Writing a Dockerfile</h3>
-                    <ul>
-                      <li>In the sample-code/flask-app folder</li>
-                      <li>Start your favourite editor (gedit, vi, emacs, etc.)</li>
-                      <li>Create a file called Dockerfile</li>
-                    </ul>
-                  </section>
-
-                  <section>
                       <h3>Our Dockerfile</h3>
                     <pre><code>FROM alpine:3.5
 
@@ -1183,7 +1224,7 @@ CMD ["python", "/usr/src/app/app.py"]</code></pre>
 
                   <section>
                     <h3>
-                      Build a Docker image
+                      Build the Docker image
                     </h3>
                     <pre><code>$ cd ~/docker-introduction/sample-code/flask-app 
 $ docker build -t YOURNAME/myfirstapp .</code></pre>
@@ -1195,7 +1236,7 @@ Note: please replace YOURNAME with your Docker Hub username
 
                   <section>
                     <h3>
-                      Run your image
+                      Run the container
                     </h3>
                     <pre><code>$ docker run -p 8888:5000 --name myfirstapp YOURNAME/myfirstapp</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119510.json" cols="174" rows="11"></asciinema-player>
@@ -1210,8 +1251,7 @@ Note: please replace YOURNAME with your Docker Hub username
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120558.json" cols="138" rows="11"></asciinema-player>
 <ul>
 
-  <li>If registry not specified, logs into hub.docker.com</li>
-  <li>Adds session to <code>~/.docker/config</code></li>
+  <li>If registry not specified, logs into <a href="https://hub.docker.com">hub.docker.com</a></li>
   <li>Can log in to multiple registries</li>
 
 </ul>
@@ -1219,7 +1259,7 @@ Note: please replace YOURNAME with your Docker Hub username
 
                   <section>
                     <h3>
-                      Push our first image
+                      Push image to registry
                     </h3>
                     <pre><code>$ docker push YOURNAME/myfirstapp</code></pre>
 
@@ -1288,9 +1328,24 @@ Note: please replace YOURNAME with your Docker Hub username
 
                     </section>
 
+                    <section>
+                      <h3>Layer caching</h3>
+                      <pre><code>$ cd ~/docker-introduction/sample-code/caching
+$ docker build -t caching-example -f Dockerfile.layering . </code></pre>
+                      <ul>
+                        <li class="fragment" data-fragment-index="0">Build image in <code>sample-code/caching</code> directory</li>
+                        <li class="fragment" data-fragment-index="1">Run build a second time. What happens?</li>
+<li class="fragment" data-fragment-index="2" >Change line with Change me! and run again</li>
+                        <li class="fragment" data-fragment-index="3">Each instruction creates a layer in an image</li>
+                        <li class="fragment" data-fragment-index="4">Docker caches layers when building</li>
+                        <li class="fragment" data-fragment-index="5">When a layer is changed Docker rebuilds from changed layer</li>
+                      </ul>
+
+                      
+                    </section>
                     
                     <section>
-                        <h3>Layer caching</h3>
+                        <h3>Consequences of layer caching</h3>
                         <div style="width:100%">
                             <div style="float:left;width:50%">
                                 <pre><code class="dockerfile"># Example 1
@@ -1309,7 +1364,7 @@ RUN apt-get update \
                         </div>
                         <div style="width:100%;float:left" class="fragment"
                             data-fragment-index="0" >
-                            <pre><code>$ cd docker-introduction/sample-code/apt-get
+                            <pre><code>$ cd ~/docker-introduction/sample-code/caching
 $ docker build  -t bad-apt-example -f Dockerfile.bad .
 $ docker build  -t good-apt-example -f Dockerfile.good .
                             </code></pre>
@@ -1537,14 +1592,14 @@ CMD ["test"]</code></pre>
                   </section>
 
                 <section>
-                    <h3>Microservices</h3>
+                    <h3>Microservices vs. Monoliths</h3>
                     <div style="float:left;width:50%">
                       <ul>
-                        <li>A suite of small decoupled applications</li>
+                        <li>Small decoupled applications vs. one big app</li>
                         <li>Developed independently</li>
                         <li>Deployed and updated independently</li>
                         <li>Scaled independently</li>
-                        <li>Enforces modularity</li>
+                        <li>Better modularity</li>
                         <li class="fragment" data-fragment-index="0">Docker containers fit with microservice architecture</li>
 
                       </ul>
@@ -1560,6 +1615,9 @@ CMD ["test"]</code></pre>
                       <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
                     </ul></aside>
                 </section>
+
+
+
                   <section>
                       <h3>Build a voting app</h3>
                               <div style="width:50%;float:left">
@@ -1625,6 +1683,36 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                     <h2>Container Orchestration</h2>
                   </section>
 
+                <section>
+                    <h3>First, some more buzzwords</h3>
+                    <ul>
+                        <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
+                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
+                        <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
+                    </ul>
+                    <aside class="notes"><ul>
+                      <li>Immutable architecture: Instead of mutating an instance, replace it with a new one.</li>
+                      <li>Pets (nursed back to health) vs. Cattle (replaced when sick)</li>
+                      <li>Snowflake (unique) vs. Phoenix (constantly rising from the ashes of its predecessor)</li>
+                    </ul></aside>
+                </section>
+
+                <section>
+                    <h3>Immutable Architecture/Infrastructure</h3>
+                    <ul>
+                        <li>Phoenix servers</li>
+                        <li>The environment is defined in code</li>
+                        <li>If you need to change <em>anything</em> you create a new instance and destroy the old one</li>
+                        <li>Docker makes it much more likely you will work in this way</li>
+                        <li>Procedural vs Declarative</li>
+                    </ul>
+                    <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
+                </section>
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Immutable Architecture</h2>
+                    <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
+                </section>
                   <section>
                     <h3>
                       Container orchestration 
@@ -1740,7 +1828,7 @@ $ docker swarm init</code></pre>
 
                   <section>
                       <h3>Verify stack is running</h3>
-                      <pre><code>$ docker stack ps vote</code></pre>
+                      <pre style="width:100%"><code>$ docker stack ps vote</code></pre>
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119596.json" cols="174" rows="15"></asciinema-player>
 Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
 a look at the <a href="http://localhost:5001">results</a>.
@@ -1808,37 +1896,6 @@ changed
                     </section>
 
 
-                <section>
-                    <h3>Some Concepts</h3>
-                    <ul>
-                        <li>Buzzwords ahead!</li>
-                        <li><a href="http://radar.oreilly.com/2015/06/an-introduction-to-immutable-infrastructure.html">Immutable infrastructure</a></li>
-                        <li><a href="https://blog.engineyard.com/2014/pets-vs-cattle">Cattle vs pets</a></li>
-                        <li><a href="http://martinfowler.com/bliki/SnowflakeServer.html">Snowflake Servers</a> vs. <a href="http://martinfowler.com/bliki/PhoenixServer.html">Phoenix Servers</a></li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li>Immutable architecture: Instead of mutating an instance, replace it with a new one.</li>
-                      <li>Pets (nursed back to health) vs. Cattle (replaced when sick)</li>
-                      <li>Snowflake (unique) vs. Phoenix (constantly rising from the ashes of its predecessor)</li>
-                    </ul></aside>
-                </section>
-
-                <section>
-                    <h3>Immutable Architecture/Infrastructure</h3>
-                    <ul>
-                        <li>Phoenix servers</li>
-                        <li>The environment is defined in code</li>
-                        <li>If you need to change <em>anything</em> you create a new instance and destroy the old one</li>
-                        <li>Docker makes it much more likely you will work in this way</li>
-                        <li>Procedural vs Declarative</li>
-                    </ul>
-                    <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
-                </section>
-                <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Immutable Architecture</h2>
-                    <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
-                </section>
 
 
                     <section>

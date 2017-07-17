@@ -1,0 +1,10 @@
+FROM alpine:latest
+
+RUN echo line 1
+RUN echo line 2
+RUN echo line 3
+RUN echo Change me!
+RUN echo line 5
+RUN echo line 6
+RUN echo line 7
+RUN echo line 8
