@@ -373,21 +373,52 @@
                   </section>
 
                   <section>
-                    <h3>Docker Hub</h3>
-                    <ul>
-                      <li>Canonical home of official docker images</li>
-                      <li>Contains >100K docker images (private, public, official)</li>
-                      <li>Free, so let's <a href="https://hub.docker.com/">sign up</a> </li>
-                    </ul>
+                    <h3>Docker Registries</h3>
+                    <div style="float:left;width:50%">
+                      <ul>
+                        <li>Public repositories for docker images
+                          <ul>
+                            <li><a href="https://hub.docker.com">Docker Hub</a></li>
+                            <li><a href="https://quay.io">Quay.io</a></li>
+                            <li>GitLab ships with docker registry</li>
+                          </ul>
+                        </li>
+                        <li>
+                          Create your own private registry
+                          <a href="https://github.com/docker/distribution">docker/distribution</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div style="float:left;width:50%">
+                      <img src="img/docker-hub.png" />
+                    </div>
                   </section>
                   </section>
                 <section>
                     <section>
-                        <h2>Running Docker</h2>
+                        <h2>First Steps with Docker</h2>
                     </section>
+                  <section>
+                      <h3>
+                          Docker version
+                      </h3>
+
+                      <pre><code>$ docker --version
+Docker version 17.03.1-ce, build c6d412e</code></pre>
+                      <p>Current version scheme similar to Ubuntu versioning: <code>YY.MM.#</code></p>
+                    
+                  </section>
+                  <section>
+                      <h3>Get command documentation</h3>
+                      <ul>
+                          <li>Just typing <code>docker</code> returns list of commands</li>
+                          <li>Calling any command with <code>-h</code> flag displays some docs</li>
+                          <li>Comprehensive online docs on <a href="https://docs.docker.com/edge/engine/reference/commandline/docker/">Docker website</a></li>
+                      </ul>
+                  </section>
                     <section>
                       <h3>
-                        Run the <code>docker</code> client
+                        Basic client usage
                       </h3>
                       <pre><code>$ docker&lt;ENTER&gt;
 
@@ -403,6 +434,7 @@
     .</code></pre>
                     </section>
                     
+
                     <section>
                         <h3>
                             Exercise: Hello world
@@ -426,10 +458,10 @@ data-autoplay="1" data-loop="1" data-size="small" data-speed="1" async></script>
                         Exercise: Pull and run course slides image
                       </h3>
                       <pre><code>$ docker run --name docker-intro --rm \
-        -p 8000:8000 heytrav/docker-introduction-slides:may-30</code></pre>
+        -p 8000:8000 heytrav/docker-introduction-slides:july-20</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
 <p>
-<a href="http://localhost:8000">View course slides</a>
+Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>
 </p>
                     </section>
 
@@ -442,10 +474,9 @@ data-autoplay="1" data-loop="1" data-size="small" data-speed="1" async></script>
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
      theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
                     <ul>
-                      <li>Docker starts alpine image</li>
-                      <li>Runs shell command</li>
-                      <li>Exits immediately</li>
-                      <li>Require <code>-i -t</code> flag</li>
+                      <li class="fragment" data-fragment-index="0">Docker starts alpine image</li>
+                      <li class="fragment" data-fragment-index="1">Runs shell command</li>
+                      <li class="fragment" data-fragment-index="2">Exits immediately</li>
                     </ul>
                   </section>
 
@@ -460,9 +491,14 @@ data-autoplay="1" data-loop="1" data-size="small" data-speed="1" async></script>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-119490.json" cols="174" rows="5"></asciinema-player>
                     <ul>
-                      <li>Docker starts alpine image</li>
-                      <li>Runs shell command</li>
-                      <li>Execute commands inside container</li>
+                      <li class="fragment" data-fragment-index="0">Docker starts alpine image
+                        <ul>
+                          <li><code>-i</code> interactively</li>
+                          <li><code>-t</code> allocate a pseudo-TTY</li>
+                        </ul>
+                      </li>
+                      <li class="fragment" data-fragment-index="1">Runs shell command</li>
+                      <li class="fragment" data-fragment-index="2">Execute commands inside container</li>
                     </ul>
                   </section>
                   <section>
@@ -522,26 +558,6 @@ $ docker ps -a
                   </section>-->
 
                   
-                  <section>
-                      <h2>General purpose commands</h2>
-                  </section>
-                  <section>
-                      <h3>Get command documentation</h3>
-                      <ul>
-                          <li>Just typing <code>docker</code> returns list of commands</li>
-                          <li>Calling any command with <code>-h</code> flag displays some docs</li>
-                          <li>Comprehensive online docs on <a href="https://docs.docker.com/edge/engine/reference/commandline/docker/">Docker website</a></li>
-                      </ul>
-                  </section>
-                  <section>
-                      <h3>
-                          Docker version
-                      </h3>
-
-                      <pre><code>$ docker --version
-Docker version 17.03.1-ce, build c6d412e</code></pre>
-                  </section>
-
                   <section>
                     <h3>List local images</h3>
                     <pre><code>$ docker image ls</code></pre>
@@ -630,7 +646,7 @@ $ docker rm $NAME</code></pre>
 
                 <section>
                   <section>
-                    <h2>Docker in a nutshell</h2>
+                    <h2>How Docker works</h2>
                   </section>
                     <!--<section>
                         <h3>Components of Docker</h3>
@@ -847,6 +863,24 @@ $ docker rm $NAME</code></pre>
                       <li>Images are the basis of containers</li>
                       <li>An image is a <em>readonly</em> file system similar to tar archive</li>
                       <li><em>Distributable</em> artefact of Docker</li>
+                      <li class="fragment" data-fragment-index="0">Image must have a name in lower case letters</li>
+                      <li class="fragment" data-fragment-index="1">
+                        Tag is optional. Implicitly <em>:latest</em> if not specified
+                        <ul>
+                          <li class="fragment" data-fragment-index="2"><code>postgres<em style="color:green">:9.4</em></code></li>
+                          <li class="fragment" data-fragment-index="3"><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code></li>
+                        </ul>
+                      </li>
+                      <li class="fragment" data-fragment-index="4">
+                        Url and username if pushing to registry
+                        <ul>
+                          <li class="fragment" data-fragment-index="5"><code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code></li>
+                          <li class="fragment" data-fragment-index="6"><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code></li>
+                        </ul>
+                      </li>
+                      
+
+
                     </ul>
                   </section>
                   <section>
