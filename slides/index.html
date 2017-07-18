@@ -85,7 +85,7 @@
                     <h3>This course</h3>
                     <ul>
                         <li>Makes use of official Docker docs</li>
-                        <li>Based on Docker version 1.13.1</li>
+                        <li>Based on latest Docker</li>
                         <li>A mix of command line and theory</li>
                         <li>Assumes no prior Docker knowledge</li>
                         <li>Assumes familiarity with the linux shell</li>
@@ -101,8 +101,10 @@
                     <h3>Aims</h3>
                     <ul>
                         <li>Understand how to use Docker on the command line</li>
-                        <li>Understand where Docker can be used</li>
-                        <li>Appreciation of the larger ecosystem</li>
+                        <li>Understand how Docker works</li>
+                        <li>Learn how to integrate Docker with applications</li>
+                        <li>Learn ops and developers can use Docker to deploy
+                        applications</li>
                         <li>Get people thinking about where they could use Docker</li>
                     </ul>
                 
@@ -123,19 +125,20 @@
                   <section>
                       <h3>What is containerization?</h3>
                       <ul>
-                          <li>
-                              An operating system level virtualization method for
-                              running distributed applications without launching an
-                              entire VM.
-                          </li>
-                          <li>
-                              Multiple isolated systems run on a single host and
-                              access a single kernel
+                        <li>
+                          A type of virtualization
+                        </li>
+                          
+                          <li>Difference from traditional VMs
+                            <ul>
+                              <li>Don't replicate entire OS, just bits needed for application</li>
+                              <li>Run natively on host</li>
+                            </ul>
                           </li>
                           <li>
                               Key benefits:
                               <ul>
-                                  <li>Lightweight - Places less strain on overall resources.</li>
+                                  <li>More lightweight than VMs</li>
                                   <li>Efficiency gains in storage, CPU</li>
                                   <li>Portability
                                       <aside class="notes">
@@ -186,7 +189,8 @@
                       </h3>
                       <ul>
                           <li>Containers share a kernel</li>
-                          <li>Container image only contains
+                          <li>Use less CPU than VMs</li>
+                          <li>Less storage. Container image only contains:
                               <ul>
                                   <li>executable</li>
                                   <li>application dependencies</li>
@@ -197,14 +201,24 @@
 
                 <section>
                     <h3>Benefits of Containers: Decoupling</h3>
-                    <ul>
+                    <div style="float:left;width:50%"><ul>
                         <li>Application stack not coupled to host machine</li>
-                        <!--<li>Allows a service to have the most appropriate stack without needing to consider conflicts with and dependencies of other services (eg python versions)</li>-->
                         <li>Scale and upgrade services independently</li>
-                        <li>Configuration is coupled with the application</li>
                         <li>Treat services like cattle instead of pets </li>
-                    </ul>
+                      </ul></div>
+                      <div style="float:left;width:50%"><img src="img/immutable_infrastructure.gif" /></div>
                     <aside class="notes">Scale services, not machines. You *can* treat machines like cattle, not pets.</aside>
+                </section>
+                <section>
+                    <h3>Benefits of Containers: Workflows</h3>
+                    <div style="float:left;width:50%"><ul>
+                        <li>Easy to distribute</li>
+                        <li>Developers can wrap application with libs and dependencies as a single package </li>
+                        <li>
+                          Easy to move code from development environments to
+                          production in easy and replicable fashion 
+                        </li>
+                      </ul></div>
                 </section>
                   </section>
                   <section>
@@ -212,6 +226,7 @@
                       <h2>
                         Introduction to Docker
                       </h2>
+                      <h3>The Docker Platform</h3>
 <aside class="notes">
                             Docker is an open-source platform for creating,
                             running, and distributing software "containers"
@@ -220,16 +235,51 @@
                         </aside>
                     </section>
 
+                    <section>
+                      <h3>What is Docker?</h3>
+                      <dl>
+                        <dt>High level</dt>
+                        <dd>
+                        Docker is an open-source platform for creating,
+                        running, and distributing software "containers"
+                        that bundle software applications with all of
+                        their dependencies.
+                        </dd>
+                        <dt>Low level</dt>
+                        <dd>
+                        Docker is a command-line tool for programmatically defining the contents of a Linux container in code, which can then be versioned, reproduced, shared, and modified easily just as if it were the source code to a program
+                        </dd>
+                      </dl>
+                    </section>
                     
+                    <section>
+                        <h3>Docker popularity</h3>
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">Linux containers are not new
+                              <ul>
+                                <li>FreeBSD Jails</li>
+                                <li>LXC containers</li>
+                                <li>Solaris Zones</li>
+                              </ul>
+                              </li>
+                              <li class="fragment" data-fragment-index="1">Docker is doing for containers what Vagrant did for virtual machines
+                                <ul>
+                                  <li>Easy to create</li>
+                                  <li>Easy to distribute</li>
+                                </ul>
+                              </li>
+                        </ul>
+                    </section>
 
                     <section>
-                        <h3>The Docker Platform</h3>
+                        <h3>Docker workflow</h3>
                         
                         <ul>
-                            <li>Develop your application and its supporting components using containers.</li>
-                            <li>The container becomes the unit for distributing and testing your application.</li>
-                            <li>Deploy application to staging/production environments</li>
+                            <li class="fragment" data-fragment-index="0">Developer packages application and supporting components into image</li>
+                            <li class="fragment" data-fragment-index="1">Developer/CI pushes image to private or public registry</li>
+                            <li class="fragment" data-fragment-index="2">The image becomes the unit for distributing and testing your application.  </li>
                         </ul>
+                      <img  class="fragment" data-fragment-index="2"src="img/Diapositive1.png" alt="Developer workflow">
                         <aside class="notes">
                             <p>
                             Docker has created a platform that makes it easy
@@ -249,7 +299,7 @@
                         </aside>
 
                     </section>
-                    <section>
+                    <!--<section>
                         <h3>The Docker Engine</h3>
                         <aside class="notes">
                             <p>
@@ -272,8 +322,8 @@
                             <li>A command line interface (CLI) client (the docker command).</li>
                         </ul>
                         <img src="img/engine-components-flow.png" alt="Docker Engine">
-                    </section>
-                    <section>
+                    </section>-->
+                    <!--<section>
                         <h3>Uses of Docker</h3>
                         <ul>
                             <li>Fast consistent delivery of applications </li>
@@ -289,21 +339,9 @@
                                 <li>Can run more on the same hardware</li>
                             </ul>
                         </aside>
-
-                    
-                        
-
-                    </section>
+                    </section>-->
                   
 
-                    <!--<section>
-                        <h3>Docker popularity</h3>
-                        <ul>
-                            <li>Linux containers are not new, but Docker makes it easier to build and ship them.</li>
-                            <li>Containers are intended to do for software deployment what the shipping container did for the shipping industry.</li>
-                            <li>Containers are comparable to virtual machines, but there are important differences.</li>
-                        </ul>
-                    </section>-->
                     <section>
                         <h3>Docker Portability</h3>
 
@@ -350,7 +388,7 @@
                                 </section>-->
 
 
-                  <section>
+                  <!--<section>
                       <h3>Why Docker?</h3>
                       <ul>
                           <li>Containers generally lightweight compared to traditional virtualization</li>
@@ -359,9 +397,9 @@
                           <li>Dependency encapsulation and decoupling</li>
                           <li>Enables new workflows</li>
                       </ul>
-                  </section>
+                  </section>-->
 
-                  <section class="image-slide">
+                  <!--<section class="image-slide">
                       <h2>Developer workflow</h2>
                       <img
                       src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png"
@@ -370,7 +408,7 @@
                         <li>Docker workflows are comparable to Git workflows.</li>
                         <li>Always specify tags (or SHAs).</li>
                       </ul></aside>
-                  </section>
+                  </section>-->
 
                   <section>
                     <h3>Docker Registries</h3>
@@ -444,22 +482,14 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
     theme="solarized-light" src="lib/asciicast-122666.json" cols="150" rows="15"></asciinema-player>
                     </section>
                     
-                    <!--<section>
-                      <h3>
-                        Exercise: Pull and run course slides image
-                      </h3>
-                      <pre><code>$ docker pull heytrav/docker-introduction-slides</code></pre>
-<script type="text/javascript"   src="https://asciinema.org/a/119466.js" id="asciicast-119466" id="asciicast-119450"
-data-autoplay="1" data-loop="1" data-size="small" data-speed="1" async></script>
-                    </section>-->
                     
                     <section>
                       <h3>
                         Exercise: Pull and run course slides image
                       </h3>
-                      <pre><code>$ docker run --name docker-intro --rm \
+                      <pre><code>$ docker run --name docker-intro -d --rm \
         -p 8000:8000 heytrav/docker-introduction-slides:july-20</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
+<!--<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>-->
 <p>
 Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>
 </p>
@@ -526,37 +556,6 @@ Follow along with course slides: <a href="http://localhost:8000">http://localhos
                   </section>
 
 
-                  <!--<section>
-                      <h3>
-                          Create, run and delete containers 
-                      </h3>
-                      <pre><code>$ docker create -P --expose=1234 python:2.7 \
-                                    python -m SimpleHTTPServer 1234
-
-a842945e2414132011ae704b0c4a4184acc4016d199dfd4e7181c9b89092de13
-
-$ docker ps -a
-CONTAINER ID  IMAGE       COMMAND              CREATED       ... NAMES
-a842945e2414  python:2.7  python -m SimpleHTT 8 seconds ago ... fervent_hodgkin
-
-$ docker start &lt;CONTAINER_ID&gt;
-a842945e2414
-
-$ docker kill &lt;CONTAINER_ID&gt;
-a842945e2414
-$ docker rm &lt;CONTAINER_ID&gt;
-a842945e2414
-$ docker ps -a
-                      </code></pre>
-
-                      <aside class="notes">
-                          Instead of using docker run, it's possible to create a
-                          container and run it in separate steps using the create,
-                          and start commands.
-                      </aside>
-
-                  </section>-->
-
                   
                   <section>
                     <h3>List local images</h3>
@@ -603,7 +602,7 @@ $ docker ps -a
 <!--<script  data-autoplay="1" data-loop="1" data-size="small" data-speed="1" type="text/javascript" src="https://asciinema.org/a/122552.js" id="asciicast-122552" async></script>-->
  <asciinema-player autoplay="1" loop="1" font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-122552.json" cols="170" rows="14"></asciinema-player>
 <ul>
-    <li><code>-f</code> flag to watch logs in realtime</li>
+    <li><code>-f</code> flag to watch logs in realtime, like <code>tail -f file.log</code></li>
 </ul>
 <p>
 See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online documentation</a>
@@ -1699,20 +1698,17 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
 
                 <section>
                     <h3>Immutable Architecture/Infrastructure</h3>
-                    <ul>
+                    <div style="float:left;width:50%"><ul>
                         <li>Phoenix servers</li>
                         <li>The environment is defined in code</li>
                         <li>If you need to change <em>anything</em> you create a new instance and destroy the old one</li>
                         <li>Docker makes it much more likely you will work in this way</li>
-                        <li>Procedural vs Declarative</li>
-                    </ul>
+                      </ul></div>
+                    <div style="float:left;width:50%"><img src="img/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800"></div>
                     <aside class="notes">Docker basically forces you to not manually alter servers.</aside>
                 </section>
                 <!-- Large image slide -->
-                <section class="image-slide">
-                    <h2>Immutable Architecture</h2>
-                    <img src="http://s.radar.oreilly.com/wp-files/2/2015/06/immutable_infrastructure.gif" alt="Immutable Architecture" height="600" width="800">
-                </section>
+                
                   <section>
                     <h3>
                       Container orchestration 
