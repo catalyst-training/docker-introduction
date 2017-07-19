@@ -1714,17 +1714,17 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                       Container orchestration 
                     </h3>
                     <ul>
-                      <li>Manage deployment and life-cycle of containers</li>
-                      <li>..across multiple machines</li>
-                      <li>Networking between containers (microservices)</li>
-                      <li>Scaling microservices</li>
-                      
                       <li>Frameworks for container orchestration
                         <ul>
                           <li>Docker Swarm</li>
                           <li>Kubernetes</li>
                         </ul>
                       </li>
+                      <li>Manage deployment/restarting containers across clusters</li>
+                      <li>Networking between containers (microservices)</li>
+                      <li>Scaling microservices</li>
+                      <li>Fault tolerance</li>
+                      
 
                     </ul>
                   </section>
@@ -1812,10 +1812,9 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                           <li>Specifies
                             <ul>
                               <li>which services to run</li>
-                            <li>scaling</li> 
+                              <li>scaling</li> 
                               <li>network</li>
                               <li>mount file volumes</li>
-
                               <li>healthchecks</li>
                               <li>environment variables</li>
                               <li>secrets</li>
@@ -1823,7 +1822,7 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                           </li> 
 
                         </ul></div>
-   <div style="float:left;width:50%"><pre><code># stack.yml
+   <div style="float:left;width:50%;height:80%"><pre><code class="yaml"># stack.yml
 version: "3.3" 
 services:
   db:
@@ -1894,7 +1893,8 @@ a look at the <a href="http://localhost:5001">results</a>.
                       </p>
 
                       <pre><code>$ docker build -t vote:v2 vote</code></pre>
-                      <p>Note: please replace YOURNAME with your docker hub  ;)</p>
+                      <p>Note: please replace <code>yourname</code> with your docker hub
+                      username if you have one</p>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-120557.json" cols="138"
     rows="15"></asciinema-player>
@@ -1940,7 +1940,8 @@ changed
                     <ul>
                       <li class="fragment" data-fragment-index="0">Set up cluster of multiple machines
                       <ul><li>Catalyst Cloud (OpenStack)</li></ul></li>
-                      <li class="fragment" data-fragment-index="1">Install docker </li>
+                      <li class="fragment" data-fragment-index="1">Install
+                        Docker on each machine </li>
                       <li class="fragment" data-fragment-index="2">Initialise a swarm</li>
                       <li class="fragment" data-fragment-index="3">Deploy our voting app</li>
                        <li class="fragment" data-fragment-index="4">Run through a few typical scenarios
@@ -1956,15 +1957,16 @@ changed
                     <div style="float:left;width:50%">
                         <ul>
                             <li class="fragment" data-fragment-index="0">
-                                Manually setting up a cluster is complicated
+                                Need to:
                                 <ul>
-                                    <li>networking</li>
-                                    <li>router(s)</li>
-                                    <li>security groups</li>
+
+                                  <li>provision machines</li>
+                                    <li>set up router(s)</li>
+                                    <li>set up security groups</li>
                                 </ul>
                             </li>
                             <li class="fragment" data-fragment-index="1">
-                                Automation tools:
+                                Preferable to use automation tools:
                                 <ul>
                                     <li>Chef</li>
                                     <li>Puppet</li>
@@ -2005,6 +2007,7 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                         <ul class="fragment" data-fragment-index="2">
                             <li>Should have ansible installed</li>
                             <li>Should have activated and sourced a python virtualenv <ul><li><code>(ansible-env)</code> should appear at beginning of line in your shell</li></ul> </li>
+                            <li>Sourced the environment file for the training account</li>
                         </ul>
                     </section>
 
@@ -2064,19 +2067,20 @@ $ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
                     </section>
                     <section>
                         <h3>Monitor deploy progress</h3>
-                        <pre><code>$ watch docker stack ps vote</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-120540.json" cols="199" rows="11"></asciinema-player>
-                        <pre><code>$ docker service ls</code></pre>
+                        <pre><code>$ watch docker stack vote</code></pre>
+                        <pre><code>$ watch docker service ls</code></pre>
                     </section>
                     <section>
-                        <h3>Let's Vote!</h3>
+                        <h3>Try out the voting app</h3>
                         <dl>
-                            <dt><a href="http://voting.app:5000">Vote</a></dt>           
+                            <dt><a
+                              href="http://voting.app:5000">http://voting.app:5000</a></dt>           
                             <dd>To vote</dd>
-                            <dt><a href="http://voting.app:5001">Results</a></dt>
+                            <dt><a
+                              href="http://voting.app:5001">http://voting.app:5001</a></dt>
                             <dd>To see results</dd>
-                            <dt><a href="http://voting.app:8080">Visualizer</a></dt>
+                            <dt><a
+                              href="http://voting.app:8080">http://voting.app:8080</a></dt>
                             <dd>To visualise running containers</dd>
                         </dl>
                     </section>
@@ -2102,12 +2106,17 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                         <h3>Developer workflow</h3>
                         <ul>
                             <li class="fragment" data-fragment-index="0">Push code to repository</li>
-                            <li class="fragment" data-fragment-index="1">Continuous Integration (CI) system runs tests (assume they pass) </li>
-                            <li class="fragment" data-fragment-index="2">Automate image build &amp; push to a docker registry</li>
+                            <li class="fragment" data-fragment-index="1">Continuous Integration (CI) system runs tests</li>
+                            <li class="fragment" data-fragment-index="2">If tests successful, automate image build &amp; push to a docker registry</li>
                             <li class="fragment" data-fragment-index="3">Manually/automatically run <code>docker service update</code></li>
                             <li class="fragment"
-                                data-fragment-index="4">Easy to setup with existing services
+                                data-fragment-index="4">Easy to setup with
+                                existing services and automation tools like
+                                Ansible
                                 <ul>
+                                    <li><a
+                                        href="https://hub.docker.com">DockerHub</a>
+                                    (eg. <a href="https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/">these slides</a>)</li>
                                     <li><a href="https://github.com">GitHub</a></li>
                                     <li><a href="https://circleci.com">CircleCI</a></li>
                                     <li>GitLab</li>
@@ -2125,6 +2134,8 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                                 Sometimes necessary to take host offline
                                 <ul>
                                     <li>Planned maintenance</li>
+                                    <li>Patching vulnerabilities</li>
+                                    <li>Resizing host</li>
                                 </ul>
                             </li>
 
@@ -2204,7 +2215,7 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                 <section>
                     <h3>Competing technologies</h3>
                     <ul>
-                        <li>Rocket (CoreOS)</li>
+                        <li>rkt (CoreOS)</li>
                         <li>Serverless (FaaS) <ul>
                                 <li>Lambda (AWS)</li> 
                                 <li>Azure Functions (Microsoft)</li>
