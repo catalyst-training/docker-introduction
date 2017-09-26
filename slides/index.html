@@ -113,6 +113,22 @@
                         deploying code
                     </aside>
                 </section>
+
+                <section>
+                    <section>
+                        <h2>Setup</h2>
+                    </section>
+                    <section>
+                        <h3>Fetch/Run Slides</h3>
+                      <pre><code>$ docker run --name docker-intro -d --rm \
+        -p 8000:8000 heytrav/docker-introduction-slides:october-10</code></pre>
+<!--<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>-->
+<p>
+Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>
+</p>
+                    </section>
+                </section>
+
                 
                   <section>
 
@@ -479,17 +495,6 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                     </section>
                     
                     
-                    <section>
-                      <h3>
-                        Exercise: Pull and run course slides image
-                      </h3>
-                      <pre><code>$ docker run --name docker-intro -d --rm \
-        -p 8000:8000 heytrav/docker-introduction-slides:july-20</code></pre>
-<!--<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>-->
-<p>
-Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>
-</p>
-                    </section>
 
 
                   <section>
@@ -2010,7 +2015,9 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                     <section>
                         <h3>Create a cluster</h3>
                         <pre><code>$ cd ~/catalystcloud-ansible/example-playbooks/docker-swarm-mode
-$ ansible-playbook --ask-sudo-pass --extra-vars "suffix=-$( hostname )" create-swarm-hosts.yaml</code></pre>
+$ ansible-playbook --ask-sudo-pass \
+    --extra-vars "suffix=-$( hostname )" \
+    create-swarm-hosts.yaml</code></pre>
                     </section>
 
                     <section>
