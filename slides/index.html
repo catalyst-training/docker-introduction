@@ -119,9 +119,77 @@
                         <h2>Setup</h2>
                     </section>
                     <section>
-                        <h3>Fetch/Run Slides</h3>
+                        <h3>Fetch course resources</h3>
+                        <pre class="fragment" data-fragment-index="0"><code>$ git clone \
+   https://github.com/catalyst-training/docker-introduction.git</code></pre>
+                        <ul>
+                            <li class="fragment" data-fragment-index="1">Slides for Reveal.js presentation</li>
+                            <li class="fragment" data-fragment-index="2">docker-introduction.pdf</li>
+                            <li class="fragment"
+                                data-fragment-index="3">Ansible setup playbook</li>
+                            <li class="fragment" data-fragment-index="4">Sample code for some exercices</li>
+                        </ul>
+
+
+                    </section>
+                    <section>
+                        <h3>Setup ansible</h3>
+                        <ul>
+                            <li>Python based tool set</li>
+                            <li>Automate devops tasks
+                                <ul>
+                                    <li>server/cluster management </li>
+                                    <li>installing packages</li>
+                                    <li>deploying code </li>
+                                    <li>managing config</li>
+                                </ul>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Setup steps</h3>
+                        <pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/catalyst/catalystcloud-ansible.git</code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code>$ cd catalystcloud-ansible
+$ ./install-ansible.sh
+. 
+. &lt;stuff happens&gt;
+.
+$ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
+                        <ul class="fragment" data-fragment-index="2">
+                            <li>Should have:
+                                <ul>
+                                    <li>ansible installed</li>
+                                    <li>activated and sourced a python virtualenv </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Setup Docker</h3>
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">
+                                Follow instructions on the <a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/">Docker website</a>
+                            </li>
+                            <li class="fragment" data-fragment-index="1">Use the ansible playbook included in course repo</li>
+                        </ul>
+                        <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
+$ ansible-playbook -K ansible/docker-install.yml</code></pre>
+                        <ul>
+                            <li class="fragment" data-fragment-index="2">
+                                This playbook installs:
+                                <ul>
+                                    <li class="fragment"
+                                        data-fragment-index="3">latest Docker <em>Community Edition</em></li>
+                                    <li class="fragment"
+                                        data-fragmnet-index="4"><code>docker-compose</code></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h3>Fetch and run slides</h3>
                       <pre><code>$ docker run --name docker-intro -d --rm \
-        -p 8000:8000 heytrav/docker-introduction-slides:october-10</code></pre>
+        -p 8000:8000 heytrav/docker-introduction-slides:oct-10</code></pre>
 <!--<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>-->
 <p>
 Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>
@@ -1639,7 +1707,8 @@ CMD ["test"]</code></pre>
                     <h3>
                       Build vote app components
                     </h3>
-                    <pre><code>$ cd ~/example-voting-app
+                        <pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/dockersamples/example-voting-app.git</code></pre>
+                    <pre class="fragment" data-fragment-index="1"><code>$ cd ~/example-voting-app
 $ docker build -t vote vote
 $ docker build -t result result
 $ docker build -t worker worker</code></pre>
@@ -1983,7 +2052,7 @@ changed
                     </div>
 
                   </section>
-                    <section>
+                    <!--<section>
                         <h3>Ansible</h3>
                         <ul>
                             <li>Python based tool set</li>
@@ -1995,9 +2064,9 @@ changed
                                     <li>managing config</li>
                                 </ul>
                         </ul>
-                        </section>        
+                        </section>        -->
                     
-                    <section>
+                    <!--<section>
                         <h3>Setup steps</h3>
                         <pre class="fragment" data-fragment-index="0"><code>$ cd ~/catalystcloud-ansible
 $ ./install-ansible.sh
@@ -2010,7 +2079,7 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                             <li>Should have activated and sourced a python virtualenv <ul><li><code>(ansible-env)</code> should appear at beginning of line in your shell</li></ul> </li>
                             <li>Sourced the environment file for the training account</li>
                         </ul>
-                    </section>
+                    </section>-->
 
                     <section>
                         <h3>Create a cluster</h3>
