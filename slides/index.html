@@ -127,13 +127,13 @@
                             <li class="fragment" data-fragment-index="2">docker-introduction.pdf</li>
                             <li class="fragment"
                                 data-fragment-index="3">Ansible setup playbook</li>
-                            <li class="fragment" data-fragment-index="4">Sample code for some exercices</li>
+                            <li class="fragment" data-fragment-index="4">Sample code for some exercises</li>
                         </ul>
 
 
                     </section>
                     <section>
-                        <h3>Setup ansible</h3>
+                        <h3>Ansible</h3>
                         <ul>
                             <li>Python based tool set</li>
                             <li>Automate devops tasks
@@ -146,7 +146,7 @@
                         </ul>
                     </section>
                     <section>
-                        <h3>Setup steps</h3>
+                        <h3>Setup Ansible</h3>
                         <pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/catalyst/catalystcloud-ansible.git</code></pre>
                         <pre class="fragment" data-fragment-index="1"><code>$ cd catalystcloud-ansible
 $ ./install-ansible.sh
@@ -1740,12 +1740,71 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                   <section>
                     <h3>Disadvantages of this approach</h3>
                     <ul>
-                      <li>Tedious to type commands</li>
-                      <li>Can't scale individual services</li>
-                      <li>Better to use orchestration platforms</li>
+                      <li>Complicated with shell/script commands
+                          <ul>
+                              <li>Managing service interactions</li>
+                              <li>Adding/managing services</li>
+                          </ul>
+                      </li>
+                      <li>Better tools exist..</li>
                     </ul>
                   </section>
+                <section>
+                    <h3>Docker Compose</h3>
+                    <h4>Docker as a dev environment</h4>
+                    <div style="width:50%;float:left;">
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">Tool for defining multi container applications</li>
+                            <li class="fragment" data-fragment-index="1">Use YAML syntax to define services</li>
+                            <li class="fragment" data-fragment-index="2">Can be used for staging/production environments</li>
+                        </ul>
+                    </div>
+                    <div class="fragment" data-fragment-index="3" style="width:50%;float:left;">
+                    <pre><code>---
+# docker-compose.yml
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+      - logvolume01:/var/log
+    links:
+      - redis
+  redis:
+    image: redis
+    volumes:
+      logvolume01: {}</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Running Docker Compose</h3>
+
+                    <ul>
+                        <li class="fragment" data-fragment-index="0">
+                            Start compose: <code>$ docker-compose up</code>
+                        </li>
+                        <li class="fragment" data-fragment-index="0">
+                            Stop compose: <code>$ docker-compose down</code>
+                        </li>
+                        
+                        <li class="fragment" data-fragment-index="1">
+                            <code>-h</code> help documentation
+                        </li>
+                        <li class="fragment" data-fragment-index="3">Have a look at the <a href="">documentation</a></li>
+                    </ul>
+
+                </section>
+                <section>
+                    <h3>Docker Compose Example</h3>
+                    <pre><code>$ cd example-voting-app
+$ docker-compose up</code></pre>
+                </section>
                 </section>  
+
 
                 <section>
                   <section>
