@@ -1781,9 +1781,14 @@ docker run --rm -d --name result -v $PWD/result:/app \
                         <ul>
                             <li class="fragment"
                                 data-fragment-index="0">Declarative YAML syntax</li>
-                            <li class="fragment"
-                                data-fragment-index="1">Define components as
-                                services</li>
+                          <li class="fragment" data-fragment-index="1">Specifies
+                            <ul>
+                              <li>Services</li>
+                              <li>image or build</li> 
+                              <li>volumes</li>
+                              <li>environment variables</li>
+                            </ul>
+                          </li> 
                             <li class="fragment"
                                 data-fragment-index="2">Interactive
                                 development</li>
@@ -2003,17 +2008,13 @@ $ docker-compose up</code></pre>
                       <h3>Swarm Stack File</h3>
                       <div style="float:left;width:50%"><ul>
                           <li>Similar to file used for <code>docker-compose</code></li>
-                          <li>Specifies
-                            <ul>
-                              <li>which services to run</li>
-                              <li>scaling</li> 
-                              <li>network</li>
-                              <li>mount file volumes</li>
-                              <li>healthchecks</li>
-                              <li>environment variables</li>
-                              <li>secrets</li>
-                            </ul>
-                          </li> 
+                          <li>
+                              A few differences
+                              <ul>
+                                  <li>No <code>build</code> option</li>
+                                  <li>No shared volumes</li>
+                              </ul>
+                          </li>
 
                         </ul></div>
    <div style="float:left;width:50%;height:80%"><pre><code class="yaml"># stack.yml
@@ -2041,7 +2042,6 @@ services:
     .
     .</code></pre></div>                  
                   </section>
-
                   
                   <section>
                       <h3>Initiate a Swarm</h3>
