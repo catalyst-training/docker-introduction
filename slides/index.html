@@ -1687,15 +1687,16 @@ CMD ["test"]</code></pre>
 
 
                   <section>
-                      <h3>Build a voting app</h3>
+                      <h3>Example voting application</h3>
+                    <h4>Microservice application consisting of 5 components</h4>
                               <div style="width:50%;float:left">
                                 <ul>
-                                  <li>Python web application</li>
-                                  <li>Redis queue</li>
-                                  <li>.NET worker</li>
-                                  <li>Postgres DB with a data volume</li>
-                                  <li>Node.js app to show votes in real time</li>
-                                  </li>
+
+                                  <li class="fragment" data-fragment-index="0">Python web application</li>
+                                  <li class="fragment" data-fragment-index="1">Redis queue</li>
+                                  <li class="fragment" data-fragment-index="2">.NET worker</li>
+                                  <li class="fragment" data-fragment-index="3">Postgres DB with a data volume</li>
+                                  <li class="fragment" data-fragment-index="4">Node.js app to show votes in real time</li>
                                 </ul>
                               </div>
                               <div style="float:left;width:50%">
@@ -1707,35 +1708,58 @@ CMD ["test"]</code></pre>
                     <h3>
                       Build vote app components
                     </h3>
-                        <pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/dockersamples/example-voting-app.git</code></pre>
-                    <pre class="fragment" data-fragment-index="1"><code>$ cd ~/example-voting-app
-$ docker build -t vote vote
-$ docker build -t result result
-$ docker build -t worker worker</code></pre>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker build -t vote vote</code></pre>
+                    <pre class="fragment" data-fragment-index="1"><code>$ docker build -t result result</code></pre>
+                    <pre class="fragment" data-fragment-index="2"><code>$ docker build -t worker worker</code></pre>
+                    <pre class="fragment" data-fragment-index="3"><code>$ docker image ls</code></pre>
                   </section>
-                  <section>
-                    <h3>Run service containers</h3>
-                    <pre><code>$ docker run --rm -d -p 6379:6379 --name redis redis:alpine
-$ docker run --rm -d --name db postgres:9.4 </code></pre>                  
-                    <ul>
-                      <li>Redis to act as message bus for microservices</li>
-                      <li>Postgres for storage of voting results</li>
-                    </ul>
-                  </section>
+                  
                   <section>
                       <h3>Run microservices</h3>
 
-                      <pre><code>$ docker run --rm -d --name vote --link redis \
-   --link db -v $PWD/vote:/app  -p 5000:80 vote
-$ docker run --rm -d --name worker --link redis --link db worker
-$ docker run --rm -d --name result -v $PWD/result:/app \
+                      <!--<div style="width:20%;float:left;"><ul>
+                              <li class="fragment" data-fragment-index="0">Run flask app 
+                                  
+                                  <ul>
+                                      <li class="fragment" data-fragment-index="1">
+                                          <code>--link</code> to connect redis and db to vote container
+                                      </li>
+                                  </ul>
+
+                              </li>
+                              <li class="fragment" data-fragment-index="2">
+                                  Results app
+                                  
+                                  <ul>
+                                      <li class="fragment" data-fragment-index="3"><code>-v</code> to mount directory as volume</li>
+                                      <li class="fragment" data-fragment-index="4"><code>-p</code> to map ports in docker container</li>
+                                  </ul>
+                              </li>
+                              <li class="fragment" data-fragment-index="5">
+                                  Worker app
+                              </li>
+
+                          </ul></div>-->
+                          <div >
+                              <pre><code>#! /bin/bash
+# Helper services
+docker run --rm -d -p 6379:6379 --name redis redis:alpine
+docker run --rm -d --name db postgres:9.4 
+
+# Application
+docker run --rm -d --name vote --link redis \
+    --link db -v $PWD/vote:/app  -p 5000:80 vote
+
+docker run --rm -d --name worker --link redis --link db worker
+
+docker run --rm -d --name result -v $PWD/result:/app \
    --link db -p 5001:80 -p 5858:5858 result nodemon --debug server.js</code></pre>                  
-                      <ul>
-                          <li><code>--name</code> flag to specify name of container</li>
-                          <li><code>--link</code> flag to tell docker to bridge two or more containers</li>
-                          <li>Voting app: <a href="http://localhost:5000">http://localhost:5000</a></li>
-                          <li>Results app: <a href="http://localhost:5001">http://localhost:5001</a></li>
-                      </ul>
+                          </div>
+                          <dl>
+                              <dt><code>--link a:b</code></dt>   <dd>Link container <em>a</em> to container <em>b</em></dd>
+                              <dt><code>-v  ./path:/var/lib/path</code></dt>   <dd>Mount a directory as a volume</dd>
+                              <dt><code>-p  8080:80 </code></dt>   <dd>Map port in container</dd>
+                          </dl>
                   </section>
                   <section>
                     <h3>Disadvantages of this approach</h3>
@@ -1754,12 +1778,15 @@ $ docker run --rm -d --name result -v $PWD/result:/app \
                     <h4>Docker as a dev environment</h4>
                     <div style="width:50%;float:left;">
                         <ul>
-                            <li class="fragment" data-fragment-index="0">Tool for defining multi container applications</li>
-                            <li class="fragment" data-fragment-index="1">Use YAML syntax to define services</li>
+                            <li class="fragment"
+                                data-fragment-index="0">Declarative YAML syntax</li>
+                            <li class="fragment"
+                                data-fragment-index="1">Define components as
+                                services</li>
                             <li class="fragment" data-fragment-index="2">Can be used for staging/production environments</li>
                         </ul>
                     </div>
-                    <div class="fragment" data-fragment-index="3" style="width:50%;float:left;">
+                    <div class="fragment" data-fragment-index="0" style="width:50%;float:left;">
                     <pre><code>---
 # docker-compose.yml
 version: '3'
@@ -1785,14 +1812,14 @@ services:
 
                     <ul>
                         <li class="fragment" data-fragment-index="0">
-                            Start compose: <code>$ docker-compose up</code>
+                            Start compose: <pre><code>$ docker-compose up</code></pre>
                         </li>
-                        <li class="fragment" data-fragment-index="0">
-                            Stop compose: <code>$ docker-compose down</code>
+                        <li class="fragment" data-fragment-index="1">
+                            Stop compose: <pre><code>$ docker-compose down</code></pre>
                         </li>
                         
-                        <li class="fragment" data-fragment-index="1">
-                            <code>-h</code> help documentation
+                        <li class="fragment" data-fragment-index="2">
+                            Complete set of commands: <pre><code>$ docker-compose -h</code></pre>
                         </li>
                         <li class="fragment" data-fragment-index="3">Have a look at the <a href="">documentation</a></li>
                     </ul>
@@ -1802,6 +1829,20 @@ services:
                     <h3>Docker Compose Example</h3>
                     <pre><code>$ cd example-voting-app
 $ docker-compose up</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/docker-compose.json" cols="174" rows="15"></asciinema-player>
+<p class="fragment" data-fragment-index="0">
+View voting app on <a href="http://localhost:5000">localhost:5000</a>
+</p>
+                </section>
+                <section>
+                    <h3>More Docker Compose</h3>
+                    <ul>
+                        <li>Run in background <pre><code>$ docker-compose up -d</code></pre></li>
+                        <li>Restart service <pre><code>$ docker-compose restart &lt;service name&gt;</code></pre></li>
+                        <li>Stop services <pre><code>$ docker-compose stop</code></pre></li>
+                        <li>Stop services, remove containers and networks <pre><code>$ docker-compose down</code></pre></li>
+                    </ul>
                 </section>
                 </section>  
 
@@ -1933,11 +1974,9 @@ $ docker-compose up</code></pre>
                     <img src="img/voting-app-swarm.png" alt="Docker swarm"/>
                   </section>
                   <section>
-                      <h3>Docker Compose file</h3>
+                      <h3>Swarm Stack File</h3>
                       <div style="float:left;width:50%"><ul>
-                          <li>Configure our services with a <em>compose file</em></li>
-                          <li>A type of <em>service contract</em></li>
-                          <li>yaml syntax</li>
+                          <li>Similar to file used for <code>docker-compose</code></li>
                           <li>Specifies
                             <ul>
                               <li>which services to run</li>
