@@ -1656,7 +1656,7 @@ CMD ["test"]</code></pre>
                 </section>-->
                 <section>
                   <section>
-                    <h2>Docker and Microservices</h2>
+                    <h2>Docker and Development</h2>
                   </section>
 
                 <section>
@@ -1770,6 +1770,7 @@ docker run --rm -d --name result -v $PWD/result:/app \
                               <li>Adding/managing services</li>
                           </ul>
                       </li>
+                      <li>Can't scale services</li>
                       <li>Better tools exist..</li>
                     </ul>
                   </section>
@@ -1783,7 +1784,10 @@ docker run --rm -d --name result -v $PWD/result:/app \
                             <li class="fragment"
                                 data-fragment-index="1">Define components as
                                 services</li>
-                            <li class="fragment" data-fragment-index="2">Can be used for staging/production environments</li>
+                            <li class="fragment"
+                                data-fragment-index="2">Interactive
+                                development</li>
+                            <li class="fragment" data-fragment-index="3">Can be used for staging/production environments</li>
                         </ul>
                     </div>
                     <div class="fragment" data-fragment-index="0" style="width:50%;float:left;">
@@ -1808,11 +1812,13 @@ services:
                 </section>
 
                 <section>
-                    <h3>Running Docker Compose</h3>
+                    <h3>Docker Compose</h3>
+                    <h4>Basic commands</h4>
 
                     <ul>
                         <li class="fragment" data-fragment-index="0">
-                            Start compose: <pre><code>$ docker-compose up</code></pre>
+                            Start compose: 
+                            <pre><code>$ docker-compose up [-d]</code></pre>
                         </li>
                         <li class="fragment" data-fragment-index="1">
                             Stop compose: <pre><code>$ docker-compose down</code></pre>
@@ -1832,18 +1838,38 @@ $ docker-compose up</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/docker-compose.json" cols="174" rows="15"></asciinema-player>
 <p class="fragment" data-fragment-index="0">
-View voting app on <a href="http://localhost:5000">localhost:5000</a>
+ <a href="http://localhost:5000">Vote</a> and <a href="http://localhost:5001">view results</a>
 </p>
                 </section>
                 <section>
                     <h3>More Docker Compose</h3>
                     <ul>
-                        <li>Run in background <pre><code>$ docker-compose up -d</code></pre></li>
+                        <li>Run in background: Builds images, mounts volumes, etc.
+                            <pre><code>$ docker-compose up -d</code></pre></li>
                         <li>Restart service <pre><code>$ docker-compose restart &lt;service name&gt;</code></pre></li>
                         <li>Stop services <pre><code>$ docker-compose stop</code></pre></li>
                         <li>Stop services, remove containers and networks <pre><code>$ docker-compose down</code></pre></li>
                     </ul>
                 </section>
+                  <section>
+                      <h3>Interactive development</h3>
+                      <ul>
+                          <li>Open up <code>vote/app.py</code> </li>
+                          <li>On lines 8 & 9, modify vote options</li>
+                          <li>View change in <a href="http://localhost:5000">voting</a> application</li>
+                      </ul>
+                  </section>
+                  <section>
+                      <h3>Change vote options</h3>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120556.json" cols="138" rows="21"></asciinema-player>
+                  </section>
+                  <section>
+                      <h3>Scaling services</h3>
+                      <pre><code>$ docker-compose up -d --scale SERVICE=&lt;number&gt;</code></pre>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/docker-compose-scaling-service.json" cols="138" rows="21"></asciinema-player>
+
+                  </section>
                 </section>  
 
 
@@ -2041,19 +2067,6 @@ Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
 a look at the <a href="http://localhost:5001">results</a>.
                   </section>
 
-                  <section>
-                      <h3>Modify vote app</h3>
-                      <ul>
-                          <li>Open up <code>app.py</code> </li>
-                          <li>On lines 8 & 9, modify vote options</li>
-                          <li>Build image</li>
-                          <li>Push to Docker Hub (optional)</li>
-                      </ul>
-                  </section>
-                  <section>
-                      <h3>Change vote options</h3>
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120556.json" cols="138" rows="21"></asciinema-player>
-                  </section>
                   <section>
                       <h3>Build image</h3>
                       <p>
