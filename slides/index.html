@@ -135,6 +135,10 @@
                     <section>
                         <h3>Ansible</h3>
                         <ul>
+                          <li>
+                            Some of the features we will be exploring require
+                            setup. We'll use ansible for that.
+                          </li>
                             <li>Python based tool set</li>
                             <li>Automate devops tasks
                                 <ul>
@@ -550,25 +554,84 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
           --help               Print usage
     .
     .</code></pre>
+                      <p>
+                      <code>docker</code> <code style="color:green">command</code> <code style="color:red;font-style:italic">options</code>
+                      </p>
                     </section>
                     
+                  <section>
+                     <h4>Exercise: View <em>help</em> for <code>docker run</code></h4>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --help
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run a command in a new container
+
+Options:
+      --add-host list                  Add a custom host-to-IP mapping (host:ip)
+  -a, --attach list                    Attach to STDIN, STDOUT or STDERR
+      --blkio-weight uint16            Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+      --blkio-weight-device list       Block IO weight (relative device weight) (default [])
+      .
+      .  </code></pre>
+                  </section>
+                  <section>
+                    <h3>Docker <code>run</code></h3> 
+                        <p>
+                        <code>docker</code> <code style="color:red">run</code>
+                        <code style="color:purple">[options]</code> <code
+                        style="color:green;font-style:italic">image</code> <code style="color:blue;font-style:italic">[command]</code>
+                        </p>
+                        <p>
+                        </p>
+                        <table>
+                          <tr>
+                            <th>Option</th>
+                            <th>Argument</th>
+                            <th>Description </th>
+                          </tr>
+                          <tr><td>-i     </td><th>         </th>      <td>Keep STDIN open</td></tr>
+                          <tr><td>-t     </td><th>         </th>      <td>Allocate a tty</td></tr>
+                          <tr><td>--rm   </td><th>         </th>      <td>Automatically remove container on exit</td></tr>
+                          <tr><td>-v     </td><th>  list   </th>      <td>Mount a volume</td></tr>
+                          <tr><td>-p     </td><th>  list   </th>      <td>List of port mappings</td></tr>
+                          <tr><td>-e, --env     </td><th>  list   </th>
+                            <td>Set environment variables</td></tr>
+                          <tr><td>-d, --detach     </td><th></th>      <td>Run
+                            container in background and print container ID</td></tr>
+                          <tr><td>--link </td><th>  list   </th>      <td>Add link to another container</td></tr>
+                          <tr><td>--name </td><th>  string </th>      <td>Name for the container</td></tr>
+                        </table>
+                        <p class="fragment" data-fragment-index="0">
+                       These are just
+                        examples that we'll use in the course. 
+                        See complete
+                        list with <code>docker run --help</code>
+                        </p>
+                        
+                  </section>
 
                     <section>
                         <h3>
-                            Exercise: Hello world
+                            Run a simple container
                         </h3>
                         <pre><code>$ docker run hello-world</code></pre>
 <asciinema-player autoplay="1" loop="loop" font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-122666.json" cols="150" rows="15"></asciinema-player>
+    theme="solarized-light" src="lib/asciicast-122666.json" cols="150" rows="10"></asciinema-player>
+  <p>
+  The hello-world image was created by docker for instructional purposes. It
+  just outputs a <em>hello world</em>-like message and exits.
+  </p>
                     </section>
                     
-                    
-
-
                   <section>
                     <h3>
-                      Exercise: Start a shell
+                      Start a shell
                     </h3>
+                      <p>
+                      <code>docker</code> <code >run</code>
+                      <code style="color:green;">image</code>
+                      <code style="color:blue;font-style:italic">[command]</code>
+                      </p>
                      <pre><code>$ docker run alpine /bin/sh</code></pre> 
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
      theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
@@ -576,6 +639,7 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                       <li class="fragment" data-fragment-index="0">Docker starts alpine image</li>
                       <li class="fragment" data-fragment-index="1">Runs shell command</li>
                       <li class="fragment" data-fragment-index="2">Exits immediately</li>
+                      <li class="fragment" data-fragment-index="3">A docker container only runs as long as it has a process (eg. a shell terminal or program) to run</li>
                     </ul>
                   </section>
 
@@ -583,13 +647,15 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
 
                     
                   <section>
-                    <h3>
-                      Exercise: Start an <em>interactive</em> shell
-                    </h3>
-                    <pre><code>$ docker run -it alpine /bin/sh</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+                    
+<h4>Exercise: Start an <em>interactive</em> shell</h4>
+                      <p>
+                      <code>docker</code> <code >run</code> <code style="color:red;">[options]</code> <code >alpine</code> <code>/bin/sh</code>
+                      </p>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker run -it alpine /bin/sh</code></pre>
+<asciinema-player class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-119490.json" cols="174" rows="5"></asciinema-player>
-                    <ul>
+                    <ul style="width:80%;">
                       <li class="fragment" data-fragment-index="0">Docker starts alpine image
                         <ul>
                           <li><code>-i</code> interactively</li>
@@ -601,20 +667,121 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                     </ul>
                   </section>
                   <section>
-                    <h3>
-                      Exercise: Run detached container
-                    </h3>
-                    <pre><code>$ docker run --rm --name static-site -e AUTHOR="YOUR NAME" \
-    -d -p 8081:80 dockersamples/static-site</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-122718.json" cols="120" rows="8"></asciinema-player>
+                    
+                    <h4>
+                      Exercise: Run website in a container
+                    </h4>
                     <ul>
-                      <li><code>-d</code> creates container with process detached from terminal</li>
-                      <li><code>-p</code> publish container with external port 8081 mapped to internal port 80</li>
-                      <li><code>-e</code> pass environment variable into container</li>
-                      <li><code>--name</code> the container "static-site"</li>
-                      <li>Go to <a href="http://localhost:8081">http://localhost:8081</a> in your browser</li>
+                      <li>Run the image: <code>dockersamples/static-site</code></li>
+                      <li>Name it <em>static-site</em></li>
+                      <li>Pass your name to the <code>AUTHOR</code> environment variable</li>
+                      <li>Map port 8081 to 80 internally (hint <code>8081:80</code>)</li>
+
+                      <li>Go to <a href="http://localhost:8081">localhost:8081</a></li>
+  
                     </ul>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --name static-site -e AUTHOR="YOUR NAME" \
+    -p 8081:80 dockersamples/static-site</code></pre>
+<asciinema-player autoplay="1" class="fragment" data-fragment-index="0" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/static-site-v1.json" cols="120" rows="8"></asciinema-player>
+                  </section>
+
+                  <section>
+                    <h3>List running containers</h3>
+                    <h4><code>docker ps</code></h4>
+                    <pre><code>$ docker ps</code></pre>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/asciicast-119497.json" cols="174"
+     rows="5"></asciinema-player>
+                        
+   <table>
+     <tr>
+       <th>Option                  </th>
+       <th>Argument</th>
+       <th>Description</th>
+     </tr>
+
+     <tr><td><code>-a, --all      </code></td><td>            </td><td> Show all containers (default shows just running)</td></tr>
+     <tr><td><code>-f, --filter   </code></td><td> filter     </td><td>    Filter output based on conditions provided</td></tr>
+     <tr><td><code>    --format   </code></td><td> string     </td><td>    Pretty-print containers using a Go template</td></tr>
+     <tr><td><code>    --help     </code></td><td>            </td><td> Print usage</td></tr>
+     <tr><td><code>    --no-trunc </code></td><td>            </td><td> Don't truncate output</td></tr>
+   </table>
+                    
+                  </section>
+                  <section>
+                    <h3>Stop a running container</h3>
+                    <p>
+                    <code>docker</code> <code style="color:red;">stop</code>
+                    <code style="color:green;">name|containerID</code>
+                    </p>
+                    
+                  </section>
+                  <section>
+                    <h4>Exercise: Stop the <code>static-site</code> container</h4>
+
+                    <ul>
+                      <li class="fragment" data-fragment-index="0">
+                        You actually have a couple options:
+                        <ul>
+                          <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
+                          <li class="fragment" data-fragment-index="2">use the <code>containerID</code> from <code>docker ps</code> output</li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
+
+<asciinema-player class="fragment" data-fragment-index="2" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119499.json" cols="174" rows="4"></asciinema-player>
+                  </section>
+                  <section>
+                    <h4>Exercise: Repeat run static website</h4>
+
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --name static-site -e AUTHOR="YOUR NAME" \
+    -p 8081:80 dockersamples/static-site</code></pre>
+                    <p class="fragment" data-fragment-index="1">You will probably get an error message:</p>
+<asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/name-in-use-error.json" cols="200"
+    rows="6"></asciinema-player>
+                    <p class="fragment" data-fragment-index="2">
+                    Note: the container has been stopped, but it still exists
+                    with the name static-sites. Docker will not let you create
+                    two containers with the same name.
+                    </p>
+
+                  </section>
+                  <section>
+                    <h3>Removing containers</h3>
+                    <p class="fragment" data-fragment-index="0">
+                    <code>docker</code> <code style="color:red;">rm</code> <code style="color:green;">name|containerID</code>
+                    </p>
+                  </section>
+
+                  <section>
+                    <h4>Exercise: remove old <code>static-site</code> container</h4>
+                    <pre><code>$ docker stop $NAME
+$ docker rm $NAME</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119504.json" cols="200" rows="18"></asciinema-player>
+                  </section>
+                  <section>
+                    <h4>Exercise: Running a detached container</h4>
+                    <ul>
+                      <li>
+                        Run static-site container like you did before, but add
+                        options to:
+                        <ul>
+                          <li>run in backround</li>
+                          <li>remove container on completion</li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --rm --name static-site -e AUTHOR="YOUR NAME" \
+    -d -p 8081:80 dockersamples/static-site</code></pre>
+<asciinema-player  class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-122718.json" cols="120" rows="8"></asciinema-player>
+                    
                     <aside class="notes">
                         <ul>
                             <li>Have users stop (<code>docker stop static-site</code>) and start this container with the exact same line</li>
@@ -624,89 +791,79 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
 
                   </section>
 
+                  
+
 
                   
+                  
+                  
+
+                  <section>
+                      <h3>View container logs</h3>
+                      <p>
+                      <code>docker</code> <color style="color:red;">logs</color> <code style="color:blue;">[options]</code> <code style="color:green;">CONTAINER</code>
+                      </p>
+<!--<script  data-autoplay="1" data-loop="1" data-size="small" data-speed="1" type="text/javascript" src="https://asciinema.org/a/122552.js" id="asciicast-122552" async></script>-->
+ <table>
+   <tr>
+     <th>Option</th>
+     <th>Argument</th>
+     <th>Description</th>
+   </tr>
+
+   <tr><td><code>    --details    </code></td><td>       </td> <td>      Show extra details provided to logs</td></tr>
+   <tr><td><code>-f, --follow     </code></td><td>       </td> <td>      Follow log output</td></tr>
+   <tr><td><code>    --help       </code></td><td>       </td> <td>      Print usage</td></tr>
+   <tr><td><code>    --since      </code></td><td> string</td> <td>            Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)</td></tr>
+   <tr><td><code>    --tail       </code></td><td> string</td> <td>             Number of lines to show from the end of the logs (default "all")</td></tr>
+   <tr><td><code>-t, --timestamps </code></td><td>       </td> <td>      Show timestamps</td></tr>
+ </table>
+                                         
+<p>
+See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online documentation</a>
+</p>
+                  </section>
+                  <section>
+                    <h4>Exercise: view container logs for <code>static-site</code> container</h4>
+ <asciinema-player class="fragment" data-fragment-index="0" autoplay="1" loop="1" font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-122552.json" cols="170" rows="14"></asciinema-player>
+                    <p class="fragment" data-fragment-index="1">Note: Go to <a href="http://localhost:8081">localhost:8081</a> and refresh a few times</p>
+                  </section>
+                  <section>
+                    <h3><code>docker exec</code></h3>
+                   
+                    <p style="width:100%">
+                    <code>docker</code> <code style="color:red;">exec </code>
+                    <code style="color:purple;">[options] </code> <code
+                    style="color:green;">CONTAINERID</code> <code style="color:blue;">[command]</code>
+                    </p>
+                    <ul style="width:80%">
+                      <li>A way to interact with a running container</li>
+                      <li>Open a shell into a running container.</li><li> A bit like ssh'ing into a machine</li>
+    <li>Can be useful for debugging</li>
+                    <li>
+                      See <a href="https://docs.docker.com/engine/reference/commandline/exec/">online documentation</a>
+                    </li>                   
+                    </ul>
+                  </section>
+                  <section>
+                    <h4>
+                      Exercise: Check process list in <code>static-site</code> container
+                    </h4>
+
+
+<asciinema-player class="fragment" data-fragment-index="0"  autoplay="1" loop="1" font-size="medium"
+   theme="solarized-light" speed="1" src="lib/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
+
+                  </section>
                   <section>
                     <h3>List local images</h3>
                     <pre><code>$ docker image ls</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-119494.json" cols="174" rows="7"></asciinema-player>
                   </section>
-                  
-                  <section>
-                    <h3>List running containers</h3>
-                    <pre><code>$ docker ps</code></pre>
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/asciicast-119497.json" cols="174"
-     rows="5"></asciinema-player>
-                  </section>
-                  <section>
-                    <h3><code>docker ps</code></h3>
-
-                    <pre><code>Options:
--a, --all             Show all containers (default shows just running)
--f, --filter filter   Filter output based on conditions provided
-    --format string   Pretty-print containers using a Go template
-    --help            Print usage
--n, --last int        Show n last created containers (includes all states) (default -1)
--l, --latest          Show the latest created container (includes all states)
-    --no-trunc        Don't truncate output
--q, --quiet           Only display numeric IDs
--s, --size            Display total file sizes</code></pre>
-                    <p>More examples</p>
-                    <dl>
-                        <dt><code>docker ps -a</code></dt>
-                        <dd>Show all containers (also not running)</dd>
-                        <dt><code>docker ps -a --filter 'exited=0'</code></dt>
-                        <dd>Filter all containers by exit code</dd>
-                    </dl>
-                    <p>
-                    See <a href="https://docs.docker.com/engine/reference/commandline/ps/">online documentation</a>
-                    </p>
-                  </section>
-
-                  <section>
-                      <h3>View container logs</h3>
-                      <pre><code>$ docker logs</code></pre>
-<!--<script  data-autoplay="1" data-loop="1" data-size="small" data-speed="1" type="text/javascript" src="https://asciinema.org/a/122552.js" id="asciicast-122552" async></script>-->
- <asciinema-player autoplay="1" loop="1" font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-122552.json" cols="170" rows="14"></asciinema-player>
-<ul>
-    <li><code>-f</code> flag to watch logs in realtime, like <code>tail -f file.log</code></li>
-</ul>
-<p>
-See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online documentation</a>
-</p>
-                  </section>
-                  <section>
-                      <h3>Enter a running container</h3>
-
-                      <pre><code>$ docker exec OPTIONS &lt;CONTAINER NAME&gt;</code></pre>
-
-<asciinema-player  autoplay="1" loop="1" font-size="medium"
-   theme="solarized-light" speed="1" src="lib/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
-<ul>
-    <li>Can be useful for debugging</li>
-</ul>
-<p>
-See <a href="https://docs.docker.com/engine/reference/commandline/exec/">online documentation</a>
-</p>
-                  </section>
 
 
 
-                  <section>
-                    <h3>Exercise: Stop a running container</h3>
-                    <pre><code>$ docker stop &lt;CONTAINER_ID&gt;</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-119499.json" cols="174" rows="4"></asciinema-player>
-                  </section>
-                  <section>
-                    <h2>Exercise: Clean up</h2>
-                    <pre><code>$ docker stop $NAME
-$ docker rm $NAME</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-119504.json" cols="200" rows="18"></asciinema-player>
-                  </section>
 
                 </section>
 
@@ -976,7 +1133,7 @@ $ docker rm $NAME</code></pre>
                       </ul>
                   </section>
 <section>
-                        <h3>Exercise: Create a basic image</h3>
+                        <h4>Exercise: Create a basic image</h4>
                         <pre><code>$ docker run -t -i ubuntu:16.04 /bin/bash
 
 root@69079aaaaab1:/$ apt-get update 
@@ -1161,7 +1318,36 @@ CMD ["test"]</code></pre>
                       </ul>
                   </section>
                   <section>
-                      <h3>Exercise: Build images with common layers</h3>
+                    <h3>
+                      <code>docker build</code>
+                    </h3>
+                    <h4>Build Docker images</h4>
+                    <code>docker</code> <code style="color:red;">build</code>
+                    <code style="color:purple">[options]</code> <code
+                    style="color:red;">image[:tag]</code>
+                    <code
+                    style="color:red;">path</code>
+
+
+                  <table>
+                    <tr>
+                      <th>Options</th>
+                      <th>Arguments</th>
+                      <th>Description</th>
+                    </tr>
+
+                    <tr>  <td><code>    --compress             </code></td><td>         </td>       <td>Compress the build context using gzip</td></tr>
+                    <tr>  <td><code>-c, --cpu-shares           </code></td><td>  int    </td>         <td>CPU shares (relative weight)</td></tr>
+                    <tr>  <td><code>    --cpuset-cpus          </code></td><td>  string </td>        <td>CPUs in which to allow execution (0-3, 0,1)</td></tr>
+                    <tr>  <td><code>    --cpuset-mems          </code></td><td>  string </td>        <td>MEMs in which to allow execution (0-3, 0,1)</td></tr>
+                    <tr>  <td><code>    --disable-content-trust</code></td><td>         </td>   <td>Skip image verification (default true)</td></tr>
+                    <tr>  <td><code>-f, --file string          </code></td><td>         </td>   <td>Name of the Dockerfile (Default is 'PATH/Dockerfile')</td></tr>
+                    <tr>  <td><code>    --pull                 </code></td><td>         </td>   <td>Always attempt to pull a newer version of the image</td></tr>
+                    <tr>  <td><code>-t, --tag list             </code></td><td>         </td>   <td>Name and optionally a tag in the 'name:tag' format</td></tr>
+                  </table>
+                  </section>
+                  <section>
+                      <h4>Exercise: Build images with common layers</h4>
                       <p>
                       <code>~/docker-introduction/sample-code/layering</code>
                       </p>
