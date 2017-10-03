@@ -122,7 +122,7 @@
                         <h3>Fetch course resources</h3>
                         <pre class="fragment" data-fragment-index="0"><code>$ git clone \
    https://github.com/catalyst-training/docker-introduction.git</code></pre>
-                        <ul>
+                        <ul style="width:80%;">
                             <li class="fragment" data-fragment-index="1">Slides for Reveal.js presentation</li>
                             <li class="fragment" data-fragment-index="2">docker-introduction.pdf</li>
                             <li class="fragment"
@@ -158,13 +158,9 @@ $ ./install-ansible.sh
 . &lt;stuff happens&gt;
 .
 $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
-                        <ul class="fragment" data-fragment-index="2">
-                            <li>Should have:
-                                <ul>
-                                    <li>ansible installed</li>
-                                    <li>activated and sourced a python virtualenv </li>
-                                </ul>
-                            </li>
+                        <ul style="width:80%;" class="fragment" data-fragment-index="2">
+                            <li>Ansible installed</li>
+                            <li>Activated and sourced a python virtualenv </li>
                         </ul>
                     </section>
                     <section>
@@ -174,10 +170,6 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                                 Follow instructions on the <a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/">Docker website</a>
                             </li>
                             <li class="fragment" data-fragment-index="1">Use the ansible playbook included in course repo</li>
-                        </ul>
-                        <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
-$ ansible-playbook -K ansible/docker-install.yml</code></pre>
-                        <ul>
                             <li class="fragment" data-fragment-index="2">
                                 This playbook installs:
                                 <ul>
@@ -188,6 +180,9 @@ $ ansible-playbook -K ansible/docker-install.yml</code></pre>
                                 </ul>
                             </li>
                         </ul>
+                        <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
+$ ansible-playbook -K ansible/docker-install.yml</code></pre>
+                        
                     </section>
                     
                     <section>
@@ -444,55 +439,9 @@ Follow along with course slides: <a href="http://localhost:8000">http://localhos
 
                     </section>
 
-                <!--<section>
-                                    <h3>Components of Docker</h3>
-                                    <ul>
-                                        <li>Images</li>
-                                            <ul>
-                                                <li>Read only template for creating containers</li>
-                                                <li>
-                                                    Can be built and distributed (by anyone)
-                                                </li>
-                                                <li>Can be based on or extended by other
-                                                    images</li>
-                                            </ul>
-                                        <li>Containers</li>
-                                            <ul>
-                                                <li>An actual running instance of an image</li>
-                                                <li>Read write</li>
-                                                <li>Encasulates your application and its dependencies</li>
-                                            </ul>
-                                        <li>Registries
-                                            <ul>
-                                                <li>Repository of images</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                    <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
-                                </section>-->
 
 
-                  <!--<section>
-                      <h3>Why Docker?</h3>
-                      <ul>
-                          <li>Containers generally lightweight compared to traditional virtualization</li>
-                          <li>Consistency across dev/test/prod</li>
-                          <li>Easy to modify, update and scale</li>
-                          <li>Dependency encapsulation and decoupling</li>
-                          <li>Enables new workflows</li>
-                      </ul>
-                  </section>-->
 
-                  <!--<section class="image-slide">
-                      <h2>Developer workflow</h2>
-                      <img
-                      src="http://blog.octo.com/wp-content/uploads/2014/01/Diapositive1.png"
-                      alt="Developer workflow">
-                      <aside class="notes"><ul>
-                        <li>Docker workflows are comparable to Git workflows.</li>
-                        <li>Always specify tags (or SHAs).</li>
-                      </ul></aside>
-                  </section>-->
 
                   <section>
                     <h3>Docker Registries</h3>
@@ -533,8 +482,10 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                   <section>
                       <h3>Get command documentation</h3>
                       <ul>
-                          <li>Just typing <code>docker</code> returns list of commands</li>
-                          <li>Calling any command with <code>-h</code> flag displays some docs</li>
+                          <li>Just typing <code style="color:red;">docker</code> returns list of commands</li>
+                          <li>Calling any command with <code
+                                  style="color:red;">-h</code> or <code
+                                  style="color:red;">--help</code> displays some docs</li>
                           <li>Comprehensive online docs on <a href="https://docs.docker.com/edge/engine/reference/commandline/docker/">Docker website</a></li>
                       </ul>
                   </section>
@@ -555,12 +506,14 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
     .
     .</code></pre>
                       <p>
-                      <code>docker</code> <code style="color:green">command</code> <code style="color:red;font-style:italic">options</code>
+                      <code>docker</code> <code
+                          style="color:red">command</code> <code
+                          style="color:blue;font-style:italic">[options] [args]</code>
                       </p>
                     </section>
                     
                   <section>
-                     <h4>Exercise: View <em>help</em> for <code>docker run</code></h4>
+                     <h4>Exercise: View documentation for <code>docker run</code></h4>
                     <pre class="fragment" data-fragment-index="0"><code>$ docker run --help
 Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
@@ -577,13 +530,17 @@ Options:
                   <section>
                     <h3>Docker <code>run</code></h3> 
                         <p>
-                        <code>docker</code> <code style="color:red">run</code>
+                        <code>docker</code> <code >run</code>
                         <code style="color:purple">[options]</code> <code
-                        style="color:green;font-style:italic">image</code> <code style="color:blue;font-style:italic">[command]</code>
+                        style="color:red;font-style:italic">image</code> <code style="color:blue;font-style:italic">[command]</code>
                         </p>
-                        <p>
-                        </p>
-                        <table>
+                        <ul class="fragment" data-fragment-index="0">
+                            <li>
+                                <code>docker run</code> requires an <code style="color:red">image</code> argument
+                            </li>
+                        </ul>
+                        
+                        <table class="fragment" data-fragment-index="1">
                           <tr>
                             <th>Option</th>
                             <th>Argument</th>
@@ -601,7 +558,7 @@ Options:
                           <tr><td>--link </td><th>  list   </th>      <td>Add link to another container</td></tr>
                           <tr><td>--name </td><th>  string </th>      <td>Name for the container</td></tr>
                         </table>
-                        <p class="fragment" data-fragment-index="0">
+                        <p class="fragment" data-fragment-index="1">
                        These are just
                         examples that we'll use in the course. 
                         See complete
@@ -633,14 +590,19 @@ Options:
                       <code style="color:blue;font-style:italic">[command]</code>
                       </p>
                      <pre><code>$ docker run alpine /bin/sh</code></pre> 
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
                     <ul>
-                      <li class="fragment" data-fragment-index="0">Docker starts alpine image</li>
-                      <li class="fragment" data-fragment-index="1">Runs shell command</li>
+                      <li class="fragment" data-fragment-index="0">Docker
+                          starts container using alpine image</li>
+                        <li class="fragment" data-fragment-index="1">
+                            <code >[command]</code> argument is executed
+                            inside container
+                            
+                        </li>
                       <li class="fragment" data-fragment-index="2">Exits immediately</li>
                       <li class="fragment" data-fragment-index="3">A docker container only runs as long as it has a process (eg. a shell terminal or program) to run</li>
                     </ul>
+ <asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
                   </section>
 
 
@@ -725,14 +687,16 @@ Options:
                         You actually have a couple options:
                         <ul>
                           <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
-                          <li class="fragment" data-fragment-index="2">use the <code>containerID</code> from <code>docker ps</code> output</li>
+                          <li class="fragment" data-fragment-index="2">use the
+                              <code>containerID</code> from <code>docker
+                                  ps</code> output (will depend on your
+                              environment)</li>
                         </ul>
                       </li>
                     </ul>
                     <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
+                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
 
-<asciinema-player class="fragment" data-fragment-index="2" autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-119499.json" cols="174" rows="4"></asciinema-player>
                   </section>
                   <section>
                     <h4>Exercise: Repeat run static website</h4>
@@ -745,7 +709,7 @@ Options:
     rows="6"></asciinema-player>
                     <p class="fragment" data-fragment-index="2">
                     Note: the container has been stopped, but it still exists
-                    with the name static-sites. Docker will not let you create
+                    with the name <em>static-sites</em>. Docker will not let you create
                     two containers with the same name.
                     </p>
 
@@ -759,10 +723,13 @@ Options:
 
                   <section>
                     <h4>Exercise: remove old <code>static-site</code> container</h4>
-                    <pre><code>$ docker stop $NAME
-$ docker rm $NAME</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-119504.json" cols="200" rows="18"></asciinema-player>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker rm static-site</code></pre>
+<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/asciicast-119504.json" cols="200" rows="12"></asciinema-player>
+<p class="fragment" data-fragment-index="1">
+If you pass the <code style="color:red;">--rm</code> flag to <code>docker run</code>, containers will be cleaned up when
+stopped.
+</p>
                   </section>
                   <section>
                     <h4>Exercise: Running a detached container</h4>
@@ -772,8 +739,12 @@ $ docker rm $NAME</code></pre>
                         options to:
                         <ul>
                           <li>run in backround</li>
-                          <li>remove container on completion</li>
+                          <li>remove container when stopped</li>
                         </ul>
+                      </li>
+                      <li class="fragment" data-fragment-index="2">
+                          Run docker stop static-site, and restart using same
+                          command
                       </li>
                     </ul>
 
@@ -791,17 +762,13 @@ $ docker rm $NAME</code></pre>
 
                   </section>
 
-                  
-
-
-                  
-                  
-                  
-
                   <section>
                       <h3>View container logs</h3>
                       <p>
-                      <code>docker</code> <color style="color:red;">logs</color> <code style="color:blue;">[options]</code> <code style="color:green;">CONTAINER</code>
+                      <code>docker</code> <color
+                      style="color:red;">logs</color> <code
+                      style="color:blue;">[options]</code> <code
+                  style="color:red;">CONTAINER</code>
                       </p>
 <!--<script  data-autoplay="1" data-loop="1" data-size="small" data-speed="1" type="text/javascript" src="https://asciinema.org/a/122552.js" id="asciicast-122552" async></script>-->
  <table>
@@ -834,11 +801,12 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                     <p style="width:100%">
                     <code>docker</code> <code style="color:red;">exec </code>
                     <code style="color:purple;">[options] </code> <code
-                    style="color:green;">CONTAINERID</code> <code style="color:blue;">[command]</code>
+                    style="color:red;">CONTAINERID</code> <code style="color:blue;">[command]</code>
                     </p>
                     <ul style="width:80%">
                       <li>A way to interact with a running container</li>
-                      <li>Open a shell into a running container.</li><li> A bit like ssh'ing into a machine</li>
+                      <li>Open a shell inside a running container.</li>
+                      <li> A bit like ssh'ing into a machine</li>
     <li>Can be useful for debugging</li>
                     <li>
                       See <a href="https://docs.docker.com/engine/reference/commandline/exec/">online documentation</a>
