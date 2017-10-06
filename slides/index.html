@@ -1355,7 +1355,7 @@ CMD ["test"]</code></pre>
 <asciinema-player  class="fragment" data-fragment-index="0" autoplay="1"  font-size="medium" speed="3"
     theme="solarized-light" src="lib/build-base-image.json" loop="loop" cols="136" rows="18"></asciinema-player>
                   </section>
-                  <section>
+                  <!--<section>
                       <h4>Exercise: Build images with common layers</h4>
                       <p>
                       <code>~/docker-introduction/sample-code/layering</code>
@@ -1383,13 +1383,18 @@ CMD /app/hello.sh</code></pre>
 echo "Hello world"</code></pre>
                       </p>
 
-                  </section>
+                  </section>-->
                   <section>
-                      <h3>Build child image</h3>
-                      <p>
-                      <pre><code>$ docker build -t acme/my-final-image:1.0 -f Dockerfile .</code></pre>
-                      </p>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-122489.json" cols="136" rows="14"></asciinema-player>
+                      <h4>Exercise: Build child image</h4>
+                      <ul>
+                          <li>Create <code style="color:red;">acme/my-final-image</code></li>
+                          <li>Tag <code style="color:red">1.0</code></li>
+                          <li>Use <code style="color:red">Dockerfile.child</code>
+                              to build image</li>
+                      </ul>
+                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t acme/my-final-image:1.0 -f Dockerfile.child .</code></pre>
+<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/build-child-image.json" cols="136" rows="14"></asciinema-player>
                   </section>
                   <section>
                       <h3>Compare base and final image</h3>
