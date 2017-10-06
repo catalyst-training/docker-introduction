@@ -167,9 +167,14 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                         <h3>Setup Docker</h3>
                         <ul>
                             <li class="fragment" data-fragment-index="0">
-                                Follow instructions on the <a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/">Docker website</a>
+                                Follow instructions on website for installing
+                                <ul>
+                                    <li><a href="https://store.docker.com/search?offering=community&type=edition">Docker Community Edition</a></li>
+                                    <li><a href="https://docs.docker.com/compose/install/">docker-compose</a></li>
+                                </ul>
                             </li>
-                            <li class="fragment" data-fragment-index="1">Use the ansible playbook included in course repo</li>
+                            <li class="fragment" data-fragment-index="1">If
+                                you are using Ubuntu, use the ansible playbook included in course repo</li>
                             <li class="fragment" data-fragment-index="2">
                                 This playbook installs:
                                 <ul>
@@ -177,6 +182,10 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                                         data-fragment-index="3">latest Docker <em>Community Edition</em></li>
                                     <li class="fragment"
                                         data-fragmnet-index="4"><code>docker-compose</code></li>
+                                    <li class="fragment"
+                                        data-fragmnet-index="4">Note: you
+                                        might need to logout and login again
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -493,6 +502,11 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                       <h3>
                         Basic client usage
                       </h3>
+                      <p>
+                      <code>docker</code> <code
+                          style="color:red">command</code> <code
+                          style="color:blue;font-style:italic">[options] [args]</code>
+                      </p>
                       <pre><code>$ docker&lt;ENTER&gt;
 
     Usage:  docker COMMAND
@@ -505,11 +519,6 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
           --help               Print usage
     .
     .</code></pre>
-                      <p>
-                      <code>docker</code> <code
-                          style="color:red">command</code> <code
-                          style="color:blue;font-style:italic">[options] [args]</code>
-                      </p>
                     </section>
                     
                   <section>
@@ -529,7 +538,8 @@ Options:
                   </section>
                   <section>
                     <h3>Docker <code>run</code></h3> 
-                        <p>
+                    <h4>Run a command in a container from an image
+                    </h4>                        <p>
                         <code>docker</code> <code >run</code>
                         <code style="color:purple">[options]</code> <code
                         style="color:red;font-style:italic">image</code> <code style="color:blue;font-style:italic">[command]</code>
@@ -626,37 +636,27 @@ Options:
                       </li>
                       <li class="fragment" data-fragment-index="1">Runs shell command</li>
                       <li class="fragment" data-fragment-index="2">Execute commands inside container</li>
+                          <li class="fragment" data-fragment-index="3">
+                              Exiting the shell stops the process and the
+                              container
+                          </li>
                     </ul>
                   </section>
-                  <section>
-                    
-                    <h4>
-                      Exercise: Run website in a container
-                    </h4>
-                    <ul>
-                      <li>Run the image: <code>dockersamples/static-site</code></li>
-                      <li>Name it <em>static-site</em></li>
-                      <li>Pass your name to the <code>AUTHOR</code> environment variable</li>
-                      <li>Map port 8081 to 80 internally (hint <code>8081:80</code>)</li>
-
-                      <li>Go to <a href="http://localhost:8081">localhost:8081</a></li>
-  
-                    </ul>
-                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --name static-site -e AUTHOR="YOUR NAME" \
-    -p 8081:80 dockersamples/static-site</code></pre>
-<asciinema-player autoplay="1" class="fragment" data-fragment-index="0" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/static-site-v1.json" cols="120" rows="8"></asciinema-player>
-                  </section>
-
                   <section>
                     <h3>List running containers</h3>
                     <h4><code>docker ps</code></h4>
-                    <pre><code>$ docker ps</code></pre>
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/asciicast-119497.json" cols="174"
-     rows="5"></asciinema-player>
+                    <pre  class="fragment" data-fragment-index="0"
+                    style="width:100%"><code>$ docker ps
+                    
+CONTAINER ID  IMAGE                                ... NAMES
+b3169acf49f8  alpine                               ... adoring_edison
+02aa3e50580c  heytrav/docker-introduction-slides   ... docker-intro</code></pre>
+                    <p class="fragment" data-fragment-index="1">
+                    Note: by default docker will assign a random name to each
+                    container (i.e. <em>adoring_edison</em>).
+                    </p>
                         
-   <table>
+   <table class="fragment" data-fragment-index="2">
      <tr>
        <th>Option                  </th>
        <th>Argument</th>
@@ -672,47 +672,25 @@ Options:
                     
                   </section>
                   <section>
-                    <h3>Stop a running container</h3>
-                    <p>
-                    <code>docker</code> <code style="color:red;">stop</code>
-                    <code style="color:green;">name|containerID</code>
-                    </p>
+                      <h4>
+                          Exercise: Assign name to a container
+                      </h4>
+                    <pre class="fragment" style="width:100%;" data-fragment-index="0"><code>$ docker run -it --name myalpine alpine /bin/sh</code></pre>
                     
-                  </section>
-                  <section>
-                    <h4>Exercise: Stop the <code>static-site</code> container</h4>
-
-                    <ul>
-                      <li class="fragment" data-fragment-index="0">
-                        You actually have a couple options:
-                        <ul>
-                          <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
-                          <li class="fragment" data-fragment-index="2">use the
-                              <code>containerID</code> from <code>docker
-                                  ps</code> output (will depend on your
-                              environment)</li>
-                        </ul>
-                      </li>
+                    <pre class="fragment" style="width:100%;" data-fragment-index="1"><code>❯ docker ps
+CONTAINER ID        IMAGE                                ...   NAMES
+db1faf244e7a        alpine                               ...   myalpine
+02aa3e50580c        heytrav/docker-introduction-slides   ...   docker-intro</code></pre>
+                    <ul style="width:80%;">
+                        <li class="fragment" data-fragment-index="2">Exit the shell</li>
+                        <li class="fragment" data-fragment-index="2">Repeat.
+                            What happens?</li>
                     </ul>
-                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
-                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
-
-                  </section>
-                  <section>
-                    <h4>Exercise: Repeat run static website</h4>
-
-                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --name static-site -e AUTHOR="YOUR NAME" \
-    -p 8081:80 dockersamples/static-site</code></pre>
-                    <p class="fragment" data-fragment-index="1">You will probably get an error message:</p>
-<asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
+<asciinema-player  class="fragment" data-fragment-index="3" autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/name-in-use-error.json" cols="200"
     rows="6"></asciinema-player>
-                    <p class="fragment" data-fragment-index="2">
-                    Note: the container has been stopped, but it still exists
-                    with the name <em>static-sites</em>. Docker will not let you create
-                    two containers with the same name.
-                    </p>
-
+                    
+                    
                   </section>
                   <section>
                     <h3>Removing containers</h3>
@@ -722,29 +700,46 @@ Options:
                   </section>
 
                   <section>
-                    <h4>Exercise: remove old <code>static-site</code> container</h4>
-                    <pre class="fragment" data-fragment-index="0"><code>$ docker rm static-site</code></pre>
+                    <h4>Exercise: remove old <code>myalpine</code> container</h4>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker rm myalpine</code></pre>
 <asciinema-player  class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-119504.json" cols="200" rows="12"></asciinema-player>
+    theme="solarized-light" src="lib/remove-container.json" cols="200" rows="12"></asciinema-player>
 <p class="fragment" data-fragment-index="1">
 If you pass the <code style="color:red;">--rm</code> flag to <code>docker run</code>, containers will be cleaned up when
 stopped.
 </p>
                   </section>
                   <section>
+                    
+                    <h4>
+                      Exercise: Run website in a container
+                    </h4>
+                    <ul>
+                      <li>Run the image: <code style="color:red;">dockersamples/static-site</code></li>
+                      <li>Name it <em>static-site</em></li>
+                      <li>Pass your name to the <code>AUTHOR</code> environment variable</li>
+                      <li>Map port 8081 to 80 internally (hint <code>8081:80</code>)</li>
+                      <li>Container terminates when stopped</li>
+
+                      <li>Go to <a href="http://localhost:8081">localhost:8081</a></li>
+                      <li class="fragment" data-fragment-index="1">CTRL-C to exit</li>
+  
+                    </ul>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --name static-site -e AUTHOR="YOUR NAME" \
+    --rm -p 8081:80 dockersamples/static-site</code></pre>
+<asciinema-player autoplay="1" class="fragment" data-fragment-index="0" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="lib/static-site-v1.json" cols="120" rows="8"></asciinema-player>
+                  </section>
+
+                  
+                  
+                  <section>
                     <h4>Exercise: Running a detached container</h4>
                     <ul>
                       <li>
                         Run static-site container like you did before, but add
-                        options to:
-                        <ul>
-                          <li>run in backround</li>
-                          <li>remove container when stopped</li>
-                        </ul>
-                      </li>
-                      <li class="fragment" data-fragment-index="2">
-                          Run docker stop static-site, and restart using same
-                          command
+                        option to run in the background (i.e.
+                        <em>detached</em> state).
                       </li>
                     </ul>
 
@@ -821,6 +816,33 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
 
 <asciinema-player class="fragment" data-fragment-index="0"  autoplay="1" loop="1" font-size="medium"
    theme="solarized-light" speed="1" src="lib/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
+
+                  </section>
+                  <section>
+                    <h3>Stop a running container</h3>
+                    <p>
+                    <code>docker</code> <code style="color:red;">stop</code>
+                    <code style="color:green;">name|containerID</code>
+                    </p>
+                    
+                  </section>
+                  <section>
+                    <h4>Exercise: Stop the <code>static-site</code> container</h4>
+
+                    <ul>
+                      <li class="fragment" data-fragment-index="0">
+                        You actually have a couple options:
+                        <ul>
+                          <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
+                          <li class="fragment" data-fragment-index="2">use the
+                              <code>containerID</code> from <code>docker
+                                  ps</code> output (will depend on your
+                              environment)</li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
+                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
 
                   </section>
                   <section>
@@ -930,110 +952,6 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                             </dl></aside>
                     </section>
 
-                    <section>
-                        <h3>Namespaces</h3>
-
-                        <div style="float:left;width:50%">
-                            <ul>
-                                <li>Restrict visibility</li>
-                                <li>Processes inside a namespace should only see that namespace</li>
-                                <li>
-                                    Namespaces:
-                                    <ul>
-                                        <li>pid</li>
-                                        <li>mnt</li>
-                                        <li>user</li>
-                                        <li>ipc</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div style="float:right;width:50%">
-                            <img src="img/docker-namespaces.png"
-                                 alt="Namespaces"/>
-                        </div>
-
-                    </section>
-                    <section>
-                        <h3>Cgroups</h3>
-
-                        <div style="float:left;width:50%">
-                            <ul>
-                                <li>Restrict usage</li>
-                                <li>Highly flexible; fine tuned</li>
-                                <li>
-                                    Cgroups:
-                                    <ul>
-                                        <li>cpu</li>
-                                        <li>memory</li>
-                                        <li>devices</li>
-                                        <li>pids</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div style="float:right;width:50%">
-                            <img src="img/cgroups.svg"
-                                 alt="cgroups"/>
-                        </div>
-
-                    </section>
-
-                    <section>
-                        <h3>Combining the two</h3>
-                        <p>
-                        A running container represents a combination of
-                        namespace and sets of cgroups
-                        </p>
-                        <img src="img/namespace-cgroup-combined.svg"
-                             alt="Combined namespaces cgroups" />
-                    </section>
-
-                    <section>
-                      <h3>Behind the scenes</h3>
-                      <ul>
-                        <li>User types docker commands</li>
-                        <li>Docker client contacts docker daemon</li>
-                        <li>Docker daemon checks if image exists</li>
-                        <li>Docker daemon downloads image from docker registry
-                        if it does not exist</li>
-                        <li>Docker daemon runs container using image</li>
-                      </ul>
-                    </section>
-                  <section>
-                    <h3>Docker architecture</h3>
-
-                    <img src="img/architecture.svg" alt="Architecture">
-                    <aside class="notes">
-                      <ul>
-                        <li>Expalin architecture diagram (Commands and components).</li>
-                        <li>Client vs daemon.</li>
-                        <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
-                        <li>Docker's use of UFS separates it from other container solutions.</li>
-                        <li>Execute the "docker run" command and go through the list of steps it does.
-                          <ul>
-                            <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
-                            <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
-                          </ul></li>
-                          <li>Namespaces => isolation of filesystem and kernel features.</li>
-                          <li>Control groups => resource limiting.</li>
-                          <li>Different container format avaialble, default is libcontainer</li>
-                      </ul></aside>
-                    <aside class="notes">
-                        <ul>
-                            <li>Docker client talks to Docker Daemon</li>
-                            <li>Docker Daemon does heavy lifting</li>
-                            <li>
-                                Client and daemon 
-                                <ul>
-                                    <li>can run on the same system</li>
-                                    <li>communicate using REST API</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </aside>
-                    
-                  </section>
                 <!-- Large image slide -->
 
 
@@ -1100,6 +1018,147 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                           </li>
                       </ul>
                   </section>
+
+                  <section>
+                      <h3>Image layers</h3>
+                      <img src="img/container-layers.jpg"/>
+                  </section>
+                  <section>
+                      <h3>Sharing image layers</h3>
+                      <ul>
+                          <li>Images will share any common layers</li>
+                          <li>
+                              Applies to 
+                              <ul>
+                                  <li>Images pulled from Docker </li>
+                                  <li>Images you build yourself</li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </section>
+                    <section>
+                        <h3>Namespaces</h3>
+
+                        <div style="float:left;width:50%">
+                            <ul>
+                                <li>Restrict visibility</li>
+                                <li>Processes inside a namespace should only see that namespace</li>
+                                <li>
+                                    Namespaces:
+                                    <ul>
+                                        <li>pid</li>
+                                        <li>mnt</li>
+                                        <li>user</li>
+                                        <li>ipc</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="float:right;width:50%">
+                            <img src="img/docker-namespaces.png"
+                                 alt="Namespaces"/>
+                        </div>
+
+                    </section>
+                    <section>
+                        <h3>Cgroups</h3>
+
+                        <div style="float:left;width:50%">
+                            <ul>
+                                <li>Restrict usage</li>
+                                <li>Highly flexible; fine tuned</li>
+                                <li>
+                                    Cgroups:
+                                    <ul>
+                                        <li>cpu</li>
+                                        <li>memory</li>
+                                        <li>devices</li>
+                                        <li>pids</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="float:right;width:50%">
+                            <img src="img/cgroups.svg"
+                                 alt="cgroups"/>
+                        </div>
+
+                    </section>
+
+                    <section>
+                        <h3>Combining the two</h3>
+                        <p>
+                        A running container represents a combination of
+                        layered file system,
+                        namespace and sets of cgroups
+                        </p>
+                        <img src="img/namespace-cgroup-combined.svg"
+                             alt="Combined namespaces cgroups" />
+                    </section>
+
+                  <section>
+                      <h3>Container layering</h3>
+                      <ul>
+                          <li>Container creates its own read/write layer on top of image</li>
+                          <li>Multiple containers each have own read/write layer, but can share the actual image</li>
+                      </ul>
+                      <img src="img/sharing-layers.jpg"/>
+                      <aside class="notes">
+                          <ul>
+                              <li>Difference between containers and images is top writable layer</li>
+                              <li>All writes to container stored here</li>
+                              <li>Lost when container deleted</li>
+                          </ul>
+                      </aside>
+
+                  </section>
+                    <section>
+                      <h3>Behind the scenes</h3>
+                      <ul>
+                        <li>User types docker commands</li>
+                        <li>Docker client contacts docker daemon</li>
+                        <li>Docker daemon checks if image exists</li>
+                        <li>Docker daemon downloads image from docker registry
+                        if it does not exist</li>
+                        <li>Docker daemon runs container using image</li>
+                      </ul>
+                    </section>
+                  <section>
+                    <h3>Docker architecture</h3>
+
+                    <img src="img/architecture.svg" alt="Architecture">
+                    <aside class="notes">
+                      <ul>
+                        <li>Expalin architecture diagram (Commands and components).</li>
+                        <li>Client vs daemon.</li>
+                        <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
+                        <li>Docker's use of UFS separates it from other container solutions.</li>
+                        <li>Execute the "docker run" command and go through the list of steps it does.
+                          <ul>
+                            <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
+                            <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
+                          </ul></li>
+                          <li>Namespaces => isolation of filesystem and kernel features.</li>
+                          <li>Control groups => resource limiting.</li>
+                          <li>Different container format avaialble, default is libcontainer</li>
+                      </ul></aside>
+                    <aside class="notes">
+                        <ul>
+                            <li>Docker client talks to Docker Daemon</li>
+                            <li>Docker Daemon does heavy lifting</li>
+                            <li>
+                                Client and daemon 
+                                <ul>
+                                    <li>can run on the same system</li>
+                                    <li>communicate using REST API</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </aside>
+                    
+                  </section>
+
+
 <section>
                         <h4>Exercise: Create a basic image</h4>
                         <pre><code>$ docker run -t -i ubuntu:16.04 /bin/bash
@@ -1243,7 +1302,7 @@ CMD ["test"]</code></pre>
 
 
                   <section>
-                    <h3>more Dockerfile instructions </h3>
+                    <h3>More Dockerfile instructions </h3>
                     <dl>
                       <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
                       <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
@@ -1251,40 +1310,7 @@ CMD ["test"]</code></pre>
                     </dl>
                   </section>
 
-                  <section>
-                      <h3>Image layers</h3>
-                      <img src="img/container-layers.jpg"/>
-                  </section>
 
-                  <section>
-                      <h3>Container layering</h3>
-                      <ul>
-                          <li>Container creates its own read/write layer on top of image</li>
-                          <li>Multiple containers each have own read/write layer, but can share the actual image</li>
-                      </ul>
-                      <img src="img/sharing-layers.jpg"/>
-                      <aside class="notes">
-                          <ul>
-                              <li>Difference between containers and images is top writable layer</li>
-                              <li>All writes to container stored here</li>
-                              <li>Lost when container deleted</li>
-                          </ul>
-                      </aside>
-
-                  </section>
-                  <section>
-                      <h3>Sharing image layers</h3>
-                      <ul>
-                          <li>Images will share any common layers</li>
-                          <li>
-                              Applies to 
-                              <ul>
-                                  <li>Images pulled from Docker </li>
-                                  <li>Images you build yourself</li>
-                              </ul>
-                          </li>
-                      </ul>
-                  </section>
                   <section>
                     <h3>
                       <code>docker build</code>
@@ -1315,6 +1341,21 @@ CMD ["test"]</code></pre>
                   </table>
                   </section>
                   <section>
+                      <h4>
+                          Exercise: build docker image using Dockerfile
+                      </h4>
+                      <ul>
+                          <li>Call image <code style="color:red;">acme/my-base-image</code></li>
+                          <li>Tag it <code style="color:red;">1.0</code></li>
+                      </ul>
+
+                      <p>
+                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t acme/my-base-image:1.0  .</code></pre>
+                      </p>
+<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1"  font-size="medium" speed="3"
+    theme="solarized-light" src="lib/build-base-image.json" loop="loop" cols="136" rows="18"></asciinema-player>
+                  </section>
+                  <section>
                       <h4>Exercise: Build images with common layers</h4>
                       <p>
                       <code>~/docker-introduction/sample-code/layering</code>
@@ -1342,14 +1383,6 @@ CMD /app/hello.sh</code></pre>
 echo "Hello world"</code></pre>
                       </p>
 
-                  </section>
-                  <section>
-                      <h3>Build base image</h3>
-                      <p>
-                      <pre><code>$ docker build -t acme/my-base-image:1.0 -f Dockerfile.base .</code></pre>
-                      </p>
-<asciinema-player autoplay="1"  font-size="medium" speed="3"
-    theme="solarized-light" src="lib/asciicast-122488.json" loop="loop" cols="136" rows="18"></asciinema-player>
                   </section>
                   <section>
                       <h3>Build child image</h3>
