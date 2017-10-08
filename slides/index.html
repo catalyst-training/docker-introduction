@@ -1036,6 +1036,11 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                           </li>
                       </ul>
                   </section>
+                  <section>
+                      <h3>
+                          Container basics
+                      </h3>
+                  </section>
                     <section>
                         <h3>Namespaces</h3>
 
@@ -1397,8 +1402,11 @@ echo "Hello world"</code></pre>
     theme="solarized-light" src="lib/build-child-image.json" cols="136" rows="14"></asciinema-player>
                   </section>
                   <section>
-                      <h3>Compare base and final image</h3>
+                      <h4>Exercise: Compare base and child image layers</h4>
                       <ul>
+                          <li>
+                              Use: <code>docker</code> <code style="color:red;">history</code> <code style="color:green;">image</code>
+                          </li>
                           <li>The final image should contain all the same layers as the base image </li>
                           <li>One additional layer: the last line of the Dockerfile</li>
                       </ul>
@@ -1637,7 +1645,6 @@ $ docker build  -t good-apt-example -f Dockerfile.good .
                             <li class="fragment"
                                 data-fragment-index="3">Example 1: <code>apt-get update</code> does not refresh index
                                 <ul>
-                                    <li>Can miss important patches</li>
                                     <li>apt repos might change</li>
                                 </ul>
                                 <li class="fragment" data-fragment-index="4">
@@ -2011,21 +2018,44 @@ services:
                 <section>
                     <h3>Docker Compose</h3>
                     <h4>Basic commands</h4>
+                    <p>
+                    <code>docker-compose</code> <code style="color:red;">COMMAND</code> <code style="color:blue;">[options]</code> <code>[args]</code>
+                    </p>
 
-                    <ul>
-                        <li class="fragment" data-fragment-index="0">
-                            Start compose: 
-                            <pre><code>$ docker-compose up [-d]</code></pre>
-                        </li>
-                        <li class="fragment" data-fragment-index="1">
-                            Stop compose: <pre><code>$ docker-compose down</code></pre>
-                        </li>
+                    <table>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code >up</code></td>
+                            <td>Start compose</td>      
+                        </tr>
+                        <tr>
+                            <td>
+                                 <code >down</code>
+                            </td>
+                            <td>
+                                Stop &amp; tear down containers/networks
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <code >restart</code> &lt;service name&gt;
+                            </td>
+                            <td>
+                                Restart a service
+                            </td>
+                        </tr>
+                        scale
                         
-                        <li class="fragment" data-fragment-index="2">
-                            Complete set of commands: <pre><code>$ docker-compose -h</code></pre>
-                        </li>
-                        <li class="fragment" data-fragment-index="3">Have a look at the <a href="">documentation</a></li>
-                    </ul>
+                    </table>
+                    
+                    <p class="fragment" data-fragment-index="0">Use
+                    <code>docker-compose</code> <code
+                    style="color:red;">-h</code> to view inline documentation</p>
+                    <p class="fragment" data-fragment-index="1">Have a look at
+                    the <a href="">documentation</a></p>
 
                 </section>
                 <section>
@@ -2038,16 +2068,7 @@ $ docker-compose up</code></pre>
  <a href="http://localhost:5000">Vote</a> and <a href="http://localhost:5001">view results</a>
 </p>
                 </section>
-                <section>
-                    <h3>More Docker Compose</h3>
-                    <ul>
-                        <li>Run in background: Builds images, mounts volumes, etc.
-                            <pre><code>$ docker-compose up -d</code></pre></li>
-                        <li>Restart service <pre><code>$ docker-compose restart &lt;service name&gt;</code></pre></li>
-                        <li>Stop services <pre><code>$ docker-compose stop</code></pre></li>
-                        <li>Stop services, remove containers and networks <pre><code>$ docker-compose down</code></pre></li>
-                    </ul>
-                </section>
+                
                   <section>
                       <h3>Interactive development</h3>
                       <ul>
