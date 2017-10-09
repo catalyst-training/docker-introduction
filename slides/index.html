@@ -673,7 +673,7 @@ b3169acf49f8  alpine                               ... adoring_edison
                   </section>
                   <section>
                       <h4>
-                          Exercise: Assign name to a container
+                          Exercise: Assign a name to the running alpine container
                       </h4>
                     <pre class="fragment" style="width:100%;" data-fragment-index="0"><code>$ docker run -it --name myalpine alpine /bin/sh</code></pre>
                     
@@ -683,7 +683,8 @@ db1faf244e7a        alpine                               ...   myalpine
 02aa3e50580c        heytrav/docker-introduction-slides   ...   docker-intro</code></pre>
                     <ul style="width:80%;">
                         <li class="fragment" data-fragment-index="2">Exit the shell</li>
-                        <li class="fragment" data-fragment-index="2">Repeat.
+                        <li class="fragment" data-fragment-index="2">Repeat
+                            using same name.
                             What happens?</li>
                     </ul>
 <asciinema-player  class="fragment" data-fragment-index="3" autoplay="1" loop="loop"  font-size="medium" speed="1"
@@ -1901,6 +1902,10 @@ CMD ["test"]</code></pre>
                               <div style="float:left;width:50%">
                                 <img src="img/voting-app.png" alt="Voting application"/>
                               </div>
+                              <div style="float:left;width:100%;">
+                                  <pre class="fragment" data-fragment-index="5"><code>$ git clone https://github.com/dockersamples/example-voting-app.git
+$ cd example-voting-app</code></pre>
+                              </div>
                   </section>
 
                   <section>
@@ -2061,7 +2066,7 @@ services:
                 <section>
                     <h3>Docker Compose Example</h3>
                     <pre><code>$ cd example-voting-app
-$ docker-compose up</code></pre>
+$ docker-compose up -d</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/docker-compose.json" cols="174" rows="15"></asciinema-player>
 <p class="fragment" data-fragment-index="0">
