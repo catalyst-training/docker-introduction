@@ -122,8 +122,7 @@
                         <h3>Fetch course resources</h3>
                         <pre class="fragment" data-fragment-index="0"><code>$ git clone \
    https://github.com/catalyst-training/docker-introduction.git
-$ cd docker-introduction
-$ git checkout oct-10</code></pre>
+$ cd docker-introduction</code></pre>
                         <ul style="width:80%;">
                             <li class="fragment" data-fragment-index="1">Slides for Reveal.js presentation</li>
                             <li class="fragment" data-fragment-index="2">docker-introduction.pdf</li>
@@ -183,9 +182,9 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                                     <li class="fragment"
                                         data-fragment-index="3">latest Docker <em>Community Edition</em></li>
                                     <li class="fragment"
-                                        data-fragmnet-index="4"><code>docker-compose</code></li>
+                                        data-fragment-index="4"><code>docker-compose</code></li>
                                     <li class="fragment"
-                                        data-fragmnet-index="4">Note: you
+                                        data-fragment-index="4">Note: you
                                         might need to logout and login again
                                     </li>
                                 </ul>
@@ -193,13 +192,17 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                         </ul>
                         <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
 $ ansible-playbook -K ansible/docker-install.yml</code></pre>
+                        <p class="fragment" data-fragment-index="2">
+                        Note: on Ubuntu versions &gte; 16.04 you'll need to
+                        add <code>-e ansible_python_interpreter=/usr/bin/python</code>.
+                        </p>
                         
                     </section>
                     
                     <section>
                         <h3>Fetch and run slides</h3>
                       <pre><code>$ docker run --name docker-intro -d --rm \
-        -p 8000:8000 heytrav/docker-introduction-slides:oct-10</code></pre>
+        -p 8000:8000 heytrav/docker-introduction-slides</code></pre>
 <!--<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119477.json" cols="150" rows="15"></asciinema-player>-->
 <p>
 Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>

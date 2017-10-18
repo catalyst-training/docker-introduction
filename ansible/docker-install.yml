@@ -28,9 +28,17 @@
         - linux-image-extra-virtual
 
     - name: Add Dockers official GPG key
-      apt_key:
-        url: "https://download.docker.com/linux/ubuntu/gpg"
-        state: present
+      block:
+        - name: Install gpg key for ubuntu from docker.com
+          apt_key:
+            url: "https://download.docker.com/linux/ubuntu/gpg"
+            state: present
+      rescue:
+        - name: Install gpg key for ubuntu using local version.
+          apt_key:
+            data: "{{ lookup('file', 'files/docker.asc') }}"
+            state: present
+
 
     - name: Get os release name
       command: lsb_release -cs
