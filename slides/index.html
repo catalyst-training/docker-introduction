@@ -120,9 +120,11 @@
                     </section>
                     <section>
                         <h3>Fetch course resources</h3>
-                        <pre class="fragment" data-fragment-index="0"><code>$ git clone \
+                        <!--<pre class="fragment" data-fragment-index="0"><code>$ git clone \
    https://github.com/catalyst-training/docker-introduction.git
-$ cd docker-introduction</code></pre>
+$ cd docker-introduction</code></pre>-->
+                        <pre class="fragment" data-fragment-index="0"><code>$ cd ~/docker-introduction
+$ ls</code></pre>
                         <ul style="width:80%;">
                             <li class="fragment" data-fragment-index="1">Slides for Reveal.js presentation</li>
                             <li class="fragment" data-fragment-index="2">docker-introduction.pdf</li>
@@ -152,16 +154,18 @@ $ cd docker-introduction</code></pre>
                     </section>
                     <section>
                         <h3>Setup Ansible</h3>
-                        <pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/catalyst/catalystcloud-ansible.git</code></pre>
-                        <pre class="fragment" data-fragment-index="1"><code>$ cd catalystcloud-ansible
+                        <!--<pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/catalyst/catalystcloud-ansible.git</code></pre>-->
+                        <pre class="fragment" data-fragment-index="1"><code>$ cd ~/catalystcloud-ansible
 $ ./install-ansible.sh
 . 
 . &lt;stuff happens&gt;
 .
 $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                         <ul style="width:80%;" class="fragment" data-fragment-index="2">
-                            <li>Ansible installed</li>
-                            <li>Activated and sourced a python virtualenv </li>
+                            <li>Installs python virtualenv with latest ansible
+                            libraries</li>
+                            <li>We'll be using this virtualenv for tasks
+                                throughout the course.</li>
                         </ul>
                     </section>
                     <section>
