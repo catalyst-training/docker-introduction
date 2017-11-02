@@ -196,10 +196,11 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                         </ul>
                         <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
 $ ansible-playbook -K ansible/docker-install.yml</code></pre>
-                        <p class="fragment" data-fragment-index="2">
-                        Note: on Ubuntu versions &gte; 16.04 you'll need to
-                        add <code>-e ansible_python_interpreter=/usr/bin/python</code>.
+                        <p class="fragment" data-fragment-index="5">
+                        Note: on some Ubuntu versions (eg. &ge; 16.04) you'll need to
+                        add: 
                         </p>
+                        <pre class="fragment" data-fragment-index="5"><code>-e ansible_python_interpreter=/usr/bin/python</code></pre>.
                         
                     </section>
                     
