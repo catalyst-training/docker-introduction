@@ -683,8 +683,11 @@ b3169acf49f8  alpine                               ... adoring_edison
                   </section>
                   <section>
                       <h4>
-                          Exercise: Assign a name to the running alpine container
+                          Exercise: Assign the name <em>myalpine</em> when running
+                          previous example container
                       </h4>
+                      
+                      <p>Hint: <code>docker run -it </code><code style="color:red;">&lt;option&gt;</code><code> alpine</code></p>
                     <pre class="fragment" style="width:100%;" data-fragment-index="0"><code>$ docker run -it --name myalpine alpine /bin/sh</code></pre>
                     
                     <pre class="fragment" style="width:100%;" data-fragment-index="1"><code>❯ docker ps
@@ -1985,6 +1988,7 @@ docker run --rm -d --name result -v $PWD/result:/app \
                           </ul>
                       </li>
                       <li>Can't scale services</li>
+                      <li>Stopping services is P.I.T.A.</li>
                       <li>Better tools exist..</li>
                     </ul>
                   </section>
