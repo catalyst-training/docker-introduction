@@ -1281,25 +1281,46 @@ RUN make /app</code></pre>
                   </section>
                   <section>
                     <h4>ENTRYPOINT</h4>
+                    <ul>
+                        <li>
+                         Docker images not always executable by default (see
+                         <code>~/docker-introduction/sample-code/entrypoint_cmd_examples/Dockerfile.notexecutable</code>)
+                        </li>
+                      <li>Configure executable behaviour of container</li>
+                      <li>
+                          shell form: 
+                          <ul>
+                              <li>
+                                  <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> [param1] [param2]</code>
+                              </li>
+                          </ul>
+                      </li>
+                      <li>
+                          exec form: 
+                          <ul>
+                              <li>
+                                  <code>ENTRYPOINT ["command", "param1", "param2"]</code>
+                              </li>
+                          </ul>
+                      </li>
+
+                    </ul>
                     <pre><code>ENTRYPOINT ["node", "index.js"]</code></pre>
                     <pre><code>ENTRYPOINT ["python3", "app.py"]</code></pre>
                     <pre><code>ENTRYPOINT python3 app.py</code></pre>
-                    <ul>
-                      <li>Configure container to run executable by default</li>
-                      <li>Preferred to use JSON array syntax (best practices)</li>
-                    </ul>
+                    
                   </section>
                   <section>
                     <h4>CMD</h4>
-                    <pre><code>CMD ["node", "index.js"]</code></pre>
-                    <pre><code>ENTRYPOINT ["python3", "manage.py"]
-CMD ["test"]</code></pre>
                     <ul>
                       <li>Provide defaults to executable</li>
                       <li>or provide executable</li>
-                      <li>Also, preferred to use JSON array syntax (best practices)</li>
+                      <li>Shell and exec forms just like <code>ENTRYPOINT</code></li>
                       <li>Last argument to <code>docker run</code> overrides <code>CMD</code></li>
                     </ul>
+                    <pre><code>CMD ["node", "index.js"]</code></pre>
+                    <pre><code>ENTRYPOINT ["python3", "manage.py"]
+CMD ["test"]</code></pre>
                   </section>
                   <section>
                     <h4>ENTRYPOINT &amp; CMD</h4>
@@ -1383,7 +1404,7 @@ CMD ["test"]</code></pre>
                       <code>Dockerfile.base</code>
 
 
-                      <pre><code class="dockerfile">FROM ubuntu:16.10
+                      <pre><code class="dockerfile">FROM ubuntu:16.04
 COPY . /app</code></pre>
                       </p>
 
@@ -1463,7 +1484,7 @@ IMAGE         ...                                        SIZE
                       <li>Write a Dockerfile</li>
                       <li>Build an image</li>
                       <li>Run the image</li>
-                      <li>Upload image do Docker Registry</li>
+                      <li>Upload image to a Docker registry</li>
                     </ul>
                   </section>
                   <section>
@@ -1753,14 +1774,19 @@ RUN cd /usr/path && tar -xvf big.tar.gz \
                     </section>
                     <section>
                         <h3>
+                            CMD &amp; ENTRYPOINT
+                        </h3>
+                    </section>
+                    <section>
+                        <h3>
                             CMD
                         </h3>
                         <ul>
                             <li>Used to run software contained by image</li>
-                            <li>Should be run in form <ul><li><code>CMD ["executable", "param1", "param2", ..]</code></li></ul></li>
+                            <li>Avoid <ul><li><code>CMD "executable param1 param2 ..."</code></li></ul></li>
+                            <li>Best practice to run in <strong>exec</strong> form: <ul><li><code>CMD ["executable", "param1", "param2", ..]</code></li></ul></li>
                             <li>Or in form that creates interactive shell like
                                 <ul><li><code>CMD ["python"]</code></li><li><code>CMD ["/bin/bash"]</code></li></ul></li>
-                            <li>Avoid <ul><li><code>CMD "executable param1 param2 ..."</code></li></ul></li>
                         </ul>
                     </section>
                     <section>

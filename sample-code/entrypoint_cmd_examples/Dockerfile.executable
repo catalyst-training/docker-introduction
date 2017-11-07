@@ -1,0 +1,6 @@
+FROM alpine
+
+ENTRYPOINT ["echo", "Good", "morning,", "Dave"]
+
+
+
