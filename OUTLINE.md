@@ -1,15 +1,19 @@
 # Introduction to Docker
 
-Participants will learn the basics of working with Docker and hopefully how they can use it in everyday development and building applications for production.
+This is a course for people who are interested in learning the basics of Docker.
+Particpants will learn basic command line usage, how to create images, best
+practices, and how Docker can be used in their day to day software development.
+
 
 ## Course Outline
 
-* Basics of containerisation and comparison with other forms of virtualisation
-* Basic command line usage
-   * Finding documentation
-   * Fetching images
-   * Running/stopping containers
-   * Checking processes and viewing logs from containers
+* Fundamentals of containerisation
+* Command line usage/how to:
+   * Find documentation
+   * Fetch images
+   * Run/stop containers
+   * Check processes
+   * View logs from containers
 * How Docker works
    * Images
    * Containers
@@ -22,6 +26,7 @@ Participants will learn the basics of working with Docker and hopefully how they
 * Container orchestration
    * Kubernetes
    * Docker Swarm
+* Build a Docker Swarm in Catalyst Cloud
    
    
 ## Target audience
