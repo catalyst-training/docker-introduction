@@ -1216,7 +1216,7 @@ $ docker history ubuntu:update</code></pre>
                           <li>A very simple Dockerfile with 4 layers:</li>
                       </ul>
                       
-                      <pre><code class="dockerfile">FROM ubuntu:15.10
+                      <pre><code class="dockerfile">FROM ubuntu:16.04
 COPY . /app
 RUN make /app
 CMD ["python", "/app/app.py"]</code></pre>
@@ -1281,33 +1281,36 @@ RUN make /app</code></pre>
                   </section>
                   <section>
                     <h4>ENTRYPOINT</h4>
-                    <ul>
-                        <li>
-                         Docker images not always executable by default (see
-                         <code>~/docker-introduction/sample-code/entrypoint_cmd_examples/Dockerfile.notexecutable</code>)
+                    <ul style="width:100%">
+                        <li class='fragment' data-fragment-index="0">
+                         Docker images need not be executable by default 
                         </li>
-                      <li>Configure executable behaviour of container</li>
-                      <li>
-                          shell form: 
-                          <ul>
-                              <li>
-                                  <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> [param1] [param2]</code>
-                              </li>
-                          </ul>
-                      </li>
-                      <li>
-                          exec form: 
-                          <ul>
-                              <li>
-                                  <code>ENTRYPOINT ["command", "param1", "param2"]</code>
-                              </li>
-                          </ul>
-                      </li>
+                      <li class='fragment' data-fragment-index="1">ENTRYPOINT
+                          configures executable behaviour of container</li>
 
                     </ul>
-                    <pre><code>ENTRYPOINT ["node", "index.js"]</code></pre>
-                    <pre><code>ENTRYPOINT ["python3", "app.py"]</code></pre>
-                    <pre><code>ENTRYPOINT python3 app.py</code></pre>
+                    <pre class="fragment" data-fragment-index="2"><code>$ cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
+$ docker build -t not-executable -f Dockerfile.notexecutable .
+$ docker run not-executable # does nothing</code></pre>
+                    <ul style="width:100%">
+                        <li class="fragment" data-fragment-index="3">
+                            Two ways to execute a command:
+                                <ul>
+                                    <li class='fragment' data-fragment-index="4">
+                                shell form: 
+                                        <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> [param1] [param2]</code>
+                                    </li>
+                                    <li class='fragment' data-fragment-index="5">
+                                  exec form: <code>ENTRYPOINT ["command", "param1", "param2"]</code>
+                              </li>
+                              
+                              </ul>
+                        </li>
+                      
+
+                    </ul>
+                    <pre class="fragment" data-fragment-index="5"><code>$ docker build -t executable -f Dockerfile.executable .
+$ docker run executable</code></pre>
                     
                   </section>
                   <section>
@@ -1315,7 +1318,7 @@ RUN make /app</code></pre>
                     <ul>
                       <li>Provide defaults to executable</li>
                       <li>or provide executable</li>
-                      <li>Shell and exec forms just like <code>ENTRYPOINT</code></li>
+                      <li><em>Shell</em> and <em>exec</em> forms just like <code>ENTRYPOINT</code></li>
                       <li>Last argument to <code>docker run</code> overrides <code>CMD</code></li>
                     </ul>
                     <pre><code>CMD ["node", "index.js"]</code></pre>
