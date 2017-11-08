@@ -2,7 +2,7 @@
 
 This is a course for people who are interested in learning the basics of Docker.
 Particpants will learn basic command line usage, how to create images, best
-practices, and how Docker can be used in their day to day software development.
+practices, and how Docker can be used in day-to-day software development.
 
 
 ## Course Outline
@@ -22,11 +22,9 @@ practices, and how Docker can be used in their day to day software development.
 * Dockerising applications
 * Dockerfile best practices
 * Software development workflows
-   * using `docker-compose`
 * Container orchestration
    * Kubernetes
-   * Docker Swarm
-* Build a Docker Swarm in Catalyst Cloud
+   * Docker Swarm demo in Catalyst Cloud
    
    
 ## Target audience
