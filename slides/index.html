@@ -1298,7 +1298,7 @@ $ docker run not-executable # does nothing</code></pre>
                                 <ul>
                                     <li class='fragment' data-fragment-index="4">
                                 shell form: 
-                                        <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> [param1] [param2]</code>
+                                        <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
                                     </li>
                                     <li class='fragment' data-fragment-index="5">
                                   exec form: <code>ENTRYPOINT ["command", "param1", "param2"]</code>
@@ -1315,31 +1315,41 @@ $ docker run executable</code></pre>
                   </section>
                   <section>
                     <h4>CMD</h4>
-                    <ul>
-                      <li>Provide defaults to executable</li>
-                      <li>or provide executable</li>
-                      <li><em>Shell</em> and <em>exec</em> forms just like <code>ENTRYPOINT</code></li>
-                      <li>Last argument to <code>docker run</code> overrides <code>CMD</code></li>
+                    <ul style="width:100%;">
+                      <li class="fragment" data-fragment-index="0">Provide defaults to executable</li>
+                      <li class="fragment" data-fragment-index="1">or provide executable</li>
+                      <li class="fragment" data-fragment-index="2"><em>Shell</em> and <em>exec</em> forms just like <code>ENTRYPOINT</code></li>
+                      <li class="fragment" data-fragment-index="3">Arguments following the image for <code>docker run image</code> overrides <code>CMD</code></li>
                     </ul>
-                    <pre><code>CMD ["node", "index.js"]</code></pre>
-                    <pre><code>ENTRYPOINT ["python3", "manage.py"]
-CMD ["test"]</code></pre>
+                    <pre class="fragment" data-fragment-index="4"><code>$ docker build -t cmd-only -f Dockerfile.cmd_only .
+$ docker run cmd-only
+$ docker run cmd-only echo Good morning, Hal</code></pre>
                   </section>
                   <section>
-                    <h4>ENTRYPOINT &amp; CMD</h4>
-                    <p>Hypothetical application</p>
-                    <pre><code>FROM ubuntu:latest
+                    <h4>Combining ENTRYPOINT &amp; CMD</h4>
+                    <ul>
+                        <li class="fragment" data-fragment-index="0">
+                            Use exec form of ENTRYPOINT and CMD together to set base
+                            command and default arguments
+                        </li>
+                        <li class="fragment" data-fragment-index="1">Hypothetical application</li>
+                    </ul>
+                    <pre class="fragment" data-fragment-index="2"><code>FROM ubuntu:latest
 .
 .
 ENTRYPOINT ["./base-script"]
 CMD ["test"]</code></pre>
-                    <pre><code>$ docker run my-image</code></pre>
+                    <pre class="fragment" data-fragment-index="3"><code>$ docker run my-image</code></pre>
+                    <p class="fragment" data-fragment-index="4">
                     By default this image will just pass <code>test</code> as
                     argument to <code>base-script</code> to run unit tests by
                     default
-                    <pre><code>$ docker run my-image server</code></pre>
+                    </p>
+                    <pre class="fragment" data-fragment-index="5"><code>$ docker run my-image server</code></pre>
+                    <p class="fragment" data-fragment-index="6">
                     Passing argument at the end tells it to override CMD and
                     execute with <code>server</code> to run server feature
+                    </p>
                   </section>
 
 
@@ -1463,7 +1473,7 @@ IMAGE         ...                                        SIZE
                   </section>
 
 
-                  <section>
+                  <!--<section>
                     <h3>Images and Tags</h3>
                     <ul>
                       <li>Tags specify a particular version of an image<pre><code>$ docker pull ubuntu:14.04</code></pre></li>
@@ -1471,7 +1481,7 @@ IMAGE         ...                                        SIZE
                         <li>Registries like Docker Hub contain >> 100K images<pre><code>$ docker search ubuntu</code></pre></li>
 
                     </ul>
-                  </section>
+                  </section>-->
                   
 
 
@@ -1775,24 +1785,60 @@ RUN cd /usr/path && tar -xvf big.tar.gz \
                             <li class="fragment" data-fragment-index="4">Recommend to only use COPY and never ADD</li>
                         </ul>
                     </section>
+                    
                     <section>
                         <h3>
                             CMD &amp; ENTRYPOINT
                         </h3>
+                        <h4>
+                            General best practices
+                        </h4>
+                        <ul                             style="width:100;">
+                            <li class="fragment" data-fragment-index="0"
+>Avoid using <em>shell</em> form
+                                <ul><li><code>ENTRYPOINT "executable param1 param2 ..."</code></li></ul></li>
+                            <li class="fragment" data-fragment-index="1"
+>
+                                Docker directs POSIX commands at process with PID
+                                1
+                            </li>
+                            <li class="fragment" data-fragment-index="2"
+>
+                                Using <em>shell</em> form, process is run internally using <code>/bin/sh
+                                    -c</code> and do not have PID 1
+                            </li>
+                            <li class="fragment" data-fragment-index="3"
+>
+                                It can be difficult to stop container since
+                                process does not receive SIGTERM from <code>docker stop container</code>
+                            </li>
+                            
+                        </ul>
+                        <pre class="fragment" data-fragment-index="4"><code>$ cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
+$ docker build -t runtop-shell -f Dockerfile.top_shell .
+$ docker run --rm --name topshell runtop-shell</code></pre>
+                        <p class="fragment" data-fragment-index="5">
+                        What happens when you want to stop container
+                        <em>topshell</em>?
+                        </p>
                     </section>
                     <section>
                         <h3>
-                            CMD
+                            CMD &amp; ENTRYPOINT
                         </h3>
-                        <ul>
-                            <li>Used to run software contained by image</li>
-                            <li>Avoid <ul><li><code>CMD "executable param1 param2 ..."</code></li></ul></li>
+                        <h4>
+                            General best practices
+                        </h4>
+                        <ul class="fragment" data-fragment-index="1"
+                            style="width:100;">
                             <li>Best practice to run in <strong>exec</strong> form: <ul><li><code>CMD ["executable", "param1", "param2", ..]</code></li></ul></li>
                             <li>Or in form that creates interactive shell like
-                                <ul><li><code>CMD ["python"]</code></li><li><code>CMD ["/bin/bash"]</code></li></ul></li>
+                                <ul><li><code>ENTRYPOINT ["python"]</code></li><li><code>CMD ["/bin/bash"]</code></li></ul></li>
                         </ul>
+                        <pre class="fragment" data-fragment-index="3"><code>$ docker build -t runtop -f Dockerfile.top .
+$ docker run runtop</code></pre>
                     </section>
-                    <section>
+                    <!--<section>
                         <h3>ENTRYPOINT</h3>
                         <pre><code class="dockerfile">ENTRYPOINT ["python", "manage.py"]
 CMD ["test"]</code></pre>
@@ -1812,7 +1858,7 @@ CMD ["test"]</code></pre>
                                 <li>ENTRYPOINT can be overridden with the --entrypoint flag</li>
                             </ul>
                         </aside>
-                    </section>
+                    </section>-->
 
                 </section>
 
