@@ -1231,7 +1231,11 @@ CMD ["python", "/app/app.py"]</code></pre>
                   <section>
                     <h3>Structure of a Dockerfile</h3>
                     <ul>
-                      <li>Tell Docker which base image to use<pre><code class="dockerfile">FROM ubuntu:15.10</code></pre></li>
+                      <li>Tell Docker which base image to use
+                          <pre><code class="Dockerfile">FROM ubuntu</code></pre>
+                          <pre><code class="Dockerfile">FROM postgres:9.4</code></pre>
+                          <pre><code class="Dockerfile">FROM node:latest</code></pre>
+                      </li>
                       <li>A number of commands telling docker how to build image
                           <pre><code class="dockerfile">COPY . /app
 RUN make /app</code></pre>
@@ -1248,6 +1252,9 @@ RUN make /app</code></pre>
                   </section>
                   <section>
                     <h4>FROM</h4>
+                    <p>
+                    <code>FROM </code><code style="color:red;">image</code><code style="color:blue;">:tag</code>
+                    </p>
                     <p>Define the base image for a new image</p>
                     <pre><code>FROM ubuntu:17.04</code></pre>
 
@@ -1258,27 +1265,37 @@ RUN make /app</code></pre>
                   <section>
 
                     <h4>RUN</h4>
+                    <p>
+                    <code>RUN </code><code
+                        style="color:red;">command</code><code style="color:blue;"> arg1 arg2 ...</code>
+                    </p>
+                    <p>Execute shell commands for building image</p>
                     <pre><code>RUN apt-get update && apt-get install python3</code></pre>
                     <pre><code>RUN mkdir -p /usr/local/myapp && cd /usr/local/myapp</code></pre>
                     <pre><code>RUN make all</code></pre>
                     <pre><code>RUN curl https://domain.com/somebig.tar | tar -xv | /bin/sh</code></pre>
-                    <p>Execute shell commands for building image</p>
+                  </section>
+                  <section>
+                    <h4>COPY</h4>
+                    <p>
+                    <code>COPY </code><code style="color:red;">src dest</code>
+                    </p>
+                    <p>Copy files from build directory into image</p>
+                    <pre><code>COPY package.json /usr/local/myapp</code></pre>
+                    <pre><code>COPY . /usr/share/www</code></pre>
                   </section>
                   <section>
                     <h4>WORKDIR</h4>
-                    <pre><code>WORKDIR /usr/local/myapp</code></pre>
-                    <ul>
-                      <li>Create a directory to start in when container runs</li>
-                      <li>Will be created if does not exist</li>
+                    <code>WORKDIR </code><code style="color:red;">path</code>
+                    <ul style="width:100%;">
+                      <li>Create a directory in the image</li>
+                      <li>Container will run relative to this directory</li>
                     </ul>
+                    <pre><code>WORKDIR /usr/local/myapp</code></pre>
+                
                   </section>
                   
-                  <section>
-                    <h4>COPY</h4>
-                    <pre><code>COPY package.json /usr/local/myapp</code></pre>
-                    <pre><code>COPY . /usr/share/www</code></pre>
-                    <p>Copy files from build directory into image</p>
-                  </section>
+                  
                   <section>
                     <h4>ENTRYPOINT</h4>
                     <ul style="width:100%">
@@ -1751,7 +1768,7 @@ RUN apt-get update \
                     </section>
                     
                     <section>
-                        <h3>ADD</h3>
+                        <h3>ADD is BADD</h3>
                         <ul style="width:80%">
                             <li class="fragment" data-fragment-index="0">Copies files to a directory
                                 <pre><code>ADD . /usr/path/</code></pre>
@@ -1769,10 +1786,13 @@ RUN apt-get update \
                     </section>
                     
                     <section>
-                        <h3>ADD vs COPY</h3>
+                        <h3>Problems with ADD</h3>
                         
                         <ul style="width:100%">
-                            <li class="fragment" data-fragment-index="0">Problem with ADD <pre><code>ADD http://domain.com/big.tar.gz /usr/path/ # large intermediate layer
+                            <li class="fragment" data-fragment-index="0">Large
+                                intermediate layers
+                                
+                                <pre><code>ADD http://domain.com/big.tar.gz /usr/path/ # large intermediate layer
 RUN cd /usr/path && tar -xvf big.tar.gz \
    && rm big.tar.gz</code></pre> 
                                 <ul><li>Increased overall image size</li></ul></li>
@@ -1831,7 +1851,7 @@ $ docker run --rm --name topshell runtop-shell</code></pre>
                         </h4>
                         <ul class="fragment" data-fragment-index="1"
                             style="width:100;">
-                            <li>Best practice to run in <strong>exec</strong> form: <ul><li><code>CMD ["executable", "param1", "param2", ..]</code></li></ul></li>
+                            <li>Best practice to use <strong>exec</strong> form: <ul><li><code>CMD ["executable", "param1", "param2", ..]</code></li></ul></li>
                             <li>Or in form that creates interactive shell like
                                 <ul><li><code>ENTRYPOINT ["python"]</code></li><li><code>CMD ["/bin/bash"]</code></li></ul></li>
                         </ul>
@@ -1861,87 +1881,6 @@ CMD ["test"]</code></pre>
                     </section>-->
 
                 </section>
-
-                <!--<section>
-                <section>
-                    <h3>Microservices</h3>
-                    <p>Cockcrofts definition: Loosely coupled service oriented architecture with bounded contexts</p>
-                    <p>Eric Brewers: Microservice boundaries are language boundaries and team boundaries</p>
-                </section>
-                <section>
-                    <h3>Microservices</h3>
-                    <ul>
-                        <li>A suite of small services, each running in its own process and communicating with lightweight mechanisms</li>
-                        <li>Services can be implemented with entirely different stacks</li>
-                        <li>Services can be developed, maintained, and updated independently</li>
-                        <li>Often use well defined REST APIs to communicate</li>
-                        <li>If a message bus/queue is used then its likely to be lightweight (ZeroMQ vs ESB)</li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>Microservices</h3>
-                    <ul>
-                        <li>Often use a DevOps approach (you build it you run it)</li>
-                        <li>Smart endpoints and dumb pipes</li>
-                        <li>Decentralized Data Management with eventual consistency</li>
-                        <li>Continuous integration and delivery</li>
-                        <li>Design for failure (optimize MTTR (mean-time-to-repair))</li>
-                    </ul>
-                    <aside class="notes">Smart endpoints and dumb pipes: Communication mediums should be as simple/dumb as possible (e.g. simple message queue, REST); the logic should be in the app.</aside>
-                </section>
-                <section>
-                    <h3><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></h3>
-                    <ul>
-                        <li>Create a Separate Data Store for Each Microservice</li>
-                        <li>Keep Code at a Similar Level of Maturity</li>
-                        <li>Do a Separate Build for Each Microservice</li>
-                        <li>Deploy in Containers</li>
-                        <li>Treat Servers as Stateless</li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li>Separate data stores: Use the best DBMS and schema for each service.</li>
-                      <li>When doing new development, create a new microservice, rather than extending the existing one (so that you don't break it or make it less performant). You can merge the microservices later if needed.</li>
-                      <li>Stateless: Cattle, not pets.</li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>Containers and Microservices</h3>
-                    <ul>
-                        <li>Containers do not necessarily map to service or application boundaries</li>
-                        <li>A service will often contain more than one container</li>
-                        <li>A container is more like an OO Class - Brendan Burns @ Dockercon 2015</li>
-                        <li>A container is a persistent object - Eric Brewer @ OSCon 2015</li>
-                    </ul>
-                    <aside class="notes">Containers are great for microservices, because they simplify the task of deploying many individual services, each with their own requirements.</aside>
-                </section>
-                <section>
-                    <h3>Containers and Microservices: Requirements</h3>
-                    <ul>
-                        <li>Sharing among containers (eg filesystems)</li>
-                        <li>Atomic co-scheduling of containers</li>
-                        <li>Parameterization of containers</li>
-                    </ul>
-                    <aside class="notes"><ul>
-                      <li>Volumes</li>
-                      <li>Being able to spin up a bunch of containers together as a unit.</li>
-                      <li>Parameters through environment variables for different environments.</li>
-                    </ul></aside>
-                </section>
-                <section>
-                    <h3>Microservices - Resources</h3>
-                    <ul>
-                        <li><a href="http://martinfowler.com/articles/microservices.html">Microservices - Martin Fowler</a></li>
-                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Adopting Microservices at Netflix: Lessons for Architectural Design</a></li>
-                        <li><a href="https://www.nginx.com/blog/adopting-microservices-at-netflix-lessons-for-team-and-process-design/">Adopting Microservices at Netflix: Lessons for Team and Process Design</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=e4jr6Ihz4Qo">Kubernetes: The Path to Cloud Native - Eric Brewer - OSCon 2105</a></li>
-                        <li>Nginx blog Building Microservices series: <a href="https://www.nginx.com/blog/introduction-to-microservices/">1</a>,<a href="https://www.nginx.com/blog/building-microservices-using-an-api-gateway">2</a>,<a href="https://www.nginx.com/blog/building-microservices-inter-process-communication/">3</a></li>
-                        <li><a href="https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/">Microservices best practices</a></li>
-                    </ul>
-                </section>
-                </section>-->
                 <section>
                   <section>
                     <h2>Docker and Development</h2>
@@ -1951,12 +1890,12 @@ CMD ["test"]</code></pre>
                     <h3>Microservices vs. Monoliths</h3>
                     <div style="float:left;width:50%">
                       <ul>
-                        <li>Small decoupled applications vs. one big app</li>
-                        <li>Developed independently</li>
-                        <li>Deployed and updated independently</li>
-                        <li>Scaled independently</li>
-                        <li>Better modularity</li>
-                        <li class="fragment" data-fragment-index="0">Docker containers fit with microservice architecture</li>
+                        <li class="fragment" data-fragment-index="0">Small decoupled applications vs. one big app</li>
+                        <li class="fragment" data-fragment-index="1">Developed independently</li>
+                        <li class="fragment" data-fragment-index="2">Deployed and updated independently</li>
+                        <li class="fragment" data-fragment-index="3">Scaled independently</li>
+                        <li class="fragment" data-fragment-index="4">Better modularity</li>
+                        <li class="fragment" data-fragment-index="5">Docker containers fit with microservice architecture</li>
 
                       </ul>
                     </div>

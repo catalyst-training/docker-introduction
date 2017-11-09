@@ -189,11 +189,11 @@
     ],
     [
       0.094618,
-      "Step 1/2 : FROM ubuntu:16.10\r\n"
+      "Step 1/2 : FROM ubuntu:16.04\r\n"
     ],
     [
       3.543303,
-      "16.10: Pulling from library/ubuntu\r\n"
+      "16.04: Pulling from library/ubuntu\r\n"
     ],
     [
       7.5e-05,
