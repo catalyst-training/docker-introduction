@@ -1,5 +1,8 @@
 # Introduction to Docker
 
+> **Note:** The canonical location for this repository is
+> https://github.com/catalyst-training/docker-introduction
+
 Presentation and tutorials for an introduction to docker.  This repository includes:
 
 * A Reveal.js presentation with instructional material for an introduction to
@@ -7,7 +10,7 @@ Presentation and tutorials for an introduction to docker.  This repository inclu
 * Sample code for training exercises
 
 The presentation is available as a docker image that can be pulled directly
-from Docker Hub. 
+from Docker Hub.
 
 ```
 docker run -d --rm --name docker-intro -p 8000:8000 \
