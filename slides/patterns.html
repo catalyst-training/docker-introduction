@@ -1,0 +1,64 @@
+<section>
+                <section>
+                    <h3>Patterns for Composite Containers</h3>
+                    <p>
+                    <a href="http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html">http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html</a> (<a href=blog/">local</a>).
+                    </p>
+                    <ul>
+                        <li>Sidecar containers (eg logger, git synchroniser)</li>
+                        <li>Ambassador containers (local proxy to a service of unknown size)</li>
+                        <li>Adapter containers (normalize and abstract different services)</li>
+                    </ul>
+                </section>
+                <section class="image-slide">
+                    <h2>Sidecar containers</h2>
+                    <ul>
+                        <li>Modular and pluggable</li>
+                        <li>Reuse sidecar for different frontends</li>
+                        <li>Different team can maintain the sidecar</li>
+                        <li>Lower complexity inside specific containers</li>
+                    </ul>
+                    <img src="img/sidecar.png" alt="Sidecar">
+                    <aside class="notes">
+                      Sidecar containers provide re-usable
+                      functionality that enhances
+                      another container.
+                      <br>
+                      The example here shows a webserver container server files from
+                      a data volume. The data volume is shared with a
+                      sidecar container that synchronises the files
+                      with a Git repository, thus providing Git
+                      push-to-deploy. The sidecar can be re-used to
+                      provide git-syncing in other contexts.
+                    </aside>
+                </section>
+                <section class="image-slide">
+                    <h2>Ambassador containers</h2>
+                    <ul>
+                        <li>Its a proxy ...</li>
+                        <li>The solution behind the proxy can be as simple or complicated as the environment requires</li>
+                        <li>Also modular, reuse, lower complexity per container</li>
+                    </ul>
+                    <img src="img/ambassador.png" alt="Ambassador">
+                    <aside class="notes">
+                      Example is of an ambassador container to act
+                      like a normal redis server, while it is really a
+                      proxy for a redis cluster.
+                    </aside>
+                </section>
+                <section class="image-slide">
+                    <h2>Adapter containers</h2>
+                    <ul>
+                        <li>When containers want to talk to other systems</li>
+                        <li>Use adaptors to translate so that neither ends needs native support for each other protocols</li>
+                        <li>eg, monitoring systems, convert from app specific output to monitoring system format</li>
+                    </ul>
+                    <img src="img/adapter.png" alt="Adapter">
+                    <aside class="notes">
+                      In the example, the redis logs are converted
+                      into a standard format by an adapter container,
+                      so that the monitoring system only needs to know
+                      the standard format that all adapters provide.
+                    </aside>
+                </section>
+                </section>
