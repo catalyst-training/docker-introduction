@@ -1,0 +1,17 @@
+FROM openjdk:8
+LABEL maintainer="developer@catalyst.net.nz"
+
+
+RUN apt-get update && apt-get install -yy \
+    gcc-multilib \
+    lib32stdc++6 \
+    lib32z1 \
+    python-swiftclient \
+  && rm -fr /var/lib/apt/lists/*
+
+
+WORKDIR /usr/local # Set up android SDK 
+
+RUN wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \     
+  tar xf android-sdk_r24.4.1-linux.tgz && \     
+  rm -f android-sdk_r24.4.1-linux.tgz

@@ -1699,7 +1699,62 @@ Include things you don't want in your image:
 
                     </section>
                     
+                    <section>
+                        <h3>
+                            Minimise layers
+                        </h3>
+                        <h4>
+                            Size image is sum of layers
+                        </h4>
+                    </section>
 
+                    <section>
+                        <h3>
+                            Package management and layers
+                        </h3>
+
+                        <div style="width:50%;float:left">
+                        <p>Image size: 471 MB</p>
+                            <pre><code>FROM ubuntu:latest
+
+RUN apt-get update \ 
+ && apt-get install -y \
+    libsqlite3-dev \
+    mercurial \
+    automake \
+    build-essential \
+    curl \
+    dpkg-sig \
+    aufs-tools \
+    libcap-dev \
+    reprepro</code></pre>
+                        </div>
+                        
+
+                        <div style="float:left;width:50%">
+                            <p>Image size: 430 MB</p>
+                            <pre><code>FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y \
+    aufs-tools \
+    automake \
+    build-essential \
+    curl \
+    dpkg-sig \
+    libcap-dev \
+    libsqlite3-dev \
+    mercurial \
+    reprepro \
+&& rm -rf /var/lib/apt/lists/*</code></pre>
+                        </div>
+                        <ul>
+                            <li>Sort multiline arguments</li>
+                            <li>Split complex RUN statement on separate lines with backslashes</li>
+                            <li>Run apt-get update and apt-get install in same RUN </li>
+                            <li>Run clean up in same line whenever possible</li>
+                        </ul>
+                    </section>
 
                     <section>
                       <h3>Layer caching</h3>
@@ -1762,53 +1817,6 @@ $ docker build  -t good-apt-example -f Dockerfile.good .
                         
                     </section>
 
-                    <section>
-                        <h3>
-                            Package management and layers
-                        </h3>
-
-                        <div style="width:50%;float:left">
-                        <p>Image size: 471 MB</p>
-                            <pre><code>FROM ubuntu:latest
-
-RUN apt-get update \ 
- && apt-get install -y \
-    libsqlite3-dev \
-    mercurial \
-    automake \
-    build-essential \
-    curl \
-    dpkg-sig \
-    aufs-tools \
-    libcap-dev \
-    reprepro</code></pre>
-                        </div>
-                        
-
-                        <div style="float:left;width:50%">
-                            <p>Image size: 430 MB</p>
-                            <pre><code>FROM ubuntu:latest
-
-RUN apt-get update \
-  && apt-get install -y \
-    aufs-tools \
-    automake \
-    build-essential \
-    curl \
-    dpkg-sig \
-    libcap-dev \
-    libsqlite3-dev \
-    mercurial \
-    reprepro \
-&& rm -rf /var/lib/apt/lists/*</code></pre>
-                        </div>
-                        <ul>
-                            <li>Sort multiline arguments</li>
-                            <li>Split complex RUN statement on separate lines with backslashes</li>
-                            <li>Run apt-get update and apt-get install in same RUN </li>
-                            <li>Run clean up in same line whenever possible</li>
-                        </ul>
-                    </section>
                     
                     <section>
                         <h3>ADD is BADD</h3>
