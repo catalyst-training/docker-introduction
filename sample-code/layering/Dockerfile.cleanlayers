@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM ubuntu:16.04
 LABEL maintainer="developer@catalyst.net.nz"
 
 
@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -yy \
     gcc-multilib \
     lib32stdc++6 \
     lib32z1 \
-    python-swiftclient \
   && rm -fr /var/lib/apt/lists/*
 
 
