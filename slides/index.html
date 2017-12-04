@@ -502,22 +502,9 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                       <h3>Get command documentation</h3>
                       <ul>
                           <li>Just typing <code style="color:red;">docker</code> returns list of commands</li>
-                          <li>Calling any command with <code
-                                  style="color:red;">-h</code> or <code
-                                  style="color:red;">--help</code> displays some docs</li>
                           <li>Comprehensive online docs on <a href="https://docs.docker.com/edge/engine/reference/commandline/docker/">Docker website</a></li>
                       </ul>
-                  </section>
-                    <section>
-                      <h3>
-                        Basic client usage
-                      </h3>
-                      <p>
-                      <code>docker</code> <code
-                          style="color:red">command</code> <code
-                          style="color:blue;font-style:italic">[options] [args]</code>
-                      </p>
-                      <pre><code>$ docker&lt;ENTER&gt;
+<pre><code>$ docker&lt;ENTER&gt;
 
     Usage:  docker COMMAND
 
@@ -529,6 +516,21 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
           --help               Print usage
     .
     .</code></pre>
+                  </section>
+                    <section>
+                      <h3>
+                        Basic client usage
+                      </h3>
+                          <code>docker</code> <code
+                                                              style="color:red">command</code> <code
+                                                              style="color:blue;font-style:italic">[options] [args]</code>
+                      
+                      
+                      <ul style="width:70%;">
+                      <li>Calling any command with <code
+                                  style="color:red;">-h</code> or <code
+                                  style="color:red;">--help</code> displays some docs</li>
+                      </ul>
                     </section>
                     
                   <section>
@@ -1182,14 +1184,14 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                         <h4>Exercise: Create a basic image</h4>
                         <pre><code>$ docker run -t -i ubuntu:16.04 /bin/bash
 
-root@69079aaaaab1:/$ apt-get update 
-root@69079aaaaab1:/$ exit
+root@CONTAINERID:/$ apt-get update 
+root@CONTAINERID:/$ exit
+$ docker diff CONTAINERID
 
-$ docker commit 69079aaaaab1 ubuntu:update
+$ docker commit CONTAINERID ubuntu:update
 13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
 
 $ docker image ls
-$ docker diff 69079aaaaab1
 $ docker history ubuntu:16.04
 $ docker history ubuntu:update</code></pre>
                         <ul>
@@ -2319,8 +2321,8 @@ a look at the <a href="http://localhost:5001">results</a>.
                       In example-voting-app...
                       </p>
 
-                      <pre><code>$ docker build -t vote:v2 vote</code></pre>
-                      <p>Note: please replace <code>yourname</code> with your docker hub
+                      <pre><code>$ docker build -t YOURNAME/vote:v2 vote</code></pre>
+                      <p>Note: please replace <code>YOURNAME</code> with your docker hub
                       username if you have one</p>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-120557.json" cols="138"
@@ -2331,7 +2333,7 @@ a look at the <a href="http://localhost:5001">results</a>.
 
                     <section>
                         <h3>Update a service</h3>
-                        <pre><code>$ docker service update --image vote:v2 vote_vote</code></pre>
+                        <pre><code>$ docker service update --image YOURNAME/vote:v2 vote_vote</code></pre>
 <p>
 Now go to the <a href="http://localhost:5000">voting app</a> and see what
 changed
@@ -2606,7 +2608,8 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                     </section>
                     <section>
                         <h3>Tear down your cluster</h3>
-                        <pre><code>$ ansible-playbook -K  --extra-vars "suffix=-$( hostname )" remove-swarm-hosts.yaml</code></pre>
+                        <pre><code>$ ansible-playbook -K  --extra-vars "suffix=-$( hostname )" \ 
+remove-swarm-hosts.yaml</code></pre>
                     </section>
 
                 </section>
