@@ -5,7 +5,7 @@ LABEL maintainer="developer@catalyst.net.nz"
 RUN apt-get update && apt-get install -yy \
     gcc-multilib \
     lib32stdc++6 \
-    lib32z1 \
+    lib32z1 
 RUN rm -fr /var/lib/apt/lists/*
 
 
