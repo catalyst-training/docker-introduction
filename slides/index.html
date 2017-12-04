@@ -1422,7 +1422,8 @@ CMD ["test"]</code></pre>
                       </ul>
 
                       <p>
-                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t acme/my-base-image:1.0  .</code></pre>
+                      <pre class="fragment" data-fragment-index="0"><code>$ cd ~/docker-introduction/sample-code/layering
+$ docker build -t acme/my-base-image:1.0  .</code></pre>
                       </p>
 <asciinema-player  class="fragment" data-fragment-index="0" autoplay="1"  font-size="medium" speed="3"
     theme="solarized-light" src="lib/build-base-image.json" loop="loop" cols="136" rows="18"></asciinema-player>
@@ -1631,10 +1632,10 @@ Note: please replace YOURNAME with your Docker Hub username
                         <h3>General guidelines</h3>
                         <ul>
                             <li>Containers should be as ephemeral as possible</li>
-                            <li>Use a <code>.dockerignore</code> file</li>
                             <li>Avoid installing unnecessary packages</li>
                             <li>Minimise concerns <ul><li>Avoid multiple processes/apps in one container</li></ul></li>
                         </ul>
+
                         <aside class="notes">
                             <ul><li>
                                     By ephemeral is meant that a container can be built, stopped, destroyed and rebuilt with minimal setup and configuration
@@ -1642,6 +1643,29 @@ Note: please replace YOURNAME with your Docker Hub username
                                 <li>dockerignore to avoid copying in unneeded stuff (.git subdirectory)</li>
                             </ul>
                         </aside>
+                    </section>
+                    <section>
+                        <h3>
+                            Use a <code>.dockerignore</code> file
+                        </h3>
+                        <ul>
+                            <li>top level of your project</li>
+                            <li>Very similar to <code>.gitignore</code></li>
+                            <li>Include things you don't want image</li>
+                            <li>
+                                <code>COPY . dest/</code> will not copy files
+                                ignored in <code>.dockerignore</code>
+                            </li>
+                            <li>
+                                Avoid bloating images with <code>.git</code> directory
+                            </li>
+                        </ul>
+                        <pre><code>.git*
+.dockerignore
+Dockerfile
+README*
+# don't import python virtualenv
+.venv</code></pre>
                     </section>
                     <section>
                         <h3>General guidelines</h3>
