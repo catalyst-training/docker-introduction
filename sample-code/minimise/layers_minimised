@@ -1,0 +1,11 @@
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+1d4ede737365        5 minutes ago       /bin/sh -c apt update && apt install -yy w...   685MB               
+2bc1b1c41922        28 minutes ago      /bin/sh -c #(nop) WORKDIR /usr/local # Set...   0B                  
+fc5de3005dbd        28 minutes ago      /bin/sh -c apt update && apt install -yy  ...   156MB               
+b0b9f4840130        34 minutes ago      /bin/sh -c #(nop)  LABEL maintainer=develo...   0B                  
+dd6f76d9cc90        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B                  
+<missing>           4 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo '...   7B                  
+<missing>           4 weeks ago         /bin/sh -c sed -i 's/^#\s*\(deb.*universe\...   2.76kB              
+<missing>           4 weeks ago         /bin/sh -c rm -rf /var/lib/apt/lists/*          0B                  
+<missing>           4 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' >...   745B                
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:5b334adf9d9a225...   122MB               

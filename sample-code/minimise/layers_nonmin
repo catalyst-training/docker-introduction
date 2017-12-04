@@ -1,0 +1,13 @@
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+0f727ceb2c46        28 minutes ago      /bin/sh -c cd /usr/local && tar xf android...   678MB               
+90b659f34671        28 minutes ago      /bin/sh -c #(nop) ADD cb7f541a55debac72db6...   326MB               
+6c80e65e6535        29 minutes ago      /bin/sh -c #(nop) WORKDIR /usr/local # Set...   0B                  
+9ff62f9467ca        29 minutes ago      /bin/sh -c rm -fr /var/lib/apt/lists/*          0B                  
+fb9c068d9079        29 minutes ago      /bin/sh -c apt update && apt install -yy  ...   195MB               
+b0b9f4840130        34 minutes ago      /bin/sh -c #(nop)  LABEL maintainer=develo...   0B                  
+dd6f76d9cc90        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B                  
+<missing>           4 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo '...   7B                  
+<missing>           4 weeks ago         /bin/sh -c sed -i 's/^#\s*\(deb.*universe\...   2.76kB              
+<missing>           4 weeks ago         /bin/sh -c rm -rf /var/lib/apt/lists/*          0B                  
+<missing>           4 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' >...   745B                
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:5b334adf9d9a225...   122MB               

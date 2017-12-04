@@ -1701,20 +1701,24 @@ Include things you don't want in your image:
                     
                     <section>
                         <h3>
-                            Minimise layers
+                            Image size and layers
                         </h3>
                         <h4>
-                            Size image is sum of layers
+                            Size of an image is the sum of layers
                         </h4>
-                        <ul><li>
-                                Compare Dockerfiles:
-                                <ul>
-                                    <li><code>sample-code/layering/Dockerfile.largelayers</code></li>
-                                    <li><code>sample-code/layering/Dockerfile.cleanlayers</code></li>
-                                </ul>
-                            </li></ul>
+                        <p>
+                        Have a look at files in <code style="color:red;">sample-code/minimise</code>
+                        </p>
+
+                            <table>
+                                <tr><th>File</th>                     <th>Image size</th></tr>
+                                <tr><td>Non minimised</td>   <td>1.32GB</td></tr>
+                                <tr><td>Minimised</td>   <td>963MB</td></tr>
+                            </table>
+
 
                     </section>
+                    
 
                     <section>
                         <h3>
