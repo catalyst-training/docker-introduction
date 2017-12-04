@@ -1679,16 +1679,17 @@ Include things you don't want in your image:
                         <h3>General guidelines</h3>
                         <ul>
                             <li>Use current official repositories in FROM as base image
-								<ul>
+								
+                            </li>
+                            <li>
+                                Image size may be a factor on cloud hosts where
+                                space is limited
+                                <ul>
 									<li>debian 124 MB</li>
 									<li>ubuntu 117 MB</li>
 									<li>alpine 3.99 MB</li>
 									<li>busybox 1.11 MB</li>
 								</ul>
-                            </li>
-                            <li>
-                                Image size may be a factor on cloud hosts where
-                                space is limited
                             </li>
                             <li>
                                 Choice of image depends on other factors
@@ -1772,14 +1773,14 @@ $ docker build  -t good-apt-example -f Dockerfile.good .
 
 RUN apt-get update \ 
  && apt-get install -y \
-    aufs-tools \
+    libsqlite3-dev \
+    mercurial \
     automake \
     build-essential \
     curl \
     dpkg-sig \
+    aufs-tools \
     libcap-dev \
-    libsqlite3-dev \
-    mercurial \
     reprepro</code></pre>
                         </div>
                         
