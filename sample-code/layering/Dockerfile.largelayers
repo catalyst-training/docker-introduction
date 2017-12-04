@@ -11,6 +11,6 @@ RUN rm -fr /var/lib/apt/lists/*
 
 
 WORKDIR /usr/local # Set up android SDK 
-ADD https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+ADD https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz /usr/local
 
 RUN tar xf android-sdk_r24.4.1-linux.tgz &&  rm -f android-sdk_r24.4.1-linux.tgz
