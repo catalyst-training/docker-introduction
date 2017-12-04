@@ -1648,24 +1648,32 @@ Note: please replace YOURNAME with your Docker Hub username
                         <h3>
                             Use a <code>.dockerignore</code> file
                         </h3>
-                        <ul>
-                            <li>top level of your project</li>
-                            <li>Very similar to <code>.gitignore</code></li>
-                            <li>Include things you don't want image</li>
-                            <li>
-                                <code>COPY . dest/</code> will not copy files
-                                ignored in <code>.dockerignore</code>
-                            </li>
-                            <li>
-                                Avoid bloating images with <code>.git</code> directory
-                            </li>
-                        </ul>
-                        <pre><code>.git*
+                        <pre><code># .dockerignore
+.git*
 .dockerignore
 Dockerfile
 README*
 # don't import python virtualenv
 .venv</code></pre>
+                        <ul>
+                            <li>Top level of your project</li>
+                            <li>Very similar to <code>.gitignore</code></li>
+                            <li>
+                                <code>COPY . dest/</code> will not copy files
+                                ignored in <code>.dockerignore</code>
+                            </li>
+                            <li>
+Include things you don't want in your image:
+                                <ul>
+                                    <li>
+                                        <code>.git</code> directory
+                                    </li>
+                                    <li>
+                                        <code>node_modules</code>, <code>virtualenv</code> directories
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </section>
                     <section>
                         <h3>General guidelines</h3>
@@ -1677,15 +1685,20 @@ README*
 									<li>alpine 3.99 MB</li>
 									<li>busybox 1.11 MB</li>
 								</ul>
-</li>
-                            <li>Minimise Layers</li>
-                            <li>Sort multiline arguments</li>
-                            <li>Split complex RUN statement on separate lines with backslashes</li>
-                            <li>Run apt-get update and apt-get install in same RUN </li>
-                            <li>Run clean up in same line whenever possible</li>
+                            </li>
+                            <li>
+                                Image size may be a factor on cloud hosts where
+                                space is limited
+                            </li>
+                            <li>
+                                Choice of image depends on other factors
+                            </li>
+                            
                         </ul>
 
                     </section>
+                    
+
 
                     <section>
                       <h3>Layer caching</h3>
@@ -1750,11 +1763,8 @@ $ docker build  -t good-apt-example -f Dockerfile.good .
 
                     <section>
                         <h3>
-                            Minimise Layers
+                            Package management and layers
                         </h3>
-                        <p>
-                        Remove non-essential files when possible.
-                        </p>
 
                         <div style="width:50%;float:left">
                         <p>Image size: 471 MB</p>
@@ -1791,6 +1801,12 @@ RUN apt-get update \
     reprepro \
 && rm -rf /var/lib/apt/lists/*</code></pre>
                         </div>
+                        <ul>
+                            <li>Sort multiline arguments</li>
+                            <li>Split complex RUN statement on separate lines with backslashes</li>
+                            <li>Run apt-get update and apt-get install in same RUN </li>
+                            <li>Run clean up in same line whenever possible</li>
+                        </ul>
                     </section>
                     
                     <section>
