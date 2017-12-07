@@ -120,9 +120,9 @@
                     </section>
                     <section>
                         <h3>Fetch course resources</h3>
-                        <!--<pre class="fragment" data-fragment-index="0"><code>$ git clone \
+                        <pre class="fragment" data-fragment-index="0"><code>$ git clone \
    https://github.com/catalyst-training/docker-introduction.git
-$ cd docker-introduction</code></pre>-->
+$ cd docker-introduction</code></pre>
                         <pre class="fragment" data-fragment-index="0"><code>$ cd ~/docker-introduction
 $ ls</code></pre>
                         <ul style="width:80%;">
@@ -154,7 +154,7 @@ $ ls</code></pre>
                     </section>
                     <section>
                         <h3>Setup Ansible</h3>
-                        <!--<pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/catalyst/catalystcloud-ansible.git</code></pre>-->
+                        <pre class="fragment" data-fragment-index="0"><code>$ git clone https://github.com/catalyst/catalystcloud-ansible.git</code></pre>
                         <pre class="fragment" data-fragment-index="1"><code>$ cd ~/catalystcloud-ansible
 $ ./install-ansible.sh
 . 
@@ -551,7 +551,8 @@ Options:
                   <section>
                     <h3>Docker <code>run</code></h3> 
                     <h4>Run a command in a container from an image
-                    </h4>                        <p>
+                    </h4>                        
+                    <p>
                         <code>docker</code> <code >run</code>
                         <code style="color:purple">[options]</code> <code
                         style="color:red;font-style:italic">image</code> <code style="color:blue;font-style:italic">[command]</code>
@@ -625,6 +626,11 @@ Options:
                     </ul>
  <asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
      theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
+ <p class="fragment" data-fragment-index="4">
+ The <em>alpine</em> image contains the <a
+     href="https://www.aplinelinux.org/about/">Alpine OS</a>, a very minimal
+ Linux distribution. 
+ </p>
                   </section>
 
 
@@ -730,21 +736,26 @@ stopped.
                     <h4>
                       Exercise: Run website in a container
                     </h4>
+                    <pre><code>$ docker run [OPTIONS] dockersamples/static-site</code></pre>
                     <ul>
-                      <li>Run the image: <code style="color:red;">dockersamples/static-site</code></li>
-                      <li>Name it <em>static-site</em></li>
-                      <li>Pass your name to the <code>AUTHOR</code> environment variable</li>
-                      <li>Map port 8081 to 80 internally (hint <code>8081:80</code>)</li>
-                      <li>Container terminates when stopped</li>
-
-                      <li>Go to <a href="http://localhost:8081">localhost:8081</a></li>
-                      <li class="fragment" data-fragment-index="1">CTRL-C to exit</li>
-  
+                      <li class="fragment" data-fragment-index="0">Find
+                          values for [OPTIONS]:
+                          <ul>
+                              <li>Give it the name: <em>static-site</em></li>
+                              <li>Pass <code>AUTHOR="YOURNAME"</code> as environment variable</li>
+                              <li>Map port 8081 to 80 internally (hint <code>8081:80</code>)</li>
+                              <li>
+                                  Cleans up container on exit
+                              </li>
+                          </ul>
+                      </li>
                     </ul>
-                    <pre class="fragment" data-fragment-index="0"><code>$ docker run --name static-site -e AUTHOR="YOUR NAME" \
-    --rm -p 8081:80 dockersamples/static-site</code></pre>
-<asciinema-player autoplay="1" class="fragment" data-fragment-index="0" loop="loop"  font-size="medium" speed="1"
+<asciinema-player autoplay="1" class="fragment" data-fragment-index="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/static-site-v1.json" cols="120" rows="8"></asciinema-player>
+<ul class="fragment" data-fragment-index="2" >
+<li>View results at <a href="http://localhost:8081">localhost:8081</a>.</li>
+<li>Try to exit using CTRL-C. What happens?</li>
+</ul>
                   </section>
 
                   
@@ -869,6 +880,51 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                   </section>
 
 
+                    <section>
+                      <h3>Behind the scenes</h3>
+                      <ul>
+                        <li>User types docker commands</li>
+                        <li>Docker client contacts docker daemon</li>
+                        <li>Docker daemon checks if image exists</li>
+                        <li>Docker daemon downloads image from docker registry
+                        if it does not exist</li>
+                        <li>Docker daemon runs container using image</li>
+                      </ul>
+                    </section>
+                  <section>
+                    <h3>Docker architecture</h3>
+
+                    <img src="img/architecture.svg" alt="Architecture">
+                    <aside class="notes">
+                      <ul>
+                        <li>Expalin architecture diagram (Commands and components).</li>
+                        <li>Client vs daemon.</li>
+                        <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
+                        <li>Docker's use of UFS separates it from other container solutions.</li>
+                        <li>Execute the "docker run" command and go through the list of steps it does.
+                          <ul>
+                            <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
+                            <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
+                          </ul></li>
+                          <li>Namespaces => isolation of filesystem and kernel features.</li>
+                          <li>Control groups => resource limiting.</li>
+                          <li>Different container format avaialble, default is libcontainer</li>
+                      </ul></aside>
+                    <aside class="notes">
+                        <ul>
+                            <li>Docker client talks to Docker Daemon</li>
+                            <li>Docker Daemon does heavy lifting</li>
+                            <li>
+                                Client and daemon 
+                                <ul>
+                                    <li>can run on the same system</li>
+                                    <li>communicate using REST API</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </aside>
+                    
+                  </section>
 
 
                 </section>
@@ -1034,7 +1090,6 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                           </li>
                       </ul>
                   </section>
-
                   <section>
                       <h3>Image layers</h3>
                       <img src="img/container-layers.jpg"/>
@@ -1133,72 +1188,54 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                       </aside>
 
                   </section>
-                    <section>
-                      <h3>Behind the scenes</h3>
-                      <ul>
-                        <li>User types docker commands</li>
-                        <li>Docker client contacts docker daemon</li>
-                        <li>Docker daemon checks if image exists</li>
-                        <li>Docker daemon downloads image from docker registry
-                        if it does not exist</li>
-                        <li>Docker daemon runs container using image</li>
-                      </ul>
-                    </section>
                   <section>
-                    <h3>Docker architecture</h3>
-
-                    <img src="img/architecture.svg" alt="Architecture">
-                    <aside class="notes">
-                      <ul>
-                        <li>Expalin architecture diagram (Commands and components).</li>
-                        <li>Client vs daemon.</li>
-                        <li>Union file systems; each command in a Dockerfile creates a new layer in an image.</li>
-                        <li>Docker's use of UFS separates it from other container solutions.</li>
-                        <li>Execute the "docker run" command and go through the list of steps it does.
-                          <ul>
-                            <li>Use sudo, unless you are in the Docker group (because of kernel feature permissions)</li>
-                            <li>-i for interactive mode, -t for pseudo-tty allocation (Both let you use bash like a terminal)</li>
-                          </ul></li>
-                          <li>Namespaces => isolation of filesystem and kernel features.</li>
-                          <li>Control groups => resource limiting.</li>
-                          <li>Different container format avaialble, default is libcontainer</li>
-                      </ul></aside>
-                    <aside class="notes">
-                        <ul>
-                            <li>Docker client talks to Docker Daemon</li>
-                            <li>Docker Daemon does heavy lifting</li>
-                            <li>
-                                Client and daemon 
-                                <ul>
-                                    <li>can run on the same system</li>
-                                    <li>communicate using REST API</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </aside>
-                    
+                      <h3>
+                          Create images, explore layers
+                      </h3>
+                      <table style="width:100%;">
+                          <tr>
+                              <th>Docker command   </th>
+                              <th>Description   </th>
+                              <th>Syntax</th>
+                          </tr>
+                          <tr>
+                              <td>  <code>diff</code> </td>
+                              <td>  Inspect changes to files on a container's filesystem</td>
+                              <td>  <code>docker </code><code >diff</code> <code style="color:purple">[options]</code> <code style="color:red;font-style:italic">CONTAINERID</code><code style="color:blue;font-style:italic"></code></td>
+                          </tr>
+                          <tr>
+                              <td> <code>commit</code> </td>
+                              <td>  Create a new image from a container's changes</td>
+                              <td> <code>docker </code><code >commit</code> <code style="color:purple">[options]</code> <code style="color:red;font-style:italic">CONTAINER</code><code style="color:blue;font-style:italic"> [IMAGE[:TAG]]</code></td>
+                          </tr>
+                          <tr>
+                              <td>  <code>history</code> </td>
+                              <td>  Show history of an image</td>
+                              <td>  <code>docker </code><code >history</code> <code style="color:purple">[options]</code> <code style="color:red;font-style:italic">image</code><code style="color:blue;font-style:italic">:tag</code></td>
+                          </tr>
+                      </table>
                   </section>
 
+                  
 
 <section>
-                        <h4>Exercise: Create a basic image</h4>
-                        <pre><code>$ docker run -t -i ubuntu:16.04 /bin/bash
-
+                        <h4>Exercise: Explore image layers</h4>
+                        <pre class="fragment" data-fragment-index="0"><code>$ docker run -it ubuntu:16.04 /bin/bash
 root@CONTAINERID:/$ apt-get update 
 root@CONTAINERID:/$ exit
-$ docker diff CONTAINERID
-
-$ docker commit CONTAINERID ubuntu:update
-13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
-
-$ docker image ls
+$ docker ps -a
+$ docker diff CONTAINERID</code></pre>
+<pre class="fragment" data-fragment-index="1"><code>$ docker commit CONTAINERID ubuntu:update
+13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c</code></pre>
+<pre class="fragment" data-fragment-index="2"><code>$ docker image ls
 $ docker history ubuntu:16.04
 $ docker history ubuntu:update</code></pre>
-                        <ul>
-                            <li>Created a new layer (cache files added by apt)</li>
-                            <li>Not an ideal way to create images</li>
-                            <li>Better to create images using a Dockerfile</li>
-                        </ul>
+<ul class="fragment" data-fragment-index="3">
+    <li>Created an image by committing changes in a container</li>
+    <li>Now have two separate images</li>
+    <li>Share common layers; only difference is new layer on ubuntu:update</li>
+</ul>
+                        
                         <aside class="notes">
                             <ul>
                                 <li>If you'd like to keep changes made inside a container, it is possible to save them by committing the container.</li>
@@ -1207,6 +1244,17 @@ $ docker history ubuntu:update</code></pre>
                             </ul>
                         </aside>
 
+                    </section>
+                </section>
+                <section>
+
+                    <section>
+                        <h2>
+                            Creating Docker Images
+                        </h2>
+                        <h3>
+                            Introducing the Dockerfile
+                        </h3>
                     </section>
 
                   <section>
