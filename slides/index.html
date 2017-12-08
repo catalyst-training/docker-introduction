@@ -170,7 +170,7 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                     </section>
                     <section>
                         <h3>Setup Docker</h3>
-                        <ul>
+                        <ul style="width:80%;">
                             <li class="fragment" data-fragment-index="0">
                                 Follow instructions on website for installing
                                 <ul>
@@ -180,6 +180,11 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                             </li>
                             <li class="fragment" data-fragment-index="1">If
                                 you are using Ubuntu, use the ansible playbook included in course repo</li>
+                        </ul>
+                        <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
+$ ansible-playbook -K ansible/docker-install.yml \
+      -e ansible_python_interpreter=/usr/bin/python</code></pre>
+                        <ul style="width:80%;">
                             <li class="fragment" data-fragment-index="2">
                                 This playbook installs:
                                 <ul>
@@ -194,13 +199,7 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
                                 </ul>
                             </li>
                         </ul>
-                        <pre class="fragment" data-fragment-index="1"><code>$ cd docker-introduction
-$ ansible-playbook -K ansible/docker-install.yml</code></pre>
-                        <p class="fragment" data-fragment-index="5">
-                        Note: on some Ubuntu versions (eg. &ge; 16.04) you'll need to
-                        add: 
-                        </p>
-                        <pre class="fragment" data-fragment-index="5"><code>-e ansible_python_interpreter=/usr/bin/python</code></pre>.
+                        
                         
                     </section>
                     
@@ -459,6 +458,53 @@ Follow along with course slides: <a href="http://localhost:8000">http://localhos
                     </section>
 
 
+                    <section>
+                        <h3>Components of Docker</h3>
+                        <ul>
+                            <li>Images
+                                <ul>
+                                    <li>The build component</li>
+                                    <li>Distributable <em>artefact</em></li>
+                                </ul>
+                            </li>
+                            <li>Containers
+                                <ul>
+                                    <li>The run component</li>
+                                </ul>
+                            </li>
+                                
+                            <li>Registries
+                                <ul>
+                                    <li>The distribution component</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
+                    </section>
+                    <section class="image-slide">
+                        <h3>Components of Docker</h3>
+                        <img
+                        src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
+                        <aside class="notes"><ul>
+                                <li>Images
+                                    <ul>
+                                        <li>The build component</li>
+                                        <li>Distributable <em>artefact</em></li>
+                                    </ul>
+                                </li>
+                                <li>Containers
+                                    <ul>
+                                        <li>The run component</li>
+                                    </ul>
+                                </li>
+
+                                <li>Registries
+                                    <ul>
+                                        <li>The distribution component</li>
+                                    </ul>
+                                </li>
+                            </ul></aside>
+                    </section>
 
 
 
@@ -527,9 +573,7 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                       
                       
                       <ul style="width:70%;">
-                      <li>Calling any command with <code
-                                  style="color:red;">-h</code> or <code
-                                  style="color:red;">--help</code> displays some docs</li>
+                      <li>Calling any command with <code style="color:red;">--help</code> displays some docs</li>
                       </ul>
                     </section>
                     
@@ -548,8 +592,60 @@ Options:
       .
       .  </code></pre>
                   </section>
+<section>
+                        <h3>
+                            Search for images
+                        </h3>
+                        <p>
+                        <code>docker search </code><code style="color:blue;">[OPTIONS]</code><code style="color:red;"> TERM</code> 
+                        </p>
+                        <table class="fragment" data-fragment-index="0">
+                          <tr>
+                            <th>Option</th>
+                            <th>Argument</th>
+                            <th>Description </th>
+                          </tr>
+
+
+
+  <tr><td>-f, --filter     </td><td>filter </td><td>  Filter output based on conditions provided</td></tr>
+  <tr><td>    --format     </td><td>string </td><td>  Pretty-print search using a Go template</td></tr>
+  <tr><td>    --help       </td><td>       </td><td>   Print usage</td></tr>
+  <tr><td>    --limit      </td><td>int    </td><td>   Max number of search results (default 25)</td></tr>
+  <tr><td>    --no-trunc   </td><td>       </td><td>  Don't truncate output</td></tr>
+                        </table>
+<asciinema-player class="fragment" data-fragment-index="1" autoplay="0" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/docker-search.json" cols="200" rows="10"></asciinema-player>
+
+                    </section>
+                    <section>
+                        <h3>
+                            Pull an image from a registry
+                        </h3>
+                        <p>
+                        <code>docker pull </code><code
+                            style="color:blue;">[OPTIONS]</code><code
+                            style="color:red;"> NAME</code><code style="color:blue;">[:TAG]</code> 
+                        </p>
+                        <table class="fragment" data-fragment-index="0">
+                          <tr>
+                            <th>Option</th>
+                            <th>Argument</th>
+                            <th>Description </th>
+                          </tr>
+
+
+                        <tr><td>-a, --all-tags              </td><td>  </td><td>Download all tagged images in the repository</td></tr>
+                        <tr><td>    --disable-content-trust </td><td>  </td><td>Skip image verification (default true)</td></tr>
+                        <tr><td>    --help                  </td><td>  </td><td>Print usage</td></tr>
+
+                        </table>
+<asciinema-player class="fragment" data-fragment-index="1" autoplay="0" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/docker-pull.json" cols="200" rows="10"></asciinema-player>
+                    </section>
+
                   <section>
-                    <h3>Docker <code>run</code></h3> 
+                    <h3><code>docker run</code></h3> 
                     <h4>Run a command in a container from an image
                     </h4>                        
                     <p>
@@ -603,6 +699,8 @@ Options:
   </p>
                     </section>
                     
+
+                    
                   <section>
                     <h3>
                       Start a shell
@@ -613,24 +711,25 @@ Options:
                       <code style="color:blue;font-style:italic">[command]</code>
                       </p>
                      <pre><code>$ docker run alpine /bin/sh</code></pre> 
-                    <ul>
-                      <li class="fragment" data-fragment-index="0">Docker
+<asciinema-player class="fragment" data-fragment-index="0" autoplay="0" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>                    <ul>
+                      <li class="fragment" data-fragment-index="1">Docker
                           starts container using alpine image</li>
-                        <li class="fragment" data-fragment-index="1">
+  <li class="fragment" data-fragment-index="2">
+ The <em>alpine</em> image contains the <a
+     href="https://www.aplinelinux.org/about/">Alpine OS</a>, a very minimal
+ Linux distribution. 
+ </li>                      <li class="fragment" data-fragment-index="3">
                             <code >[command]</code> argument is executed
                             inside container
                             
                         </li>
-                      <li class="fragment" data-fragment-index="2">Exits immediately</li>
-                      <li class="fragment" data-fragment-index="3">A docker container only runs as long as it has a process (eg. a shell terminal or program) to run</li>
+                      <li class="fragment" data-fragment-index="4">Exits immediately</li>
+                      <li class="fragment" data-fragment-index="5">A docker container only runs as long as it has a process (eg. a shell terminal or program) to run</li>
+ 
+
                     </ul>
- <asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/asciicast-119489.json" cols="174" rows="3"></asciinema-player>
- <p class="fragment" data-fragment-index="4">
- The <em>alpine</em> image contains the <a
-     href="https://www.aplinelinux.org/about/">Alpine OS</a>, a very minimal
- Linux distribution. 
- </p>
+ 
                   </section>
 
 
@@ -641,6 +740,9 @@ Options:
 <h4>Exercise: Start an <em>interactive</em> shell</h4>
                       <p>
                       <code>docker</code> <code >run</code> <code style="color:red;">[options]</code> <code >alpine</code> <code>/bin/sh</code>
+                      </p>
+                      <p>
+                      Find <code>[options]</code> to make container run interactively
                       </p>
                     <pre class="fragment" data-fragment-index="0"><code>$ docker run -it alpine /bin/sh</code></pre>
 <asciinema-player class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
@@ -935,53 +1037,6 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                   <section>
                     <h2>How Docker works</h2>
                   </section>
-                    <!--<section>
-                        <h3>Components of Docker</h3>
-                        <ul>
-                            <li>Images
-                                <ul>
-                                    <li>The build component</li>
-                                    <li>Distributable <em>artefact</em></li>
-                                </ul>
-                            </li>
-                            <li>Containers
-                                <ul>
-                                    <li>The run component</li>
-                                </ul>
-                            </li>
-                                
-                            <li>Registries
-                                <ul>
-                                    <li>The distribution component</li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <aside class="notes">Remember: Images are like templates/classes, containers are like instances/objects.</aside>
-                    </section>-->
-                    <section class="image-slide">
-                        <h3>Components of Docker</h3>
-                        <img
-                        src="http://alandargan.com/wp-content/uploads/2014/11/Docker2.png" alt="">
-                        <aside class="notes"><ul>
-                                <li>Images
-                                    <ul>
-                                        <li>The build component</li>
-                                        <li>Distributable <em>artefact</em></li>
-                                    </ul>
-                                </li>
-                                <li>Containers
-                                    <ul>
-                                        <li>The run component</li>
-                                    </ul>
-                                </li>
-
-                                <li>Registries
-                                    <ul>
-                                        <li>The distribution component</li>
-                                    </ul>
-                                </li>
-                            </ul></aside>
-                    </section>
                     <section>
                         <h3>
                             Underlying technology
@@ -1046,24 +1101,6 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                       <li>Images are the basis of containers</li>
                       <li>An image is a <em>readonly</em> file system similar to tar archive</li>
                       <li><em>Distributable</em> artefact of Docker</li>
-                      <li class="fragment" data-fragment-index="0">Image must have a name in lower case letters</li>
-                      <li class="fragment" data-fragment-index="1">
-                        Tag is optional. Implicitly <em>:latest</em> if not specified
-                        <ul>
-                          <li class="fragment" data-fragment-index="2"><code>postgres<em style="color:green">:9.4</em></code></li>
-                          <li class="fragment" data-fragment-index="3"><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code></li>
-                        </ul>
-                      </li>
-                      <li class="fragment" data-fragment-index="4">
-                        Url and username if pushing to registry
-                        <ul>
-                          <li class="fragment" data-fragment-index="5"><code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code></li>
-                          <li class="fragment" data-fragment-index="6"><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code></li>
-                        </ul>
-                      </li>
-                      
-
-
                     </ul>
                   </section>
                   <section>
@@ -1252,11 +1289,71 @@ $ docker history ubuntu:update</code></pre>
                         <h2>
                             Creating Docker Images
                         </h2>
-                        <h3>
-                            Introducing the Dockerfile
-                        </h3>
                     </section>
 
+                  <section>
+                    <h3>
+                      <code>docker build</code>
+                    </h3>
+                    <h4>Build Docker images</h4>
+                    <p style="font-size:65%;">
+                    <code>docker</code> <code style="color:red;">build</code>
+                    <code style="color:purple">[options]</code> <code
+                        style="color:red;">image</code><code style="color:blue;">:[tag]</code>
+                    <code
+                        style="color:red;">./path/to/Dockerfile</code>
+                    </p>
+
+
+                  <table>
+                    <tr>
+                      <th>Options</th>
+                      <th>Arguments</th>
+                      <th>Description</th>
+                    </tr>
+
+                    <tr>  <td><code>    --compress             </code></td><td>         </td>       <td>Compress the build context using gzip</td></tr>
+                    <tr>  <td><code>-c, --cpu-shares           </code></td><td>  int    </td>         <td>CPU shares (relative weight)</td></tr>
+                    <tr>  <td><code>    --cpuset-cpus          </code></td><td>  string </td>        <td>CPUs in which to allow execution (0-3, 0,1)</td></tr>
+                    <tr>  <td><code>    --cpuset-mems          </code></td><td>  string </td>        <td>MEMs in which to allow execution (0-3, 0,1)</td></tr>
+                    <tr>  <td><code>    --disable-content-trust</code></td><td>         </td>   <td>Skip image verification (default true)</td></tr>
+                    <tr>  <td><code>-f, --file string          </code></td><td>         </td>   <td>Name of the Dockerfile (Default is 'PATH/Dockerfile')</td></tr>
+                    <tr>  <td><code>    --pull                 </code></td><td>         </td>   <td>Always attempt to pull a newer version of the image</td></tr>
+                    <tr>  <td><code>-t, --tag list             </code></td><td>         </td>   <td>Name and optionally a tag in the 'name:tag' format</td></tr>
+                  </table>
+                  <p class="fragment" data-fragment-index="0">
+                  Note that a path to folder with Dockerfile is always
+                  required. When in same directory, use "."
+                  </p>
+                  </section>
+
+                  <section>
+                      <h3>
+                          Image naming semantics
+                      </h3>
+                      <ul>
+                          <li class="fragment" data-fragment-index="0">No
+                              upper-case letters
+                              </li>
+                          <li class="fragment" data-fragment-index="1">
+                              Tag is optional. Implicitly <em>:latest</em> if not specified
+                              <ul>
+                                  <li class="fragment" data-fragment-index="2"><code>postgres<em style="color:green">:9.4</em></code></li>
+                                  <li class="fragment" data-fragment-index="3"><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code></li>
+                              </ul>
+                          </li>
+                          <li class="fragment" data-fragment-index="4">
+                              Url and username if pushing to registry
+                              <ul>
+                                  <li class="fragment" data-fragment-index="5"><code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code></li>
+                                  <li class="fragment" data-fragment-index="6"><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code></li>
+                              </ul>
+                          </li>
+
+
+
+                      </ul>
+                  </section>
                   <section>
                     <h3>Create images with a <em>Dockerfile</em></h3>
                       <ul>
@@ -1432,35 +1529,6 @@ CMD ["test"]</code></pre>
 
 
                   <section>
-                    <h3>
-                      <code>docker build</code>
-                    </h3>
-                    <h4>Build Docker images</h4>
-                    <code>docker</code> <code style="color:red;">build</code>
-                    <code style="color:purple">[options]</code> <code
-                    style="color:red;">image[:tag]</code>
-                    <code
-                    style="color:red;">path</code>
-
-
-                  <table>
-                    <tr>
-                      <th>Options</th>
-                      <th>Arguments</th>
-                      <th>Description</th>
-                    </tr>
-
-                    <tr>  <td><code>    --compress             </code></td><td>         </td>       <td>Compress the build context using gzip</td></tr>
-                    <tr>  <td><code>-c, --cpu-shares           </code></td><td>  int    </td>         <td>CPU shares (relative weight)</td></tr>
-                    <tr>  <td><code>    --cpuset-cpus          </code></td><td>  string </td>        <td>CPUs in which to allow execution (0-3, 0,1)</td></tr>
-                    <tr>  <td><code>    --cpuset-mems          </code></td><td>  string </td>        <td>MEMs in which to allow execution (0-3, 0,1)</td></tr>
-                    <tr>  <td><code>    --disable-content-trust</code></td><td>         </td>   <td>Skip image verification (default true)</td></tr>
-                    <tr>  <td><code>-f, --file string          </code></td><td>         </td>   <td>Name of the Dockerfile (Default is 'PATH/Dockerfile')</td></tr>
-                    <tr>  <td><code>    --pull                 </code></td><td>         </td>   <td>Always attempt to pull a newer version of the image</td></tr>
-                    <tr>  <td><code>-t, --tag list             </code></td><td>         </td>   <td>Name and optionally a tag in the 'name:tag' format</td></tr>
-                  </table>
-                  </section>
-                  <section>
                       <h4>
                           Exercise: build docker image using Dockerfile
                       </h4>
@@ -1506,7 +1574,7 @@ echo "Hello world"</code></pre>
 
                   </section>-->
                   <section>
-                      <h4>Exercise: Build child image</h4>
+                      <h4>Exercise: Build child image from a base</h4>
                       <ul>
                           <li>Create <code style="color:red;">acme/my-final-image</code></li>
                           <li>Tag <code style="color:red">1.0</code></li>
