@@ -1569,32 +1569,35 @@ CMD ["./hello.sh"]</code></pre>
                         </li>
                       <li class='fragment' data-fragment-index="1">ENTRYPOINT
                           configures executable behaviour of container</li>
+                      <li class="fragment" data-fragment-index="2">
+                          <em>shell</em> and <em>exec</em> forms just like <code>CMD</code>
+                      </li>
 
                     </ul>
-                    <pre class="fragment" data-fragment-index="2"><code>$ cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
+                    <pre class="fragment" data-fragment-index="3"><code>$ cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
 $ docker build -t not-executable -f Dockerfile.notexecutable .
 $ docker run not-executable # does nothing</code></pre>
-                    <pre class="fragment" data-fragment-index="5"><code>$ docker build -t executable -f Dockerfile.executable .
+                    <pre class="fragment" data-fragment-index="4"><code>$ docker build -t executable -f Dockerfile.executable .
 $ docker run executable</code></pre>
                     
                   </section>
                   <section>
                     <h4>Combining ENTRYPOINT &amp; CMD</h4>
                     <ul>
-                      <li class="fragment" data-fragment-index="3">Arguments following the image for <code>docker run image</code> overrides <code>CMD</code></li>
-                        <li class="fragment" data-fragment-index="0">
+                      <li class="fragment" data-fragment-index="0">Arguments following the image for <code>docker run image</code> overrides <code>CMD</code></li>
+                        <li class="fragment" data-fragment-index="1">
                             Use exec form of ENTRYPOINT and CMD together to set base
                             command and default arguments
                         </li>
-                        <li class="fragment" data-fragment-index="1">Hypothetical application</li>
+                        <li class="fragment" data-fragment-index="2">Hypothetical application</li>
                     </ul>
-                    <pre class="fragment" data-fragment-index="2"><code>FROM ubuntu:latest
+                    <pre class="fragment" data-fragment-index="3"><code>FROM ubuntu:latest
 .
 .
 ENTRYPOINT ["./base-script"]
 CMD ["test"]</code></pre>
-                    <pre class="fragment" data-fragment-index="3"><code>$ docker run my-image</code></pre>
-                    <p class="fragment" data-fragment-index="4">
+                    <pre class="fragment" data-fragment-index="4"><code>$ docker run my-image</code></pre>
+                    <p class="fragment" data-fragment-index="5">
                     By default this image will just pass <code>test</code> as
                     argument to <code>base-script</code> to run unit tests by
                     default
