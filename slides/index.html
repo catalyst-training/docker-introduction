@@ -1437,12 +1437,15 @@ RUN make /app</code></pre>
                             Write a <code>Dockerfile</code>:
                               <ul>
                                   <li>
+                                      Named <code>Dockerfile</code>
+                                  </li>
+                                  <li>
                                       Based on alpine
                                   </li>
                                   <li>
                                       Set working directory to <code style="color:blue;">/app</code>
                                   </li>
-                                  <li>COPY hello.sh into working directory</li>
+                                  <li>Copy hello.sh into working directory</li>
                                   <li>make hello.sh executable</li>
                                   <li>tell docker to run hello.sh on docker run</li>
                               </ul>
@@ -1510,7 +1513,8 @@ CMD ["./hello.sh"]</code></pre>
                               </ul>
                           </li>
                       </ul>
-                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t YOURNAME/my-first-image .</code></pre>
+                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t YOURNAME/my-first-image .
+$ docker run YOURNAME/my-first-image</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
                                                                class="fragment"
                                                                data-fragment-index="0"
