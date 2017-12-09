@@ -693,10 +693,15 @@ Options:
                         <pre><code>$ docker run hello-world</code></pre>
 <asciinema-player autoplay="1" loop="loop" font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-122666.json" cols="150" rows="10"></asciinema-player>
-  <p>
-  The hello-world image was created by docker for instructional purposes. It
-  just outputs a <em>hello world</em>-like message and exits.
-  </p>
+<ul>
+    <li class="fragment" data-fragment-index="0">
+        The hello-world image was created by docker for instructional purposes. It
+        just outputs a <em>hello world</em>-like message and exits.
+    </li>
+    
+</ul>
+
+
                     </section>
                     
 
@@ -855,11 +860,40 @@ stopped.
 <asciinema-player autoplay="1" class="fragment" data-fragment-index="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/static-site-v1.json" cols="120" rows="8"></asciinema-player>
 <ul class="fragment" data-fragment-index="2" >
-<li>View results at <a href="http://localhost:8081">localhost:8081</a>.</li>
+    <li>
+        Note: <code>docker run</code> implicitly pulls image if not available
+    </li>
 <li>Try to exit using CTRL-C. What happens?</li>
 </ul>
                   </section>
 
+                  <section>
+                    <h3>Stop a running container</h3>
+                    <p>
+                    <code>docker</code> <code style="color:red;">stop</code>
+                    <code style="color:green;">name|containerID</code>
+                    </p>
+                    
+                  </section>
+                  <section>
+                    <h4>Exercise: Stop the <code>static-site</code> container</h4>
+
+                    <ul>
+                      <li class="fragment" data-fragment-index="0">
+                        You actually have a couple options:
+                        <ul>
+                          <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
+                          <li class="fragment" data-fragment-index="2">use the
+                              <code>containerID</code> from <code>docker
+                                  ps</code> output (will depend on your
+                              environment)</li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
+                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
+
+                  </section>
                   
                   
                   <section>
@@ -945,33 +979,6 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
 
 <asciinema-player class="fragment" data-fragment-index="0"  autoplay="1" loop="1" font-size="medium"
    theme="solarized-light" speed="1" src="lib/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
-
-                  </section>
-                  <section>
-                    <h3>Stop a running container</h3>
-                    <p>
-                    <code>docker</code> <code style="color:red;">stop</code>
-                    <code style="color:green;">name|containerID</code>
-                    </p>
-                    
-                  </section>
-                  <section>
-                    <h4>Exercise: Stop the <code>static-site</code> container</h4>
-
-                    <ul>
-                      <li class="fragment" data-fragment-index="0">
-                        You actually have a couple options:
-                        <ul>
-                          <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
-                          <li class="fragment" data-fragment-index="2">use the
-                              <code>containerID</code> from <code>docker
-                                  ps</code> output (will depend on your
-                              environment)</li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
-                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
 
                   </section>
                   <section>
@@ -1106,7 +1113,20 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                   <section>
                     <h3>Types of images</h3>
                     <dl>
-                      <dt>Official Base Image</dt> <dd>Images that have no parent (alpine, ubuntu, debian)</dd>
+                      <dt>Official Base Image</dt> 
+                      <dd>Created by single authority (OS, packages):
+                      <br>
+                              <ul style="width:50%;">
+                                  <li>ubuntu:16.04</li>
+                                  <li>
+                                      centos:7.3.1611
+                                  </li>
+                                  <li>
+                                      postgres
+                                  </li>
+
+                              </ul>
+                      </dd>
                       <dt>Base Image</dt> <dd>Can be any image (official or otherwise) that is used to build a new image</dd>
                       <dt>Child Images</dt> <dd>Build on base images and add functionality (this is the type you'll build)</dd>
                     </dl>
@@ -1116,15 +1136,8 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                       <h3>Layering of images</h3>
                       <ul>
                           <li>Images are <em>layered</em></li>
-                          <li>
-                              Images always consist of an <em>official base image</em>
-                              <ul>
-                                  <li>ubuntu:14.04</li>
-                                  <li>alpine:latest</li>
-                              </ul>
-                              <li>Any child image built by adding layers on top of base</li>
-                              <li>Each successive layer is set of differences to preceding layer</li>
-                          </li>
+                          <li>Any child image built by adding layers on top of base</li>
+                          <li>Each successive layer is set of differences to preceding layer</li>
                       </ul>
                   </section>
                   <section>
@@ -1292,6 +1305,161 @@ $ docker history ubuntu:update</code></pre>
                     </section>
 
                   <section>
+                    <h3>Introducing the <em>Dockerfile</em></h3>
+                      <ul>
+                          <li>A text file</li> 
+                          <li>Usually named <code>Dockerfile</code></li>
+                          <li>Sequential instructions for building a Docker image</li>
+                          <li>Each instruction creates a layer on the previous</li>
+                      </ul>
+                      
+                      <aside class="notes">
+                          Basically the Dockerfile is like a bash script. It
+                          contains instructions for sequentially building an
+                          image. Some instructions apply to running the image in a
+                          container.
+                      </aside>
+                      
+                  </section>
+                  <section>
+                    <h3>Structure of a Dockerfile</h3>
+                    <ul>
+                      <li>Start by telling Docker which base image to use
+                          <pre><code class="Dockerfile">FROM &lt;base image&gt;</code></pre>
+                      </li>
+                      <li>A number of commands telling docker how to build image
+                          <pre><code class="dockerfile">COPY . /app
+RUN make /app</code></pre>
+                      </li>
+                      <li>Optionally tell Docker what command to run when the
+                          container is started<pre><code
+                                     class="dockerfile">CMD ["python", "/app/app.py"]</code></pre></li>
+                          
+                    </ul>
+                  </section>
+                  <section>
+                    <h2>Common Dockerfile Instructions</h2>
+                  </section>
+                  <section>
+                    <h4>FROM</h4>
+                    <p>
+                    <code>FROM </code><code style="color:red;">image</code><code style="color:blue;">:tag</code>
+                    </p>
+                    <p>Define the base image for a new image</p>
+                    <pre><code>FROM ubuntu:17.04</code></pre>
+
+                    <pre><code>FROM debian # :latest implicit</code></pre>
+
+                    <pre><code>FROM my-custom-image:1.2.3</code></pre>
+                    <ul style="width:80%;" >
+                        <li>
+                            Image can be
+                            <ul>
+                                <li>
+                                    An official base image
+                                    <ul>
+                                        <li>ubuntu:16.04</li>
+                                        <li>alpine</li>
+                                        <li>postgres:9.4</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Another image you have created
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                  </section>
+                  <section>
+
+                    <h4>RUN</h4>
+                    <p>
+                    <code>RUN </code><code
+                        style="color:red;">command</code><code style="color:blue;"> arg1 arg2 ...</code>
+                    </p>
+                    <p>Execute shell commands for building image</p>
+                    <pre><code>RUN apt-get update && apt-get install python3</code></pre>
+                    <pre><code>RUN mkdir -p /usr/local/myapp && cd /usr/local/myapp</code></pre>
+                    <pre><code>RUN make all</code></pre>
+                    <pre><code>RUN curl https://domain.com/somebig.tar | tar -xv | /bin/sh</code></pre>
+                  </section>
+                  <section>
+                    <h4>COPY</h4>
+                    <p>
+                    <code>COPY </code><code style="color:red;">src dest</code>
+                    </p>
+                    <p>Copy files from build directory into image</p>
+                    <pre><code>COPY package.json /usr/local/myapp</code></pre>
+                    <pre><code>COPY . /usr/share/www</code></pre>
+                  </section>
+
+                  <section>
+                    <h4>WORKDIR</h4>
+                    <code>WORKDIR </code><code style="color:red;">path</code>
+                    <ul style="width:100%;">
+                      <li>Create a directory in the image</li>
+                      <li>Container will run relative to this directory</li>
+                    </ul>
+                    <pre><code>WORKDIR /usr/local/myapp</code></pre>
+                
+                  </section>
+                  <section>
+                    <h4>CMD</h4>
+                    <ul style="width:100%;">
+                      <li>Provide defaults to executable</li>
+                      <li>or provide executable</li>
+                      <li>
+                          Two ways to execute a command:
+                          <ul>
+                              <li >
+                                  shell form: 
+                                  <code>CMD </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
+                              </li>
+                              <li >
+                                  exec form: <code>CMD ["command", "param1", "param2"]</code>
+                              </li>
+
+                          </ul>
+                      </li>
+
+
+                    </ul>
+                  </section>
+                  <section>
+                      <h4>
+                          Exercise: Write a basic Dockerfile
+                      </h4>
+                      <pre><code>$ cd ~/docker-introduction/sample-code/first-docker-file
+                      </code></pre>
+                      <ul style="width:80%;">
+                          <li>
+                            Write a <code>Dockerfile</code>:
+                              <ul>
+                                  <li>
+                                      Based on alpine
+                                  </li>
+                                  <li>
+                                      Set working directory to <code style="color:blue;">/app</code>
+                                  </li>
+                                  <li>COPY hello.sh into working directory</li>
+                                  <li>make hello.sh executable</li>
+                                  <li>tell docker to run hello.sh on docker run</li>
+                              </ul>
+                          </li>
+                      </ul>
+                      <pre class="fragment" data-fragment-index="0"><code>FROM alpine
+WORKDIR /app
+COPY hello.sh .
+RUN chmod +x hello.sh
+CMD ["./hello.sh"]</code></pre>
+                      <p class="fragment" data-fragment-index="0">
+                      Now that we have a Dockerfile, we can make an image
+                      </p>
+
+                            
+                  </section>
+                  <section>
                     <h3>
                       <code>docker build</code>
                     </h3>
@@ -1319,7 +1487,8 @@ $ docker history ubuntu:update</code></pre>
                     <tr>  <td><code>    --disable-content-trust</code></td><td>         </td>   <td>Skip image verification (default true)</td></tr>
                     <tr>  <td><code>-f, --file string          </code></td><td>         </td>   <td>Name of the Dockerfile (Default is 'PATH/Dockerfile')</td></tr>
                     <tr>  <td><code>    --pull                 </code></td><td>         </td>   <td>Always attempt to pull a newer version of the image</td></tr>
-                    <tr>  <td><code>-t, --tag list             </code></td><td>         </td>   <td>Name and optionally a tag in the 'name:tag' format</td></tr>
+                    <tr>  <td><code>-t, --tag             </code></td><td>
+                            list        </td>   <td>Name and optionally a tag in the 'name:tag' format</td></tr>
                   </table>
                   <p class="fragment" data-fragment-index="0">
                   Note that a path to folder with Dockerfile is always
@@ -1327,7 +1496,27 @@ $ docker history ubuntu:update</code></pre>
                   </p>
                   </section>
 
+                  
                   <section>
+                      <h4>
+                          Exercise: build image using Dockerfile
+                      </h4>
+                      <ul style="width:80%;">
+                          <li>
+                              Build a Docker image:
+                              <ul>
+                                  <li>Use Dockerfile from earlier example</li>
+                                  <li>Name image YOURNAME/my-first-image</li>
+                              </ul>
+                          </li>
+                      </ul>
+                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t YOURNAME/my-first-image .</code></pre>
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+                                                               class="fragment"
+                                                               data-fragment-index="0"
+    theme="solarized-light" src="lib/docker-build.json" cols="174" rows="12"></asciinema-player>
+                  </section>
+<section>
                       <h3>
                           Image naming semantics
                       </h3>
@@ -1343,9 +1532,18 @@ $ docker history ubuntu:update</code></pre>
                               </ul>
                           </li>
                           <li class="fragment" data-fragment-index="4">
-                              Url and username if pushing to registry
+                              If pushing to a registry, need url and username
                               <ul>
-                                  <li class="fragment" data-fragment-index="5"><code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code></li>
+                                  <li class="fragment" data-fragment-index="5">
+                                  If registry not specified, docker.io is default:
+                                  <ul>
+                                      <li>
+                                          <code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code>
+                                          ==
+                                          <code><em style="color:red">username</em>/my-image</code>
+                                      </li>
+                                  </ul>
+                                  </li>
                                   <li class="fragment" data-fragment-index="6"><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code></li>
                               </ul>
                           </li>
@@ -1355,91 +1553,11 @@ $ docker history ubuntu:update</code></pre>
                       </ul>
                   </section>
                   <section>
-                    <h3>Create images with a <em>Dockerfile</em></h3>
-                      <ul>
-                          <li>A text file. Usually named <code>Dockerfile</code></li>
-                          <li>Sequential instructions for building a Docker image</li>
-                          <li>Each instruction creates a layer on the previous</li>
-                          <li>A very simple Dockerfile with 4 layers:</li>
-                      </ul>
-                      
-                      <pre><code class="dockerfile">FROM ubuntu:16.04
-COPY . /app
-RUN make /app
-CMD ["python", "/app/app.py"]</code></pre>
-                      <aside class="notes">
-                          Basically the Dockerfile is like a bash script. It
-                          contains instructions for sequentially building an
-                          image. Some instructions apply to running the image in a
-                          container.
-                      </aside>
-                      
-                  </section>
-                  <section>
-                    <h3>Structure of a Dockerfile</h3>
-                    <ul>
-                      <li>Tell Docker which base image to use
-                          <pre><code class="Dockerfile">FROM ubuntu</code></pre>
-                          <pre><code class="Dockerfile">FROM postgres:9.4</code></pre>
-                          <pre><code class="Dockerfile">FROM node:latest</code></pre>
-                      </li>
-                      <li>A number of commands telling docker how to build image
-                          <pre><code class="dockerfile">COPY . /app
-RUN make /app</code></pre>
-                      </li>
-                      <li>Optionally tell Docker what command to run when the
-                          container is started<pre><code
-                                     class="dockerfile">CMD ["python", "/app/app.py"]</code></pre></li>
-                          
-                    </ul>
-                  </section>
-                  <section>
-                    <h2>Common Dockerfile Instructions</h2>
-                    <h3>...a non-exhaustive list</h3>
-                  </section>
-                  <section>
-                    <h4>FROM</h4>
-                    <p>
-                    <code>FROM </code><code style="color:red;">image</code><code style="color:blue;">:tag</code>
-                    </p>
-                    <p>Define the base image for a new image</p>
-                    <pre><code>FROM ubuntu:17.04</code></pre>
-
-                    <pre><code>FROM debian # :latest implicit</code></pre>
-
-                    <pre><code>FROM my-custom-image:1.2.3</code></pre>
-                  </section>
-                  <section>
-
-                    <h4>RUN</h4>
-                    <p>
-                    <code>RUN </code><code
-                        style="color:red;">command</code><code style="color:blue;"> arg1 arg2 ...</code>
-                    </p>
-                    <p>Execute shell commands for building image</p>
-                    <pre><code>RUN apt-get update && apt-get install python3</code></pre>
-                    <pre><code>RUN mkdir -p /usr/local/myapp && cd /usr/local/myapp</code></pre>
-                    <pre><code>RUN make all</code></pre>
-                    <pre><code>RUN curl https://domain.com/somebig.tar | tar -xv | /bin/sh</code></pre>
-                  </section>
-                  <section>
-                    <h4>COPY</h4>
-                    <p>
-                    <code>COPY </code><code style="color:red;">src dest</code>
-                    </p>
-                    <p>Copy files from build directory into image</p>
-                    <pre><code>COPY package.json /usr/local/myapp</code></pre>
-                    <pre><code>COPY . /usr/share/www</code></pre>
-                  </section>
-                  <section>
-                    <h4>WORKDIR</h4>
-                    <code>WORKDIR </code><code style="color:red;">path</code>
-                    <ul style="width:100%;">
-                      <li>Create a directory in the image</li>
-                      <li>Container will run relative to this directory</li>
-                    </ul>
-                    <pre><code>WORKDIR /usr/local/myapp</code></pre>
-                
+                    <h3>More Dockerfile instructions </h3>
+                    <dl>
+                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
+                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
+                    </dl>
                   </section>
                   
                   
@@ -1456,42 +1574,14 @@ RUN make /app</code></pre>
                     <pre class="fragment" data-fragment-index="2"><code>$ cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
 $ docker build -t not-executable -f Dockerfile.notexecutable .
 $ docker run not-executable # does nothing</code></pre>
-                    <ul style="width:100%">
-                        <li class="fragment" data-fragment-index="3">
-                            Two ways to execute a command:
-                                <ul>
-                                    <li class='fragment' data-fragment-index="4">
-                                shell form: 
-                                        <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
-                                    </li>
-                                    <li class='fragment' data-fragment-index="5">
-                                  exec form: <code>ENTRYPOINT ["command", "param1", "param2"]</code>
-                              </li>
-                              
-                              </ul>
-                        </li>
-                      
-
-                    </ul>
                     <pre class="fragment" data-fragment-index="5"><code>$ docker build -t executable -f Dockerfile.executable .
 $ docker run executable</code></pre>
                     
                   </section>
                   <section>
-                    <h4>CMD</h4>
-                    <ul style="width:100%;">
-                      <li class="fragment" data-fragment-index="0">Provide defaults to executable</li>
-                      <li class="fragment" data-fragment-index="1">or provide executable</li>
-                      <li class="fragment" data-fragment-index="2"><em>Shell</em> and <em>exec</em> forms just like <code>ENTRYPOINT</code></li>
-                      <li class="fragment" data-fragment-index="3">Arguments following the image for <code>docker run image</code> overrides <code>CMD</code></li>
-                    </ul>
-                    <pre class="fragment" data-fragment-index="4"><code>$ docker build -t cmd-only -f Dockerfile.cmd_only .
-$ docker run cmd-only
-$ docker run cmd-only echo Good morning, Hal</code></pre>
-                  </section>
-                  <section>
                     <h4>Combining ENTRYPOINT &amp; CMD</h4>
                     <ul>
+                      <li class="fragment" data-fragment-index="3">Arguments following the image for <code>docker run image</code> overrides <code>CMD</code></li>
                         <li class="fragment" data-fragment-index="0">
                             Use exec form of ENTRYPOINT and CMD together to set base
                             command and default arguments
@@ -1518,32 +1608,8 @@ CMD ["test"]</code></pre>
 
 
 
-                  <section>
-                    <h3>More Dockerfile instructions </h3>
-                    <dl>
-                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
-                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
-                      <dt>HEALTHCHECK CMD</dt>  <dd>Check container health by running command at regular intervals inside container</dd>
-                    </dl>
-                  </section>
 
 
-                  <section>
-                      <h4>
-                          Exercise: build docker image using Dockerfile
-                      </h4>
-                      <ul>
-                          <li>Call image <code style="color:red;">acme/my-base-image</code></li>
-                          <li>Tag it <code style="color:red;">1.0</code></li>
-                      </ul>
-
-                      <p>
-                      <pre class="fragment" data-fragment-index="0"><code>$ cd ~/docker-introduction/sample-code/layering
-$ docker build -t acme/my-base-image:1.0  .</code></pre>
-                      </p>
-<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1"  font-size="medium" speed="3"
-    theme="solarized-light" src="lib/build-base-image.json" loop="loop" cols="136" rows="18"></asciinema-player>
-                  </section>
                   <!--<section>
                       <h4>Exercise: Build images with common layers</h4>
                       <p>
@@ -1573,6 +1639,23 @@ echo "Hello world"</code></pre>
                       </p>
 
                   </section>-->
+
+                  <section>
+                      <h4>
+                          Exercise: build base image using Dockerfile
+                      </h4>
+                      <ul>
+                          <li>Call image <code style="color:red;">acme/my-base-image</code></li>
+                          <li>Tag it <code style="color:red;">1.0</code></li>
+                      </ul>
+
+                      <p>
+                      <pre class="fragment" data-fragment-index="0"><code>$ cd ~/docker-introduction/sample-code/layering
+$ docker build -t acme/my-base-image:1.0  .</code></pre>
+                      </p>
+<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1"  font-size="medium" speed="3"
+    theme="solarized-light" src="lib/build-base-image.json" loop="loop" cols="136" rows="18"></asciinema-player>
+                  </section>
                   <section>
                       <h4>Exercise: Build child image from a base</h4>
                       <ul>
