@@ -1,0 +1,22 @@
+# Stage 1
+FROM ubuntu:16.04 as builder
+LABEL maintainer="developer@catalyst.net.nz"
+
+RUN apt update && apt install -yy \
+    gcc-multilib \
+    lib32stdc++6 \
+    lib32z1 \
+    wget
+
+WORKDIR /firstbuild/
+RUN wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz 
+RUN tar xf android-sdk_r24.4.1-linux.tgz
+
+# Stage 2
+FROM alpine:latest
+
+WORKDIR /usr/local/app
+COPY --from=builder /firstbuild/android-sdk-linux .
+
+
+

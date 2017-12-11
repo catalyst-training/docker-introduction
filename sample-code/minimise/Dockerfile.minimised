@@ -1,20 +1,19 @@
-FROM ubuntu:16.04
+FROM alpine:latest
 LABEL maintainer="developer@catalyst.net.nz"
 
+RUN apk --no-cache add \
+  g++  \
+  gcc \
+  libgcc \
+  libstdc++ \
+  linux-headers 
 
-RUN apt update && apt install -yy \
-    gcc-multilib \
-    lib32stdc++6 \
-    lib32z1 \
-  && rm -fr /var/lib/apt/lists/*
+WORKDIR /usr/local/app
 
-
-WORKDIR /usr/local # Set up android SDK 
-
-RUN apt update && apt install -yy wget &&  \
+RUN apk --no-cache add --virtual native-deps wget && \
   wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \     
   tar xf android-sdk_r24.4.1-linux.tgz && \     
   rm -f android-sdk_r24.4.1-linux.tgz && \
-  apt purge -y wget && \
-  rm -fr /var/lib/apt/lists/*
+  apk del native-deps
+
 
