@@ -1976,116 +1976,6 @@ RUN apt-get update \
                             <li>Run clean up in same line whenever possible</li>
                         </ul>
                     </section>
-<section>
-                        <h3>
-                            Image size and layers
-                        </h3>
-                        <h4>
-                            Size of an image is the sum of layers
-                        </h4>
-
-                        <pre style="font-size:10pt" class="fragment"
-                        data-fragment-index="0"><code>$ cd docker-introduction/sample-code/minimise
-$ docker build -t nonminimal-container -f Dockerfile.nonmin .</code></pre>
-<pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker history nonminimal-container
-
-IMAGE               CREATED             CREATED BY                                      SIZE     
-0b36a06204c2        About an hour ago   /bin/sh -c tar xf android-sdk_r24.4.1-linu...   678MB    
-183874b1c90f        About an hour ago   /bin/sh -c #(nop) ADD cb7f541a55debac72db6...   326MB    
-8cdbebaef087        About an hour ago   /bin/sh -c #(nop) WORKDIR /usr/local/app        0B       
-eb62f9d5786a        About an hour ago   /bin/sh -c apk --no-cache add --virtual na...   150MB    
-52bebd755930        10 hours ago        /bin/sh -c #(nop)  LABEL maintainer=develo...   0B       
-e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B       
-&lt;missing&gt;           10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...   4.14MB </code></pre>
-
-                        <pre  class="fragment" data-fragment-index="2" style="font-size:10pt"><code>$ docker image ls
-nonminimal-container ...    1.16GB</code></pre>
-
-</section>
-<section>
-                        <h3>
-                            Image size and layers
-                        </h3>
-    <h4>
-        Reduce image size by compacting &amp; cleaning
-    </h4>
-
-                        <pre style="font-size:10pt"><code>$ docker build -t minimal-container -f Dockerfile.minimised .  </code></pre>
-                        
-
-
-<pre class="fragment" data-fragment-index="0" style="font-size:10pt"><code>$ docker history minimal-container
-IMAGE               CREATED             CREATED BY                                      SIZE    
-448e1f0f0bc9        3 hours ago         /bin/sh -c apk --no-cache add --virtual na...   679MB   
-8df7061d2890        3 hours ago         /bin/sh -c #(nop) WORKDIR /usr/local/app        0B      
-f897600e3104        3 hours ago         /bin/sh -c apk --no-cache add   g++    gcc...   150MB   
-52bebd755930        11 hours ago        /bin/sh -c #(nop)  LABEL maintainer=develo...   0B      
-e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B      
-&lt;missing&gt;          10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...     4.14MB</code></pre>
-                        <pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker image ls
-minimal-container ...    833MB</code></pre>
-<ul class="fragment" data-fragment-index="2" style="width:80%;">
-                            <li>In contrast to the nonminimsed Dockerfile:</li>
-                            <ul>
-                                <li>Removed separate ADD layer</li>
-                                <li>Temporily used wget to fetch tar</li>
-                                <li>Unpack tar.gz</li>
-                                <li>Remove wget in same layer</li>
-                            </ul>
-                            <li>
-                                Drawback is Dockerfile becomes unreadable
-                            </li>
-                        </ul>
-                    </section>
-                    <section>
-                        <h3>
-                            Multistage builds
-                        </h3>
-                        <h4>
-                            Really really optimise image buiilds
-                        </h4>
-                        <pre style="font-size:10pt;"><code># Stage 1
-FROM ubuntu:16.04 as builder
-
-RUN apt-get update && apt-get install -y \
-     gcc \
-     make \
-     .
-     .
-
-WORKDIR /build
-RUN wget http://source.com/bigbinary.tar.gz && tar -xzf bigbinary.tar.gz
-RUN make all      # leaves compiled-binary in /build
-
-# Stage 2
-FROM alpine:latest
-
-WORKDIR /usr/local/app
-COPY --from=builder /build/compiled-binary . </code></pre>
-                        <ul>
-                            <li>First section fetches libs and compiles binaries</li>
-                            <li>Don't care about layers so much</li>
-                            <li>Second build only copies compiled binary to smaller image</li>
-                        </ul>
-                    </section>
-                    <section>
-                        <h4>
-                            Multistage builds example
-                        </h4>
-                        <pre style="font-size:10pt" class="fragment"
-                                                    data-fragment-index="0"><code>$ docker build -t multistage -f Dockerfile.multistage .</code></pre>
-                        <pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker history multistage
-
-IMAGE               CREATED             CREATED BY                                      SIZE  
-1f2cd3159a2d        2 hours ago         /bin/sh -c #(nop) COPY dir:50362890caeda88...   678MB 
-fb2a20b96b65        2 hours ago         /bin/sh -c #(nop) WORKDIR /usr/local/app        0B    
-e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B    
-&lt;missing&gt;           10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...   4.14MB </code></pre>
-
-                        <pre  class="fragment" data-fragment-index="2" style="font-size:10pt"><code>$ docker image ls
-multistage ...    682MB</code></pre>
-
-                    </section>
                     <section>
                       <h3>Layer caching</h3>
                       <pre><code>$ cd ~/docker-introduction/sample-code/caching
@@ -2240,6 +2130,119 @@ $ docker run --rm --name topshell runtop-shell</code></pre>
 $ docker run runtop</code></pre>
                     </section>
                     
+<section>
+                        <h3>
+                            Image size and layers
+                        </h3>
+                        <h4>
+                            Size of an image is the sum of layers
+                        </h4>
+
+                        <pre style="font-size:10pt" class="fragment"
+                        data-fragment-index="0"><code>$ cd docker-introduction/sample-code/minimise
+$ docker build -t nonminimal-container -f Dockerfile.nonmin .</code></pre>
+<pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker history nonminimal-container
+
+IMAGE               CREATED             CREATED BY                                      SIZE     
+0b36a06204c2        About an hour ago   /bin/sh -c tar xf android-sdk_r24.4.1-linu...   678MB    
+183874b1c90f        About an hour ago   /bin/sh -c #(nop) ADD cb7f541a55debac72db6...   326MB    
+8cdbebaef087        About an hour ago   /bin/sh -c #(nop) WORKDIR /usr/local/app        0B       
+eb62f9d5786a        About an hour ago   /bin/sh -c apk --no-cache add --virtual na...   150MB    
+52bebd755930        10 hours ago        /bin/sh -c #(nop)  LABEL maintainer=develo...   0B       
+e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B       
+&lt;missing&gt;           10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...   4.14MB </code></pre>
+
+                        <pre  class="fragment" data-fragment-index="2" style="font-size:10pt"><code>$ docker image ls
+nonminimal-container ...    1.16GB</code></pre>
+
+</section>
+<section>
+                        <h3>
+                            Image size and layers
+                        </h3>
+    <h4>
+        Reduce image size by compacting &amp; cleaning
+    </h4>
+
+                        <pre style="font-size:10pt"><code>$ docker build -t minimal-container -f Dockerfile.minimised .  </code></pre>
+                        
+
+
+<pre class="fragment" data-fragment-index="0" style="font-size:10pt"><code>$ docker history minimal-container
+IMAGE               CREATED             CREATED BY                                      SIZE    
+448e1f0f0bc9        3 hours ago         /bin/sh -c apk --no-cache add --virtual na...   679MB   
+8df7061d2890        3 hours ago         /bin/sh -c #(nop) WORKDIR /usr/local/app        0B      
+f897600e3104        3 hours ago         /bin/sh -c apk --no-cache add   g++    gcc...   150MB   
+52bebd755930        11 hours ago        /bin/sh -c #(nop)  LABEL maintainer=develo...   0B      
+e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B      
+&lt;missing&gt;          10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...     4.14MB</code></pre>
+                        <pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker image ls
+minimal-container ...    833MB</code></pre>
+<ul class="fragment" data-fragment-index="2" style="width:80%;">
+                            <li>In contrast to the nonminimsed Dockerfile:</li>
+                            <ul>
+                                <li>Removed separate ADD layer</li>
+                                <li>Temporily used wget to fetch tar</li>
+                                <li>Unpack tar.gz</li>
+                                <li>Remove wget in same layer</li>
+                            </ul>
+                            <li>
+                                Drawback is Dockerfile becomes unreadable
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            Multistage builds
+                        </h3>
+                        <h4>
+                            Really really optimise image buiilds
+                        </h4>
+                        <pre style="font-size:10pt;"><code>############# Stage 1 ############
+FROM ubuntu:16.04 as builder
+
+RUN apt-get update && apt-get install -y \
+     gcc \
+     make \
+     .
+     .
+
+WORKDIR /build
+RUN wget http://source.com/bigbinary.tar.gz && tar -xzf bigbinary.tar.gz
+RUN make all      # leaves compiled-binary in /build
+
+############# Stage 2 ##############
+FROM alpine:latest
+
+WORKDIR /usr/local/app
+COPY --from=builder /build/compiled-binary . </code></pre>
+                        <ul>
+                            <li>First section fetches libs and compiles binaries</li>
+                            <li>
+                                Greater freedom to choose <em>build image</em>
+                            </li>
+                            <li>Don't care about layers so much</li>
+                            <li>Second build only copies compiled binary to smaller image</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>
+                            Multistage builds example
+                        </h4>
+                        <pre style="font-size:10pt" class="fragment"
+                                                    data-fragment-index="0"><code>$ docker build -t multistage -f Dockerfile.multistage .</code></pre>
+                        <pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker history multistage
+
+IMAGE               CREATED             CREATED BY                                      SIZE  
+1f2cd3159a2d        2 hours ago         /bin/sh -c #(nop) COPY dir:50362890caeda88...   678MB 
+fb2a20b96b65        2 hours ago         /bin/sh -c #(nop) WORKDIR /usr/local/app        0B    
+e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B    
+&lt;missing&gt;           10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...   4.14MB </code></pre>
+
+                        <pre  class="fragment" data-fragment-index="2" style="font-size:10pt"><code>$ docker image ls
+multistage ...    682MB</code></pre>
+
+                    </section>
                     <!--<section>
                         <h3>ENTRYPOINT</h3>
                         <pre><code class="dockerfile">ENTRYPOINT ["python", "manage.py"]
