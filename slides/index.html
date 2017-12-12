@@ -2825,7 +2825,18 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
 
                     <section>
                         <h3>Create a cluster</h3>
-                        <pre><code>$ cd ~/catalystcloud-ansible/example-playbooks/docker-swarm-mode
+                        <ul>
+                            <li>Login to <a
+                                    href="https://dashboard.cloud.catalyst.net.nz">OpenStack
+                                    Dashboard</a> with provided credentials</li>
+                            <li>Navigte to API Acccess</li>
+                            <li>Download OpenStack RC file</li>
+                        </ul>
+                        <pre><code>$ source os-training.catalyst.net.nz-openrc.sh
+&lt;enter os training password&gt;
+
+$ export OS_REGION_NAME=nz-hlz-1 
+$ cd ~/catalystcloud-ansible/example-playbooks/docker-swarm-mode
 $ ansible-playbook --ask-sudo-pass \
     --extra-vars "suffix=-$( hostname )" \
     create-swarm-hosts.yaml</code></pre>
