@@ -2295,100 +2295,119 @@ CMD ["test"]</code></pre>
                       <li><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a></li>
                     </ul></aside>
                 </section>
-
-
-
-                  <section>
-                      <h3>Example voting application</h3>
-                    <h4>Microservice application consisting of 5 components</h4>
-                              <div style="width:50%;float:left">
-                                <ul>
-
-                                  <li class="fragment" data-fragment-index="0">Python web application</li>
-                                  <li class="fragment" data-fragment-index="1">Redis queue</li>
-                                  <li class="fragment" data-fragment-index="2">.NET worker</li>
-                                  <li class="fragment" data-fragment-index="3">Postgres DB with a data volume</li>
-                                  <li class="fragment" data-fragment-index="4">Node.js app to show votes in real time</li>
-                                </ul>
-                              </div>
-                              <div style="float:left;width:50%">
-                                <img src="img/voting-app.png" alt="Voting application"/>
-                              </div>
-                              <div style="float:left;width:100%;">
-                                  <pre class="fragment" data-fragment-index="5"><code>$ git clone https://github.com/dockersamples/example-voting-app.git
-$ cd example-voting-app</code></pre>
-                              </div>
-                  </section>
-
-                  <section>
+                <section>
                     <h3>
-                      Build vote app components
+                        Microservices in Docker
                     </h3>
-                    <pre class="fragment" data-fragment-index="0"><code>$ docker build -t vote vote</code></pre>
-                    <pre class="fragment" data-fragment-index="1"><code>$ docker build -t result result</code></pre>
-                    <pre class="fragment" data-fragment-index="2"><code>$ docker build -t worker worker</code></pre>
-                    <pre class="fragment" data-fragment-index="3"><code>$ docker image ls</code></pre>
-                  </section>
+                    <h4>
+                        Linking multiple containers
+                    </h4>
+                    <ul>
+                        <li class="fragment" data-fragment-index="0">
+                            Let's build a simple application with two components
+                            <ul>
+                                <li class="fragment" data-fragment-index="1">Web application using Python Flask</li>
+                                <li class="fragment" data-fragment-index="2">Redis message queue</li>
+                            </ul>
+                        </li>
+                        <li class="fragment" data-fragment-index="3">
+                            The app is already in mycomposeapp/app.py
+                        </li>
+                        <li class="fragment" data-fragment-index="4">
+                            We want to run the app and redis as separate
+                            microservices
+                        </li>
+                        <li class="fragment" data-fragment-index="5">
+                            Redis is already available as a <a href="https://hub.docker.com/_/redis/">docker image</a>
+                            <ul>
+                                <li class="fragment" data-fragment-index="6">
+                                    docker pull redis:alpine
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment" data-fragment-index="7">
+                            We're going to have build a docker image for our app
+                        </li>
+                    </ul>
+                </section>
+<section>
+                    <h3>Create our app</h3>
+                    <ul style="width:100%;">
+                        <li class="fragment" data-fragment-index="0">
+                            Go into the mycomposeapp directory
+                            <pre><code data-trim>
+$ cd $WORKDIR/sample-code/mycomposeapp
+$ ls
+$ gedit Dockerfile
+                            </code></pre>
+                        </li>
+                        <li class="fragment" data-fragment-index="1">
+                            Contents of <code>Dockerfile</code>
+                            <pre><code data-trim>
+FROM python:3.4-alpine
+WORKDIR /code
+COPY requirements.txt /code
+RUN pip install -r requirements.txt
+COPY . /code
+CMD ["python", "app.py"]
+                            </code></pre>
+
+                        </li>
+                        <li class="fragment" data-fragment-index="2">
+                            Build Docker image for app
+                            <pre><code data-trim>$ docker build -t web .  </code></pre>
+                        </li>
+                        
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>
+                        Run containers as microservices
+                    </h3>
+                    <ul>
+                        <li class="fragment" data-fragment-index="0">
+                            First let's start our redis container
+                            <pre ><code data-trim>$ docker run -d --rm --name redis redis:alpine </code></pre>
+                        </li>
+                        <li class="fragment" data-fragment-index="1">
+                            For our web container, we need a specific option to
+                            connect it to redis
+                            <ul>
+                                <li class="fragment"
+                                    data-fragment-index="2">--link &lt;name of container&gt;</li>
+                            </ul>
+                            <pre class="fragment"
+                            data-fragment-index="3"><code> $ docker run -d --rm --name web --link redis -p 5000:5000 web </code></pre>
+                        </li>
+                        <li class="fragment" data-fragment-index="4">
+                            Once you start the web container go to <a href="http://localhost:5000">web page</a> to see counter
+                        </li>
+                    </ul>
+                </section>
                   
-                  <section>
-                      <h3>Run microservices</h3>
-
-                      <!--<div style="width:20%;float:left;"><ul>
-                              <li class="fragment" data-fragment-index="0">Run flask app 
-                                  
-                                  <ul>
-                                      <li class="fragment" data-fragment-index="1">
-                                          <code>--link</code> to connect redis and db to vote container
-                                      </li>
-                                  </ul>
-
-                              </li>
-                              <li class="fragment" data-fragment-index="2">
-                                  Results app
-                                  
-                                  <ul>
-                                      <li class="fragment" data-fragment-index="3"><code>-v</code> to mount directory as volume</li>
-                                      <li class="fragment" data-fragment-index="4"><code>-p</code> to map ports in docker container</li>
-                                  </ul>
-                              </li>
-                              <li class="fragment" data-fragment-index="5">
-                                  Worker app
-                              </li>
-
-                          </ul></div>-->
-                          <div >
-                              <pre><code>#! /bin/bash
-# Helper services
-docker run --rm -d -p 6379:6379 --name redis redis:alpine
-docker run --rm -d --name db postgres:9.4 
-
-# Application
-docker run --rm -d --name vote --link redis \
-    --link db -v $PWD/vote:/app  -p 5000:80 vote
-
-docker run --rm -d --name worker --link redis --link db worker
-
-docker run --rm -d --name result -v $PWD/result:/app \
-   --link db -p 5001:80 -p 5858:5858 result nodemon --debug server.js</code></pre>                  
-                          </div>
-                          <dl>
-                              <dt><code>--link a:b</code></dt>   <dd>Link container <em>a</em> to container <em>b</em></dd>
-                              <dt><code>-v  ./path:/var/lib/path</code></dt>   <dd>Mount a directory as a volume</dd>
-                              <dt><code>-p  8080:80 </code></dt>   <dd>Map port in container</dd>
-                          </dl>
-                  </section>
+                  
                   <section>
                     <h3>Disadvantages of this approach</h3>
                     <ul>
-                      <li>Complicated with shell/script commands
+                      <li class="fragment" data-fragment-index="0">Complicated with shell/script commands
                           <ul>
                               <li>Managing service interactions</li>
                               <li>Adding/managing services</li>
                           </ul>
                       </li>
-                      <li>Can't scale services</li>
-                      <li>Stopping services is P.I.T.A.</li>
-                      <li>Better tools exist..</li>
+                      <li class="fragment" data-fragment-index="1">Can't scale services</li>
+                      <li class="fragment" data-fragment-index="2">Stopping
+                          and cleaning up services can be tedious
+                          <li class="fragment" data-fragment-index="3">
+                              BTW
+                              <pre><code data-trim>
+$ docker stop web
+$ docker stop redis
+                              </code></pre>
+                          </li>
+                      </li>
+                      <li class="fragment" data-fragment-index="4">Better tools exist..</li>
                     </ul>
                   </section>
                 <section>
@@ -2396,9 +2415,13 @@ docker run --rm -d --name result -v $PWD/result:/app \
                     <h4>Docker as a dev environment</h4>
                     <div style="width:50%;float:left;">
                         <ul>
+                            <li  class="fragment" data-fragment-index="0">
+                                A tool that let's you easily create complex
+                                microservice apps
+                            </li>
                             <li class="fragment"
-                                data-fragment-index="0">Declarative YAML syntax</li>
-                          <li class="fragment" data-fragment-index="1">Specifies
+                                data-fragment-index="1">Declarative YAML syntax</li>
+                          <li class="fragment" data-fragment-index="2">Specifies
                             <ul>
                               <li>Services</li>
                               <li>image or build</li> 
@@ -2407,33 +2430,28 @@ docker run --rm -d --name result -v $PWD/result:/app \
                             </ul>
                           </li> 
                             <li class="fragment"
-                                data-fragment-index="2">Interactive
+                                data-fragment-index="3">Interactive
                                 development</li>
-                            <li class="fragment" data-fragment-index="3">Can be used for staging/production environments</li>
+                            <li class="fragment" data-fragment-index="4">Can be used for staging/production environments</li>
                         </ul>
                     </div>
-                    <div class="fragment" data-fragment-index="0" style="width:50%;float:left;">
-                    <pre><code>---
-# docker-compose.yml
-version: '3'
+                    <div class="fragment" data-fragment-index="2" style="width:50%;float:left;">
+
+                            <pre><code data-trim>
+---
+version: "3"
 services:
-  web:
-    build: .
-    ports:
+  web: 
+    build .
+    ports: 
       - "5000:5000"
-    volumes:
-      - .:/code
-      - logvolume01:/var/log
-    links:
-      - redis
   redis:
-    image: redis
-    volumes:
-      logvolume01: {}</code></pre>
+    image: redis:alpine
+</code></pre>
+                    
                     </div>
                 </section>
-
-                <section>
+<section>
                     <h3>Docker Compose</h3>
                     <h4>Basic commands</h4>
                     <p>
@@ -2476,6 +2494,112 @@ services:
                     the <a href="">documentation</a></p>
 
                 </section>
+                <section>
+                    <h3>
+                        Service Definition File
+                    </h3>
+                    <div style="width:50%;float:left;font-size:20pt;">
+                        <ul>
+                            <li  class="fragment" data-fragment-index="0">
+                                By default: <code>docker-compose.yml</code>
+                            </li>
+                            <li  class="fragment" data-fragment-index="1">YAML dictionary</li>
+                            <li class="fragment" data-fragment-index="2">
+                                <code>version</code> attribute
+                            </li>
+                            <li  class="fragment" data-fragment-index="3">
+                                <code>services</code>
+                                <ul>
+                                    <li>dictionary of services we want to run
+                                    </li>
+                                </ul>
+                            </li>
+                            <li  class="fragment" data-fragment-index="4">
+                                Each <code>service</code> is a dictionary describing how to run
+                                a particular container
+                                <ul>
+                                    <li>use pre-built image or fetch from registry</li>
+                                    <li>specify ports to expose</li>
+                                    <li>volumes</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width:50%;float:left;">
+                        <pre><code data-trim>---
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - 5000:5000
+  redis:
+    image: redis:alpine
+                        </code></pre>
+                    </div>
+
+                </section>
+                <section>
+                    <h4>
+                        Exercise: convert our app to use <code>docker-compose</code>
+                    </h4>
+                    <ul style="width:100%;">
+                        <li  class="fragment" data-fragment-index="0">In same directory as previous example</li>
+                        <li  class="fragment" data-fragment-index="1">Create a file called <code>docker-compose.yml</code></li>
+                        <li class="fragment" data-fragment-index="2">
+                            Add our service definition:
+                            <pre><code data-trim>
+---
+version: "3"
+services:
+  web: 
+    build .
+    ports: 
+        - "5000:5000"
+  redis:
+    image: redis:alpine
+                            </code></pre>
+                    </li>
+                    <li  class="fragment" data-fragment-index="3">
+                        Start our microservices
+                        <pre><code>$ docker-compose up</code></pre>
+                    </li>
+                    </ul>
+                </section>
+
+                
+                
+<section>
+                      <h3>Example voting application</h3>
+                    <h4>Microservice application consisting of 5 components</h4>
+                              <div style="width:50%;float:left">
+                                <ul>
+
+                                  <li class="fragment" data-fragment-index="0">Python web application</li>
+                                  <li class="fragment" data-fragment-index="1">Redis queue</li>
+                                  <li class="fragment" data-fragment-index="2">.NET worker</li>
+                                  <li class="fragment" data-fragment-index="3">Postgres DB with a data volume</li>
+                                  <li class="fragment" data-fragment-index="4">Node.js app to show votes in real time</li>
+                                </ul>
+                              </div>
+                              <div style="float:left;width:50%">
+                                <img src="img/voting-app.png" alt="Voting application"/>
+                              </div>
+                              <div style="float:left;width:100%;">
+                                  <pre class="fragment" data-fragment-index="5"><code>$ git clone https://github.com/dockersamples/example-voting-app.git
+$ cd example-voting-app</code></pre>
+                              </div>
+                  </section>
+
+                  <section>
+                    <h3>
+                      Build vote app components
+                    </h3>
+                    <pre class="fragment" data-fragment-index="0"><code>$ docker build -t vote vote</code></pre>
+                    <pre class="fragment" data-fragment-index="1"><code>$ docker build -t result result</code></pre>
+                    <pre class="fragment" data-fragment-index="2"><code>$ docker build -t worker worker</code></pre>
+                    <pre class="fragment" data-fragment-index="3"><code>$ docker image ls</code></pre>
+                  </section>
                 <section>
                     <h3>Docker Compose Example</h3>
                     <pre><code>$ cd example-voting-app
