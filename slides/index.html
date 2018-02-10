@@ -2321,7 +2321,7 @@ CMD ["test"]</code></pre>
                             Redis is already available as a <a href="https://hub.docker.com/_/redis/">docker image</a>
                             <ul>
                                 <li class="fragment" data-fragment-index="6">
-                                    docker pull redis:alpine
+                                    <code>$ docker pull redis:alpine</code>
                                 </li>
                             </ul>
                         </li>
@@ -2399,13 +2399,14 @@ CMD ["python", "app.py"]
                       <li class="fragment" data-fragment-index="1">Can't scale services</li>
                       <li class="fragment" data-fragment-index="2">Stopping
                           and cleaning up services can be tedious
-                          <li class="fragment" data-fragment-index="3">
-                              BTW
-                              <pre><code data-trim>
+                          <ul><li class="fragment" data-fragment-index="3">
+                                  BTW, you'll need to stop each of those
+                                  containers
+                                  <pre><code data-trim>
 $ docker stop web
 $ docker stop redis
-                              </code></pre>
-                          </li>
+                                  </code></pre>
+                              </li></ul>
                       </li>
                       <li class="fragment" data-fragment-index="4">Better tools exist..</li>
                     </ul>
