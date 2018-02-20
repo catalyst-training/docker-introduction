@@ -1136,6 +1136,52 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                     </dl>
 
                   </section>
+
+<section>
+                      <h3>
+                          Image naming semantics
+                      </h3>
+                      <ul>
+                          <li class="fragment" data-fragment-index="0">No
+                              upper-case letters
+                              </li>
+                          <li class="fragment" data-fragment-index="1">
+                              Tag is optional. Implicitly <em>:latest</em> if not specified
+                              <ul>
+                                  <li class="fragment" data-fragment-index="2"><code>postgres<em style="color:green">:9.4</em></code></li>
+                                  <li class="fragment" data-fragment-index="3"><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code></li>
+                              </ul>
+                          </li>
+                          <li class="fragment" data-fragment-index="4">
+                              If pushing to a registry, need url and username
+                              <ul>
+                                  <li class="fragment" data-fragment-index="5">
+                                  If registry not specified, docker.io is default:
+                                  <ul>
+                                      <li>
+                                          <code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code>
+                                          ==
+                                          <code><em style="color:red">username</em>/my-image</code>
+                                      </li>
+                                      
+                                  </ul>
+                                  </li>
+                                  <li class="fragment" data-fragment-index="6"><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code></li>
+<li class="fragment" data-fragment-index="7">GitLab registry accept several
+    variants:
+                                          <ul>
+                                              <li>gitlab.catalyst.net.nz:4567/&lt;group&gt;/&lt;project&gt;:tag</li>
+                                              <li>gitlab.catalyst.net.nz:4567/&lt;group&gt;/&lt;project&gt;/optional-image-name:tag</li>
+                                              <li>gitlab.catalyst.net.nz:4567/&lt;group&gt;/&lt;project&gt;/optional-name/optional-image-name:tag</li>
+                                          </ul>
+                                      </li>
+                              </ul>
+                          </li>
+
+
+
+                      </ul>
+                  </section>
                   <section>
                       <h3>Layering of images</h3>
                       <ul >
@@ -1580,42 +1626,6 @@ $ docker run YOURNAME/my-first-image</code></pre>
                                                                data-fragment-index="0"
     theme="solarized-light" src="lib/docker-build.json" cols="174" rows="12"></asciinema-player>
                   </section>
-<section>
-                      <h3>
-                          Image naming semantics
-                      </h3>
-                      <ul>
-                          <li class="fragment" data-fragment-index="0">No
-                              upper-case letters
-                              </li>
-                          <li class="fragment" data-fragment-index="1">
-                              Tag is optional. Implicitly <em>:latest</em> if not specified
-                              <ul>
-                                  <li class="fragment" data-fragment-index="2"><code>postgres<em style="color:green">:9.4</em></code></li>
-                                  <li class="fragment" data-fragment-index="3"><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code></li>
-                              </ul>
-                          </li>
-                          <li class="fragment" data-fragment-index="4">
-                              If pushing to a registry, need url and username
-                              <ul>
-                                  <li class="fragment" data-fragment-index="5">
-                                  If registry not specified, docker.io is default:
-                                  <ul>
-                                      <li>
-                                          <code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code>
-                                          ==
-                                          <code><em style="color:red">username</em>/my-image</code>
-                                      </li>
-                                  </ul>
-                                  </li>
-                                  <li class="fragment" data-fragment-index="6"><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code></li>
-                              </ul>
-                          </li>
-
-
-
-                      </ul>
-                  </section>
                   <section>
                     <h3>More Dockerfile instructions </h3>
                     <dl>
@@ -1673,6 +1683,12 @@ CMD ["test"]</code></pre>
                     </p>
                   </section>
 
+                  <section>
+                      <h3>
+                          Exploring ENTRYPOINT &amp; CMD behaviour
+                      </h3>
+
+                  </section>
 
 
 
@@ -1707,56 +1723,6 @@ echo "Hello world"</code></pre>
 
                   </section>-->
 
-                  <section>
-                      <h4>
-                          Exercise: build base image using Dockerfile
-                      </h4>
-                      <ul>
-                          <li>Call image <code style="color:red;">acme/my-base-image</code></li>
-                          <li>Tag it <code style="color:red;">1.0</code></li>
-                      </ul>
-
-                      <p>
-                      <pre class="fragment" data-fragment-index="0"><code>$ cd ~/docker-introduction/sample-code/layering
-$ docker build -t acme/my-base-image:1.0  .</code></pre>
-                      </p>
-<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1"  font-size="medium" speed="3"
-    theme="solarized-light" src="lib/build-base-image.json" loop="loop" cols="136" rows="18"></asciinema-player>
-                  </section>
-                  <section>
-                      <h4>Exercise: Build child image from a base</h4>
-                      <ul>
-                          <li>Create <code style="color:red;">acme/my-final-image</code></li>
-                          <li>Tag <code style="color:red">1.0</code></li>
-                          <li>Use <code style="color:red">Dockerfile.child</code>
-                              to build image</li>
-                      </ul>
-                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t acme/my-final-image:1.0 -f Dockerfile.child .</code></pre>
-<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/build-child-image.json" cols="136" rows="14"></asciinema-player>
-                  </section>
-                  <section>
-                      <h4>Exercise: Compare base and child image layers</h4>
-                      <ul>
-                          <li>
-                              Use: <code>docker</code> <code style="color:red;">history</code> <code style="color:green;">image</code>
-                          </li>
-                          <li>The final image should contain all the same layers as the base image </li>
-                          <li>One additional layer: the last line of the Dockerfile</li>
-                      </ul>
-                      <pre><code>$ docker history acme/my-base-image:1.0
-$ docker history acme/my-final-image:1.0
-IMAGE         ...                                        SIZE 
-5932655b26aa  ...   #(nop)  CMD ["/bin/sh" "-c" "/a...   0 B&lt;--new layer
-2f723f94263a  ...   #(nop) COPY dir:dd75f285798cdc9...   106 B
-8d4c9ae219d0  ...   #(nop)  CMD ["/bin/bash"]            0 B
-&lt;missing&gt;     ...   mkdir -p /run/systemd && echo '...   7 B
-&lt;missing&gt;     ...   sed -i 's/^#\s*\(deb.*universe\...   2.78 kB
-&lt;missing&gt;     ...   rm -rf /var/lib/apt/lists/*          0 B
-&lt;missing&gt;     ...   set -xe   && echo '#!/bin/sh' >...   745 B
-&lt;missing&gt;     ...   #(nop) ADD file:9e2eabb7b05f940...   106 MB
-                      </code></pre>
-                  </section>
 
 
                   <!--<section>
