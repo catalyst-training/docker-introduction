@@ -2196,51 +2196,78 @@ minimal-container ...    833MB</code></pre>
                             Multistage builds
                         </h3>
                         <h4>
-                            Really really optimise image buiilds
+                            Optimise image buiilds
                         </h4>
-                        <pre style="font-size:10pt;"><code>############# Stage 1 ############
-FROM ubuntu:16.04 as builder
-
-RUN apt-get update && apt-get install -y \
-     gcc \
-     make \
-     .
-     .
-
-WORKDIR /build
-RUN wget http://source.com/bigbinary.tar.gz && tar -xzf bigbinary.tar.gz
-RUN make all      # leaves compiled-binary in /build
-
-############# Stage 2 ##############
-FROM alpine:latest
-
-WORKDIR /usr/local/app
-COPY --from=builder /build/compiled-binary . </code></pre>
+                        
                         <ul>
-                            <li>First section fetches libs and compiles binaries</li>
-                            <li>
-                                Greater freedom to choose <em>build image</em>
+                            <li class="fragment" data-fragment-index="0">
+                                Best practices intended to optimise image size by
+                                keeping them small
                             </li>
-                            <li>Don't care about layers so much</li>
-                            <li>Second build only copies compiled binary to smaller image</li>
+
+                            <li class="fragment" data-fragment-index="1">
+                                Come at the expense of readability 
+                            </li>
+
+                            <li class="fragment" data-fragment-index="2">
+                                Multistage builds
+                                <ul>
+                                    <li>Introduced with Docker 17.05</li>
+                                    <li>Enable optimised image size</li>
+                                    <li>maintain readability</li>
+                                </ul>
+                            </li>
+                            
                         </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            Multistage builds
+                        </h3>
+                        <h4>
+                            How they work
+                        </h4>
+                        <div style="width:50%;float:left;">
+                            <ul>
+                                <li>Multiple FROM directives in a Dockerfile</li>
+                                <li>Each FROM represents a new build</li>
+                                <li>Selectively copy artifacts from one of the previous builds</li>
+                                <li>Leave behind what is not needed</li>
+                            </ul>
+                        </div>
+
+                        <div style="width:50%;float:left;">
+                        <pre ><code>FROM ubuntu:16.04 as builder
+WORKDIR /some/path
+COPY . /some/path
+RUN make install
+
+.
+FROM alpine
+COPY --from=builder /some/path/executable /root
+ENTRYPOINT ['/root/executable'] </code></pre>
+                        </div>
+
+                        
                     </section>
                     <section>
                         <h4>
                             Multistage builds example
                         </h4>
-                        <pre style="font-size:10pt" class="fragment"
-                                                    data-fragment-index="0"><code>$ docker build -t multistage -f Dockerfile.multistage .</code></pre>
-                        <pre class="fragment" data-fragment-index="1" style="font-size:10pt"><code>$ docker history multistage
+                        <pre  class="fragment"
+                                                    data-fragment-index="0"><code>$ cd ~/href-counter
+$ docker build -t href-counter -f Dockerfile.build .
+$ docker image ls | grep href
+REPOSITORY    TAG     IMAGE ID          SIZE
+href-counter  latest  b0eb64a75c55      687MB</code></pre>
+                        <pre  class="fragment"
+                                                    data-fragment-index="1"><code>$ docker build -t href-counter-multi -f Dockerfile.multi .
+$ docker image ls | grep href
+REPOSITORY          TAG           SIZE
+href-counter-multi  latest        10.3MB</code></pre>
+                        
 
-IMAGE               CREATED             CREATED BY                                      SIZE  
-1f2cd3159a2d        2 hours ago         /bin/sh -c #(nop) COPY dir:50362890caeda88...   678MB 
-fb2a20b96b65        2 hours ago         /bin/sh -c #(nop) WORKDIR /usr/local/app        0B    
-e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B    
-&lt;missing&gt;           10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...   4.14MB </code></pre>
-
-                        <pre  class="fragment" data-fragment-index="2" style="font-size:10pt"><code>$ docker image ls
-multistage ...    682MB</code></pre>
+                        
 
                     </section>
                     <!--<section>

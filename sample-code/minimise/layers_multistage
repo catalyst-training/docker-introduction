@@ -1,5 +1,0 @@
-IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
-1f2cd3159a2d        3 minutes ago       /bin/sh -c #(nop) COPY dir:50362890caeda88...   678MB               
-fb2a20b96b65        12 minutes ago      /bin/sh -c #(nop) WORKDIR /usr/local/app        0B                  
-e21c333399e0        10 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B                  
-<missing>           10 days ago         /bin/sh -c #(nop) ADD file:2b00f26f6004576...   4.14MB              
