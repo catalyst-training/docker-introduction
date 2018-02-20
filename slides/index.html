@@ -1626,13 +1626,7 @@ $ docker run YOURNAME/my-first-image</code></pre>
                                                                data-fragment-index="0"
     theme="solarized-light" src="lib/docker-build.json" cols="174" rows="12"></asciinema-player>
                   </section>
-                  <section>
-                    <h3>More Dockerfile instructions </h3>
-                    <dl>
-                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
-                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
-                    </dl>
-                  </section>
+                  
                   
                   
                   <section>
@@ -1688,52 +1682,50 @@ CMD ["test"]</code></pre>
                           Exploring ENTRYPOINT &amp; CMD behaviour
                       </h3>
 
+
+                      <ul style="width:100%;">
+
+                      <li class="fragment" data-fragment-index="0">
+                          <pre><code> $ cd sample-code/entrypoint_cmd_examples </code></pre>
+                      </li>
+                          <li class="fragment" data-fragment-index="1">
+                              Compare Dockerfiles:
+                              <ul>
+                                  <li>Dockerfile.cmd_only</li>
+                                  <li>Dockerfile.cmd_and_entrypoint</li>
+                              </ul>
+                          </li>
+                          <li class="fragment" data-fragment-index="2">Build
+                              images:
+                              <pre><code>$ docker build -t cmd_only -f Dockerfile.cmd_only .
+$ docker build -t cmd_and_entrypoint -f Dockerfile.cmd_and_entrypoint .</code></pre>
+                          </li>
+                          <li class="fragment" data-fragment-index="3">
+                              Run both the images with or without an additional
+                              argument to see what happens
+                          </li>
+                      </ul>
+
+
+
+                  </section>
+<section>
+                    <h3>More Dockerfile instructions </h3>
+                    <dl>
+                      <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
+                      <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
+                      <dt>ENV        </dt>      <dd>Set an environment
+                      variable</dd>
+                    </dl>
+                    <p>
+                    See official reference <a
+                        href="https://docs.docker.com/engine/reference/builder/">documentation</a>
+                    for more
+                    </p>
                   </section>
 
 
 
-
-                  <!--<section>
-                      <h4>Exercise: Build images with common layers</h4>
-                      <p>
-                      <code>~/docker-introduction/sample-code/layering</code>
-                      </p>
-                      <p>
-                      <code>Dockerfile.base</code>
-
-
-                      <pre><code class="dockerfile">FROM ubuntu:16.04
-COPY . /app</code></pre>
-                      </p>
-
-                      <p>
-                      <code>Dockerfile</code>
-
-
-                      <pre><code class="dockerfile">FROM acme/my-base-image:1.0
-CMD /app/hello.sh</code></pre>
-                      </p>
-
-                      <p>
-                      <code>hello.sh</code>
-
-                      <pre><code class="bash">#!/bin/sh
-echo "Hello world"</code></pre>
-                      </p>
-
-                  </section>-->
-
-
-
-                  <!--<section>
-                    <h3>Images and Tags</h3>
-                    <ul>
-                      <li>Tags specify a particular version of an image<pre><code>$ docker pull ubuntu:14.04</code></pre></li>
-                      <li>Default to <em>latest</em>. In most cases this is a LTS version<pre><code>$ docker pull ubuntu</code></pre></li>
-                        <li>Registries like Docker Hub contain >> 100K images<pre><code>$ docker search ubuntu</code></pre></li>
-
-                    </ul>
-                  </section>-->
                   
 
 
@@ -2044,7 +2036,7 @@ $ docker build  -t good-apt-example -f Dockerfile.good .
 
                     
                     <section>
-                        <h3>ADD is BADD</h3>
+                        <h3>ADD</h3>
                         <ul style="width:80%">
                             <li class="fragment" data-fragment-index="0">Copies files to a directory
                                 <pre><code>ADD . /usr/path/</code></pre>
@@ -2131,8 +2123,13 @@ $ docker run --rm --name topshell runtop-shell</code></pre>
                             <li>Or in form that creates interactive shell like
                                 <ul><li><code>ENTRYPOINT ["python"]</code></li><li><code>CMD ["/bin/bash"]</code></li></ul></li>
                         </ul>
-                        <pre class="fragment" data-fragment-index="3"><code>$ docker build -t runtop -f Dockerfile.top .
-$ docker run runtop</code></pre>
+                        <pre class="fragment" data-fragment-index="3"><code>$ docker build -t runtop-exec -f Dockerfile.top_exec .
+$ docker run runtop-exec</code></pre>
+                        <ul>
+                            <li class="fragment" data-fragment-index="4">Sometimes app constraints don't allow single process on PID1</li>
+                            <li class="fragment" data-fragment-index="5">For
+                                this purpose recommended to use <a href="https://github.com/Yelp/dumb-init">dumb-init</a></li>
+                        </ul>
                     </section>
                     
 <section>
