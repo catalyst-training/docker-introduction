@@ -469,7 +469,7 @@ Follow along with course slides: <a href="http://localhost:8000">http://localhos
                       </h3>
 
                       <pre><code>$ docker --version
-Docker version 17.03.1-ce, build c6d412e</code></pre>
+Docker version 17.12.0-ce, build c6d4123</code></pre>
                       <p>Current version scheme similar to Ubuntu versioning: <code>YY.MM.#</code></p>
                     
                   </section>
@@ -502,7 +502,7 @@ Docker version 17.03.1-ce, build c6d412e</code></pre>
                       
                       
                       <ul style="width:70%;">
-                      <li>Calling any command with <code style="color:red;">--help</code> displays some docs</li>
+                      <li class="fragment" data-fragment-index="0">Calling any command with <code style="color:red;">--help</code> displays some docs</li>
                       </ul>
                     </section>
                     
@@ -807,20 +807,23 @@ stopped.
                   <section>
                     <h4>Exercise: Stop the <code>static-site</code> container</h4>
 
-                    <ul>
+                    <ul style="width:100%;">
                       <li class="fragment" data-fragment-index="0">
                         You actually have a couple options:
                         <ul>
-                          <li class="fragment" data-fragment-index="1">use the name you gave to the container</li>
+                          <li class="fragment" data-fragment-index="1">use the name you gave to the container
+                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
+                          </li>
                           <li class="fragment" data-fragment-index="2">use the
-                              <code>containerID</code> from <code>docker
+                              <code>CONTAINERID</code> from <code>docker
                                   ps</code> output (will depend on your
-                              environment)</li>
+                              environment)
+                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
+                          
+                          </li>
                         </ul>
                       </li>
                     </ul>
-                    <pre class="fragment" data-fragment-index="1"><code>$ docker stop static-site</code></pre>
-                    <pre class="fragment" data-fragment-index="2"><code>$ docker stop 25eff330a4e4</code></pre>
 
                   </section>
                   
@@ -1161,10 +1164,10 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                           <tr><td>0 </td>         <td>Base Ubuntu OS</td></tr>
                       </table>
                   </section>
-                  <section>
+                  <!--<section>
                       <h3>Image layers</h3>
                       <img src="img/container-layers.jpg"/>
-                  </section>
+                  </section>-->
                   <section>
                       <h3>Sharing image layers</h3>
                       <ul>
@@ -1177,6 +1180,42 @@ See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online 
                               </ul>
                           </li>
                       </ul>
+                  </section>
+                  <section>
+                      <h3>Sharing image layers</h3>
+                          <div class="fragment" data-fragment-index="0"
+                              style="width:50%;float:left;">
+                              <p>
+                              Two separate images
+                              </p>
+                              <img  src="img/compare-images.svg"/>
+                          </div>
+
+                          <div class="fragment" data-fragment-index="1"
+                              style="width:50%;float:left;">
+                              <p>
+                              Reality: common layers shared
+                              </p>
+                              <img   src="img/image-share-layers.svg"/>
+                          </div>
+                  </section>
+
+                  <section>
+                    <h3>View image layers</h3>
+                    <h4><code>docker history </code><code style="color:red;">&lt;image&gt;</code></h4>
+                    <pre  class="fragment" data-fragment-index="0"
+                    style="width:100%"><code>$ docker history heytrav/docker-introduction-slides
+                    
+IMAGE          CREATED       CREATED BY             SIZE                COMMENT
+e72084f25e08   2 months ago  /bin/sh -c #(nop)      0B                  
+&lt;missing&gt;      2 months ago  /bin/sh -c #(no        0B                  
+   .
+   .
+&lt;missing&gt;      9 months ago  /bin/sh -c #(n         0B                  
+&lt;missing&gt;      9 months ago  /bin/sh -c #(n         3.97MB</code></pre>
+                        
+   
+                    
                   </section>
                   <section>
                       <h3>
