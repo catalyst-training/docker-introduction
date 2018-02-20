@@ -2270,27 +2270,6 @@ href-counter-multi  latest        10.3MB</code></pre>
                         
 
                     </section>
-                    <!--<section>
-                        <h3>ENTRYPOINT</h3>
-                        <pre><code class="dockerfile">ENTRYPOINT ["python", "manage.py"]
-CMD ["test"]</code></pre>
-                        <ul>
-                            <li>When used in conjunction with CMD:
-                                <ul><li>Set base command with ENTRYPOINT</li>
-                                    <li>Use CMD to set default argument</li> </ul></li> 
-                            <li>Will just run tests when container is run with no params <ul><li><code>docker run myimage</code></li></ul></li>
-                            <li>Can override by passing argument to container
-                                <ul><li><code>docker run myimage runserver</code></li></ul></li>
-                            <li>For more see <a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Dockerfile Best practices</a></li>
-                        </ul>
-                        <aside class="notes">
-                            <ul>
-                                <li>Use CMD when you want the user to have the choice of commands to run</li>
-                                <li>Use ENTRYPOINT when you want to wrap a command</li>
-                                <li>ENTRYPOINT can be overridden with the --entrypoint flag</li>
-                            </ul>
-                        </aside>
-                    </section>-->
 
                 </section>
                 <section>
@@ -2619,15 +2598,7 @@ $ cd example-voting-app</code></pre>
                               </div>
                   </section>
 
-                  <section>
-                    <h3>
-                      Build vote app components
-                    </h3>
-                    <pre class="fragment" data-fragment-index="0"><code>$ docker build -t vote vote</code></pre>
-                    <pre class="fragment" data-fragment-index="1"><code>$ docker build -t result result</code></pre>
-                    <pre class="fragment" data-fragment-index="2"><code>$ docker build -t worker worker</code></pre>
-                    <pre class="fragment" data-fragment-index="3"><code>$ docker image ls</code></pre>
-                  </section>
+                  
                 <section>
                     <h3>Docker Compose Example</h3>
                     <pre><code>$ cd example-voting-app
