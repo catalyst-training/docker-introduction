@@ -1,750 +1,994 @@
 {
+  "height": 25,
+  "command": null,
+  "version": 1,
+  "title": "scale compose service",
+  "env": {
+    "SHELL": "/bin/zsh",
+    "TERM": "screen-256color"
+  },
   "stdout": [
     [
-      0.644055,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                                   \r \r"
+      0.668783,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
     ],
     [
-      0.054409,
-      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m\u001b[39m \u001b[33m\u001b[39m\r\n"
+      3.4e-05,
+      "\u001bk../mycomposeapp\u001b\\"
     ],
     [
-      3.1e-05,
-      "\u001bk..le-voting-app\u001b\\\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[193C\u001b[90m\u001b[39m\u001b[193D"
-    ],
-    [
-      1.5e-05,
-      "\u001b[?1h\u001b="
-    ],
-    [
-      4e-05,
-      "\u001b[?2004h"
-    ],
-    [
-      0.767911,
-      "d"
-    ],
-    [
-      0.183755,
-      "\bdo"
-    ],
-    [
-      0.169245,
-      "c"
-    ],
-    [
-      0.094899,
-      "k"
-    ],
-    [
-      0.177647,
-      "e"
-    ],
-    [
-      0.12475,
-      "r"
-    ],
-    [
-      0.169913,
-      " "
-    ],
-    [
-      0.175486,
-      "p"
-    ],
-    [
-      0.187442,
-      "s"
-    ],
-    [
-      0.716967,
-      "\u001b[?1l\u001b>"
-    ],
-    [
-      3.3e-05,
-      "\u001b[?2004l\r\r\n"
-    ],
-    [
-      0.000944,
-      "\u001bkdocker\u001b\\"
-    ],
-    [
-      0.017072,
-      "CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                                          NAMES\r\n"
-    ],
-    [
-      4e-05,
-      "215ebf4f9d52        postgres:9.4                         \"docker-entrypoint...\"   4 minutes ago       Up 4 minutes        5432/tcp                                       db\r\n8b60a02a898f        examplevotingapp_vote                \"python app.py\"          4 minutes ago       Up 4 minutes        0.0.0.0:5000->80/tcp        "
-    ],
-    [
-      2e-05,
-      "                   examplevotingapp_vote_1\r\nbc4de04d5264        redis:alpine                         \"docker-entrypoint...\"   4 minutes ago       Up 4 minutes        "
-    ],
-    [
-      1.6e-05,
-      "0.0.0.0:32779->6379/tcp                        redis\r\n3e264f1af5a9        examplevotingapp_worker              \"/bin/sh -c 'dotne...\"   "
-    ],
-    [
-      1.2e-05,
-      "4 minutes ago       Up 4 minutes                                        "
-    ],
-    [
-      1.4e-05,
-      "               examplevotingapp_worker_1\r\n00802d4f0393        "
-    ],
-    [
-      1.6e-05,
-      "examplevotingapp_result              \"nodemon --debug s...\"   4 minutes ago       Up 4 minutes        0.0.0.0:5858->5858/tcp, 0.0.0.0:5001->80/tcp   examplevotingapp_result_1"
-    ],
-    [
-      1.5e-05,
-      "\r\n05e6a293c67b        heytrav/docker-introduction-slides   \"/usr/local/bin/du...\"   15 hours ago        Up 15 hours"
-    ],
-    [
-      1.3e-05,
-      "         0.0.0.0:8000->8000/tcp                         docker-intro"
-    ],
-    [
-      1.3e-05,
-      "\r\n"
-    ],
-    [
-      0.001217,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                                   \r \r"
-    ],
-    [
-      0.030517,
-      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
-    ],
-    [
-      3.2e-05,
-      "\u001bk..le-voting-app\u001b\\"
-    ],
-    [
-      0.000686,
-      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[193C\u001b[90m\u001b[39m\u001b[193D"
-    ],
-    [
-      2.7e-05,
-      "\u001b[?1h\u001b="
-    ],
-    [
-      3.5e-05,
-      "\u001b[?2004h"
-    ],
-    [
-      0.962887,
-      "d"
-    ],
-    [
-      0.144652,
-      "\bdo"
-    ],
-    [
-      0.125513,
-      "c"
-    ],
-    [
-      0.09056,
-      "k"
-    ],
-    [
-      0.159797,
-      "e"
-    ],
-    [
-      0.159209,
-      "r"
-    ],
-    [
-      0.200588,
-      "-"
-    ],
-    [
-      0.287523,
-      "c"
-    ],
-    [
-      0.119955,
-      "o"
-    ],
-    [
-      0.233793,
-      "m"
-    ],
-    [
-      0.212045,
-      "p"
-    ],
-    [
-      0.186117,
-      "o"
-    ],
-    [
-      0.204599,
-      "s"
-    ],
-    [
-      0.192226,
-      "e"
-    ],
-    [
-      0.178774,
-      " "
-    ],
-    [
-      0.215291,
-      "u"
-    ],
-    [
-      0.178084,
-      "p"
-    ],
-    [
-      0.113074,
-      " "
-    ],
-    [
-      0.290248,
-      "-"
-    ],
-    [
-      0.128117,
-      "d"
-    ],
-    [
-      0.07671,
-      " "
-    ],
-    [
-      0.474941,
-      "-"
-    ],
-    [
-      0.189183,
-      "-"
-    ],
-    [
-      0.184723,
-      "s"
-    ],
-    [
-      0.229689,
-      "c"
-    ],
-    [
-      0.253535,
-      "a"
-    ],
-    [
-      0.118419,
-      "l"
-    ],
-    [
-      0.283623,
-      "e"
-    ],
-    [
-      0.394289,
-      " "
-    ],
-    [
-      0.286359,
-      "w"
-    ],
-    [
-      0.153256,
-      "o"
-    ],
-    [
-      0.16078,
-      "r"
-    ],
-    [
-      0.134503,
-      "k"
-    ],
-    [
-      0.144634,
-      "e"
-    ],
-    [
-      0.133545,
-      "r"
-    ],
-    [
-      0.197004,
-      "="
-    ],
-    [
-      0.190758,
-      "3\r\n"
-    ],
-    [
-      1.110966,
-      "redis is up-to-date\r\n"
-    ],
-    [
-      0.000916,
-      "Starting examplevotingapp_worker_1 ... \r"
-    ],
-    [
-      0.000192,
-      "\r\n"
-    ],
-    [
-      0.001964,
-      "\u001b[1A\u001b[2K\r"
-    ],
-    [
-      3.9e-05,
-      "Starting examplevotingapp_worker_1 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
-    ],
-    [
-      0.001279,
-      "examplevotingapp_vote_1 is up-to-date\r\n"
-    ],
-    [
-      0.001817,
-      "examplevotingapp_result_1 is up-to-date"
-    ],
-    [
-      0.000114,
-      "\r\n"
-    ],
-    [
-      0.000843,
-      "db is up-to-date\r\n"
-    ],
-    [
-      0.002626,
-      "Creating examplevotingapp_worker_2 ... \r\r\n"
-    ],
-    [
-      0.00011,
-      "Creating examplevotingapp_worker_3 ... \r\r\n"
-    ],
-    [
-      0.010196,
-      "Creating examplevotingapp_worker_3"
-    ],
-    [
-      6.8e-05,
-      "\r\n"
-    ],
-    [
-      0.00491,
-      "Creating examplevotingapp_worker_2\r\n"
-    ],
-    [
-      0.652976,
-      "\u001b[2A\u001b[2K\rCreating examplevotingapp_worker_2 ... \u001b[32mdone\u001b[0m\r\u001b[2B"
-    ],
-    [
-      0.035934,
-      "\u001b[1A\u001b[2K\rCreating examplevotingapp_worker_3 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
-    ],
-    [
-      0.039067,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                                   \r \r"
-    ],
-    [
-      0.049622,
-      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
-    ],
-    [
-      0.000114,
-      "\u001bk..le-voting-app\u001b\\"
-    ],
-    [
-      2.1e-05,
-      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[193C\u001b[90m\u001b[39m\u001b[193D"
-    ],
-    [
-      2.9e-05,
-      "\u001b[?1h\u001b="
-    ],
-    [
-      2.6e-05,
-      "\u001b[?2004h"
-    ],
-    [
-      1.401647,
-      "d"
-    ],
-    [
-      0.169615,
-      "\bdo"
-    ],
-    [
-      0.101119,
-      "c"
-    ],
-    [
-      0.095505,
-      "k"
-    ],
-    [
-      0.15438,
-      "e"
-    ],
-    [
-      0.12445,
-      "r"
-    ],
-    [
-      0.119932,
-      " "
-    ],
-    [
-      0.241527,
-      "p"
-    ],
-    [
-      0.165839,
-      "s"
-    ],
-    [
-      1.354645,
-      "\u001b[?1l\u001b>"
-    ],
-    [
-      0.000106,
-      "\u001b[?2004l\r\r\n"
-    ],
-    [
-      0.002121,
-      "\u001bk\u001b\\"
-    ],
-    [
-      0.020703,
-      "CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                                          NAMES\r\n420c73d2d874        examplevotingapp_worker              \"/bin/sh -c 'dotne...\"   5 seconds ago       Up 4 seconds                                                       examplevotingapp_worker_3\r\n7584903592d4        examplevotingapp_worker              \"/bin/sh -c 'dotne...\"   5 seconds ago       Up 4 seconds                                                       examplevotingapp_worker_2\r\n215ebf4f9d52        postgres:9.4                         \"docker-entrypoint...\"   "
-    ],
-    [
-      0.000122,
-      "5 minutes ago       Up 5 minutes        5432/tcp                                       db\r\n8b60a02a898f        examplevotingapp_vote                \"python app.py\"          5 minutes ago       Up 5 minutes        0.0.0.0:5000->80/tcp                           examplevotingapp_vote_1\r\nbc4de04d5264        redis:alpine                         \"docker-entrypoint...\"   5 minutes ago       Up 5 minutes        0.0.0.0:32779->6379/tcp                        redis\r\n3e264f1af5a9        examplevotingapp_worker              \"/bin/sh -c 'dotne...\"   5 minutes ago       Up 5 minutes                                                       examplevotingapp_worker_1\r\n00802d4f0393        examplevotingapp_result              \"nodemon --debug s...\"   5 minutes ago       Up 5 minutes        0.0.0.0:5858->5858/tcp, 0.0.0.0:5001->80/tcp   examplevotingapp_result_1\r\n05e6a293c67b        heytrav/docker-introduction-slides   \"/usr/local/bin/du...\"   15 hours ago        Up 15 hours         0.0.0.0:8000->8000/tcp                         do"
-    ],
-    [
-      1.9e-05,
-      "cker-intro\r\n"
-    ],
-    [
-      0.003674,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                                   \r \r"
-    ],
-    [
-      0.076051,
-      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m\u001b[39m \u001b[33m\u001b[39m\r\n"
-    ],
-    [
-      0.000117,
-      "\u001bk..le-voting-app\u001b\\"
-    ],
-    [
-      0.000101,
-      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m "
-    ],
-    [
-      3.3e-05,
-      "\u001b[K\u001b[193C\u001b[90m\u001b[39m\u001b[193D"
-    ],
-    [
-      1.4e-05,
-      "\u001b[?1h\u001b="
-    ],
-    [
-      4.7e-05,
-      "\u001b[?2004h"
-    ],
-    [
-      4.473414,
-      "d"
-    ],
-    [
-      0.152879,
-      "\bdo"
-    ],
-    [
-      0.200007,
-      "c"
-    ],
-    [
-      0.088738,
-      "k"
-    ],
-    [
-      0.175391,
-      "e"
-    ],
-    [
-      0.124385,
-      "r"
-    ],
-    [
-      0.201495,
-      "-"
-    ],
-    [
-      0.187271,
-      "c"
-    ],
-    [
-      0.097816,
-      "o"
-    ],
-    [
-      0.231049,
-      "m"
-    ],
-    [
-      0.177191,
-      "p"
-    ],
-    [
-      0.052489,
-      "o"
-    ],
-    [
-      0.230422,
-      "s"
-    ],
-    [
-      0.163191,
-      "e"
-    ],
-    [
-      0.13781,
-      " "
-    ],
-    [
-      0.394448,
-      "u"
-    ],
-    [
-      0.199031,
-      "p"
-    ],
-    [
-      0.122322,
-      " "
-    ],
-    [
-      0.205122,
-      "-"
-    ],
-    [
-      0.119189,
-      "d"
-    ],
-    [
-      0.058584,
-      " "
-    ],
-    [
-      0.507092,
-      "-"
-    ],
-    [
-      0.169808,
-      "-"
-    ],
-    [
-      0.121356,
-      "s"
-    ],
-    [
-      0.20569,
-      "c"
-    ],
-    [
-      0.210849,
-      "a"
-    ],
-    [
-      0.120942,
-      "l"
-    ],
-    [
-      0.106655,
-      "e"
-    ],
-    [
-      0.175485,
-      " "
-    ],
-    [
-      0.130705,
-      "w"
-    ],
-    [
-      0.120337,
-      "o"
-    ],
-    [
-      0.102242,
-      "r"
-    ],
-    [
-      0.140368,
-      "k"
-    ],
-    [
-      0.11282,
-      "e"
-    ],
-    [
-      0.113113,
-      "r"
-    ],
-    [
-      0.261355,
-      "="
-    ],
-    [
-      0.305248,
-      "1"
-    ],
-    [
-      1.604876,
-      "\u001b[?1l\u001b>\u001b[?2004l\r\r\n"
-    ],
-    [
-      1.205064,
-      "examplevotingapp_vote_1 is up-to-date\r\n"
-    ],
-    [
-      0.000893,
-      "redis is up-to-date\r\n"
-    ],
-    [
-      0.00039,
-      "Stopping and removing examplevotingapp_worker_2 ... \r\r\n"
-    ],
-    [
-      0.000371,
-      "db is up-to-date\r\n"
-    ],
-    [
-      0.000545,
-      "Stopping and removing examplevotingapp_worker_3 ... \r\r\nexamplevotingapp_result_1 is up-to-date\r\n"
-    ],
-    [
-      10.50484,
-      "\u001b[1A\u001b[2K\rStopping and removing examplevotingapp_worker_3 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
-    ],
-    [
-      0.000144,
-      "\u001b[2A"
-    ],
-    [
-      1.8e-05,
-      "\u001b[2K\rStopping and removing examplevotingapp_worker_2 ... \u001b[32mdone\u001b[0m\r\u001b[2B"
-    ],
-    [
-      0.000129,
-      "Starting examplevotingapp_worker_1 ... \r\r\n"
-    ],
-    [
-      0.001721,
-      "\u001b[1A\u001b[2K\rStarting examplevotingapp_worker_1 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
-    ],
-    [
-      0.059252,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                                   \r \r"
-    ],
-    [
-      0.02954,
-      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m12s\u001b[39m\r\n\u001bk..le-voting-app\u001b\\\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[193C\u001b[90m\u001b[39m\u001b[193D\u001b[?1h\u001b=\u001b[?2004h"
-    ],
-    [
-      0.837193,
-      "d"
-    ],
-    [
-      0.13661,
-      "\bdo"
-    ],
-    [
-      0.110511,
-      "c"
-    ],
-    [
-      0.098876,
-      "k"
-    ],
-    [
-      0.585252,
-      "e"
-    ],
-    [
-      0.133632,
-      "r"
-    ],
-    [
-      0.142484,
-      " "
-    ],
-    [
-      0.543074,
-      "p"
-    ],
-    [
-      0.182547,
-      "s"
-    ],
-    [
-      1.103876,
-      "\u001b[?1l\u001b>"
+      0.020821,
+      "\r\u001b[31m»\u001b[00m \u001b[K"
     ],
     [
       2.5e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      0.532458,
+      "d"
+    ],
+    [
+      0.128929,
+      "\bdo"
+    ],
+    [
+      0.135583,
+      "c"
+    ],
+    [
+      0.071798,
+      "k"
+    ],
+    [
+      0.166858,
+      "e"
+    ],
+    [
+      0.111374,
+      "r"
+    ],
+    [
+      0.095819,
+      " "
+    ],
+    [
+      0.18593,
+      "p"
+    ],
+    [
+      0.136178,
+      "s"
+    ],
+    [
+      0.295947,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      6.8e-05,
       "\u001b[?2004l\r\r\n"
     ],
     [
-      0.00327,
-      "\u001bkdocker\u001b\\"
+      0.059833,
+      "CONTAINER ID"
     ],
     [
-      0.019838,
-      "CONTAINER ID        IMAGE                                COMMAND                  CREATED"
+      4.9e-05,
+      "        "
     ],
     [
-      4.1e-05,
-      "             STATUS              PORTS                                          NAMES\r\n215ebf4f9d52        postgres:9.4                         \"docker-entrypoint...\"   5 minutes ago       Up 5 minutes        5432/tcp                                       db\r\n8b60a02a898f        examplevotingapp_vote                \"python app.py\"        "
+      3.3e-05,
+      "IMAGE"
     ],
     [
-      0.000417,
-      "  5 minutes ago       Up 5 minutes        0.0.0.0:5000->80/tcp                           examplevotingapp_vote_1\r\nbc4de04d5264        redis:alpine                         \"docker-entrypoint...\"   5 minutes ago       Up 5 minutes        0.0.0.0:32779->6379/tcp                        redis\r\n3e264f1af5a9        examplevotingapp_worker              \"/bin/sh -c 'dotne...\"   5 minutes ago       Up 5 minutes                                                       examplevotingapp_worker_1\r\n00802d4f0393        examplevotingapp_result              \"nodemon --debug s...\"   5 minutes ago       Up 5 minutes        0.0.0.0:5858->5858/tcp, 0.0.0.0:5001->80/tcp   examplevotingapp_result_1\r\n05e6a293c67b        heytrav/docker-introduction-slides   \"/usr/local/bin/du...\"   15 hours ago        Up 15 hours         0.0.0.0:8000->8000/tcp                         docker-intro\r\n"
+      3.3e-05,
+      "        "
     ],
     [
-      0.005911,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                                   \r \r"
+      3.1e-05,
+      "        "
     ],
     [
-      0.072724,
-      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+      3e-05,
+      "        "
     ],
     [
-      0.000201,
-      "\u001bk..le-voting-app\u001b\\"
+      3.2e-05,
+      "        "
+    ],
+    [
+      2.9e-05,
+      "COMMAND"
+    ],
+    [
+      2.9e-05,
+      "        "
+    ],
+    [
+      2.8e-05,
+      "        "
+    ],
+    [
+      3e-05,
+      "  "
+    ],
+    [
+      3.2e-05,
+      "CREATED"
+    ],
+    [
+      3e-05,
+      "        "
+    ],
+    [
+      2.9e-05,
+      "     "
+    ],
+    [
+      2.9e-05,
+      "STATUS"
+    ],
+    [
+      3.6e-05,
+      "              PORTS"
+    ],
+    [
+      2e-05,
+      "                    NAMES\r\n"
+    ],
+    [
+      4.7e-05,
+      "b11b11d8d02c"
+    ],
+    [
+      2.7e-05,
+      "        "
+    ],
+    [
+      2.9e-05,
+      "redis:alpine"
+    ],
+    [
+      3e-05,
+      "        "
+    ],
+    [
+      2.9e-05,
+      "        "
+    ],
+    [
+      7e-05,
+      "        "
+    ],
+    [
+      3.3e-05,
+      " "
+    ],
+    [
+      3.5e-05,
+      "\"docker-entrypoint.s…\""
+    ],
+    [
+      2.9e-05,
+      "   "
+    ],
+    [
+      2.9e-05,
+      "11 minutes ago"
+    ],
+    [
+      3e-05,
+      "      "
+    ],
+    [
+      2.6e-05,
+      "Up 10 minutes"
+    ],
+    [
+      0.00013,
+      "                                mycomposeapp_redis_1\r\n869f3b23c67c        mycomposeapp_web                     \"python app.py\"          "
+    ],
+    [
+      2.7e-05,
+      "11 minutes ago      Up 10 minutes                       "
+    ],
+    [
+      0.000235,
+      "         mycomposeapp_web_1\r\nee70f4a2c2e2"
+    ],
+    [
+      3.5e-05,
+      "        heytrav/docker-introduction-slides   \"/usr/local/bin/dumb…\"   2 hours ago         Up 2 hours          0.0.0.0:8000->8000/tcp   docker-intro\r\n"
+    ],
+    [
+      0.00153,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r\u001bk../mycomposeapp\u001b\\"
+    ],
+    [
+      0.02241,
+      "\r\u001b[31m»\u001b[00m \u001b[K"
+    ],
+    [
+      2.8e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.112943,
+      "d"
+    ],
+    [
+      0.167815,
+      "\bdo"
+    ],
+    [
+      0.109844,
+      "c"
+    ],
+    [
+      0.104034,
+      "k"
+    ],
+    [
+      0.178058,
+      "e"
+    ],
+    [
+      0.125744,
+      "r"
+    ],
+    [
+      0.384393,
+      "-"
+    ],
+    [
+      0.186012,
+      "c"
+    ],
+    [
+      0.112571,
+      "o"
+    ],
+    [
+      0.173395,
+      "m"
+    ],
+    [
+      0.218628,
+      "p"
+    ],
+    [
+      0.607437,
+      "o"
+    ],
+    [
+      0.335551,
+      "s"
+    ],
+    [
+      0.394448,
+      "e"
+    ],
+    [
+      0.196231,
+      " "
+    ],
+    [
+      0.199512,
+      "u"
+    ],
+    [
+      0.266881,
+      "p"
+    ],
+    [
+      0.134805,
+      " "
+    ],
+    [
+      0.287001,
+      "-"
+    ],
+    [
+      0.169293,
+      "d"
+    ],
+    [
+      0.119665,
+      " "
+    ],
+    [
+      0.215522,
+      "-"
+    ],
+    [
+      0.152619,
+      "-"
+    ],
+    [
+      0.104407,
+      "s"
+    ],
+    [
+      0.216048,
+      "c"
+    ],
+    [
+      0.208037,
+      "a"
+    ],
+    [
+      0.125275,
+      "l"
+    ],
+    [
+      0.071311,
+      "e"
+    ],
+    [
+      0.163422,
+      " "
+    ],
+    [
+      0.149445,
+      "r"
+    ],
+    [
+      0.106698,
+      "e"
+    ],
+    [
+      0.231007,
+      "d"
+    ],
+    [
+      0.102615,
+      "i"
+    ],
+    [
+      0.079916,
+      "s"
+    ],
+    [
+      0.296584,
+      "="
+    ],
+    [
+      0.184771,
+      "4"
+    ],
+    [
+      0.423419,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      4.7e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.608976,
+      "mycomposeapp_web_1 is up-to-date\r\n"
+    ],
+    [
+      0.000368,
+      "Starting mycomposeapp_redis_1 ... \r\r\n"
+    ],
+    [
+      0.000486,
+      "\u001b[1A\u001b[2K\rStarting mycomposeapp_redis_1 ... \u001b[32mdone\u001b[0m\r"
     ],
     [
       2.2e-05,
-      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[193C\u001b[90m\u001b[39m\u001b[193D\u001b[?1h\u001b=\u001b[?2004h"
+      "\u001b[1B"
     ],
     [
-      1.365358,
+      0.003597,
+      "Creating mycomposeapp_redis_2 ... \r\r\nCreating mycomposeapp_redis_3 ... \r\r\nCreating mycomposeapp_redis_4 ... \r\r\n"
+    ],
+    [
+      0.008657,
+      "Creating mycomposeapp_redis_2\r\n"
+    ],
+    [
+      0.001717,
+      "Creating mycomposeapp_redis_4\r\n"
+    ],
+    [
+      0.000535,
+      "Creating mycomposeapp_redis_3\r\n"
+    ],
+    [
+      0.59493,
+      "\u001b[3A\u001b[2K\rCreating mycomposeapp_redis_2 ... \u001b[32mdone\u001b[0m\r\u001b[3B"
+    ],
+    [
+      0.216867,
+      "\u001b[2A\u001b[2K\rCreating mycomposeapp_redis_3 ... \u001b[32mdone\u001b[0m\r"
+    ],
+    [
+      6.2e-05,
+      "\u001b[2B"
+    ],
+    [
+      0.907305,
+      "\u001b[1A\u001b[2K\rCreating mycomposeapp_redis_4 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
+    ],
+    [
+      0.029349,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.000151,
+      "\u001bk../mycomposeapp\u001b\\"
+    ],
+    [
+      0.008342,
+      "\r\u001b[31m»\u001b[00m \u001b[K\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.527822,
+      "d"
+    ],
+    [
+      0.131346,
+      "\bdo"
+    ],
+    [
+      0.111229,
+      "c"
+    ],
+    [
+      0.117046,
+      "k"
+    ],
+    [
+      0.088818,
+      "e"
+    ],
+    [
+      0.119968,
+      "r"
+    ],
+    [
+      0.069737,
+      " "
+    ],
+    [
+      0.114015,
+      "p"
+    ],
+    [
+      0.130602,
+      "s"
+    ],
+    [
+      0.232228,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      7.7e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.100415,
+      "CONTAINER ID"
+    ],
+    [
+      0.000108,
+      "        "
+    ],
+    [
+      0.000201,
+      "IMAGE"
+    ],
+    [
+      0.000183,
+      "        "
+    ],
+    [
+      0.000183,
+      "        "
+    ],
+    [
+      0.000184,
+      "        "
+    ],
+    [
+      0.000158,
+      "        "
+    ],
+    [
+      5e-05,
+      "COMMAND"
+    ],
+    [
+      4.9e-05,
+      "        "
+    ],
+    [
+      5e-05,
+      "        "
+    ],
+    [
+      0.000198,
+      "  "
+    ],
+    [
+      4.2e-05,
+      "CREATED"
+    ],
+    [
+      4.3e-05,
+      "        "
+    ],
+    [
+      3.4e-05,
+      "     "
+    ],
+    [
+      4.1e-05,
+      "STATUS"
+    ],
+    [
+      3.5e-05,
+      "        "
+    ],
+    [
+      4.1e-05,
+      "      "
+    ],
+    [
+      0.000208,
+      "PORTS                    NAMES\r\nd434da376ace        redis:alpine                         \"docker-entrypoint.s…\""
+    ],
+    [
+      2.6e-05,
+      "   5 seconds ago       Up 3 seconds        6379/tcp                "
+    ],
+    [
+      1.8e-05,
+      " mycomposeapp_redis_3"
+    ],
+    [
+      1.6e-05,
+      "\r\ncf0384394079"
+    ],
+    [
+      1.6e-05,
+      "        redis:alpine"
+    ],
+    [
+      0.00042,
+      "                "
+    ],
+    [
+      3.3e-05,
+      "         \"docker-entrypoint.s…\"   5 seconds ago       Up 2 seconds        6379/tcp                 mycomposeapp_redis_4\r\nbeb7167df3fb        redis:alpine                         \"docker-entrypoint.s…\"   5 seconds ago       Up 3 seconds        6379/tcp                 mycomposeapp_redis_2\r\nb11b11d8d02c        redis:alpine                         \"docker-entrypoint.s…\"   12 minutes ago      Up 10 minutes                                mycomposeapp_redis_1\r\n869f3b23c67c        mycomposeapp_web                     \"python app.py\"          12 minutes ago      Up 10 minutes                                "
+    ],
+    [
+      2.3e-05,
+      "mycomposeapp_web_1\r\nee70f4a2c2e2        heytrav/docker-introduction-slides"
+    ],
+    [
+      4e-05,
+      "   \"/usr/local/bin/dumb…\""
+    ],
+    [
+      2.9e-05,
+      "   2 hours ago         Up 2 hours          0.0.0.0:8000->8000/tcp"
+    ],
+    [
+      6.2e-05,
+      "   docker-intro\r\n"
+    ],
+    [
+      0.00246,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.000129,
+      "\u001bk../mycomposeapp\u001b\\"
+    ],
+    [
+      0.016482,
+      "\r\u001b[31m»\u001b[00m \u001b[K\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      2.233865,
+      "d"
+    ],
+    [
+      0.15213,
+      "\bdo"
+    ],
+    [
+      0.129904,
+      "c"
+    ],
+    [
+      0.088587,
+      "k"
+    ],
+    [
+      0.151189,
+      "e"
+    ],
+    [
+      0.129064,
+      "r"
+    ],
+    [
+      0.366485,
+      "-"
+    ],
+    [
+      0.222588,
+      "c"
+    ],
+    [
+      0.106281,
+      "o"
+    ],
+    [
+      0.173548,
+      "m"
+    ],
+    [
+      0.354304,
+      "p"
+    ],
+    [
+      0.400913,
+      "o"
+    ],
+    [
+      0.187805,
+      "s"
+    ],
+    [
+      0.178882,
+      "e"
+    ],
+    [
+      0.151015,
+      " "
+    ],
+    [
+      0.201457,
+      "u"
+    ],
+    [
+      0.179507,
+      "p"
+    ],
+    [
+      0.164215,
+      " "
+    ],
+    [
+      0.26239,
+      "-"
+    ],
+    [
+      0.169737,
+      "d"
+    ],
+    [
+      0.111655,
+      " "
+    ],
+    [
+      0.256301,
+      "-"
+    ],
+    [
+      0.173673,
+      "-"
+    ],
+    [
+      0.192421,
+      "s"
+    ],
+    [
+      0.265558,
+      "c"
+    ],
+    [
+      0.205263,
+      "a"
+    ],
+    [
+      0.131036,
+      "l"
+    ],
+    [
+      0.073384,
+      "e"
+    ],
+    [
+      0.207065,
+      " "
+    ],
+    [
+      0.695699,
+      "r"
+    ],
+    [
+      0.071752,
+      "e"
+    ],
+    [
+      0.256137,
+      "d"
+    ],
+    [
+      0.592282,
+      "i"
+    ],
+    [
+      0.135659,
+      "s"
+    ],
+    [
+      0.286666,
+      "="
+    ],
+    [
+      0.249418,
+      "1"
+    ],
+    [
+      0.49846,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      0.000335,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.634465,
+      "mycomposeapp_web_1 is up-to-date\r\n"
+    ],
+    [
+      0.000215,
+      "Stopping and removing mycomposeapp_redis_2 ... \r\r\n"
+    ],
+    [
+      1.5e-05,
+      "Stopping and removing mycomposeapp_redis_3 ... \r\r\n"
+    ],
+    [
+      0.000101,
+      "Stopping and removing mycomposeapp_redis_4 ... \r\r\n"
+    ],
+    [
+      0.512544,
+      "\u001b[3A\u001b[2K\rStopping and removing mycomposeapp_redis_2 ... \u001b[32mdone\u001b[0m\r\u001b[3B"
+    ],
+    [
+      0.063957,
+      "\u001b[2A\u001b[2K\rStopping and removing mycomposeapp_redis_3 ... \u001b[32mdone\u001b[0m\r\u001b[2B"
+    ],
+    [
+      0.064231,
+      "\u001b[1A\u001b[2K\rStopping and removing mycomposeapp_redis_4 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
+    ],
+    [
+      0.000289,
+      "Starting mycomposeapp_redis_1 ... \r\r\n"
+    ],
+    [
+      0.001061,
+      "\u001b[1A\u001b[2K\rStarting mycomposeapp_redis_1 ... \u001b[32mdone\u001b[0m\r\u001b[1B"
+    ],
+    [
+      0.077557,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.000254,
+      "\u001bk../mycomposeapp\u001b\\"
+    ],
+    [
+      0.037847,
+      "\r\u001b[31m»\u001b[00m "
+    ],
+    [
+      0.000156,
+      "\u001b[K"
+    ],
+    [
+      0.000231,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      0.000213,
+      "\u001b[?2004h"
+    ],
+    [
+      0.840134,
+      "d"
+    ],
+    [
+      0.15423,
+      "\bdo"
+    ],
+    [
+      0.15162,
+      "c"
+    ],
+    [
+      0.080144,
+      "k"
+    ],
+    [
+      0.132877,
+      "e"
+    ],
+    [
+      0.123176,
+      "r"
+    ],
+    [
+      0.085095,
+      " "
+    ],
+    [
+      0.137522,
+      "p"
+    ],
+    [
+      0.10519,
+      "s"
+    ],
+    [
+      0.255762,
+      "\u001b[?1l\u001b>\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.001739,
+      "\u001bkdocker\u001b\\"
+    ],
+    [
+      0.101529,
+      "CONTAINER ID        IMAGE                                COMMAND"
+    ],
+    [
+      3.2e-05,
+      "                  "
+    ],
+    [
+      0.000273,
+      "CREATED             STATUS              PORTS                    NAMES\r\n"
+    ],
+    [
+      2.6e-05,
+      "b11b11d8d02c        "
+    ],
+    [
+      0.000144,
+      "redis:alpine"
+    ],
+    [
+      4.2e-05,
+      "        "
+    ],
+    [
+      5e-05,
+      "        "
+    ],
+    [
+      3.9e-05,
+      "        "
+    ],
+    [
+      3.5e-05,
+      " "
+    ],
+    [
+      4.1e-05,
+      "\"docker-entrypoint.s…\""
+    ],
+    [
+      4.1e-05,
+      "   "
+    ],
+    [
+      3.5e-05,
+      "12 minutes ago"
+    ],
+    [
+      3.6e-05,
+      "      "
+    ],
+    [
+      3.9e-05,
+      "Up 10 minutes"
+    ],
+    [
+      3.6e-05,
+      "       "
+    ],
+    [
+      3.8e-05,
+      "        "
+    ],
+    [
+      3.5e-05,
+      "        "
+    ],
+    [
+      3.5e-05,
+      "        "
+    ],
+    [
+      3.7e-05,
+      " "
+    ],
+    [
+      3.6e-05,
+      "mycomposeapp_redis_1"
+    ],
+    [
+      7.9e-05,
+      "\r\n"
+    ],
+    [
+      4.1e-05,
+      "869f3b23c67c"
+    ],
+    [
+      3.8e-05,
+      "        "
+    ],
+    [
+      8.3e-05,
+      "mycomposeapp_web                     \"python app.py\"          12 minutes ago      Up 10 minutes       "
+    ],
+    [
+      3.5e-05,
+      "                         mycomposeapp_web_1"
+    ],
+    [
+      1.8e-05,
+      "\r\nee70f4a2c2e2        heytrav/docker-introduction-slides   \"/usr/local/bin/dumb…\"   "
+    ],
+    [
+      2.1e-05,
+      "2 hours ago        "
+    ],
+    [
+      1.6e-05,
+      " Up 2 hours          0.0.0.0:8000->8000/tcp"
+    ],
+    [
+      2.6e-05,
+      "   docker-intro\r\n"
+    ],
+    [
+      0.001194,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                             \r \r"
+    ],
+    [
+      0.000115,
+      "\u001bk../mycomposeapp\u001b\\"
+    ],
+    [
+      0.015727,
+      "\r\u001b[31m»\u001b[00m \u001b[K"
+    ],
+    [
+      3e-05,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      1.1e-05,
+      "\u001b[?2004h"
+    ],
+    [
+      1.934563,
       "\u001b[?2004l\r\r\n"
     ]
   ],
-  "env": {
-    "TERM": "screen-256color",
-    "SHELL": "/bin/zsh"
-  },
-  "title": "docker-compose scaling services",
-  "height": 24,
-  "version": 1,
-  "width": 196,
-  "command": null,
-  "duration": 47.74006
+  "duration": 32.959962,
+  "width": 174
 }

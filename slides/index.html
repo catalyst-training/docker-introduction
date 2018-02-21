@@ -2562,7 +2562,7 @@ services:
 version: "3"
 services:
   web: 
-    build .
+    build: .
     ports: 
         - "5000:5000"
   redis:
@@ -2571,11 +2571,67 @@ services:
                     </li>
                     <li  class="fragment" data-fragment-index="3">
                         Start our microservices
-                        <pre><code>$ docker-compose up</code></pre>
+                        <pre><code>$ docker-compose up [-d]</code></pre>
                     </li>
                     </ul>
                 </section>
 
+                  <section>
+                      <h3>Scaling services</h3>
+                      <pre><code>$ docker-compose up -d --scale SERVICE=&lt;number&gt;</code></pre>
+
+                      <ul>
+                          <li class="fragment" data-fragment-index="0">
+                              Try scaling the redis service to 4 instances
+                          </li>
+                      </ul>
+ <asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/docker-compose-scaling-service.json"
+     cols="138" rows="15"></asciinema-player>
+
+                  </section>
+
+                  <section>
+                      <h3>
+                          Stopping docker-compose
+                      </h3>
+                      <ul>
+                          <li>In the directory where your <code>docker-compose.yml</code> file is:</li>
+                          <li><pre><code>$ docker-compose stop</code></pre></li>
+                      </ul>
+                  </section>
+                <section>
+                    <h3>
+                        Summary
+                    </h3>
+                    <ul>
+                        <li>
+                            <code>docker-compose</code> provides useful way to setup
+                            development environments
+                        </li>
+
+                        <li>
+                            Takes care of
+                            <ul>
+                                <li>networking</li>
+                                <li>linking containers</li>
+                                <li>scaling services</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </section>
+                </section>
+                <section>
+
+                    <section>
+                        <h2>
+                            Docker Workflow Example
+                        </h2>
+                        <h4>
+                            Taking apps from desktop to deployment
+                        </h4>
+                    </section>
                 
                 
 <section>
@@ -2602,7 +2658,7 @@ $ cd example-voting-app</code></pre>
 
                   
                 <section>
-                    <h3>Docker Compose Example</h3>
+                    <h3>Start Development Application</h3>
                     <pre><code>$ cd example-voting-app
 $ docker-compose up -d</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
@@ -2623,13 +2679,6 @@ $ docker-compose up -d</code></pre>
                   <section>
                       <h3>Change vote options</h3>
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120556.json" cols="138" rows="21"></asciinema-player>
-                  </section>
-                  <section>
-                      <h3>Scaling services</h3>
-                      <pre><code>$ docker-compose up -d --scale SERVICE=&lt;number&gt;</code></pre>
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/docker-compose-scaling-service.json" cols="138" rows="21"></asciinema-player>
-
                   </section>
                 </section>  
 
@@ -2696,12 +2745,12 @@ $ docker-compose up -d</code></pre>
                         <li>Manage applications not machines</li>
                     </ul>
                 </section>
-                <section>
+                <!--<section>
                   <h3>Kubernetes Overview</h3>
                   <img src="img/kubernetes-diagram.png" alt="Kubernetes diagram">
                   <aside class="notes">The services and controllers actually run as processes on every node. The external load balancer is necessary to split traffic across the nodes, and once it reaches a node, the service will route it to the correct pod, or even a different node (see: http://www.dasblinkenlichten.com/kubernetes-101-external-access-into-the-cluster/).</aside>
-                </section>
-                <section>
+                </section>-->
+                <!--<section>
                     <h3>Kubernetes Components</h3>
                     <ul>
                         <li>Pods - an ephemeral group of co-scheduled containers that together provide a service</li>
@@ -2710,7 +2759,7 @@ $ docker-compose up -d</code></pre>
                         <li>Services - stable endpoints comprised of one or more pods (external services are supported)</li>
                         <li>Replication Controllers - the orchestrator that controls and monitors the pods within a service (known as replicas)</li>
                     </ul>
-                </section>
+                </section>-->
                 <!--<section>
                     <h3>Pods/Services</h3>
                     <ul>
@@ -2818,7 +2867,8 @@ $ cd ~/example-voting-app</code></pre>
                   <section>
                       <h3>Verify stack is running</h3>
                       <pre style="width:100%"><code>$ watch -d docker service ls</code></pre>
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119596.json" cols="174" rows="15"></asciinema-player>
+ <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+     theme="solarized-light" src="lib/docker-service-watch.json" cols="174" rows="15"></asciinema-player>
 Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
 a look at the <a href="http://localhost:5001">results</a>.
                   </section>
