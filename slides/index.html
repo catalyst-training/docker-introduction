@@ -2817,7 +2817,7 @@ $ cd ~/example-voting-app</code></pre>
 
                   <section>
                       <h3>Verify stack is running</h3>
-                      <pre style="width:100%"><code>$ watch docker stack ps vote</code></pre>
+                      <pre style="width:100%"><code>$ watch -d docker service ls</code></pre>
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119596.json" cols="174" rows="15"></asciinema-player>
 Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
 a look at the <a href="http://localhost:5001">results</a>.
