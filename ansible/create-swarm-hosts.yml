@@ -201,7 +201,6 @@
         dest: /etc/hosts
         insertafter: EOF
         block: |
-          {{ hostvars[item].ansible_host }} voting.app
+          {{ hostvars[groups.managers[0]].ansible_host }} voting.app
         marker: "# {mark} ANSIBLE MANAGED BLOCK FOR voting.app"
-      with_items: groups.managers[0]
 
