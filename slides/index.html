@@ -2689,16 +2689,17 @@ $ docker-compose up -d</code></pre>
                       <li>
                         If you're happy with changes you can
                         <ul>
-                          <li class="fragment" data-fragment-index="0">push code and have CI build new docker image to deploy</li>
+                          <li class="fragment" data-fragment-index="0">Commit
+                            and push code so CI can build new docker image to deploy</li>
                           <li class="fragment" data-fragment-index="1">Tell docker-compose to rebuild the image</li>
                           <li class="fragment" data-fragment-index="1">Tag and ship it yourself
-                            <pre><code>$ docker-compose build web
-$ docker tag examplevotingapp_vote:latest YOURNAME/vote:latest
-$ docker push YOURNAME/vote:latest</code></pre>
                           </li>
                         </ul>
                       </li>
                     </ul>
+                            <pre class="fragment" data-fragment-index="1"><code>$ docker-compose build web
+$ docker tag examplevotingapp_vote:latest YOURNAME/vote:v2
+$ docker push YOURNAME/vote:v2</code></pre>
                   </section>
 
                   <section>
@@ -2745,36 +2746,6 @@ $ docker push YOURNAME/vote:latest</code></pre>
                     </ul>
                   </section>
 
-<section>
-                    <h3>Setting up a cluster</h3>
-                    <div style="float:left;width:50%">
-                        <ul>
-                            <li class="fragment" data-fragment-index="0">
-                                Need to:
-                                <ul>
-
-                                  <li>provision machines</li>
-                                    <li>set up router(s)</li>
-                                    <li>set up security groups</li>
-                                </ul>
-                            </li>
-                            <li class="fragment" data-fragment-index="1">
-                                Preferable to use automation tools:
-                                <ul>
-                                    <li>Chef</li>
-                                    <li>Puppet</li>
-                                    <li>Terraform</li>
-                                    <li>Ansible</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div style="width:50%;float:left">
-                        <img  class="fragment"
-                        data-fragment-index="0"src="img/open-stack-swarm.png" />
-                    </div>
-
-                  </section>
 
                 <section>
                     <h3>First, some more buzzwords</h3>
@@ -2937,6 +2908,36 @@ $ docker push YOURNAME/vote:latest</code></pre>
                   </section>
 
 
+<section>
+                    <h3>Setting up a cluster</h3>
+                    <div style="float:left;width:50%">
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">
+                                Need to:
+                                <ul>
+
+                                  <li>provision machines</li>
+                                    <li>set up router(s)</li>
+                                    <li>set up security groups</li>
+                                </ul>
+                            </li>
+                            <li class="fragment" data-fragment-index="1">
+                                Preferable to use automation tools:
+                                <ul>
+                                    <li>Chef</li>
+                                    <li>Puppet</li>
+                                    <li>Terraform</li>
+                                    <li>Ansible</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width:50%;float:left">
+                        <img  class="fragment"
+                        data-fragment-index="0"src="img/open-stack-swarm.png" />
+                    </div>
+
+                  </section>
 
                     <section>
                         <h3>Create a cluster</h3>
@@ -2954,6 +2955,10 @@ $ source os-training.catalyst.net.nz-openrc.sh
 $ cd ~/docker-introduction/ansible
 $ ansible-playbook -K -e suffix=-$( hostname ) \
     create-swarm-hosts.yaml</code></pre>
+                        <p class="fragment" data-fragment-index="0">
+                        This will do stuff for while, good time for some
+                        coffee
+                        </p>
                     </section>
 
                     <section>
@@ -2990,13 +2995,57 @@ $ docker swarm join --token $TOKEN  192.168.99.100:2377</code></pre>
     theme="solarized-light" src="lib/asciicast-120532.json" cols="107" rows="6"></asciinema-player>
                     </section>
 
+                  <section>
+                      <h3>Swarm Stack File</h3>
+                      <div style="float:left;width:50%"><ul>
+                          <li class="fragment" data-fragment-index="0">
+                            Service description
+                          </li>
+                          <li class="fragment" data-fragment-index="1">
+                            YAML format
+                          </li>
+                          <li class="fragment" data-fragment-index="2">Similar to file used for <code>docker-compose</code></li>
+                          <li class="fragment" data-fragment-index="3">
+                              A few differences
+                              <ul>
+                                  <li>No <code>build</code> option</li>
+                                  <li>No shared volumes</li>
+                              </ul>
+                          </li>
+
+                        </ul></div>
+   <div style="float:left;width:50%;height:80%"><pre><code class="yaml"># stack.yml
+version: "3.3" 
+services:
+  db:
+    image: postgres:9.4
+    .
+    .
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 3
+
+  vote:
+    image: vote:latest
+    depends_on:
+      - redis
+      - db
+     deploy:
+      replicas: 6
+      update_config:
+         delay: 5s
+         parallelism: 1
+    .
+    .</code></pre></div>                  
+                  </section>
                     <section>
                         <h3>Deploying voting app</h3>
                         <p>
                         Upload docker-stack.yaml to manager node
                         </p>
                         <pre><code>$ cd ~/example-voting-app
-$ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
+$ scp docker-stack.yml manager-TRAININGPC:~/</code></pre>
                     </section>
                     <section>
                         <h3>Deploy application</h3>
@@ -3032,7 +3081,7 @@ $ scp docker-stack.yml manager1-TRAININGPC:~/</code></pre>
 
                     <section>
                         <h3>Update a service</h3>
-                        <pre><code>$ docker service update --image heytrav/vote vote_vote</code></pre>
+                        <pre><code>$ docker service update --image YOURNAME/vote:v2 vote_vote</code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="lib/asciicast-120564.json" cols="146"
     rows="10"></asciinema-player>
@@ -3097,176 +3146,17 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                             <li>when a task fails on another active node</li>
                         </ul>
                     </section>
-                </section>
-
-
-                <section>
-                  <section>
-                    <h2>Container Orchestration</h2>
-                  </section>
-
-
-                <!-- Large image slide -->
-                
-                  <section>
-                      <h3>Swarm Stack File</h3>
-                      <div style="float:left;width:50%"><ul>
-                          <li>Similar to file used for <code>docker-compose</code></li>
-                          <li>
-                              A few differences
-                              <ul>
-                                  <li>No <code>build</code> option</li>
-                                  <li>No shared volumes</li>
-                              </ul>
-                          </li>
-
-                        </ul></div>
-   <div style="float:left;width:50%;height:80%"><pre><code class="yaml"># stack.yml
-version: "3.3" 
-services:
-  db:
-    image: postgres:9.4
-    .
-    .
-  redis:
-    image: redis:latest
-    deploy:
-      replicas: 3
-
-  vote:
-    image: vote:latest
-    depends_on:
-      - redis
-      - db
-     deploy:
-      replicas: 6
-      update_config:
-         delay: 5s
-         parallelism: 1
-    .
-    .</code></pre></div>                  
-                  </section>
-                  
-                  <section>
-                      <h3>Initiate a Swarm</h3>
-                      <pre><code>$ docker swarm init
-$ cd ~/example-voting-app</code></pre>
-                      <ul>
-                          <li><code>docker swarm init</code> puts your machine in <em>swarm mode</em></li>
-                          <li>Only need to do once to create manager node</li>
-                      </ul>
-                  </section>
-
-                  <section>
-                      <h3>Deploy the stack</h3>
-                      <pre><code>$ docker stack deploy --compose-file docker-stack.yml vote</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-119595.json" cols="174" rows="15"></asciinema-player>
-                  </section>
-
-                  <section>
-                      <h3>Verify stack is running</h3>
-                      <pre style="width:100%"><code>$ watch -d docker service ls</code></pre>
- <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/docker-service-watch.json" cols="174" rows="15"></asciinema-player>
-Now, let's go <a href="http://localhost:5000">vote</a>! When you're done, have
-a look at the <a href="http://localhost:5001">results</a>.
-                  </section>
-
-                  <section>
-                      <h3>Build image</h3>
-                      <p>
-                      In example-voting-app...
-                      </p>
-
-                      <pre><code>$ docker build -t YOURNAME/vote:v2 vote</code></pre>
-                      <p>Note: please replace <code>YOURNAME</code> with your docker hub
-                      username if you have one</p>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-120557.json" cols="138"
-    rows="15"></asciinema-player>
-                  </section>
-
-                  
 
                     <section>
-                        <h3>Update a service</h3>
-                        <pre><code>$ docker service update --image YOURNAME/vote:v2 vote_vote</code></pre>
-<p>
-Now go to the <a href="http://localhost:5000">voting app</a> and see what
-changed
-</p>
+                        <h3>Tear down your cluster</h3>
+                        <p>
+                        When you're done playing around with the voting app,
+                        please run the following
+                        </p>
+                        <pre><code>$ ansible-playbook -K  -e suffix=-$( hostname ) \ 
+   remove-swarm-hosts.yaml</code></pre>
                     </section>
 
-                    <section>
-                        <h3>Remove Swarm Stack</h3>
-                        <pre><code>$ docker stack rm vote</code></pre>
-<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
-    theme="solarized-light" src="lib/asciicast-120569.json" cols="130"
-    rows="15"></asciinema-player>
-                    </section>
-                  <section>
-                      <h3>Summary</h3>
-                      <ul>
-                          <li>Deployed a set of services on our local host</li>
-                          <li>Docker created a couple networks (front-tier, back-tier)</li>
-                          <li>Some services running multiple instances</li>
-                          <li>Next, we'll look at doing this across multiple machines</li>
-                      </ul>
-                  </section>
-
-                </section>
-
-                <section>
-                    <section>
-                        <h2>Running apps in the cloud</h2>
-                    </section>
-
-                  <section>
-                    <h3>Goals</h3>
-                    <ul>
-                      <li class="fragment" data-fragment-index="0">Set up cluster of multiple machines
-                      <ul><li>Catalyst Cloud (OpenStack)</li></ul></li>
-                      <li class="fragment" data-fragment-index="1">Install
-                        Docker on each machine </li>
-                      <li class="fragment" data-fragment-index="2">Initialise a swarm</li>
-                      <li class="fragment" data-fragment-index="3">Deploy our voting app</li>
-                       <li class="fragment" data-fragment-index="4">Run through a few typical scenarios
-                           <ul>
-                               <li>Rolling update with <em>vote:v2</em></li>
-                               <li>Drain node for maintenance</li>
-                           </ul>
-                       </li> 
-                    </ul>
-                  </section>
-                  
-                    <!--<section>
-                        <h3>Ansible</h3>
-                        <ul>
-                            <li>Python based tool set</li>
-                            <li>Automate devops tasks
-                                <ul>
-                                    <li>server/cluster management </li>
-                                    <li>installing packages</li>
-                                    <li>deploying code </li>
-                                    <li>managing config</li>
-                                </ul>
-                        </ul>
-                        </section>        -->
-                    
-                    <!--<section>
-                        <h3>Setup steps</h3>
-                        <pre class="fragment" data-fragment-index="0"><code>$ cd ~/catalystcloud-ansible
-$ ./install-ansible.sh
-.
-.
-$ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
-                        <pre class="fragment" data-fragment-index="1"><code>$ source ~/os-training.catalyst.net.nz-openrc.sh</code></pre>
-                        <ul class="fragment" data-fragment-index="2">
-                            <li>Should have ansible installed</li>
-                            <li>Should have activated and sourced a python virtualenv <ul><li><code>(ansible-env)</code> should appear at beginning of line in your shell</li></ul> </li>
-                            <li>Sourced the environment file for the training account</li>
-                        </ul>
-                    </section>-->
 
                     <section>
                         <h3>Summary</h3>
@@ -3285,16 +3175,7 @@ $ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate</code></pre>
 
 
                     </section>
-                    <section>
-                        <h3>Tear down your cluster</h3>
-                        <pre><code>$ ansible-playbook -K  --extra-vars "suffix=-$( hostname )" \ 
-remove-swarm-hosts.yaml</code></pre>
-                    </section>
-
                 </section>
-
-                
-                
 
 
                 <section>
