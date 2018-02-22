@@ -81,9 +81,10 @@
         marker: "# {mark} ANSIBLE MANAGED BLOCK for {{ item }}"
       with_items: "{{ host_set }}"
 
+
     - name: Remove fake domain from /etc/hosts
       become: yes
       blockinfile:
         dest: /etc/hosts
         state: absent
-        marker: "# {mark} ANSIBLE MANAGED BLOCK for my-app.cat"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR voting.app"

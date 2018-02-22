@@ -184,8 +184,24 @@
       with_items: "{{ host_set }}"
 
 
+
 - name: Set up Docker on hosts
   hosts: "swarm"
   become: yes
   roles: 
     - docker
+
+
+- name: Add manager ip as fake DNS for voting app
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Add manager IP to /etc/hosts
+      blockinfile:
+        dest: /etc/hosts
+        insertafter: EOF
+        block: |
+          {{ ansible_host }} voting.app
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR voting.app"
+      with_items: groups.managers[0]
+
