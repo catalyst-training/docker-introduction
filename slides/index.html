@@ -2681,21 +2681,43 @@ $ docker-compose up -d</code></pre>
  <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="lib/asciicast-120556.json" cols="138" rows="21"></asciinema-player>
                   </section>
 
+                    <section>
+                        <h3>Developer workflow</h3>
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">Push code to repository</li>
+                            <li class="fragment" data-fragment-index="1">Continuous Integration (CI) system runs tests</li>
+                            <li class="fragment" data-fragment-index="2">If tests successful, automate image build &amp; push to a docker registry</li>
+                            <li class="fragment" data-fragment-index="3">Manually/automatically run <code>docker service update</code></li>
+                            <li class="fragment"
+                                data-fragment-index="4">Easy to setup with
+                                existing services and automation tools like
+                                Ansible
+                                <ul>
+                                    <li><a
+                                        href="https://hub.docker.com">DockerHub</a>
+                                    (eg. <a href="https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/">these slides</a>)</li>
+                                    <li><a href="https://github.com">GitHub</a></li>
+                                    <li><a href="https://circleci.com">CircleCI</a></li>
+                                    <li>GitLab</li>
+                                    <li><a href="https://quay.io">Quay.io</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
                   <section>
                     <h3>
                       Developer workflow
                     </h3>
                     <ul>
                       <li>
-                        If you're happy with changes you can
+                        Ship your artefact directly using docker-compose
                         <ul>
-                          <li class="fragment" data-fragment-index="0">Commit
-                            and push code so CI can build new docker image to deploy</li>
-                          <li class="fragment" data-fragment-index="1">Tell docker-compose to rebuild the image</li>
-                          <li class="fragment" data-fragment-index="1">Tag and ship it yourself
+                          <li class="fragment" data-fragment-index="0">Useful if you want to test an image immediately</li>
                           </li>
                         </ul>
                       </li>
+                          <li class="fragment" data-fragment-index="1">Tell docker-compose to rebuild the image</li>
+                          <li class="fragment" data-fragment-index="3">Tag and ship it yourself
                     </ul>
                             <pre class="fragment" data-fragment-index="1"><code>$ docker-compose build web
 $ docker tag examplevotingapp_vote:latest YOURNAME/vote:v2
@@ -3088,29 +3110,6 @@ $ scp docker-stack.yml manager-TRAININGPC:~/</code></pre>
 <p>
 Now go to the <a href="http://voting.app:5000">voting app</a> and verify the change
 </p>
-                    </section>
-                    <section>
-                        <h3>Developer workflow</h3>
-                        <ul>
-                            <li class="fragment" data-fragment-index="0">Push code to repository</li>
-                            <li class="fragment" data-fragment-index="1">Continuous Integration (CI) system runs tests</li>
-                            <li class="fragment" data-fragment-index="2">If tests successful, automate image build &amp; push to a docker registry</li>
-                            <li class="fragment" data-fragment-index="3">Manually/automatically run <code>docker service update</code></li>
-                            <li class="fragment"
-                                data-fragment-index="4">Easy to setup with
-                                existing services and automation tools like
-                                Ansible
-                                <ul>
-                                    <li><a
-                                        href="https://hub.docker.com">DockerHub</a>
-                                    (eg. <a href="https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/">these slides</a>)</li>
-                                    <li><a href="https://github.com">GitHub</a></li>
-                                    <li><a href="https://circleci.com">CircleCI</a></li>
-                                    <li>GitLab</li>
-                                    <li><a href="https://quay.io">Quay.io</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     </section>
                 
                     <section>
