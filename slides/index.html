@@ -2975,7 +2975,7 @@ $ source os-training.catalyst.net.nz-openrc.sh
 &lt;enter os training password from ~/credentials.txt&gt;
 
 $ cd ~/docker-introduction/ansible
-$ ansible-playbook -K -e suffix=-$( hostname ) \
+$ ansible-playbook -i cloud-hosts -K -e suffix=-$( hostname ) \
     create-swarm-hosts.yaml</code></pre>
                         <p class="fragment" data-fragment-index="0">
                         This will do stuff for while, good time for some
@@ -3152,7 +3152,7 @@ Now go to the <a href="http://voting.app:5000">voting app</a> and verify the cha
                         When you're done playing around with the voting app,
                         please run the following
                         </p>
-                        <pre><code>$ ansible-playbook -K  -e suffix=-$( hostname ) \ 
+                        <pre><code>$ ansible-playbook -i cloud-hosts -K  -e suffix=-$( hostname ) \ 
    remove-swarm-hosts.yaml</code></pre>
                     </section>
 
