@@ -130,6 +130,7 @@
   gather_facts: false
   vars: 
     host_set: "{{ groups['swarm']  }}"
+  serial: 1
   tasks:
     - name: Remove floating ip from known hosts
       delegate_to: localhost
