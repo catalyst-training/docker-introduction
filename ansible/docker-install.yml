@@ -1,7 +1,9 @@
 - name: Install docker
   hosts: localhost
   become: yes
-  tasks: 
+  roles:
+    - docker
+  pre_tasks: 
 
     - name: Bail out if not an ubuntu distribution
       when: ansible_distribution != "Ubuntu"
@@ -17,73 +19,16 @@
         - docker-engine
         - docker-io
 
-    - name: Install packages required for docker
-      apt:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - "linux-image-extra-{{ ansible_kernel }}"
-        - linux-image-extra-virtual
 
-    - name: Add Dockers official GPG key
-      block:
-        - name: Install gpg key for ubuntu from docker.com
-          apt_key:
-            url: "https://download.docker.com/linux/ubuntu/gpg"
-            state: present
-      rescue:
-        - name: Install gpg key for ubuntu using local version.
-          apt_key:
-            data: "{{ lookup('file', 'files/docker.asc') }}"
-            state: present
+- name: Install docker-compose
+  hosts: localhost
+  become: yes
+  tasks: 
 
-
-    - name: Get os release name
-      command: lsb_release -cs
-      register: ubuntu_release
-
-    - name: Output ubuntu release
-      debug:
-        msg: "Ubuntu release version {{ ubuntu_release.stdout }}"
-
-    - name: Add repo for Docker CE
-      apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_release.stdout }} stable"
-        state: present
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Create a docker group
-      group:
-        name: docker
-        state: present
-
-    - name: Install docker community edition
-      apt:
-        name: docker-ce
-        state: latest
-      notify:
-        - start docker
-
-    - name: Add "{{ lookup('env', 'USER') }}" user to docker group
-      user:
-        name: "{{ lookup('env', 'USER') }}"
-        append: yes
-        groups: docker
 
     - name: Install docker-compose
       get_url: 
-        url: "https://github.com/docker/compose/releases/download/1.16.1/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        url: "https://github.com/docker/compose/releases/download/1.19.0/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
         dest: /usr/local/bin/docker-compose 
-        sha256sum: 1804b0ce6596efe707b9cab05d74b161833ed503f0535a937dd5d17bea8fc50a
+        sha256sum: 78734996d716113f9f9716d0b5064166e9475835e5000fd01b0480d19e1f7372
         mode: '0755'
-
-  handlers:
-    - name: start docker
-      service:
-        name: docker
-        state: started
