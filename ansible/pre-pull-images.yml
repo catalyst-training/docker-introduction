@@ -6,11 +6,14 @@
     # These are some large docker images which are notorious for  slowing down
     # the local wifi.
     images:
-      - microsoft/dotnet:1.1.1-sdk
+      - ubuntu:latest
+      - golang:1.7.3
       - dockersamples/examplevotingapp_worker
       - dockersamples/examplevotingapp_vote:before
       - dockersamples/examplevotingapp_result:before
       - dockersamples/visualizer:stable
+      - library/postgres:latest
+      - microsoft/dotnet:2.0.0-sdk
 
 
   tasks:
