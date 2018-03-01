@@ -1931,55 +1931,6 @@ Include things you don't want in your image:
                     </section>
                     
                     
-                    
-
-                    <section>
-                        <h3>
-                            Package management and layers
-                        </h3>
-
-                        <div style="width:50%;float:left">
-                        <p>Image size: 471 MB</p>
-                            <pre style="font-size:10pt;"><code>FROM ubuntu:latest
-
-RUN apt-get update \ 
- && apt-get install -y \
-    libsqlite3-dev \
-    mercurial \
-    automake \
-    build-essential \
-    curl \
-    dpkg-sig \
-    aufs-tools \
-    libcap-dev \
-    reprepro</code></pre>
-                        </div>
-                        
-
-                        <div style="float:left;width:50%">
-                            <p>Image size: 430 MB</p>
-                            <pre style="font-size:10pt;"><code>FROM ubuntu:latest
-
-RUN apt-get update \
-  && apt-get install -y \
-    aufs-tools \
-    automake \
-    build-essential \
-    curl \
-    dpkg-sig \
-    libcap-dev \
-    libsqlite3-dev \
-    mercurial \
-    reprepro \
-&& rm -rf /var/lib/apt/lists/*</code></pre>
-                        </div>
-                        <ul>
-                            <li>Sort multiline arguments</li>
-                            <li>Split complex RUN statement on separate lines with backslashes</li>
-                            <li>Run apt-get update and apt-get install in same RUN </li>
-                            <li>Run clean up in same line whenever possible</li>
-                        </ul>
-                    </section>
                     <section>
                       <h3>Layer caching</h3>
                       <pre><code>$ cd ~/docker-introduction/sample-code/caching
@@ -2041,7 +1992,75 @@ $ docker build  -t good-apt-example -f Dockerfile.good .
                         
                     </section>
 
-                    
+
+
+                    <section>
+                        <h3>
+                            Optimising image size
+                        </h3>
+                        <h4>
+                            Intermediate layers
+                        </h4>
+
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">Image
+                            size is sum of intermediate layers</li>
+                            <li class="fragment" data-fragment-index="1">Even if you remove something it exists as a
+                                diff on previous layer</li>
+                            <li class="fragment" data-fragment-index="2">Run
+                                clean up in same layer whenever possible</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            Example: Optimising image size
+                        </h3>
+                        
+                        <div  class="fragment" data-fragment-index="0">
+                            <pre style="font-size:10pt;"><code
+                                 data-noescape>FROM ubuntu:latest <mark class="fragment" data-fragment-index="1">112MB</mark>
+
+RUN apt-get update \ 
+ && apt-get install -y \
+    automake \
+    build-essential \
+    curl \
+    wget \
+    libcap-dev \
+    reprepro         <mark class="fragment" data-fragment-index="2">284MB</mark>
+RUN rm -rf /var/lib/apt/lists/* <mark class="fragment" data-fragment-index="3">0MB</mark>
+
+ADD https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz .  <mark class="fragment" data-fragment-index="4">326MB</mark>    
+RUN tar xf android-sdk_r24.4.1-linux.tgz  <mark class="fragment" data-fragment-index="5">678MB</mark>
+RUN rm -f android-sdk_r24.4.1-linux.tgz <mark  class="fragment" data-fragment-index="6">0 MB</mark></code></pre>
+
+                        <p class="fragment" data-fragment-index="7">Image size: 1.4 GB</p>
+                        </div>
+                        
+
+                        <div  class="fragment" data-fragment-index="8">
+                            <pre style="font-size:10pt;"><code
+                                 data-noescape>FROM ubuntu:latest <mark class="fragment" data-fragment-index="9">112MB</mark>
+
+RUN apt-get update \ 
+ && apt-get install -y \
+    automake \
+    build-essential \
+    curl \
+    wget \
+    libcap-dev \
+    reprepro \
+    && rm -rf /var/lib/apt/lists/* <mark class="fragment" data-fragment-index="10">244MB</mark>
+
+RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \     
+ tar xf android-sdk_r24.4.1-linux.tgz && \     
+  rm -f android-sdk_r24.4.1-linux.tgz <mark class="fragment"
+  data-fragment-index="11">678 MB</mark></code></pre>
+
+                            <p class="fragment" data-fragment-index="12">Image size: 1 GB</p>
+                        </div>
+                    </section>
+                                        
                     <section>
                         <h3>ADD</h3>
                         <ul style="width:80%">
@@ -2081,6 +2100,88 @@ RUN cd /usr/path && tar -xvf big.tar.gz \
                         </ul>
                     </section>
                     
+<section>
+                        <h3>
+                            Multistage builds
+                        </h3>
+                        <h4>
+                            Optimise image buiilds
+                        </h4>
+                        
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">
+                                Best practices intended to optimise image size by
+                                keeping them small
+                            </li>
+
+                            <li class="fragment" data-fragment-index="1">
+                                Come at the expense of readability 
+                                    <ul>
+                                    <li>Layers with long complicated commands</li>
+                                </ul>
+                            </li>
+
+                            <li class="fragment" data-fragment-index="2">
+                                Multistage builds
+                                <ul>
+                                    <li>Introduced with Docker 17.05</li>
+                                    <li>Enable optimised image size</li>
+                                    <li>maintain readability</li>
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>
+                            Multistage builds
+                        </h3>
+                        <h4>
+                            How they work
+                        </h4>
+                        <div style="width:50%;float:left;">
+                            <ul>
+                                <li>Multiple FROM directives in a Dockerfile</li>
+                                <li>Each FROM represents a new build</li>
+                                <li>Selectively copy artifacts from one of the previous builds</li>
+                                <li>Leave behind what is not needed</li>
+                            </ul>
+                        </div>
+
+                        <div style="width:50%;float:left;">
+                        <pre ><code>FROM ubuntu:16.04 as builder
+WORKDIR /bin
+COPY . /bin/
+RUN make install
+
+
+FROM alpine
+COPY --from=builder /bin/myprogram /root
+ENTRYPOINT ['/root/myprogram'] </code></pre>
+                        </div>
+
+                        
+                    </section>
+                    <section>
+                        <h4>
+                            Multistage builds example
+                        </h4>
+                        <pre  class="fragment"
+                                                    data-fragment-index="0"><code>$ cd ~/href-counter
+$ docker build -t href-counter -f Dockerfile.build .
+$ docker image ls | grep href
+REPOSITORY    TAG     IMAGE ID          SIZE
+href-counter  latest  b0eb64a75c55      687MB</code></pre>
+                        <pre  class="fragment"
+                                                    data-fragment-index="1"><code>$ docker build -t href-counter-multi -f Dockerfile.multi .
+$ docker image ls | grep href
+REPOSITORY          TAG           SIZE
+href-counter-multi  latest        10.3MB</code></pre>
+                        
+
+                        
+
+                    </section>
                     <section>
                         <h3>
                             CMD &amp; ENTRYPOINT
@@ -2138,8 +2239,43 @@ $ docker run runtop-exec</code></pre>
                                 this purpose recommended to use <a href="https://github.com/Yelp/dumb-init">dumb-init</a></li>
                         </ul>
                     </section>
+                    <section>
+                        <h3>
+                            Summary
+                        </h3>
+                        <ul>
+                            <li>
+                                Dockerfile best practices aim to
+                                <ul>
+                                    <li>
+                                        Keep image footprint small 
+                                        <ul>
+                                            <li>Sometimes at expense readability</li>
+                                            <li>Multistage builds are a good compromise</li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        Maintain clean control over containers
+                                        <ul>
+                                            <li>Easy to top and start</li>
+                                            <li>Flexible in the way they are executed</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+
+                            </li>
+<li>
+                                    Official Dockerfile <a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">best practices</a>
+                                </li>
+                        </ul>
+
+                        
+                    </section>
+
                     
-<section>
+<!--<section>
                         <h3>
                             Image size and layers
                         </h3>
@@ -2199,86 +2335,8 @@ minimal-container ...    833MB</code></pre>
                                 Drawback is Dockerfile becomes unreadable
                             </li>
                         </ul>
-                    </section>
-                    <section>
-                        <h3>
-                            Multistage builds
-                        </h3>
-                        <h4>
-                            Optimise image buiilds
-                        </h4>
-                        
-                        <ul>
-                            <li class="fragment" data-fragment-index="0">
-                                Best practices intended to optimise image size by
-                                keeping them small
-                            </li>
-
-                            <li class="fragment" data-fragment-index="1">
-                                Come at the expense of readability 
-                            </li>
-
-                            <li class="fragment" data-fragment-index="2">
-                                Multistage builds
-                                <ul>
-                                    <li>Introduced with Docker 17.05</li>
-                                    <li>Enable optimised image size</li>
-                                    <li>maintain readability</li>
-                                </ul>
-                            </li>
-                            
-                        </ul>
-                    </section>
-                    <section>
-                        <h3>
-                            Multistage builds
-                        </h3>
-                        <h4>
-                            How they work
-                        </h4>
-                        <div style="width:50%;float:left;">
-                            <ul>
-                                <li>Multiple FROM directives in a Dockerfile</li>
-                                <li>Each FROM represents a new build</li>
-                                <li>Selectively copy artifacts from one of the previous builds</li>
-                                <li>Leave behind what is not needed</li>
-                            </ul>
-                        </div>
-
-                        <div style="width:50%;float:left;">
-                        <pre ><code>FROM ubuntu:16.04 as builder
-WORKDIR /some/path
-COPY . /some/path
-RUN make install
-
-.
-FROM alpine
-COPY --from=builder /some/path/executable /root
-ENTRYPOINT ['/root/executable'] </code></pre>
-                        </div>
-
-                        
-                    </section>
-                    <section>
-                        <h4>
-                            Multistage builds example
-                        </h4>
-                        <pre  class="fragment"
-                                                    data-fragment-index="0"><code>$ cd ~/href-counter
-$ docker build -t href-counter -f Dockerfile.build .
-$ docker image ls | grep href
-REPOSITORY    TAG     IMAGE ID          SIZE
-href-counter  latest  b0eb64a75c55      687MB</code></pre>
-                        <pre  class="fragment"
-                                                    data-fragment-index="1"><code>$ docker build -t href-counter-multi -f Dockerfile.multi .
-$ docker image ls | grep href
-REPOSITORY          TAG           SIZE
-href-counter-multi  latest        10.3MB</code></pre>
-                        
-
-                        
-
-                    </section>
+</section>-->
+                    
 
                 </section>
                 <section>
