@@ -637,16 +637,23 @@ Options:
                     
                   <section>
                     <h3>
-                      Start a shell
+                      Execute command in a container
                     </h3>
                       <p>
                       <code>docker</code> <code >run</code>
                       <code style="color:green;">image</code>
                       <code style="color:blue;font-style:italic">[command]</code>
                       </p>
-                     <pre><code>$ docker run alpine /bin/sh</code></pre> 
-<asciinema-player class="fragment" data-fragment-index="0" autoplay="0" loop="loop"  font-size="medium" speed="1"
-     theme="solarized-light" src="lib/asciicast-122554.json" cols="174" rows="3"></asciinema-player>                    <ul>
+                     <pre class="fragment" data-fragment-index="0"><code data-trim>$ docker run alpine ls
+bin
+dev
+.
+.
+usr
+var
+$ </code></pre> 
+
+                    <ul>
                       <li class="fragment" data-fragment-index="1">Docker
                           starts container using alpine image</li>
   <li class="fragment" data-fragment-index="2">
@@ -2386,7 +2393,8 @@ CMD ["python", "app.py"]
                                     data-fragment-index="2">--link &lt;name of container&gt;</li>
                             </ul>
                             <pre class="fragment"
-                            data-fragment-index="3"><code> $ docker run -d --rm --name web --link redis -p 5000:5000 web </code></pre>
+                            data-fragment-index="3"><code data-trim
+                            data-noescape> $ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:5000 web </code></pre>
                         </li>
                         <li class="fragment" data-fragment-index="4">
                             Once you start the web container go to <a href="http://localhost:5000">web page</a> to see counter
@@ -2971,7 +2979,7 @@ $ docker push YOURNAME/vote:v2</code></pre>
                             <li>Download OpenStack RC file</li>
                         </ul>-->
                         <pre style="width:80%;"><code>$ cat ~/credentials.txt
-$ source os-training.catalyst.net.nz-openrc.sh
+$ source ~/os-training.catalyst.net.nz-openrc.sh
 &lt;enter os training password from ~/credentials.txt&gt;
 
 $ cd ~/docker-introduction/ansible
