@@ -2375,6 +2375,7 @@ minimal-container ...    833MB</code></pre>
                     <h4>
                         Linking multiple containers
                     </h4>
+                    <pre><code data-trim> $ cd ~/docker-introduction/sample-code/mycomposeapp </code></pre>
                     <ul>
                         <li class="fragment" data-fragment-index="0">
                             Let's build a simple application with two components
@@ -2409,7 +2410,7 @@ minimal-container ...    833MB</code></pre>
                         <li class="fragment" data-fragment-index="0">
                             Go into the mycomposeapp directory
                             <pre><code data-trim>
-$ cd $WORKDIR/sample-code/mycomposeapp
+$ cd ~/docker-introduction/sample-code/mycomposeapp
 $ ls
 $ gedit Dockerfile
                             </code></pre>
@@ -2488,41 +2489,187 @@ $ docker stop redis
                 <section>
                     <h3>Docker Compose</h3>
                     <h4>Docker as a dev environment</h4>
-                    <div style="width:50%;float:left;">
-                        <ul>
-                            <li  class="fragment" data-fragment-index="0">
-                                A tool that let's you easily create complex
-                                microservice apps
-                            </li>
-                            <li class="fragment"
-                                data-fragment-index="1">Declarative YAML syntax</li>
-                          <li class="fragment" data-fragment-index="2">Specifies
+                    <ul>
+                        <li  class="fragment" data-fragment-index="0">
+                            A tool that let's you easily bootstrap complex
+                            microservice apps
+                        </li>
+                        <li class="fragment"
+                            data-fragment-index="1">Allows interactive
+                            development
                             <ul>
-                              <li>Services</li>
-                              <li>image or build</li> 
-                              <li>volumes</li>
-                              <li>environment variables</li>
+                                <li>
+                                    you can work on the code while the container is
+                                    running
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment" data-fragment-index="4">Can be used for staging/production environments</li>
+
+                        <li class="fragment" data-fragment-index="5">Uses a
+                            YAML based config file called the <em>docker-compose file</em></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>The docker-compose file</h3>
+                    <div style="width:50%;float:left;font-size:20pt;">
+                        <ul>
+                            <li class="fragment" data-fragment-index="0">
+                                Service description file
+                            </li>
+                            <li  class="fragment"
+                                data-fragment-index="1">YAML</li>
+                            <li  class="fragment" data-fragment-index="2">
+                                By default: <code>docker-compose.yml</code>
+                            </li>
+
+                          <li class="fragment" data-fragment-index="3">Specifies
+                            <ul>
+                              <li>Services 
+                                  <ul>
+                                      <li>
+                                          effectively containers that you
+                                          will run
+                                      </li>
+                                  </ul>
+                              </li>
+                              <li>Volumes 
+                                  <ul>
+                                      <li>
+                                          filesystem mounts for containers
+                                      </li>
+                                  </ul>
+                              </li>
+                              <li>Networks 
+                                  <ul>
+                                      <li>
+                                          to be created and used by
+                                          containers
+                                      </li>
+                                  </ul>
+                              </li>
                             </ul>
                           </li> 
-                            <li class="fragment"
-                                data-fragment-index="3">Interactive
-                                development</li>
-                            <li class="fragment" data-fragment-index="4">Can be used for staging/production environments</li>
+                          <li class="fragment" data-fragment-index="4">
+                                                  Have a look at the <a
+                                                      href="https://docs.docker.com/compose/compose-file/">compose file reference</a>
+                                    </li>
+                            
                         </ul>
                     </div>
-                    <div class="fragment" data-fragment-index="2" style="width:50%;float:left;">
+                    
+                    <div class="fragment" data-fragment-index="0" style="width:50%;float:left;">
 
-                            <pre><code data-trim>
+                            <pre style="font-size:10pt;"><code data-trim
+                            data-noescape>
 ---
 version: "3"
 services:
-  web: 
-    build .
-    ports: 
-      - "5000:5000"
+  db: 
+   image: db
+   volumes:
+     - data-volume:/var/lib/db
   redis:
     image: redis:alpine
-</code></pre>
+  webapp:
+    build: .
+    ports:
+      - 80:80
+    networks:
+        hostnet: {}
+
+volumes:
+  data-volume:
+
+networks:
+  hostnet:
+    external:
+      name: host
+                            </code></pre>
+                    
+                    </div>
+                    
+
+                </section>
+
+                <section>
+                    <h3>
+                        docker-compose services
+                    </h3>
+
+
+                    <div style="width:50%;float:left;font-size:20pt;">
+                        <ul>
+                            <li  class="fragment" data-fragment-index="0">
+                                Each key in <em>services</em> dictionary represents a
+                                base name for a container
+                                
+                            </li>
+                            <li class="fragment" data-fragment-index="1">
+                                Attributes of a service include
+                                <ul>
+                                    <li>
+                                        build
+                                        <ul>
+                                            <li>
+                                                path or dictionary pointing to Dockerfile to
+                                                build for container
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        image
+                                        <ul>
+                                            <li>
+                                                Use a particular image for container
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        ports
+                                        <ul>
+                                            <li>
+                                                expose ports for accessing application
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        volumes
+                                        <ul>
+                                            <li>
+                                                mount into container
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="fragment" data-fragment-index="0" style="width:50%;float:left;">
+
+                            <pre style="font-size:10pt;"><code data-trim
+                            data-noescape>
+---
+version: "3"
+services:
+
+  webapp:
+    build: .
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+        hostnet: {}
+  db: 
+   image: db
+   volumes:
+     - data-volume:/var/lib/db
+
+  redis:
+    image: redis:alpine
+                            </code></pre>
                     
                     </div>
                 </section>
@@ -2562,58 +2709,16 @@ services:
                         
                     </table>
                     
-                    <p class="fragment" data-fragment-index="0">Use
-                    <code>docker-compose</code> <code
-                    style="color:red;">-h</code> to view inline documentation</p>
-                    <p class="fragment" data-fragment-index="1">Have a look at
-                    the <a href="">documentation</a></p>
+                    <ul>
+                        <li class="fragment" data-fragment-index="0">Use
+                            <code>docker-compose</code> <code
+                                style="color:red;">-h</code> to view inline
+                            documentation</li>
+                    </ul>
 
                 </section>
-                <section>
-                    <h3>
-                        Service Definition File
-                    </h3>
-                    <div style="width:50%;float:left;font-size:20pt;">
-                        <ul>
-                            <li  class="fragment" data-fragment-index="0">
-                                By default: <code>docker-compose.yml</code>
-                            </li>
-                            <li  class="fragment" data-fragment-index="1">YAML dictionary</li>
-                            <li class="fragment" data-fragment-index="2">
-                                <code>version</code> attribute
-                            </li>
-                            <li  class="fragment" data-fragment-index="3">
-                                <code>services</code>
-                                <ul>
-                                    <li>dictionary of services we want to run
-                                    </li>
-                                </ul>
-                            </li>
-                            <li  class="fragment" data-fragment-index="4">
-                                Each <code>service</code> is a dictionary describing how to run
-                                a particular container
-                                <ul>
-                                    <li>use pre-built image or fetch from registry</li>
-                                    <li>specify ports to expose</li>
-                                    <li>volumes</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div style="width:50%;float:left;">
-                        <pre><code data-trim>---
-version: "3"
-services:
-  web:
-    build: .
-    ports:
-      - 5000:5000
-  redis:
-    image: redis:alpine
-                        </code></pre>
-                    </div>
 
-                </section>
+                
                 <section>
                     <h4>
                         Exercise: convert our app to use <code>docker-compose</code>
