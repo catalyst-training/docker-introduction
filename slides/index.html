@@ -1544,7 +1544,8 @@ RUN make /app</code></pre>
                           Exercise: Write a basic Dockerfile
                       </h4>
                       <pre><code>$ cd ~/docker-introduction/sample-code/first-docker-file
-                      </code></pre>
+$ ls
+hello.sh </code></pre>
                       <ul style="width:80%;">
                           <li>
                             Write a <code>Dockerfile</code>:
@@ -1576,17 +1577,14 @@ CMD ["./hello.sh"]</code></pre>
                             
                   </section>
                   <section>
-                    <h3>
-                      <code>docker build</code>
-                    </h3>
-                    <h4>Build Docker images</h4>
-                    <p style="font-size:65%;">
-                    <code>docker</code> <code style="color:red;">build</code>
+                    <h3>Building Docker images</h3>
+                    <h4 style="font-size:65%;">
+                    <code>docker build</code>
                     <code style="color:purple">[options]</code> <code
                         style="color:red;">image</code><code style="color:blue;">:[tag]</code>
                     <code
                         style="color:red;">./path/to/Dockerfile</code>
-                    </p>
+                    </h4>
 
 
                   <table>
@@ -1626,15 +1624,21 @@ CMD ["./hello.sh"]</code></pre>
                               </ul>
                           </li>
                       </ul>
-                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t YOURNAME/my-first-image .
-$ docker run YOURNAME/my-first-image</code></pre>
+                      <pre class="fragment" data-fragment-index="0"><code>$ docker build -t YOURNAME/my-first-image .  </code></pre>
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
                                                                class="fragment"
-                                                               data-fragment-index="0"
+                                                               data-fragment-index="1"
     theme="solarized-light" src="lib/docker-build.json" cols="174" rows="12"></asciinema-player>
+                      <pre class="fragment" data-fragment-index="2"><code>$ docker run YOURNAME/my-first-image .  </code></pre>
+
                   </section>
                   
                   
+                  <section>
+                      <h3>
+                          A few more Dockerfile directives
+                      </h3>
+                  </section>
                   
                   <section>
                     <h4>ENTRYPOINT</h4>
