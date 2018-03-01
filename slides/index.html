@@ -2858,11 +2858,9 @@ $ docker-compose up -d</code></pre>
                             <li class="fragment" data-fragment-index="0">Push code to repository</li>
                             <li class="fragment" data-fragment-index="1">Continuous Integration (CI) system runs tests</li>
                             <li class="fragment" data-fragment-index="2">If tests successful, automate image build &amp; push to a docker registry</li>
-                            <li class="fragment" data-fragment-index="3">Manually/automatically run <code>docker service update</code></li>
                             <li class="fragment"
-                                data-fragment-index="4">Easy to setup with
-                                existing services and automation tools like
-                                Ansible
+                                data-fragment-index="3">Easy to setup with
+                                existing services
                                 <ul>
                                     <li><a
                                         href="https://hub.docker.com">DockerHub</a>
@@ -2888,9 +2886,17 @@ $ docker-compose up -d</code></pre>
                         </ul>
                       </li>
                           <li class="fragment" data-fragment-index="1">Tell docker-compose to rebuild the image</li>
-                          <li class="fragment" data-fragment-index="3">Tag and ship it yourself
+                          <li class="fragment" data-fragment-index="2">Let's
+                              build and tag the image as YOURNAME/vote:v2 and
+                          push to <a href="https://hub.docker.com">hub.docker.com</a></li>
+                          <li class="fragment" data-fragment-index="3">
+                              This will come in handy in an example we're doing
+                              later
+                          </li>
+            
                     </ul>
-                            <pre class="fragment" data-fragment-index="1"><code>$ docker-compose build web
+                            <pre class="fragment"
+                            data-fragment-index="3"><code>$ docker-compose build vote
 $ docker tag examplevotingapp_vote:latest YOURNAME/vote:v2
 $ docker push YOURNAME/vote:v2</code></pre>
                   </section>
