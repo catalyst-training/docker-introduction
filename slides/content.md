@@ -1,10 +1,10 @@
 # Catalyst <!-- .element: class="catalyst-logo" -->
-### Your presentation title
-Presented by <!-- .element: class="small-text" --> [Name](Link) <!-- .element: class="small-text" -->
+### Introduction to Docker
+Presented by <!-- .element: class="small-text" --> [Travis Holton](Link) <!-- .element: class="small-text" -->
 
 
 
-## Title goes here <!-- .slide: class="title-slide" --> <!-- .element: class="orange" -->
+## Introduction to Docker <!-- .slide: class="title-slide" --> <!-- .element: class="orange" -->
 
 
 
