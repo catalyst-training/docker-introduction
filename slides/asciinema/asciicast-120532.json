@@ -1,0 +1,90 @@
+{
+  "command": null,
+  "title": null,
+  "width": 107,
+  "duration": 6.094661,
+  "height": 16,
+  "env": {
+    "TERM": "screen-256color",
+    "SHELL": "/bin/bash"
+  },
+  "version": 1,
+  "stdout": [
+    [
+      0.028012,
+      "\u001b[01;32mubuntu@manager1-trainingpc\u001b[00m:\u001b[01;34m~\u001b[00m$ "
+    ],
+    [
+      0.656125,
+      "d"
+    ],
+    [
+      0.137943,
+      "o"
+    ],
+    [
+      0.129133,
+      "c"
+    ],
+    [
+      0.110358,
+      "k"
+    ],
+    [
+      0.159904,
+      "e"
+    ],
+    [
+      0.170033,
+      "r"
+    ],
+    [
+      0.070007,
+      " "
+    ],
+    [
+      0.190721,
+      "n"
+    ],
+    [
+      0.149099,
+      "o"
+    ],
+    [
+      0.088594,
+      "d"
+    ],
+    [
+      0.171831,
+      "e"
+    ],
+    [
+      0.099006,
+      " "
+    ],
+    [
+      0.181137,
+      "l"
+    ],
+    [
+      0.130136,
+      "s"
+    ],
+    [
+      1.592906,
+      "\r\n"
+    ],
+    [
+      0.028967,
+      "ID                            HOSTNAME              STATUS              AVAILABILITY        MANAGER STATUS\r\nd1av3sf7qxmlbgtsc3jjpfw7b *   manager1-trainingpc   Ready               Active              Leader\r\ni7jhcrv1ggamrbodueynlc2jh     worker2-trainingpc    Ready               Active              \r\nv4lo1ahpw89mmx042xzvotzt1     worker1-trainingpc    Ready               Active              \r\n"
+    ],
+    [
+      0.000587,
+      "\u001b[01;32mubuntu@manager1-trainingpc\u001b[00m:\u001b[01;34m~\u001b[00m$ "
+    ],
+    [
+        2.0,
+        "\r\n"
+    ]
+  ]
+}

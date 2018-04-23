@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "width": 136,
+  "height": 18,
+  "duration": 6.042883,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "screen-256color",
+    "SHELL": "/bin/zsh"
+  },
+  "stdout": [
+    [
+      1.475424,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                       \r \r"
+    ],
+    [
+      0.084169,
+      "\r\n\u001b[34mdocker-training \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+    ],
+    [
+      8e-05,
+      "\u001bk..code/layering\u001b\\"
+    ],
+    [
+      0.047279,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m "
+    ],
+    [
+      0.001009,
+      "\u001b[K\u001b[118Cdocker-training\u001b[133D"
+    ],
+    [
+      0.000486,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      0.000258,
+      "\u001b[?2004h"
+    ],
+    [
+      0.659777,
+      "\u001b[3mdocker build -t acme/my-final-image:1.0 -f Dockerfile .\u001b[23m"
+    ],
+    [
+      0.729851,
+      "\u001b[55D\u001b[23md\u001b[23mo\u001b[23mc\u001b[23mk\u001b[23me\u001b[23mr\u001b[23m \u001b[23mb\u001b[23mu\u001b[23mi\u001b[23ml\u001b[23md\u001b[23m \u001b[23m-\u001b[23mt\u001b[23m \u001b[23ma\u001b[23mc\u001b[23mm\u001b[23me\u001b[23m/\u001b[23mm\u001b[23my\u001b[23m-\u001b[23mf\u001b[23mi\u001b[23mn\u001b[23ma\u001b[23ml\u001b[23m-\u001b[23mi\u001b[23mm\u001b[23ma\u001b[23mg\u001b[23me\u001b[23m:\u001b[23m1\u001b[23m.\u001b[23m0\u001b[23m \u001b[23m-\u001b[23mf\u001b[23m \u001b[23mD\u001b[23mo\u001b[23mc\u001b[23mk\u001b[23me\u001b[23mr\u001b[23mf\u001b[23mi\u001b[23ml\u001b[23me\u001b[23m \u001b[23m."
+    ],
+    [
+      5.6e-05,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      2.7e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.227507,
+      "Sending build context to Docker daemon 4.096 kB\r\r\r\n"
+    ],
+    [
+      0.140209,
+      "Step 1/2 : FROM acme/my-base-image:1.0\r\n"
+    ],
+    [
+      4.8e-05,
+      " ---> 2f723f94263a\r\nStep 2/2 : CMD /app/hello.sh\r\n"
+    ],
+    [
+      0.282578,
+      " ---> Running in c779f5850c78\r\n"
+    ],
+    [
+      0.445039,
+      " ---> 5932655b26aa\r\n"
+    ],
+    [
+      0.088599,
+      "Removing intermediate container c779f5850c78\r\n"
+    ],
+    [
+      0.04009,
+      "Successfully built 5932655b26aa\r\n"
+    ],
+    [
+      0.006428,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                       \r \r"
+    ],
+    [
+      0.054516,
+      "\r\n\u001b[34mdocker-training \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+    ],
+    [
+      0.000118,
+      "\u001bk..code/layering\u001b\\"
+    ],
+    [
+      0.026719,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[118Cdocker-training\u001b[133D"
+    ],
+    [
+      4.1e-05,
+      "\u001b[?1h\u001b=\u001b[?2004h"
+    ],
+    [
+      1.65775,
+      "\u001b[?2004l\r\r\n"
+    ]
+  ]
+}

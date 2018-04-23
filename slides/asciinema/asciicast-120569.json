@@ -1,0 +1,190 @@
+{
+  "duration": 6.495152,
+  "env": {
+    "SHELL": "/usr/bin/zsh",
+    "TERM": "screen-256color"
+  },
+  "command": null,
+  "version": 1,
+  "height": 23,
+  "title": null,
+  "width": 130,
+  "stdout": [
+    [
+      0.128619,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                 \r \r"
+    ],
+    [
+      0.02049,
+      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+    ],
+    [
+      2.2e-05,
+      "\u001bk..le-voting-app\u001b\\"
+    ],
+    [
+      7.1e-05,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[112C\u001b[90mtravis@zarathud\u001b[39m\u001b[127D"
+    ],
+    [
+      1.5e-05,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      4.9e-05,
+      "\u001b[?2004h"
+    ],
+    [
+      0.968609,
+      "d"
+    ],
+    [
+      0.191519,
+      "\bdo"
+    ],
+    [
+      0.111665,
+      "c"
+    ],
+    [
+      0.104198,
+      "k"
+    ],
+    [
+      0.152313,
+      "e"
+    ],
+    [
+      0.144077,
+      "r"
+    ],
+    [
+      0.080038,
+      " "
+    ],
+    [
+      0.200619,
+      "s"
+    ],
+    [
+      0.159549,
+      "t"
+    ],
+    [
+      0.095813,
+      "a"
+    ],
+    [
+      0.328343,
+      "c"
+    ],
+    [
+      0.127353,
+      "k"
+    ],
+    [
+      0.19159,
+      " "
+    ],
+    [
+      0.241042,
+      "r"
+    ],
+    [
+      0.167966,
+      "m"
+    ],
+    [
+      0.103823,
+      " "
+    ],
+    [
+      0.224152,
+      "v"
+    ],
+    [
+      0.135883,
+      "o"
+    ],
+    [
+      0.152267,
+      "t"
+    ],
+    [
+      0.151745,
+      "e"
+    ],
+    [
+      0.248081,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      2.7e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      0.037393,
+      "Removing service vote_redis\r\n"
+    ],
+    [
+      0.013047,
+      "Removing service vote_result\r\n"
+    ],
+    [
+      0.067117,
+      "Removing service vote_db\r\n"
+    ],
+    [
+      0.016668,
+      "Removing service vote_vote\r\n"
+    ],
+    [
+      0.016739,
+      "Removing service vote_worker\r\n"
+    ],
+    [
+      0.033235,
+      "Removing service vote_visualizer\r\n"
+    ],
+    [
+      0.034486,
+      "Removing network vote_backend\r\n"
+    ],
+    [
+      0.020632,
+      "Removing network vote_frontend\r\n"
+    ],
+    [
+      0.011558,
+      "Removing network vote_default\r\n"
+    ],
+    [
+      0.008902,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                 \r \r"
+    ],
+    [
+      0.014518,
+      "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
+    ],
+    [
+      4.4e-05,
+      "\u001bk..le-voting-app\u001b\\"
+    ],
+    [
+      5.7e-05,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[35m❯\u001b[39m \u001b[K\u001b[112C\u001b[90mtravis@zarathud\u001b[39m\u001b[127D"
+    ],
+    [
+      3.4e-05,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      3.1e-05,
+      "\u001b[?2004h"
+    ],
+    [
+      1.75555,
+      "\u001b[?2004l\r\r\n"
+    ]
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "version": 1,
+  "duration": 9.353107,
+  "width": 175,
+  "command": null,
+  "env": {
+    "TERM": "screen-256color",
+    "SHELL": "/bin/zsh"
+  },
+  "stdout": [
+    [
+      0.487295,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                              \r \r"
+    ],
+    [
+      0.00032,
+      "\u001bk~\u001b\\"
+    ],
+    [
+      0.030682,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[31m$\u001b[00m "
+    ],
+    [
+      4.6e-05,
+      "\u001b[K"
+    ],
+    [
+      9.9e-05,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      0.000208,
+      "\u001b[?2004h"
+    ],
+    [
+      0.592755,
+      "d"
+    ],
+    [
+      0.124855,
+      "\bdo"
+    ],
+    [
+      0.171161,
+      "c"
+    ],
+    [
+      0.05352,
+      "k"
+    ],
+    [
+      0.190892,
+      "e"
+    ],
+    [
+      0.139867,
+      "r"
+    ],
+    [
+      0.092328,
+      " "
+    ],
+    [
+      0.163143,
+      "s"
+    ],
+    [
+      0.17819,
+      "e"
+    ],
+    [
+      0.182772,
+      "a"
+    ],
+    [
+      0.12588,
+      "r"
+    ],
+    [
+      0.319533,
+      "c"
+    ],
+    [
+      0.093715,
+      "h"
+    ],
+    [
+      0.193578,
+      " "
+    ],
+    [
+      0.329248,
+      "h"
+    ],
+    [
+      0.143152,
+      "e"
+    ],
+    [
+      0.135725,
+      "l"
+    ],
+    [
+      0.198397,
+      "l"
+    ],
+    [
+      0.219529,
+      "o"
+    ],
+    [
+      0.406717,
+      "-"
+    ],
+    [
+      0.340611,
+      "w"
+    ],
+    [
+      0.12442,
+      "o"
+    ],
+    [
+      0.141148,
+      "r"
+    ],
+    [
+      0.148411,
+      "l"
+    ],
+    [
+      0.159387,
+      "d"
+    ],
+    [
+      0.417751,
+      "\u001b[?1l\u001b>"
+    ],
+    [
+      6.3e-05,
+      "\u001b[?2004l\r\r\n"
+    ],
+    [
+      1.691187,
+      "NAME                                       DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED\r\nhello-world        "
+    ],
+    [
+      7.6e-05,
+      "                        Hello World! (an example of minimal Docker...   411                 [OK]                \r\nkitematic/hello-world-nginx                A light-weight nginx container that demons...   86                          "
+    ],
+    [
+      6.1e-05,
+      "            \r\ntutum/hello-world                          Image to test docker deployments. Has Apac...   44                "
+    ],
+    [
+      4.7e-05,
+      "                      [OK]\r\ndockercloud/hello-world                    Hello World!        "
+    ],
+    [
+      4.2e-05,
+      "                            13                          "
+    ],
+    [
+      4.6e-05,
+      "            [OK]\r\nhypriot/armhf-hello-world                  Hello World! (an example of minimal Docker..."
+    ],
+    [
+      8.1e-05,
+      "   5                                       \r\nmarcells/aspnet-hello-world                ASP.NET vNext - Hello World                     4                "
+    ],
+    [
+      5.6e-05,
+      "                       [OK]\r\narmhf/hello-world                          "
+    ],
+    [
+      4.3e-05,
+      "Hello World! (an example of minimal Docker...   4                                       \r\nbonomat/nodejs-hello-world        "
+    ],
+    [
+      3.8e-05,
+      "         a simple nodejs hello world container           3                                   "
+    ],
+    [
+      3.7e-05,
+      "    [OK]\r\ncrccheck/hello-world                       Hello World web server in under 2.5 MB"
+    ],
+    [
+      3.9e-05,
+      "          2                                   "
+    ],
+    [
+      4.5e-05,
+      "    [OK]\r\ncarinamarina/hello-world-app               This is a sample Python web application, r...   1"
+    ],
+    [
+      3.9e-05,
+      "                                       [OK]\r\nppc64le/hello-world        "
+    ],
+    [
+      4.1e-05,
+      "                Hello World! (an example of minimal Docker...   1                   "
+    ],
+    [
+      3.9e-05,
+      "                    \r\ndhaneshande/hello-world                    "
+    ],
+    [
+      3.8e-05,
+      "                                                1                "
+    ],
+    [
+      4.6e-05,
+      "                       \r\nansibleplaybookbundle/hello-world-apb      An APB which deploys a sample Hello World!...   "
+    ],
+    [
+      4e-05,
+      "0                                       [OK]\r\ninfrastructureascode/hello-world        "
+    ],
+    [
+      4.4e-05,
+      "   A tiny \"Hello World\" web server with a hea...   0                           "
+    ],
+    [
+      5e-05,
+      "            [OK]\r\nansibleplaybookbundle/hello-world-db-apb   An APB which deploys a sample Hello World!...   0                   "
+    ],
+    [
+      4e-05,
+      "                    [OK]\r\nkevindockercompany/hello-world                             "
+    ],
+    [
+      4e-05,
+      "                                0                           "
+    ],
+    [
+      3.9e-05,
+      "            \r\ns390x/hello-world                          "
+    ],
+    [
+      4.2e-05,
+      "Hello World! (an example of minimal Docker...   0                                       \r\n"
+    ],
+    [
+      4.3e-05,
+      "lkungs/docker-hello-world                  Simple Hello World Example                      0"
+    ],
+    [
+      4e-05,
+      "                                       [OK]\r\nstumacsolutions/hello-world-container"
+    ],
+    [
+      3.9e-05,
+      "                                                      0        "
+    ],
+    [
+      3.9e-05,
+      "                               \r\nsharor/hello-world                        "
+    ],
+    [
+      4.1e-05,
+      "                                                 0        "
+    ],
+    [
+      4.3e-05,
+      "                               \r\nashleybarrett/node-hello-world             Simple \"hello world\" image using node."
+    ],
+    [
+      4.1e-05,
+      "          0                                       "
+    ],
+    [
+      3.9e-05,
+      "\r\njensendw/hello-world                                                               "
+    ],
+    [
+      4.1e-05,
+      "        0                                       \r\n"
+    ],
+    [
+      4.1e-05,
+      "uniplaces/hello-world                                                      "
+    ],
+    [
+      4e-05,
+      "                0                                       \r\n"
+    ],
+    [
+      3.7e-05,
+      "hello-seattle                              Hello from DockerCon 2016 (Seattle)!            0"
+    ],
+    [
+      4e-05,
+      "                   [OK]                \r\ngscrivano/hello-world"
+    ],
+    [
+      4.1e-05,
+      "                      hello world example system container            0        "
+    ],
+    [
+      0.000175,
+      "                               [OK]\r\n"
+    ],
+    [
+      0.005095,
+      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                              \r \r"
+    ],
+    [
+      0.000263,
+      "\u001bk~\u001b\\"
+    ],
+    [
+      0.022207,
+      "\r\u001b[0m\u001b[23m\u001b[24m\u001b[J\u001b[31m$\u001b[00m "
+    ],
+    [
+      0.000134,
+      "\u001b[K"
+    ],
+    [
+      0.000188,
+      "\u001b[?1h\u001b="
+    ],
+    [
+      0.000239,
+      "\u001b[?2004h"
+    ],
+    [
+      1.683134,
+      "\u001b[?2004l\r\r\n"
+    ]
+  ],
+  "height": 24,
+  "title": "docker search"
+}
