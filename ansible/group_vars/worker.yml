@@ -1,0 +1,5 @@
+security_groups:
+  - group: "k8s-worker{{ suffix }}"
+    port: 30000
+    port_end: 32767
+    remote_group: "k8s-master{{ suffix }}"

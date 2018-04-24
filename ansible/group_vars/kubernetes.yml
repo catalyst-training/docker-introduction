@@ -1,0 +1,11 @@
+main_security_groups:
+  - group: "manage{{ suffix }}" 
+    port: 22 
+    remote_ip_prefix: "{{ ssh_remote_cidr }}"
+  - group: "k8s-kublet-api{{ suffix }}"
+    port: 10250
+    remote_group: "k8s-master{{ suffix }}" 
+  - group: "k8s-kublet-api-ro{{ suffix }}"
+    port: 10255
+    remote_group: "k8s-master{{ suffix }}" 
+

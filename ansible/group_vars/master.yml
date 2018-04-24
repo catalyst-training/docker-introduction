@@ -1,0 +1,14 @@
+security_groups:
+  - group: "k8s-master{{ suffix }}"
+    port: 6443
+    remote_ip_prefix: "{{ ssh_remote_cidr }}"
+  - group: "k8s-etcd{{ suffix }}"
+    port: 2379
+    port_end: 2380
+    remote_group: "k8s-master{{ suffix }}"
+  - group: "k8s-kube-scheduler{{ suffix }}"
+    port: 10251
+    remote_group: "k8s-master{{ suffix }}"
+  - group: "k8s-kube-controller-manager{{ suffix }}"
+    port: 10252
+    remote_group: "k8s-master{{ suffix }}"
