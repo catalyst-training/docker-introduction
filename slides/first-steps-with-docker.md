@@ -140,20 +140,12 @@ usr
 var
 $ 
 </code></pre>
-<ul>
-                      <li class="fragment" data-fragment-index="1">Docker
-                          starts container using alpine image</li>
-  <li class="fragment" data-fragment-index="2">
- The <em>alpine</em> image contains the <a
-     href="https://www.aplinelinux.org/about/">Alpine OS</a>, a very minimal
- Linux distribution. 
- </li>                      <li class="fragment" data-fragment-index="3">
-                            <code >[command]</code> argument is executed
-                            inside container
-                            
-                        </li>
-                      <li class="fragment" data-fragment-index="4">Exits immediately</li>
-                      <li class="fragment" data-fragment-index="5">A docker container only runs as long as it has a process (eg. a shell terminal or program) to run</li>
- 
 
-                    </ul>
+* Docker starts container using alpine image <!-- .element: class="fragment" data-fragment-index="0" -->
+* The <!-- .element: class="fragment" data-fragment-index="1" -->_alpine_ image contains [Alpine OS](https://www.aplinelinux.org/about/), a very minimal Linux distribution.    
+*  <!-- .element: class="fragment" data-fragment-index="2" -->`[command]` argument is executed inside container 
+* Exits immediately <!-- .element: class="fragment" data-fragment-index="3" -->
+* A docker container only runs as long as it has a process (eg. a shell terminal or program) to run <!-- .element: class="fragment" data-fragment-index="4" -->
+
+
+
