@@ -1,4 +1,4 @@
-security_groups:
+host_security_groups:
   - group: "k8s-master{{ suffix }}"
     port: 6443
     remote_ip_prefix: "{{ ssh_remote_cidr }}"

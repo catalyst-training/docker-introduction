@@ -9,3 +9,5 @@ main_security_groups:
     port: 10255
     remote_group: "k8s-master{{ suffix }}" 
 
+
+security_groups: "{{ main_security_groups + host_security_groups }}"
