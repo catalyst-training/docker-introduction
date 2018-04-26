@@ -86,4 +86,3 @@ docker push YOURNAME/myfirstapp
 * Wrote a small web application
 * Used Dockerfile to create an image
 * Pushed image to upstream registry
-
