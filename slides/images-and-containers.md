@@ -349,17 +349,76 @@ docker build -t YOURNAME/my-first-image .
 * Docker images need not be executable by default <!-- .element: class="fragment" data-fragment-index="0" -->
 * ENTRYPOINT configures executable behaviour of container <!-- .element: class="fragment" data-fragment-index="1" -->
 * <!-- .element: class="fragment" data-fragment-index="2" -->_shell_ and _exec_ forms just like <code>CMD</code>
-<pre class="fragment" data-fragment-index="3"><code data-trim>
+<pre class="fragment" data-fragment-index="3" style="font-size:14pt;"><code data-trim>
 cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
 $ docker build -t not-executable -f Dockerfile.notexecutable .
 $ docker run not-executable # does nothing
 </code></pre>
-<pre class="fragment" data-fragment-index="4"><code data-trim>
+<pre class="fragment" data-fragment-index="4" style="font-size:14pt;"><code data-trim>
 docker build -t executable -f Dockerfile.executable .
 $ docker run executable
 </code></pre>
 
 
+### Combining ENTRYPOINT and CMD
+
+* <!-- .element: class="fragment" data-fragment-index="0" -->Arguments following the image for <code>docker run image</code> overrides <code>CMD</code>
+* <!-- .element: class="fragment" data-fragment-index="1" -->Use exec form of ENTRYPOINT and CMD together to set base command and default arguments
+
+
+
+### ENTRYPOINT & CMD
+* Hypothetical application <!-- .element: class="fragment" data-fragment-index="2" -->
+<pre class="fragment" data-fragment-index="3"><code data-trim>
+FROM ubuntu:latest
+.
+.
+ENTRYPOINT ["./base-script"]
+CMD ["test"]
+</code></pre>
+<pre class="fragment" data-fragment-index="4"><code data-trim>
+docker run my-image
+</code></pre>
+
+* By default this image will just pass <!-- .element: class="fragment" data-fragment-index="5" --><code>test</code> as argument to <code>base-script</code> to run unit tests by default.
+
+
+
+### ENTRYPOINT & CMD
+<pre class="fragment" data-fragment-index="0"><code data-trim data-noescape>
+docker run my-image <mark>server</mark>
+</code></pre>
+
+* Passing argument at the end tells it to override CMD and execute with <!-- .element: class="fragment" data-fragment-index="1" --><code>server</code> to run server feature 
+
+
+### Exploring ENTRYPOINT & CMD
+```
+cd sample-code/entrypoint_cmd_examples 
+```
+
+* Compare Dockerfiles: <!-- .element: class="fragment" data-fragment-index="0" -->
+   * Dockerfile.cmd_only
+   * Dockerfile.cmd_and_entrypoint
+* Build images: <!-- .element: class="fragment" data-fragment-index="1" -->
+   ```
+   docker build -t cmd_only -f Dockerfile.cmd_only .
+   docker build -t cmd_and_entrypoint -f Dockerfile.cmd_and_entrypoint .
+   ```
+* Run both the images with or without an additional argument to see what happens <!-- .element: class="fragment" data-fragment-index="2" -->
+
+
+
+### More Dockerfile instructions 
+<dl>
+    <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
+    <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>
+    <dt>ENV        </dt>      <dd>Set an environment
+    variable</dd>
+</dl>
+
+See official reference [documentation](https://docs.docker.com/engine/reference/builder/)  for more
+                    
 
 
 
