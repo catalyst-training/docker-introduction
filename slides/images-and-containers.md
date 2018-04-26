@@ -418,7 +418,3 @@ cd sample-code/entrypoint_cmd_examples
 </dl>
 
 See official reference [documentation](https://docs.docker.com/engine/reference/builder/)  for more
-                    
-
-
-
