@@ -148,4 +148,192 @@ $
 * A docker container only runs as long as it has a process (eg. a shell terminal or program) to run <!-- .element: class="fragment" data-fragment-index="4" -->
 
 
+#### Exercise: Start an _interactive_ shell
 
+<code>docker</code> <code >run</code> <code style="color:red;">[options]</code> <code >alpine</code> <code>/bin/sh</code>
+
+* Find <code>[options]</code> to make container run interactively
+<pre class="fragment" data-fragment-index="0"><code data-trim>
+docker run -it alpine /bin/sh
+</code></pre>
+
+<asciinema-player class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="asciinema/asciicast-119490.json" cols="174" rows="5"></asciinema-player>
+
+
+### Running an interactive container
+* Docker starts alpine image <!-- .element: class="fragment" data-fragment-index="0" -->
+   * <!-- .element: class="fragment" data-fragment-index="1" -->`-i` interactively
+   * <!-- .element: class="fragment" data-fragment-index="1" -->`-t` allocate a pseudo-TTY
+* Runs shell command <!-- .element: class="fragment" data-fragment-index="2" -->
+* Execute commands inside container <!-- .element: class="fragment" data-fragment-index="2" -->
+* Exiting the shell stops the process and the container <!-- .element: class="fragment" data-fragment-index="3" -->
+                    
+
+
+### `docker ps`
+* List currently running containers <!-- .element: class="fragment" data-fragment-index="0" -->
+* <!-- .element: class="fragment" data-fragment-index="1" -->By default docker will assign a random name to each container (i.e. *adoring_edison*).
+   <pre  class="fragment" data-fragment-index="2" style="width:100%"><code data-trim>
+$ docker ps
+CONTAINER ID  IMAGE                                ... NAMES
+b3169acf49f8  alpine                               ... adoring_edison
+02aa3e50580c  heytrav/docker-introduction-slides   ... docker-intro
+</code></pre>
+<table class="fragment" data-fragment-index="3">
+     <tr>
+       <th>Option                  </th>
+       <th>Argument</th>
+       <th>Description</th>
+     </tr>
+
+     <tr><td><code>-a, --all      </code></td><td>            </td><td> Show all containers (default shows just running)</td></tr>
+     <tr><td><code>-f, --filter   </code></td><td> filter     </td><td>    Filter output based on conditions provided</td></tr>
+     <tr><td><code>    --format   </code></td><td> string     </td><td>    Pretty-print containers using a Go template</td></tr>
+     <tr><td><code>    --help     </code></td><td>            </td><td> Print usage</td></tr>
+     <tr><td><code>    --no-trunc </code></td><td>            </td><td> Don't truncate output</td></tr>
+   </table>
+
+
+#### Exercise: Assign the name <em>myalpine</em> when running previous example container
+* Hint: <code>docker run -it </code><code style="color:red;">&lt;option&gt;</code><code> alpine</code>
+<pre class="fragment" style="width:100%;" data-fragment-index="0"><code data-trim>
+docker run -it --name myalpine alpine /bin/sh
+</code></pre>
+<pre class="fragment" style="width:100%;" data-fragment-index="1"><code data-trim>
+docker ps
+CONTAINER ID        IMAGE                                ...   NAMES
+db1faf244e7a        alpine                               ...   myalpine
+02aa3e50580c        heytrav/docker-introduction-slides   ...   docker-intro
+</code></pre>
+* Exit the shell <!-- .element: class="fragment" data-fragment-index="2" -->
+* Repeat using same name.  What happens? <!-- .element: class="fragment" data-fragment-index="3" -->
+<asciinema-player  class="fragment" data-fragment-index="4" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="asciinema/name-in-use-error.json" cols="200"
+    rows="6"></asciinema-player>
+
+
+### Removing containers
+<!-- .element: class="fragment" data-fragment-index="0" --><code>docker</code> <code style="color:red;">rm</code> <code style="color:green;">name|containerID</code>
+                    
+
+
+#### Exercise: Remove old _myalpine_ container
+<pre class="fragment" data-fragment-index="0"><code data-trim>
+docker rm myalpine
+</code></pre>
+<asciinema-player  class="fragment" data-fragment-index="0" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="asciinema/remove-container.json" cols="200" rows="12"></asciinema-player>
+
+* <!-- .element: class="fragment" data-fragment-index="2" -->If you pass the <code style="color:red;">--rm</code> flag to <code>docker run</code>, containers will be cleaned up when
+stopped.
+
+
+#### Exercise: Run a website in a container
+<pre><code data-trim>
+docker run [OPTIONS] dockersamples/static-site
+</code></pre>
+
+* Find values for [OPTIONS]: <!-- .element: class="fragment" data-fragment-index="0" -->
+   * <!-- .element: class="fragment" data-fragment-index="1" -->Give it the name: _static-site_
+   * <!-- .element: class="fragment" data-fragment-index="2" -->Pass <code>AUTHOR="YOURNAME"</code> as environment variable
+   * <!-- .element: class="fragment" data-fragment-index="3" -->Map port 8081 to 80 internally (hint <code>8081:80</code>)
+   * Cleans up container on exit <!-- .element: class="fragment" data-fragment-index="4" -->
+
+
+#### Run a website in a container
+<asciinema-player autoplay="1" class="fragment" data-fragment-index="0" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="asciinema/static-site-v1.json" cols="120" rows="8"></asciinema-player>
+
+* <!-- .element: class="fragment" data-fragment-index="1" -->`docker run` implicitly pulls image if not available 
+* Try to exit using CTRL-C. What happens? <!-- .element: class="fragment" data-fragment-index="2" -->
+
+
+
+### Stopping a running container
+<code>docker</code> <code style="color:red;">stop</code> <code style="color:green;">name|containerID</code>
+
+
+
+#### Exercise: Stop the _static-site_ container
+
+* You actually have a couple options: <!-- .element: class="fragment" data-fragment-index="0" -->
+   * use the name you gave to the container <!-- .element: class="fragment" data-fragment-index="1" -->
+      ```
+      $ docker stop static-site
+      ```
+   * <!-- .element: class="fragment" data-fragment-index="2" -->use the `CONTAINERID` from `docker ps` output (will depend on your environment)
+      ```
+      $ docker stop 25eff330a4e4
+      ```
+
+
+#### Exercise: Run a detached container
+
+* Run static-site container like you did before, but add option to run in the background (i.e.  <em>detached</em> state).
+   <pre class="fragment" data-fragment-index="0"><code data-trim>
+   docker run --rm --name static-site -e AUTHOR="YOUR NAME" \
+        -d -p 8081:80 dockersamples/static-site
+   </code></pre>           
+
+<asciinema-player  class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="asciinema/asciicast-122718.json" cols="120" rows="8"></asciinema-player>
+
+Note: Have users stop (<code>docker stop static-site</code>) and start this container with the exact same line. Have them run again with the <code>--rm</code> flag
+
+
+### View Container Logs
+<code>docker</code> <color style="color:red;">logs</color> <code style="color:blue;">[options]</code> <code style="color:red;">CONTAINER</code>
+<table>
+   <tr>
+     <th>Option</th>
+     <th>Argument</th>
+     <th>Description</th>
+   </tr>
+
+   <tr><td><code>    --details    </code></td><td>       </td> <td>      Show extra details provided to logs</td></tr>
+   <tr><td><code>-f, --follow     </code></td><td>       </td> <td>      Follow log output</td></tr>
+   <tr><td><code>    --help       </code></td><td>       </td> <td>      Print usage</td></tr>
+   <tr><td><code>    --since      </code></td><td> string</td> <td>            Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)</td></tr>
+   <tr><td><code>    --tail       </code></td><td> string</td> <td>             Number of lines to show from the end of the logs (default "all")</td></tr>
+   <tr><td><code>-t, --timestamps </code></td><td>       </td> <td>      Show timestamps</td></tr>
+ </table>
+See <a href="https://docs.docker.com/engine/reference/commandline/logs/">online documentation</a>
+                      
+
+
+#### Excercie: View container logs for _static-site_ container
+
+ <asciinema-player class="fragment" data-fragment-index="0" autoplay="1" loop="1" font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-122552.json" cols="170" rows="14"></asciinema-player>
+
+Go to <!-- .element: class="fragment" data-fragment-index="1" -->[localhost:8081](http://localhost:8081) and refresh a few times
+
+
+
+#### Exercise: Check process list in _static-site_ container
+<asciinema-player class="fragment" data-fragment-index="0"  autoplay="1" loop="1" font-size="medium"
+   theme="solarized-light" speed="1" src="asciinema/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
+
+
+
+### List Local Images
+```
+docker image ls
+```
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
+    theme="solarized-light" src="asciinema/asciicast-119494.json" cols="174" rows="7"></asciinema-player>
+
+
+
+### Docker Behind the Scenes
+
+* User types docker commands
+* Docker client contacts docker daemon
+* Docker daemon checks if image exists
+* Docker daemon downloads image from docker registry if it does not exist
+* Docker daemon runs container using image
+                      
+
+
+### Docker Architecture
+![architecture](img/architecture.svg "Docker Architecture")
