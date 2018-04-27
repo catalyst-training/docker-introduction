@@ -1,3 +1,14 @@
+## Wrap Up
+
+
+### Docker Ecosystem
+
+* An explosion of tools
+* Hard to keep up
+* Lets have a quick look
+
+
+
 ### Docker Ecosystem
 ![ecosystem](img/docker-ecosystem.png "Docker Ecosystem")
 
