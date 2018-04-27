@@ -14,6 +14,7 @@
     - ca-certificates
     - "linux-image-extra-{{ ansible_kernel }}"
     - linux-image-extra-virtual
+    - curl
 
 - name: Add Dockers official GPG key
   block:
