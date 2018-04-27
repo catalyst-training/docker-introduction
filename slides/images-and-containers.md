@@ -362,26 +362,22 @@ $ docker run executable
 
 ### Combining ENTRYPOINT and CMD
 
-* <!-- .element: class="fragment" data-fragment-index="0" -->Arguments following the image for <code>docker run image</code> overrides <code>CMD</code>
+* <!-- .element: class="fragment" data-fragment-index="0" -->Arguments following the image for `docker run image` overrides `CMD`
 * <!-- .element: class="fragment" data-fragment-index="1" -->Use exec form of ENTRYPOINT and CMD together to set base command and default arguments
 
 
-
 ### ENTRYPOINT & CMD
-* Hypothetical application <!-- .element: class="fragment" data-fragment-index="2" -->
-<pre class="fragment" data-fragment-index="3"><code data-trim>
-FROM ubuntu:latest
-.
-.
-ENTRYPOINT ["./base-script"]
-CMD ["test"]
-</code></pre>
-<pre class="fragment" data-fragment-index="4"><code data-trim>
-docker run my-image
-</code></pre>
-
-* By default this image will just pass <!-- .element: class="fragment" data-fragment-index="5" --><code>test</code> as argument to <code>base-script</code> to run unit tests by default.
-
+* Hypothetical application <!-- .element: class="fragment" data-fragment-index="0" -->
+  ```dockerfile
+  FROM ubuntu:latest
+  ENTRYPOINT ["./base-script"]
+  .
+  CMD ["test"]
+  ```
+* By default this image will just pass <!-- .element: class="fragment" data-fragment-index="1" -->`test` as argument to `base-script` to run unit tests by default.
+   ```
+   docker run my-image
+   ```
 
 
 ### ENTRYPOINT & CMD

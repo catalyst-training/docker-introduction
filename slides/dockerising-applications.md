@@ -15,7 +15,7 @@
 ```
 cd ~/docker-introduction/sample-code/flask-app
 ```
-   <dl style="font-size:14pt;">
+   <dl style="font-size:15pt;">
    <dt>app.py</dt> <dd>A simple flask application for displaying cat pictures</dd>
    <dt>requirements.txt</dt> <dd>list of dependencies for flask</dd>
    <dt>templates/index.html</dt> <dd>A jinja2 template</dd>
