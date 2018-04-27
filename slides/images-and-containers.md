@@ -104,18 +104,22 @@
 
 
 ### View Image Layers
-<code>docker history </code><code style="color:red;">&lt;image&gt;</code>
-<pre  class="fragment" data-fragment-index="0"
-                    style="width:100%"><code data-trim>
+`docker history ` `<image>` <!-- .element: style="color:red;"  --> 
+
+```
 docker history heytrav/docker-introduction-slides
-                    
-IMAGE          CREATED       CREATED BY             SIZE                COMMENT
-e72084f25e08   2 months ago  /bin/sh -c #(nop)      0B                  
-&lt;missing&gt;      2 months ago  /bin/sh -c #(no        0B                  
-   .
-   .
-&lt;missing&gt;      9 months ago  /bin/sh -c #(n         0B                  
-&lt;missing&gt;      9 months ago  /bin/sh -c #(n         3.97MB</code></pre>
+
+IMAGE          CREATED       CREATED BY             SIZE  
+e72084f25e08   2 months ago  /bin/sh -c #(nop)      0B    
+<missing>      2 months ago  /bin/sh -c #(no        0B    
+    .
+    .
+<missing>      9 months ago  /bin/sh -c #(n         0B    
+<missing>      9 months ago  /bin/sh -c #(n         3.97MB
+```
+<!-- .element: class="fragment" data-fragment-index="0"
+style="font-size:10pt;" -->
+
 
 
 ## Containers

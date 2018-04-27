@@ -36,16 +36,15 @@ Note: Same application container can run on any system or cloud.
                   
 
 ### Benefits: Resources
-<ul>
-<li>Containers share a kernel</li>
-<li>Use less CPU than VMs</li>
-<li>Less storage. Container image only contains:
-    <ul>
-        <li>executable</li>
-        <li>application dependencies</li>
-    </ul>
-</li>
-</ul>
+
+* Containers share a kernel
+* Use less CPU than VMs
+* Less storage. Container image only contains:
+   * executable
+   * application dependencies
+
+
+
 
 
 ### Benefits: Decoupling

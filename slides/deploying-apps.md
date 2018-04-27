@@ -74,9 +74,9 @@
 
 ### Docker Swarm
 
-* Two types of machines or <em>nodes</em>
-   * 1 or more <em>manager</em> nodes
-   * 0 or more <em>worker</em> nodes
+* Two types of machines or _nodes_
+   * 1 or more _manager_ nodes
+   * 0 or more _worker_ nodes
 * Managers control global state of cluster
    * Raft Consensus Algorithm
    * If one manager fails, any other should take over
