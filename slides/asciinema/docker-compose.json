@@ -7,10 +7,6 @@
   "duration": 18.887593,
   "stdout": [
     [
-      0.305665,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                 \r \r"
-    ],
-    [
       0.024027,
       "\r\n\u001b[34m\u001b[01mexample-voting-app\u001b[22m \u001b[90m \u001b[39m \u001b[33m\u001b[39m\r\n"
     ],
@@ -841,10 +837,6 @@
     [
       0.000698,
       "        0.0.0.0:32780->6379/tcp                        redis\r\n046a17f49dff        examplevotingapp_worker              \"/bin/sh -c 'dotne...\"   5 seconds ago       Up 4 seconds                                                       examplevotingapp_worker_1\r\n05e6a293c67b        heytrav/docker-introduction-slides   \"/usr/local/bin/du...\"   16 hours ago        Up 16 hours         0.0.0.0:8000->8000/tcp                         docker-intro\r\n"
-    ],
-    [
-      0.001615,
-      "\u001b[1m\u001b[3m%\u001b[23m\u001b[1m\u001b[0m                                                                                                                                                                                 \r \r"
     ],
     [
       0.043158,

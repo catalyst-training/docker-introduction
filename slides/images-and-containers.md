@@ -180,23 +180,27 @@ namespace and sets of cgroups
 
 
 #### Exercise: Explore Image Layers
-<pre class="fragment" data-fragment-index="0"><code data-trim>
+```
 docker run -it ubuntu:16.04 /bin/bash
 root@CONTAINERID:/$ apt-get update 
 root@CONTAINERID:/$ exit
 docker ps -a
 docker diff CONTAINERID
-</code></pre>
-<pre class="fragment" data-fragment-index="1"><code data-trim>
+```
+<!-- .example: class="fragment" data-fragment-index="0"-->
+
+```
 docker commit CONTAINERID ubuntu:update
 13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
-</code></pre>
-<pre class="fragment" data-fragment-index="2"><code data-trim>
+```
+<!-- .example: class="fragment" data-fragment-index="1"-->
+
+```
 docker image ls
 docker history ubuntu:16.04
 docker history ubuntu:update
-</code></pre>
-
+```
+<!-- .example: class="fragment" data-fragment-index="2"-->
 
 
 ### Explore Image Layers
@@ -209,8 +213,7 @@ docker history ubuntu:update
 ## Creating Docker Images
 
 
-
-### Introducing the _Dockerfile_
+### The _Dockerfile_
 
 * A text file 
 * Usually named <code>Dockerfile</code>
@@ -295,21 +298,21 @@ docker history ubuntu:update
 ```
 cd ~/docker-introduction/sample-code/first-docker-file && ls
 ```
-* Write a <code>Dockerfile</code>:
-   * Named <code>Dockerfile</code>
+* Write a `Dockerfile`:
+   * Named `Dockerfile`
    * Based on alpine
    * Set working directory to <code style="color:blue;">/app</code>
-   * Copy hello.sh into working directory
-   * make hello.sh executable
-   * tell docker to run hello.sh on docker run
-<pre class="fragment" data-fragment-index="0"><code data-trim>
+   * Copy `hello.sh` into working directory
+   * make `hello.sh` executable
+   * tell docker to run `hello.sh` on docker run
+```
 FROM alpine
 WORKDIR /app
 COPY hello.sh .
 RUN chmod +x hello.sh
 CMD ["./hello.sh"]
-</code></pre>
-
+```
+<!-- .example: style="font-size:10pt;" class="fragment" data-fragment-index="0" -->
 
 
 ### `docker build`
