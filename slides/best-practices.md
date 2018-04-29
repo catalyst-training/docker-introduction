@@ -254,7 +254,3 @@ What happens when you want to stop container
       * Easy to top and start
       * Flexible in the way they are executed
 * Official Dockerfile [best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-
-
-
-

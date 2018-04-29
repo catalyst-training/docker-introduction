@@ -35,14 +35,13 @@ cd ~/example-voting-app
 
 * Push code to repository <!-- .element: class="fragment" data-fragment-index="0" -->
 * Continuous Integration (CI) system runs tests <!-- .element: class="fragment" data-fragment-index="1" -->
-* If tests successful, automate image build &amp; push to a docker registry
-* Easy to setup with existing services
-
-* [DockerHub](https://hub.docker.com) (eg. [these slides](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/))
-* [GitHub](https://github.com)
-* [CircleCI](https://circleci.com)
-* GitLab
-* [Quay.io](https://quay.io)
+* If tests successful, automate image build &amp; push to a docker registry <!-- .element: class="fragment" data-fragment-index="2" -->
+* Easy to setup with existing services <!-- .element: class="fragment" data-fragment-index="3" -->
+   * [DockerHub](https://hub.docker.com) (eg. [these slides](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/))
+   * [GitHub](https://github.com)
+   * [CircleCI](https://circleci.com)
+   * GitLab
+   * [Quay.io](https://quay.io)
 
 
 ### Developer Workflow
@@ -65,8 +64,3 @@ docker push YOURNAME/vote:v2
 * With docker-compose it's relatively easy to develop on a microservice application
 * Changes visible in real time
 * Can easily package and distribute images for others to use
-
-
-
-
-

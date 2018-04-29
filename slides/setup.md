@@ -3,116 +3,84 @@
 
 ### Fetch course resources
 
-<pre class="fragment" data-fragment-index="0"><code data-trim data-noescape>
-$ git clone \
-    https://github.com/catalyst-training/docker-introduction.git
-$ cd docker-introduction
-</code></pre>
+```
+git clone https://github.com/catalyst-training/docker-introduction.git
+```
+<!-- .element: style="width:100%;" class="fragment" data-fragment-index="0" -->
 
-<pre class="fragment" data-fragment-index="0"><code data-trim>
-$ cd ~/docker-introduction
-$ ls
-</code></pre>
+```
+cd ~/docker-introduction
+```
+<!-- .element: style="width:100%;" class="fragment" data-fragment-index="1" -->
 
-<ul style="width:80%;">
-<li class="fragment" data-fragment-index="1">Slides for Reveal.js presentation</li>
-<li class="fragment" data-fragment-index="2">docker-introduction.pdf</li>
-<li class="fragment"
-data-fragment-index="3">Ansible setup playbook</li>
-<li class="fragment" data-fragment-index="4">Sample code for some exercises</li>
-</ul>
-
+* This folder contains: <!-- .element: class="fragment" data-fragment-index="2" -->
+   * Slides for reveal.js presentation
+   * docker-introduction.pdf
+   * Ansible setup playbook
+   * Sample code for exercises
 
 
 ### Ansible
-<ul>
-    <li>
-    Some of the features we will be exploring require
-    setup. We'll use ansible for that.
-    </li>
-    <li>Python based tool set</li>
-    <li>Automate devops tasks
-        <ul>
-            <li>server/cluster management </li>
-            <li>installing packages</li>
-            <li>deploying code </li>
-            <li>Configuration management</li>
-        </ul>
-</ul>
 
+* Some of the features we will be exploring require setup. We'll use ansible for that.
+* Python based tool set
+* Automate devops tasks
+   * server/cluster management 
+   * installing packages
+   * deploying code 
+   * Configuration management
 
 
 ## Setup Ansible
-<pre class="fragment" data-fragment-index="0"><code data-trim>
-git clone \
-     https://github.com/catalyst/catalystcloud-ansible.git
-</code></pre>
+```
+git clone https://github.com/catalyst/catalystcloud-ansible.git
+```
 
-<pre class="fragment" data-fragment-index="1"><code data-trim>
+<!-- .element: style="width:100%;" class="fragment" data-fragment-index="0" -->
+
+```
 cd ~/catalystcloud-ansible
 ./install-ansible.sh
 . 
-. &lt;stuff happens&gt;
+. <stuff happens>
 .
-$ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate
-</code></pre>
-<ul style="width:80%;" class="fragment" data-fragment-index="2">
-    <li>Installs python virtualenv with latest ansible
-    libraries</li>
-    <li>We'll be using this virtualenv for tasks
-        throughout the course.</li>
-</ul>
+source $CC_ANSIBLE_DIR/ansible-venv/bin/activate
+```
+<!-- .element: style="width:100%;" class="fragment" data-fragment-index="1" -->
 
+* Installs python virtualenv with latest ansible libraries <!-- .element: class="fragment" data-fragment-index="2" -->
+* We'll be using this virtualenv for tasks throughout the course <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<!-- .element: style="width:80%;"  -->
 
 
 ## Setup Docker
-<ul style="width:80%;">
-<li class="fragment" data-fragment-index="0">
-Follow instructions on website for installing
-<ul>
-<li><a href="https://store.docker.com/search?offering=community&type=edition">Docker Community Edition</a></li>
-<li><a href="https://docs.docker.com/compose/install/">docker-compose</a></li>
-</ul>
-</li>
-<li class="fragment" data-fragment-index="1">If
-you are using Ubuntu, use the ansible playbook included in course repo</li>
-</ul>
-<pre class="fragment" data-fragment-index="1"><code data-trim>
-$ cd docker-introduction
-$ ansible-playbook -K ansible/docker-install.yml \
+
+* Follow instructions on website for installing <!-- .element: class="fragment" data-fragment-index="0" -->
+   * [Docker Community Edition](https://store.docker.com/search?offering=community&type=edition)
+   * [docker-compose](https://docs.docker.com/compose/install/)
+* If you are using Ubuntu, you can use the ansible playbook included in course repo <!-- .element: class="fragment" data-fragment-index="1" -->
+
+```
+cd docker-introduction
+ansible-playbook -K ansible/docker-install.yml \
         -e ansible_python_interpreter=/usr/bin/python
-</code></pre>
-
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 
 
 ## Setup Docker
-<ul style="width:80%;">
-<li class="fragment" >
-This playbook installs:
-<ul>
-<li class="fragment"
->latest Docker <em>Community Edition</em></li>
-<li class="fragment"
-><code>docker-compose</code></li>
-<li class="fragment"
->You might need to logout and login again
-</li>
-</ul>
-</li>
-</ul>
-
+* This playbook installs:
+   * latest Docker _Community Edition_
+   * `docker-compose`
+* You might need to logout and login again
 
 
 ## Fetch and run slides
-<pre><code data-trim>
-$ docker run --name docker-intro -d --rm \
-    -p 8000:8000 heytrav/docker-introduction-slides
-</code></pre>
-    <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
-    <p>
-    Follow along with course slides: <a href="http://localhost:8000">http://localhost:8000</a>
-    </p>
-
-
-
+```
+docker run --name docker-intro -d --rm \
+        -p 8000:8000 heytrav/docker-introduction-slides
+```
+<asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
+* Follow along with the <!-- .element: class="fragment" data-fragment-index="0" -->[course slides](http://localhost:800)

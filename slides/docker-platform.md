@@ -29,27 +29,18 @@ A command-line tool for programmatically defining the contents of a Linux contai
 
 
 ### Docker Workflow
-* Developer packages application and supporting components into image <!-- .element: class="fragment" data-fragment-index="0" -->
+* Developer packages application and supporting components into image <!-- .element: class="fragment" data-fragment-index="0" -->![workflow](img/Diapositive1.png "Developer workflow")  <!-- .element: class="img-right" style="width:50%;" -->
 * Developer/CI pushes image to private or public registry <!-- .element: class="fragment" data-fragment-index="1" -->
 * The image becomes the unit for distributing and testing your application.
   <!-- .element: class="fragment" data-fragment-index="2" --> 
 
-![workflow](img/Diapositive1.png "Developer workflow") <!-- .element: class="fragment" data-fragment-index="2" -->
-
 
 ### Portability
 
-<ul>
-<li>Most modern operating systems
-<ul>
-<li>Linux (RHEL, CentOS, Ubuntu LTS, etc.)</li>
-<li>OSX </li>
-<li>Windows</li>
-</ul>
-</li>
-<li>Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)</li>
-<li>Private clouds (OpenStack, Vmware)</li>
-<li>Public clouds (AWS, Azure, Rackspace, Google)</li>
-</ul>
-
-                    
+* Docker is supported on most modern operating systems
+   * Linux (RHEL, CentOS, Ubuntu LTS, etc.)
+   * OSX 
+   * Windows
+* Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)
+* Private clouds (OpenStack, Vmware)
+* Public clouds (AWS, Azure, Rackspace, Google)

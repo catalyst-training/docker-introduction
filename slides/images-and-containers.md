@@ -71,7 +71,7 @@
 | 0 | Base Ubuntu OS |
 
 * A layer is an instruction that 
-   * change filesystem
+   * changes the filesystem
    * tells Docker what to do when run
 
 
@@ -337,9 +337,11 @@ CMD ["./hello.sh"]
 * Build a Docker image:
    * Use Dockerfile from earlier example
    * Name image YOURNAME/my-first-image
-<pre class="fragment" data-fragment-index="0"><code data-trim>
+
+```
 docker build -t YOURNAME/my-first-image .  
-</code></pre>
+```
+<!-- .element: class="fragment" data-fragment-index="0" -->
 
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" class="fragment" data-fragment-index="1" theme="solarized-light" src="asciinema/docker-build.json" cols="174" rows="12"></asciinema-player> 
 
