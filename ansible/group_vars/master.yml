@@ -1,3 +1,4 @@
+flannel_semaphore: "/home/{{ ssh_user }}/applied_flanel_pod_network"
 host_security_groups:
   - group: "k8s-master{{ suffix }}"
     port: 6443
@@ -15,6 +16,6 @@ host_security_groups:
   - group: "k8s-master{{ suffix }}"
     port: 10250
     remote_group: "k8s-master{{ suffix }}" 
-  - group: "k8s-kublet-api-ro{{ suffix }}"
+  - group: "k8s-master{{ suffix }}"
     port: 10255
     remote_group: "k8s-master{{ suffix }}" 

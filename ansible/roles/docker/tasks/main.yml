@@ -12,9 +12,10 @@
   with_items:
     - apt-transport-https
     - ca-certificates
+    - curl
     - "linux-image-extra-{{ ansible_kernel }}"
     - linux-image-extra-virtual
-    - curl
+    - software-properties-common
 
 - name: Add Dockers official GPG key
   block:
@@ -53,8 +54,8 @@
 
 - name: Install docker community edition
   apt:
-    name: docker-ce
-    state: latest
+    name: "{{ hostvars[inventory_hostname].docker_lib | default(docker_lib) }}"
+    state: present
   notify:
     - start docker
 

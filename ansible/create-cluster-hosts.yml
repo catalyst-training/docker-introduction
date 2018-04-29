@@ -47,6 +47,7 @@
         ip_version: 4
         dns_nameservers: "{{ default_nameservers }}"
 
+
     - name: Create router
       os_router:
         state: present
@@ -202,6 +203,6 @@
         dest: /etc/hosts
         insertafter: EOF
         block: |
-          {{ hostvars[groups.managers[0]].ansible_host }} voting.app
+          {{ hostvars[groups.master[0]].ansible_host }} voting.app
         marker: "# {mark} ANSIBLE MANAGED BLOCK FOR voting.app"
 
