@@ -7,7 +7,6 @@
 * Typically some kind of hosting provider
    * Bare metal
    * Cloud Provider
-* We'll use Catalyst Cloud OpenStack
 
 
 ### Immutable Architecture
