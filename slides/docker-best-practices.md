@@ -49,6 +49,13 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
   * Do not rely on files or other persistant files or data in container <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
+### Designing Containerised Applications
+* Containerised component(s) should be agnostic to other services/components
+* Eg. application component may interact with
+   * Containerised database in development
+   * Dedicated service in production
+    
+
 
 ### Containerise Application Components
 * Each component is self-contained ![containerised-dev](img/containerised-dev-prod-deploy.svg "Containerised deploy") <!-- .element: class="img-right" style="width:50%;" -->
