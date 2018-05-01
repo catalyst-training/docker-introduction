@@ -66,3 +66,15 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
 >Your Docker thingy still isn't <!-- .element: class="fragment" data-fragment-index="0" -->_exactly_ like production!
 
 > Our application(s) are not deployed as Docker containers <!-- .element: class="fragment" data-fragment-index="1" -->
+
+
+### Docker Developer Workflow
+* In the following sections we'll explore ways of making development
+  environment similar/identical to production
+* Development
+   * docker-compose as a tool for managing complex microservice applications in
+    development
+* Production
+   * Orchestration platforms for deploying container workloads in production
+     environments
+* Connecting the two with CI/CD workflows
