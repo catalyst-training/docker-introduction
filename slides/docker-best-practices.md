@@ -39,6 +39,17 @@
 Common mistake to try and treat Docker containers like traditional VMs <!-- .element: class="fragment" data-fragment-index="0" -->
 
 
+### Containerise Application Components
+* Each component is self-contained <!-- .element: class="fragment" data-fragment-index="0" -->![containerised-dev](img/containerised-dev-prod-deploy.svg "Containerised deploy") <!-- .element: class="img-right" style="width:50%;" -->
+   * dependencies <!-- .element: class="fragment" data-fragment-index="1" -->
+   * configuration <!-- .element: class="fragment" data-fragment-index="2" -->
+* Components can be independently <!-- .element: class="fragment" data-fragment-index="3" -->
+   * Started/Stopped
+   * Updated
+   * Scaled
+* Brings us closer to production environment <!-- .element: class="fragment" data-fragment-index="4" -->
+
+
 
 ### Designing Containerised Applications
 * Containerised application should be <!-- .element: class="fragment" data-fragment-index="0" -->_smallest executable unit_
@@ -50,26 +61,15 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
   * log, other files <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
-### Containerise Application Components
-* Each component is self-contained ![containerised-dev](img/containerised-dev-prod-deploy.svg "Containerised deploy") <!-- .element: class="img-right" style="width:50%;" -->
-   * dependencies
-   * configuration
-* Components can be independently 
-   * Started/Stopped
-   * Updated
-   * Scaled
-* Brings us closer to production environment
-
-
 ### Designing Containerised Applications
-* Containerised component(s) should be agnostic to other services/components
-* Eg. application component may interact with ![agnostic](img/components-agnostic.svg "Agnostic Components") <!-- .element: class="img-right fragment" data-fragment-index="0" -->
-   * Containerised database in development <!-- .element: class="fragment" data-fragment-index="0" -->
-   * Dedicated service in production <!-- .element: class="fragment" data-fragment-index="1" -->
+* Containerised component(s) should be agnostic to other services/components <!-- .element: class="fragment" data-fragment-index="0" -->
+* Eg. application component may interact with <!-- .element: class="fragment" data-fragment-index="1" -->![agnostic](img/components-agnostic.svg "Agnostic Components") <!-- .element: class="img-right" -->
+   * Containerised database in development  <!-- .element: class="fragment" data-fragment-index="2" -->
+   * Cloud provider in production  <!-- .element: class="fragment" data-fragment-index="3" -->
     
 
 
-### What's the Catch?
+### Something still not right
 >Your Docker thingy still isn't <!-- .element: class="fragment" data-fragment-index="0" -->_exactly_ like production!
 
 > Our application(s) are not deployed as Docker containers <!-- .element: class="fragment" data-fragment-index="1" -->

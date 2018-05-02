@@ -2,8 +2,8 @@
 
 
 ### Docker and Microservices
-* Containerised applications ideal for microservices ![basic microsrevices](img/microservice-basic.png "Microservice applications") <!-- .element: class="img-right" -->
-* Components ideally self contained and modular
+* Containerised applications ideal for microservices <!-- .element: class="fragment" data-fragment-index="0" -->![basic microsrevices](img/microservice-basic.png "Microservice applications") <!-- .element: class="img-right" -->
+* Components ideally self contained and modular <!-- .element: class="fragment" data-fragment-index="1" -->
    * deployed independently 
    * scaled independently
 
@@ -13,14 +13,15 @@
 ```
  cd ~/docker-introduction/sample-code/mycomposeapp 
 ```
-* Let's build a simple application with two components
+<!-- .element: class="fragment" data-fragment-index="0" -->
+* Let's build a simple application with two components <!-- .element: class="fragment" data-fragment-index="1" -->
    * Web application using Python Flask
    * Redis message queue
-* The app is already in mycomposeapp/app.py
-* We want to run the app and redis as separate microservices
-* Redis is already available as a [docker image](https://hub.docker.com/_/redis/)
+* The app is already in mycomposeapp/app.py <!-- .element: class="fragment" data-fragment-index="2" -->
+* We want to run the app and redis as separate microservices <!-- .element: class="fragment" data-fragment-index="3" -->
+* Redis is already available as a <!-- .element: class="fragment" data-fragment-index="4" -->[docker image](https://hub.docker.com/_/redis/)
    `docker pull redis:alpine`
-*  We're going to have build a docker image for our app
+*  We're going to have build a docker image for our app <!-- .element: class="fragment" data-fragment-index="5" -->
 
 
 ### Create Our App
@@ -42,7 +43,7 @@
    ```
 *  Build Docker image for app  <!-- .element: class="fragment" data-fragment-index="2" -->
    ```
-   $ docker build -t web .  
+   docker build -t web .  
    ```
 
 
