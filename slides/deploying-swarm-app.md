@@ -1,6 +1,30 @@
 ## Deploying a Swarm Application
 
 
+### Docker Swarm
+
+* Standard since Docker 1.12 ![swarm](img/dockerswarm.png "Docker Swarm")<!-- .element: class="img-right" -->
+* Manage containers across multiple machines
+   * Scaling services
+   * Healthchecks
+   * Load balancing
+
+
+
+### Docker Swarm
+
+* Two types of machines or _nodes_
+   * 1 or more _manager_ nodes
+   * 0 or more _worker_ nodes
+* Managers control global state of cluster
+   * Raft Consensus Algorithm
+   * If one manager fails, any other should take over
+                      
+                    
+
+
+![swarm](img/voting-app-swarm.png "Docker Swarm")
+
 ### Setting Up a Cluster
 * Need to: <!-- .element: class="fragment" data-fragment-index="0" -->
    * provision machines
