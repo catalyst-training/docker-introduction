@@ -58,3 +58,11 @@
 * Open source project written in Go
 * Cloud Native Computing Foundation
 * Manage applications not machines
+
+
+### Watch cluster
+
+```
+watch -t -n1 'echo Vote Pods && kubectl get pods -n vote -o wide && echo && echo vote Services && kubectl get svc -n vote && echo && echo Nodes && kubectl get nodes -o wide'
+```
+
