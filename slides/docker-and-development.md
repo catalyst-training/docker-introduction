@@ -26,10 +26,11 @@
 ### Create Our App
 * Go into the mycomposeapp directory <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
-   $ cd ~/docker-introduction/sample-code/mycomposeapp
-   $ ls
-   $ gedit Dockerfile
+   cd ~/docker-introduction/sample-code/mycomposeapp
+   ls
+   gedit Dockerfile
    ```
+   <!-- .element: style="font-size:13pt;"  -->
 * Contents of <!-- .element: class="fragment" data-fragment-index="1" -->`Dockerfile`
    ```
    FROM python:3.4-alpine
@@ -49,14 +50,15 @@
 
 * First let's start our redis container <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
-    $ docker run -d --rm --name redis redis:alpine 
+    docker run -d --rm --name redis redis:alpine 
    ```
 * For our web container, we need a specific option to connect it to redis
   <!-- .element: class="fragment" data-fragment-index="1" -->
    * `--link <name of container>`
     <pre class="fragment" data-fragment-index="2"><code data-trim
-data-noescape> $ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:5000 web </code></pre>
-* Once you start the web container go to <!-- .element: class="fragment" data-fragment-index="3" -->[web page](http://localhost:5000) to see counter
+data-noescape>docker run -d --rm --name web <mark>--link redis</mark> -p 5000:5000 web </code></pre>
+* Try <!-- .element: class="fragment" data-fragment-index="3" -->`docker ps` to see that _web_ and _redis_ containers are running 
+* Once you start the web container go to <!-- .element: class="fragment" data-fragment-index="4" -->[web page](http://localhost:5000) to see counter
 
 
 ### Disadvantages of this approach
@@ -76,16 +78,16 @@ data-noescape> $ docker run -d --rm --name web <mark>--link redis</mark> -p 5000
 
 ### `docker-compose`
 
-* A tool that let's you easily bootstrap complex microservice apps
-* Allows interactive development
-   * you can work on the code while the container is running
-* Can be used for staging/production environments
-* Uses a YAML based config file called the <em>docker-compose file</em>
+* A tool that let's you easily bootstrap complex microservice apps <!-- .element: class="fragment" data-fragment-index="0" -->
+* Allows interactive development <!-- .element: class="fragment" data-fragment-index="1" -->
+   * you can work on the code while the container is running <!-- .element: class="fragment" data-fragment-index="2" -->
+* Can be used for staging/production environments <!-- .element: class="fragment" data-fragment-index="3" -->
+* Uses a YAML based config file called the <!-- .element: class="fragment" data-fragment-index="4" -->_docker-compose file_
 
 
 
 ### The `docker-compose` file
-<div style="width:50%;float:left;font-size:20pt;">
+<div style="width:50%;float:left;font-size:19pt;">
 <ul>
     <li class="fragment" data-fragment-index="0">
         Service description file
@@ -98,24 +100,24 @@ data-noescape> $ docker run -d --rm --name web <mark>--link redis</mark> -p 5000
 
     <li class="fragment" data-fragment-index="3">Specifies
     <ul>
-        <li>Services 
+        <li class="fragment" data-fragment-index="4">Services 
             <ul>
-                <li>
+                <li class="fragment" data-fragment-index="5">
                     effectively containers that you
                     will run
                 </li>
             </ul>
         </li>
-        <li>Volumes 
+        <li class="fragment" data-fragment-index="6">Volumes 
             <ul>
-                <li>
+                <li class="fragment" data-fragment-index="7">
                     filesystem mounts for containers
                 </li>
             </ul>
         </li>
-        <li>Networks 
+        <li class="fragment" data-fragment-index="8">Networks 
             <ul>
-                <li>
+                <li class="fragment" data-fragment-index="9">
                     to be created and used by
                     containers
                 </li>
@@ -123,7 +125,7 @@ data-noescape> $ docker run -d --rm --name web <mark>--link redis</mark> -p 5000
         </li>
     </ul>
     </li> 
-    <li class="fragment" data-fragment-index="4">
+    <li class="fragment" data-fragment-index="10">
                             Have a look at the <a
                                 href="https://docs.docker.com/compose/compose-file/">compose file reference</a>
             </li>
@@ -219,19 +221,19 @@ networks:
 version: "3"
 services:
 
-  webapp:
+  <mark>webapp</mark>:
     build: .
     ports:
       - 80:80
       - 443:443
     networks:
         hostnet: {}
-  db: 
+  <mark>db</mark>: 
    image: db
    volumes:
      - data-volume:/var/lib/db
 
-  redis:
+  <mark>redis</mark>:
     image: redis:alpine
                             </code></pre>
                     
