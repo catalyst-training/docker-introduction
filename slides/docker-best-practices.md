@@ -33,7 +33,8 @@
 
 ### Misconception About Docker Containers
 
->I'll just put my entire application into a Docker container and run it that way
+>I'll just put my entire application into a Docker container
+> and run it that way
 
 Common mistake to try and treat Docker containers like traditional VMs <!-- .element: class="fragment" data-fragment-index="0" -->
 
@@ -45,16 +46,8 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
   * Single process per container <!-- .element: class="fragment" data-fragment-index="2" -->
   * Single component of your application <!-- .element: class="fragment" data-fragment-index="3" -->
 * No stored <!-- .element: class="fragment" data-fragment-index="4" -->_state_
-  * Do not store entire DB in a container <!-- .element: class="fragment" data-fragment-index="5" -->
-  * Do not rely on files or other persistant files or data in container <!-- .element: class="fragment" data-fragment-index="6" -->
-
-
-### Designing Containerised Applications
-* Containerised component(s) should be agnostic to other services/components
-* Eg. application component may interact with
-   * Containerised database in development
-   * Dedicated service in production
-    
+  * databases <!-- .element: class="fragment" data-fragment-index="5" -->
+  * log, other files <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
 ### Containerise Application Components
@@ -68,6 +61,13 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
 * Brings us closer to production environment
 
 
+### Designing Containerised Applications
+* Containerised component(s) should be agnostic to other services/components
+* Eg. application component may interact with ![agnostic](img/components-agnostic.svg "Agnostic Components") <!-- .element: class="img-right fragment" data-fragment-index="0" -->
+   * Containerised database in development <!-- .element: class="fragment" data-fragment-index="0" -->
+   * Dedicated service in production <!-- .element: class="fragment" data-fragment-index="1" -->
+    
+
 
 ### What's the Catch?
 >Your Docker thingy still isn't <!-- .element: class="fragment" data-fragment-index="0" -->_exactly_ like production!
@@ -77,11 +77,12 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
 
 ### Docker Developer Workflow
 * In the following sections we'll explore ways of making development
-  environment similar/identical to production
-* Development
-   * docker-compose as a tool for managing complex microservice applications in
+  environment similar/identical to production <!-- .element: class="fragment" data-fragment-index="0" -->
+* Development <!-- .element: class="fragment" data-fragment-index="1" -->
+   * docker-compose as a tool for managing complex microservice applications in <!-- .element: class="fragment" data-fragment-index="2" -->
     development
-* Production
+* Production <!-- .element: class="fragment" data-fragment-index="3" -->
    * Orchestration platforms for deploying container workloads in production
+     <!-- .element: class="fragment" data-fragment-index="4" -->
      environments
-* Connecting the two with CI/CD workflows
+* Connecting the two with CI/CD workflows <!-- .element: class="fragment" data-fragment-index="5" -->
