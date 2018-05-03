@@ -2,10 +2,6 @@
 - name: Preflight to set up machine specific variables
   hosts: "cluster"
   gather_facts: false
-  tasks:
-
-    - fail:
-      when: suffix is not defined or suffix == ""
 
 
 
@@ -14,7 +10,6 @@
   gather_facts: false
   vars:
     # optional suffix to namespace resources
-    suffix: ""
     host_set: "{{ groups.cluster | unique | list }}"
     # change if required or override at runtime using --extra-vars
 
