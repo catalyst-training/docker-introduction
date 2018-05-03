@@ -59,10 +59,51 @@
 * Cloud Native Computing Foundation
 * Manage applications not machines
 
+### Create Kubernetes Cluster
+
+```
+ansible-playbook -K -i cloud-hosts create-cluster-hosts.yml kubeadm-install.yml
+```
+
+### Upload Kubernetes Spec files
+
+```
+cd ~/example-voting-app
+scp k8s-specifications/*.yaml trainigpc-master:~/
+
+```
+  
+
+### Verify Kubernetes Cluster
+
+```
+ssh trainingpc-master
+kubectl get nodes
+NAME               STATUS    ROLES     AGE       VERSION
+trainingpc-master   Ready     master    26m       v1.10.2
+trainingpc-worker1  Ready     <none>    25m       v1.10.2
+trainingpc-worker2  Ready     <none>    25m       v1.10.2
+```
+
+
+### Create Namespace
+* Create a namespace for our application
+
+```
+kubectl create namespace vote
+```
+
+
+### Load Specification Files
+
+```
+for i in `ls *.yaml`; do kubectl apply -n vote -f $i; done
+```
 
 ### Watch cluster
 
 ```
 watch -t -n1 'echo Vote Pods && kubectl get pods -n vote -o wide && echo && echo vote Services && kubectl get svc -n vote && echo && echo Nodes && kubectl get nodes -o wide'
 ```
+
 
