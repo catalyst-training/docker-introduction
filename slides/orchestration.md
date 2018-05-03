@@ -33,77 +33,17 @@
 * Containers are ephemeral
 * The job of the _master_ is to make sure containers are healthy
 * It will periodically kill and respawn a container
-* This is very similar to _phoenix_ principle
-![immutable arch](img/immutable_infrastructure.gif "Immutable Architecture")
+* This is very similar to _phoenix_ principle ![immutable arch](img/immutable_infrastructure.gif "Immutable Architecture") <!-- .element: class="img-right" -->
+   + Outdated or unhealthy containers <!-- .element: class="fragment" data-fragment-index="0" -->_burned_
+   + Fresh containers spawned in their place <!-- .element: class="fragment" data-fragment-index="1" -->
 
 
+### Orchestration Platforms
 
-### Container Orchestration
-
-* Frameworks for container orchestration
-   * Docker Swarm
-   * Kubernetes
-* Manage deployment/restarting containers across clusters
-* Networking between containers (microservices)
-* Scaling microservices
-* Fault tolerance
-
-
-
-### Kubernetes
-
-* Container orchestrator
-* Started by Google
-* Inspired by Borg (Google's cluster management system)
-* Open source project written in Go
-* Cloud Native Computing Foundation
-* Manage applications not machines
-
-### Create Kubernetes Cluster
-
-```
-ansible-playbook -K -i cloud-hosts create-cluster-hosts.yml kubeadm-install.yml
-```
-
-### Upload Kubernetes Spec files
-
-```
-cd ~/example-voting-app
-scp k8s-specifications/*.yaml trainigpc-master:~/
-
-```
-  
-
-### Verify Kubernetes Cluster
-
-```
-ssh trainingpc-master
-kubectl get nodes
-NAME               STATUS    ROLES     AGE       VERSION
-trainingpc-master   Ready     master    26m       v1.10.2
-trainingpc-worker1  Ready     <none>    25m       v1.10.2
-trainingpc-worker2  Ready     <none>    25m       v1.10.2
-```
-
-
-### Create Namespace
-* Create a namespace for our application
-
-```
-kubectl create namespace vote
-```
-
-
-### Load Specification Files
-
-```
-for i in `ls *.yaml`; do kubectl apply -n vote -f $i; done
-```
-
-### Watch cluster
-
-```
-watch -t -n1 'echo Vote Pods && kubectl get pods -n vote -o wide && echo && echo vote Services && kubectl get svc -n vote && echo && echo Nodes && kubectl get nodes -o wide'
-```
-
-
+* There are two main orchestration platforms
+* Docker Swarm
+   + Integrated into Docker since 17.03
+* Kubernetes
+   + Descends from _Borg_, (Google)
+   + Joint project from Google, Coreos, OpenShift
+   + Can use other container platforms than Docker (eg. rkt)
