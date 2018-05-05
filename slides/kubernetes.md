@@ -15,15 +15,88 @@
       - performs _scheduling_
       - monitoring/healthchecks
    + node (formerly _minion_)
-* Unit of work
-   + Pod
-      - one or more containers
+      - runs containers
+
+
+### Kubernetes Concepts: Objects
+* Pod
+   + Unit of work
+   + \>= 1 containers
+* Service
+   + Exposes IP of Pod to
+      - Other Pods
+      - External ports (i.e. web, API ingress)
+
+
+### Kubernetes Architecture <!-- .slide: class="image-slide" -->
+![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture")
+
+
+
+### Kubernetes Concepts: Management
+* Label
+   + Key/Value pairs used to group objects
+      - replication controllers
+      - services
+* Label Selectors
+   + Select objects base on labels
+   + Semantics:
+      - `role = webserver` 
+      - `app != foo`, 
+      - `role in (webserver, backend)`
+
+
+
+### Kubernetes Concepts: Management
+* Replication Controller (RC)
+   + Manage pods identified by a label
+   + Ensure certain number running at any given time
+* Namespaces
+   + Virtual cluster
+   + Isolate set of containers on same physical cluster
+
+
+
+### Control Architecture <!-- .slide: class="image-slide" -->
+![admin interaction](img/kubernetes-admin-interaction.svg "Kubernetes Admin Control")
+
+
+### Provisioning Our Cluster
+* Steps needed:
+   + Create host machines in the cloud
+   + Set up networking
+   + Install Kubernetes dependencies
+      - kubectl
+      - kubeadm
+      - kubelet
+   + Join nodes to master
+   + Deploy Kubernetes spec files
+
+
+
+
+### Kubernetes Configuration
+
+* Replication Controllers
+   + Define _Pods_
+   + The _unit_ of work for Kubernetes
+* Services
+   + Define network interface to a pod
+   + ingress ports
+   + map to a replication controller
+
+
+
+### Setting up the Voting Application
+* Have a look in the `example-voting-app/k8s-specifications`
+
 
 
 ### Create Kubernetes Cluster
 
 ```
-ansible-playbook -K -i cloud-hosts create-cluster-hosts.yml kubeadm-install.yml
+ansible-playbook -K -i cloud-hosts \
+   create-cluster-hosts.yml kubeadm-install.yml
 ```
 
 

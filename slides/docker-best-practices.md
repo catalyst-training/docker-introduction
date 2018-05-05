@@ -12,9 +12,9 @@
 
 ### Development vs Production
 
-* Ideal scenario development environment identical to production <!-- .element: class="fragment" data-fragment-index="0" -->
+* Ideal scenario: Development environment identical to production <!-- .element: class="fragment" data-fragment-index="0" -->
 * In practice this is often difficult to achieve  <!-- .element: class="fragment" data-fragment-index="1" -->
-   * Limited CPU of dev machines <!-- .element: class="fragment" data-fragment-index="2" -->![dev-env](img/dev-prod-deploy.svg "Dev environment") <!-- .element: class="img-right" style="width:40%;" -->
+   * Limited CPU of dev machines <!-- .element: class="fragment" data-fragment-index="2" -->![dev-env](img/dev-prod-deploy.svg "Dev environment") <!-- .element: class="img-right fragment" style="width:40%;" data-fragment-index="4" -->
    * Cost of machines <!-- .element: class="fragment" data-fragment-index="3" -->
    * Compromise is to develop everything in single VM <!-- .element: class="fragment" data-fragment-index="4" --> 
 
@@ -25,9 +25,8 @@
    * Which config files on which machines <!-- .element: class="fragment" data-fragment-index="2" -->
    * Which dependency libraries present on machines <!-- .element: class="fragment" data-fragment-index="3" -->
 * Difficult to scale individual services <!-- .element: class="fragment" data-fragment-index="4" -->
-   * web server, message queue
-   * application components (microservices vs. monolith)
-* Can lead to unpredictable behaviour when application is deployed to production <!-- .element: class="fragment" data-fragment-index="5" -->
+* Applications components often tightly coupled <!-- .element: class="fragment" data-fragment-index="5" -->
+* Can lead to unpredictable behaviour when application is deployed to production <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
 
@@ -39,26 +38,22 @@
 Common mistake to try and treat Docker containers like traditional VMs <!-- .element: class="fragment" data-fragment-index="0" -->
 
 
+### Designing Containerised Applications
+* Containerised application should <!-- .element: class="fragment" data-fragment-index="0" -->_smallest executable unit_
+  * Have a single application <!-- .element: class="fragment" data-fragment-index="1" -->
+  * Single executable runner <!-- .element: class="fragment" data-fragment-index="2" -->
+  * Single process per container <!-- .element: class="fragment" data-fragment-index="3" -->
+  * Single component of your application <!-- .element: class="fragment" data-fragment-index="4" -->
+* No stored <!-- .element: class="fragment" data-fragment-index="5" -->_state_
+
+
 ### Containerise Application Components
 * Each component is self-contained <!-- .element: class="fragment" data-fragment-index="0" -->![containerised-dev](img/containerised-dev-prod-deploy.svg "Containerised deploy") <!-- .element: class="img-right" style="width:50%;" -->
    * dependencies <!-- .element: class="fragment" data-fragment-index="1" -->
    * configuration <!-- .element: class="fragment" data-fragment-index="2" -->
-* Components can be independently <!-- .element: class="fragment" data-fragment-index="3" -->
-   * Started/Stopped
-   * Updated
-   * Scaled
+* Better decoupling of components and dependencies <!-- .element: class="fragment" data-fragment-index="3" -->
 * Brings us closer to production environment <!-- .element: class="fragment" data-fragment-index="4" -->
 
-
-
-### Designing Containerised Applications
-* Containerised application should be <!-- .element: class="fragment" data-fragment-index="0" -->_smallest executable unit_
-  * Single executable runner only <!-- .element: class="fragment" data-fragment-index="1" -->
-  * Single process per container <!-- .element: class="fragment" data-fragment-index="2" -->
-  * Single component of your application <!-- .element: class="fragment" data-fragment-index="3" -->
-* No stored <!-- .element: class="fragment" data-fragment-index="4" -->_state_
-  * databases <!-- .element: class="fragment" data-fragment-index="5" -->
-  * log, other files <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
 ### Designing Containerised Applications
