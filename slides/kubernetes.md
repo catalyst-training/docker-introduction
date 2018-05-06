@@ -212,3 +212,6 @@ watch -t -n1 'echo Vote Pods \
 
 ### View Website
 * Once all containers are running you can visit your website
+
+
+###  Experimenting with Kubernetes
