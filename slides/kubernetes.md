@@ -18,10 +18,13 @@
       - runs containers
 
 
-### Kubernetes Concepts: Objects
-* Pod
-   + Unit of work
-   + \>= 1 containers
+### Kubernetes Concepts: Pods & Services
+* A _pod_ is the unit of work  ![pod and services](img/pod-diagram.svg "Pod and Services") <!-- .element: class="img-right" style="width:50%;" -->
+   + Consist of ≥ 1 containers
+      - Always _scheduled_ together
+      - Have same IP
+      - Share storage
+      - Communication via localhost
 * Service
    + Exposes IP of Pod to
       - Other Pods
@@ -38,12 +41,17 @@
    + Key/Value pairs used to group objects
       - replication controllers
       - services
-* Label Selectors
+* Label Selectors 
    + Select objects base on labels
    + Semantics:
       - `role = webserver` 
       - `app != foo`, 
       - `role in (webserver, backend)`
+
+
+
+### Kubernetes Lables & Replication Controllers <!-- .slide: class="image-slide" -->
+![label-selectors](img/label-selectors.svg "Label Selectors") 
 
 
 
