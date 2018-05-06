@@ -80,19 +80,6 @@
 
 
 
-
-### Kubernetes Configuration
-
-* Replication Controllers
-   + Define _Pods_
-   + The _unit_ of work for Kubernetes
-* Services
-   + Define network interface to a pod
-   + ingress ports
-   + map to a replication controller
-
-
-
 ### Setting up the Voting Application
 * Have a look in the `example-voting-app/k8s-specifications`
 
