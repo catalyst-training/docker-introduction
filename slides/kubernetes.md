@@ -2,10 +2,12 @@
 
 
 ### Kubernetes Facts
+
 * Greek word for _helmsman_ or _pilot_
 * Also origin of words like _cybernetics_ and _government_
 * Inspired by _Borg_, Google's internal scheduling tool
-* Play on Borg _cube_
+* Play on _Borg cube_
+* [Source](https://news.ycombinator.com/item?id=9653797)
 
 
 ### Kubernetes Concepts
@@ -27,6 +29,7 @@
    + Exposes IP of Pod to
       - Other Pods
       - External ports (i.e. web, API ingress)
+
 
 
 ### Kubernetes Architecture <!-- .slide: class="image-slide" -->
@@ -58,6 +61,65 @@
 
 
 
+### Defining a Replication Controller
+* Specification deployment file
+* Attributes define <!-- .element: class="fragment" data-fragment-index="0" -->
+   + How many instances to run at start<!-- .element: class="fragment" data-fragment-index="1" -->
+   + Label selectors <!-- .element: class="fragment" data-fragment-index="1" -->
+   + Images/containers in pod <!-- .element: class="fragment" data-fragment-index="2" -->
+   + Volumes mounted in pod <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<!-- .element: style="width:50%;float:left;"  -->
+
+<pre  style="width:40%;float:left;font-size:10pt;" ><code data-trim data-noescape>
+<span class="fragment" data-fragment-index="0">apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis</span>
+<span class="fragment" data-fragment-index="1">spec:
+  <span class="fragment" data-fragment-index="1"><mark>replicas: 1</mark></span>
+  template:
+    metadata:
+      labels:
+        <mark>app: redis</mark></span>
+    <span class="fragment" data-fragment-index="2">spec:
+      containers:
+      - <mark>image: redis:alpine</mark>
+        name: redis
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data</span>
+      <span class="fragment" data-fragment-index="3">volumes:
+      - name: redis-data
+        emptyDir: {}</span> 
+        </code></pre>
+
+
+
+### Defining a Service
+* Service spec defines
+  + Type <!-- .element: class="fragment" data-fragment-index="0" -->
+     - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
+  + Ports & protocol <!-- .element: class="fragment" data-fragment-index="2" -->
+  + Map to Replication Controller (Pod) <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<!-- .element: style="width:50%;float:left;"  -->
+
+<pre style="width:40%;float:left;"><code data-trim data-noescape>
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
+  <span class="fragment" data-fragment-index="2">ports:
+  - port: 6379
+    targetPort: 6379</span>
+  <span class="fragment" data-fragment-index="3">selector:
+    <mark>app: redis</mark></span></code></pre>
+
+
+
 ### Kubernetes Lables & Replication Controllers <!-- .slide: class="image-slide" -->
 ![label-selectors](img/label-selectors.svg "Label Selectors") 
 
@@ -67,7 +129,13 @@
 ![admin interaction](img/kubernetes-admin-interaction.svg "Kubernetes Admin Control")
 
 
-### Provisioning Our Cluster
+
+## Demo: Set up Voting Application in Kubernetes
+
+
+
+
+### Setup
 * Steps needed:
    + Create host machines in the cloud
    + Set up networking
