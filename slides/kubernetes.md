@@ -134,7 +134,6 @@ spec:
 
 
 
-
 ### Setup
 * Steps needed:
    + Create host machines in the cloud
