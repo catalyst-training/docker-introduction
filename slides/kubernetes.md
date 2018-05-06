@@ -2,11 +2,10 @@
 
 
 ### Kubernetes Facts
-* Started by Google
-* Inspired by Borg (Google's cluster management system)
-* Open source project written in Go
-* Cloud Native Computing Foundation
-* Manage applications not machines
+* Greek word for _helmsman_ or _pilot_
+* Also origin of words like _cybernetics_ and _government_
+* Inspired by _Borg_, Google's internal scheduling tool
+* Play on Borg _cube_
 
 
 ### Kubernetes Concepts
@@ -23,7 +22,6 @@
    + Consist of ≥ 1 containers
       - Always _scheduled_ together
       - Have same IP
-      - Share storage
       - Communication via localhost
 * Service
    + Exposes IP of Pod to
@@ -50,11 +48,6 @@
 
 
 
-### Kubernetes Lables & Replication Controllers <!-- .slide: class="image-slide" -->
-![label-selectors](img/label-selectors.svg "Label Selectors") 
-
-
-
 ### Kubernetes Concepts: Management
 * Replication Controller (RC)
    + Manage pods identified by a label
@@ -62,6 +55,11 @@
 * Namespaces
    + Virtual cluster
    + Isolate set of containers on same physical cluster
+
+
+
+### Kubernetes Lables & Replication Controllers <!-- .slide: class="image-slide" -->
+![label-selectors](img/label-selectors.svg "Label Selectors") 
 
 
 

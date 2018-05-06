@@ -139,7 +139,7 @@ data-noescape>docker run -d --rm --name web <mark>--link redis</mark> -p 5000:50
 data-noescape>
 ---
 version: "3"
-services:
+<span class="fragment" data-fragment-index="4"><mark >services:</mark>
   db: 
    image: db
    volumes:
@@ -151,15 +151,15 @@ services:
     ports:
       - 80:80
     networks:
-        hostnet: {}
+        hostnet: {}</span>
 
-volumes:
-  data-volume:
+<span class="fragment" data-fragment-index="6"><mark>volumes:</mark>
+  data-volume:</span>
 
-networks:
+<span class="fragment" data-fragment-index="8"><mark>networks:</mark>
   hostnet:
     external:
-      name: host
+      name: host</span>
 </code></pre>
 </div>
 
