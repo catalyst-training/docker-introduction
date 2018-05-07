@@ -10,10 +10,10 @@
 * Ideal for deploying containerised applications in production <!-- .element: class="fragment" data-fragment-index="2" -->
 
 
-### The concept
+### Cluster
 
-* You have a machine designated the <!-- .element: class="fragment" data-fragment-index="0" -->_master_ 
-* You have a cluster of machines called <!-- .element: class="fragment" data-fragment-index="1" -->_nodes_ 
+* Machine designated the <!-- .element: class="fragment" data-fragment-index="0" -->_master_ 
+* Several machines designated <!-- .element: class="fragment" data-fragment-index="1" -->_nodes_ 
 
 ![Orchestration](img/container-orchestration.svg "Container Orchestration") <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -45,5 +45,5 @@
    + Integrated into Docker since 17.03
 * Kubernetes
    + Descends from _Borg_, (Google)
-   + Joint project from Google, Coreos, OpenShift
+   + Joint project from Google, CoreOS, OpenShift
    + Can use other container platforms than Docker (eg. rkt)
