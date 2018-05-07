@@ -19,29 +19,32 @@
       - runs containers
 
 
-### Kubernetes Concepts: Pods & Services
-* A _pod_ is the unit of work  ![pod and services](img/pod-diagram.svg "Pod and Services") <!-- .element: class="img-right" style="width:50%;" -->
-   + Consist of ≥ 1 containers
+### Pods and Replication Controllers
+* A _pod_ is the unit of work 
+   + Consist of ≥ 1 containers ![pod and services](img/pod-diagram.svg "Pod and Services") <!-- .element: class="img-right" style="width:50%;" -->
       - Always _scheduled_ together
       - Have same IP
       - Communication via localhost
-* Service
-   + Exposes IP of Pod to
-      - Other Pods
-      - External ports (i.e. web, API ingress)
+
+
+### Services
+* Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
+    + Other Pods
+    + External ports (i.e. web, API ingress)
 
 
 
-### Kubernetes Architecture <!-- .slide: class="image-slide" -->
-![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture")
+### Replication Controllers
+
+* Replication Controller (RC)
+   + Manage pods identified by a label
+   + Ensure certain number running at any given time
 
 
-
-### Kubernetes Concepts: Management
-* Label
-   + Key/Value pairs used to group objects
-      - replication controllers
-      - services
+### Labels & Selectors
+* Label is a key: value pair used to group objects
+    - replication controllers for scheduling pods
+    - services 
 * Label Selectors 
    + Select objects base on labels
    + Semantics:
@@ -51,10 +54,12 @@
 
 
 
+### Kubernetes Labels & Replication Controllers <!-- .slide: class="image-slide" -->
+![label-selectors](img/label-selectors.svg "Label Selectors") 
+
+
+
 ### Kubernetes Concepts: Management
-* Replication Controller (RC)
-   + Manage pods identified by a label
-   + Ensure certain number running at any given time
 * Namespaces
    + Virtual cluster
    + Isolate set of containers on same physical cluster
@@ -120,18 +125,12 @@ spec:
 
 
 
-### Kubernetes Lables & Replication Controllers <!-- .slide: class="image-slide" -->
-![label-selectors](img/label-selectors.svg "Label Selectors") 
+### Controlling Kubernetes
+* Control plane of Kubernetes is a REST API ![admin interaction](img/kubernetes-admin-interaction.svg "Kubernetes Admin Control") <!-- .element: class="img-right" style="width:60%;"  -->
+* Admin cluster using `kubectl` command line client
 
 
-
-### Control Architecture <!-- .slide: class="image-slide" -->
-![admin interaction](img/kubernetes-admin-interaction.svg "Kubernetes Admin Control")
-
-
-
-## Demo: Set up Voting Application in Kubernetes
-
+### Demo: Set up Voting Application in Kubernetes
 
 
 ### Setup
@@ -155,6 +154,7 @@ spec:
 ### Create Kubernetes Cluster
 
 ```
+cd ~/docker-introduction
 ansible-playbook -K -i cloud-hosts \
    create-cluster-hosts.yml kubeadm-install.yml
 ```
@@ -215,3 +215,13 @@ watch -t -n1 'echo Vote Pods \
 
 
 ###  Experimenting with Kubernetes
+* Drain node
+* Rolling upgrade
+
+
+
+### Clean up
+
+```
+ansible-playbook ansible/remove-cluster-hosts.yml -K
+```
