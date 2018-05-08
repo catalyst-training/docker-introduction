@@ -160,18 +160,22 @@ ansible-playbook -K -i cloud-hosts \
 ```
 
 
-### Upload Kubernetes Spec files
-```
-cd ~/example-voting-app
-scp k8s-specifications/*.yaml trainigpc-master:~/
-```
-  
+### Manual steps
+* `scp` the admin.conf file to your local directory
+   ```
+   scp trainingpc-master:~/.kube/config admin.conf
+   ```
+* Change the cluster server url to your master floating IP
+* Start kubectl proxy locally
+   ```
+   kubectl --kubeconfig ./admin.conf proxy
+   Starting to serve on 127.0.0.1:8001
+   ```
 
 
 ### Verify Kubernetes Cluster
 ```
-ssh trainingpc-master
-kubectl get nodes
+kubectl --server=127.0.0.1:8001 get nodes
 NAME               STATUS    ROLES     AGE       VERSION
 trainingpc-master   Ready     master    26m       v1.10.2
 trainingpc-worker1  Ready     <none>    25m       v1.10.2
@@ -183,15 +187,17 @@ trainingpc-worker2  Ready     <none>    25m       v1.10.2
 * Create a namespace for our application
 
 ```
-kubectl create namespace vote
+kubectl  --server=127.0.0.1:8001 create namespace vote
+namespace "vote" created
 ```
 
 
 ### Load Specification Files
 
 ```bash
+cd ~/example-voting-app/k8s-specifications
 for i in `ls *.yaml`; \
-     do kubectl apply -n vote -f $i; done
+     do kubectl --server=127.0.0.1:8001 apply -n vote -f $i; done
 ```
 * This tells kubernetes to begin setting up containers
   + creates network endpoints
@@ -201,11 +207,11 @@ for i in `ls *.yaml`; \
 ### Watch cluster
 ```
 watch -t -n1 'echo Vote Pods \
-   && kubectl get pods -n vote -o wide \
+   && kubectl --server=127.0.0.1:8001 get pods -n vote -o wide \
    && echo && echo vote Services \
-   && kubectl get svc -n vote \
+   && kubectl --server=127.0.0.1:8001 get svc -n vote \
    && echo && echo Nodes \
-   && kubectl get nodes -o wide'
+   && kubectl --server=127.0.0.1:8001 get nodes -o wide'
 ```
 
 
