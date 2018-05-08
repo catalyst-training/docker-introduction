@@ -10,12 +10,20 @@
 * Ideal for deploying containerised applications in production <!-- .element: class="fragment" data-fragment-index="2" -->
 
 
-### Cluster
+### Server Architecture
 
 * Machine designated the <!-- .element: class="fragment" data-fragment-index="0" -->_master_ 
 * Several machines designated <!-- .element: class="fragment" data-fragment-index="1" -->_nodes_ 
 
 ![Orchestration](img/container-orchestration.svg "Container Orchestration") <!-- .element: class="fragment" data-fragment-index="3" -->
+
+
+### Container Orchestration: User perspective
+* Orchestration framework handles 
+   + Routing requests to containers ![orchestration-user-perspective](img/user-container-orchestration-interaction.svg "User Interaction") <!-- .element: class="img-right" -->
+   + Load balancing between different containers
+* From user perspective as if interacting with single appliation
+
 
 
 ### Masters and Nodes
