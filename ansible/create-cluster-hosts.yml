@@ -159,6 +159,12 @@
           {{ ansible_host }} {{ inventory_hostname }}
         marker: "# {mark} ANSIBLE MANAGED BLOCK for {{ inventory_hostname }}"
 
+- name: Basic host setup
+  hosts: "cluster"
+  become: true
+  gather_facts: false
+  vars: 
+    host_set: "{{ groups.cluster  }}"
 
     - name: Update apt cache
       raw: apt update -y
