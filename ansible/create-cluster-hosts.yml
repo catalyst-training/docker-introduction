@@ -165,6 +165,7 @@
   gather_facts: false
   vars: 
     host_set: "{{ groups.cluster  }}"
+  tasks:
 
     - name: Update apt cache
       raw: apt update -y
