@@ -19,7 +19,7 @@
       - runs containers
 
 
-### Pods and Replication Controllers
+### Pods
 * A _pod_ is the unit of work 
    + Consist of ≥ 1 containers ![pod and services](img/pod-diagram.svg "Pod and Services") <!-- .element: class="img-right" style="width:50%;" -->
       - Always _scheduled_ together
@@ -27,18 +27,19 @@
       - Communication via localhost
 
 
-### Services
-* Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
-    + Other Pods
-    + External ports (i.e. web, API ingress)
-
-
-
 ### Replication Controllers
 
 * Replication Controller (RC)
    + Manage pods identified by a label
    + Ensure certain number running at any given time
+
+
+
+### Services
+* Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
+    + Other Pods
+    + External ports (i.e. web, API ingress)
+
 
 
 ### Labels & Selectors
@@ -54,15 +55,38 @@
 
 
 
+### Namespaces
+* Virtual cluster
+* Isolate set of containers on same physical cluster
+
+
+
 ### Kubernetes Labels & Replication Controllers <!-- .slide: class="image-slide" -->
 ![label-selectors](img/label-selectors.svg "Label Selectors") 
 
 
 
-### Kubernetes Concepts: Management
-* Namespaces
-   + Virtual cluster
-   + Isolate set of containers on same physical cluster
+### Defining a Service
+* Service spec defines
+  + Type <!-- .element: class="fragment" data-fragment-index="0" -->
+     - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
+  + Ports & protocol <!-- .element: class="fragment" data-fragment-index="2" -->
+  + Map to Replication Controller (Pod) <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<!-- .element: style="width:50%;float:left;"  -->
+
+<pre style="width:40%;float:left;"><code data-trim data-noescape>
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
+  <span class="fragment" data-fragment-index="2">ports:
+  - port: 6379
+    targetPort: 6379</span>
+  <span class="fragment" data-fragment-index="3">selector:
+    <mark>app: redis</mark></span></code></pre>
 
 
 
@@ -101,30 +125,6 @@ metadata:
 
 
 
-### Defining a Service
-* Service spec defines
-  + Type <!-- .element: class="fragment" data-fragment-index="0" -->
-     - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
-  + Ports & protocol <!-- .element: class="fragment" data-fragment-index="2" -->
-  + Map to Replication Controller (Pod) <!-- .element: class="fragment" data-fragment-index="3" -->
-
-<!-- .element: style="width:50%;float:left;"  -->
-
-<pre style="width:40%;float:left;"><code data-trim data-noescape>
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-spec:
-  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
-  <span class="fragment" data-fragment-index="2">ports:
-  - port: 6379
-    targetPort: 6379</span>
-  <span class="fragment" data-fragment-index="3">selector:
-    <mark>app: redis</mark></span></code></pre>
-
-
-
 ### Controlling Kubernetes
 * Control plane of Kubernetes is a REST API ![admin interaction](img/kubernetes-admin-interaction.svg "Kubernetes Admin Control") <!-- .element: class="img-right" style="width:60%;"  -->
 * Admin cluster using `kubectl` command line client
@@ -160,17 +160,14 @@ ansible-playbook -K -i cloud-hosts \
 ```
 
 
-### Manual steps
-* `scp` the admin.conf file to your local directory
-   ```
-   scp trainingpc-master:~/.kube/config admin.conf
-   ```
-* Change the cluster server url to your master floating IP
+### Remotely Controlling Kubernetes
 * Start kubectl proxy locally
    ```
    kubectl --kubeconfig ./admin.conf proxy
    Starting to serve on 127.0.0.1:8001
    ```
+* Put this terminal aside and open a new one
+
 
 
 ### Verify Kubernetes Cluster
@@ -199,6 +196,8 @@ cd ~/example-voting-app/k8s-specifications
 for i in `ls *.yaml`; \
      do kubectl --server=127.0.0.1:8001 apply -n vote -f $i; done
 ```
+<!-- .element: style="font-size:12pt;"  -->
+
 * This tells kubernetes to begin setting up containers
   + creates network endpoints
   + assigns Pods to replication controller
