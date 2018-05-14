@@ -1,0 +1,14 @@
+
+localhost ansible_connection=local #ansible_python_interpreter=
+
+[cluster]
+travis-lp-master
+travis-lp-worker[1:2]
+
+[master]
+travis-lp-master
+
+[worker]
+travis-lp-worker[1:2]
+
+[kubernetes:children]

@@ -1,0 +1,14 @@
+
+localhost ansible_connection=local #ansible_python_interpreter=
+
+[cluster]
+{{ prefix }}-master
+{{ prefix }}-worker[1:2]
+
+[master]
+{{ prefix }}-master
+
+[worker]
+{{ prefix }}-worker[1:2]
+
+[kubernetes:children]
