@@ -34,20 +34,19 @@
 
 ### Image Naming Semantics
 * No upper-case letters  <!-- .element: class="fragment" data-fragment-index="0" -->
-* Tag is optional. Implicitly <!-- .element: class="fragment" data-fragment-index="1" --><em>:latest</em> if not specified
+* Tag is optional. Implicitly <!-- .element: class="fragment" data-fragment-index="1" -->_:latest_ if not specified
    * <!-- .element: class="fragment" data-fragment-index="2" --><code>postgres<em style="color:green">:9.4</em></code>
    * <!-- .element: class="fragment" data-fragment-index="3" --><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code>
-* If pushing to a registry, need url and username <!-- .element: class="fragment" data-fragment-index="4" -->
 
 
 ### Image Naming Semantics
-* If registry not specified, docker.io is default: <!-- .element: class="fragment" data-fragment-index="0" -->
+* If pushing to a registry, need url and username <!-- .element: class="fragment" data-fragment-index="0" -->
+* If registry not specified, docker.io is default: <!-- .element: class="fragment" data-fragment-index="1" -->
     *  <!-- .element: class="fragment" data-fragment-index="1" --><code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code> == <code><em style="color:red">username</em>/my-image</code> 
       * <!-- .element: class="fragment" data-fragment-index="2" --><code><em style="color:green">my.reg.com/</em>my-image:1.2.3</code>
-* GitLab registry accept several variants: <!-- .element: class="fragment" data-fragment-index="3" -->
+* The fully qualified image name identifies an image <!-- .element: class="fragment" data-fragment-index="3" -->
    * gitlab.catalyst.net.nz:4567/&lt;group&gt;/&lt;project&gt;:tag
-   * gitlab.catalyst.net.nz:4567/&lt;group&gt;/&lt;project&gt;/optional-image-name:tag
-   * gitlab.catalyst.net.nz:4567/&lt;group&gt;/&lt;project&gt;/optional-name/optional-image-name:tag
+   * quay.io/&lt;username&gt;/image-name:tag
 
 
 ### Images and Layering

@@ -237,6 +237,12 @@ docker run [OPTIONS] dockersamples/static-site
    * <!-- .element: class="fragment" data-fragment-index="3" -->Map port 8081 to 80 internally (hint <code>8081:80</code>)
    * Cleans up container on exit <!-- .element: class="fragment" data-fragment-index="4" -->
 
+```shell
+docker run --name static-site --rm \
+   -e AUTHOR="YOURNAME" -p 8081:80 dockersamples/static-site
+```
+<!-- .element: class="fragment" data-fragment-index="5" style="font-size:13pt;" -->
+
 
 #### Run a website in a container
 <asciinema-player autoplay="1" class="fragment" data-fragment-index="0" loop="loop"  font-size="medium" speed="1"
@@ -263,22 +269,20 @@ docker run [OPTIONS] dockersamples/static-site
       ```
       $ docker stop 25eff330a4e4
       ```
+* For the previous exercise, you'll need to be in another terminal <!-- .element: class="fragment" data-fragment-index="3" -->
 
 
 #### Exercise: Run a detached container
 
 * Run static-site container like you did before, but add option to run in the background (i.e.  _detached_ state).
 
-```
+<pre class="fragment" style="font-size:12pt" data-fragment-index="0"><code data-trim data-noescape>
 docker run --rm --name static-site -e AUTHOR="YOUR NAME" \
-            -d -p 8081:80 dockersamples/static-site
-```
-<!-- .element: class="fragment" data-fragment-index="0"
-style="font-size:13pt;width:100%;" -->
+              <mark>-d</mark> -p 8081:80 dockersamples/static-site
+                                              </code></pre>
 
 <asciinema-player  class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="asciinema/asciicast-122718.json" cols="120" rows="8"></asciinema-player>
-
 Note: Have users stop (<code>docker stop static-site</code>) and start this container with the exact same line. Have them run again with the <code>--rm</code> flag
 
 
@@ -323,13 +327,10 @@ docker image ls
 
 ### Docker Behind the Scenes
 
-* User types docker commands
-* Docker client contacts docker daemon
-* Docker daemon checks if image exists
-* Docker daemon downloads image from docker registry if it does not exist
-* Docker daemon runs container using image
-                      
-
-
-### Docker Architecture
-![architecture](img/architecture.svg "Docker Architecture")
+* Docker application on your machine is a client-server application <!-- .element: class="fragment" data-fragment-index="0" -->![architecture](img/architecture.svg "Docker Architecture") <!-- .element: class="img-right" style="width:50%;" -->
+   + Type commands to <!-- .element: class="fragment" data-fragment-index="1" -->_docker client_ on CLI 
+   + Docker client contacts docker daemon <!-- .element: class="fragment" data-fragment-index="2" -->
+   + Docker daemon checks if image exists <!-- .element: class="fragment" data-fragment-index="3" -->
+   + Docker daemon downloads image from docker registry if it does not exist
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+   + Docker daemon runs container using image <!-- .element: class="fragment" data-fragment-index="5" -->
