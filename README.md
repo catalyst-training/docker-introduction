@@ -1,5 +1,7 @@
 # Introduction to Docker
 
+[Course Outline](slides/course-outline.md)
+
 > **Note:** The canonical location for this repository is
 > https://github.com/catalyst-training/docker-introduction
 
