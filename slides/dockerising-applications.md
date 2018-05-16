@@ -11,17 +11,18 @@
                     
 
 
-#### Step 1. Set up the the web page
+#### Set up the the web page
+<dl style="font-size:18pt;">
+<dt>app.py</dt> <dd>A simple flask application for displaying cat pictures</dd>
+<dt>requirements.txt</dt> <dd>list of dependencies for flask</dd>
+<dt>templates/index.html</dt> <dd>A jinja2 template</dd>
+<dt>Dockerfile</dt><dd>Instructions for building a Docker image</dd>
+</dl>
+
 ```
 cd ~/docker-introduction/sample-code/flask-app
 ```
-   <dl style="font-size:18pt;">
-   <dt>app.py</dt> <dd>A simple flask application for displaying cat pictures</dd>
-   <dt>requirements.txt</dt> <dd>list of dependencies for flask</dd>
-   <dt>templates/index.html</dt> <dd>A jinja2 template</dd>
-   <dt>Dockerfile</dt><dd>Instructions for building a Docker image</dd>
-   </dl>
-
+<!-- .element: class="fragment" data-fragment-index="0" -->
                     
 
 
@@ -45,12 +46,12 @@ EXPOSE 5000
 
 CMD ["python", "/usr/src/app/app.py"]
 ```
+<!-- .element: style="font-size:13pt;"  -->
 
 
 
 ### Build the Docker Image
 ```
-cd ~/docker-introduction/sample-code/flask-app 
 docker build -t YOURNAME/myfirstapp .
 ```
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-119506.json" cols="174" rows="22"></asciinema-player>
@@ -60,6 +61,8 @@ docker build -t YOURNAME/myfirstapp .
 ```
 docker run -p 8888:5000 --rm --name myfirstapp YOURNAME/myfirstapp
 ```
+<!-- .element: style="font-size:13pt;"  -->
+
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-119510.json" cols="174" rows="11"></asciinema-player>
 ...Now open [your test webapp](http://localhost:8888)
 

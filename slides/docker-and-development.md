@@ -20,15 +20,15 @@
 * The app is already in mycomposeapp/app.py <!-- .element: class="fragment" data-fragment-index="2" -->
 * We want to run the app and redis as separate microservices <!-- .element: class="fragment" data-fragment-index="3" -->
 * Redis is already available as a <!-- .element: class="fragment" data-fragment-index="4" -->[docker image](https://hub.docker.com/_/redis/)
-   `docker pull redis:alpine`
-*  We're going to have build a docker image for our app <!-- .element: class="fragment" data-fragment-index="5" -->
+   ```
+   docker pull redis:alpine
+   ```
+*  Let's build a docker image for our app <!-- .element: class="fragment" data-fragment-index="5" -->
 
 
 ### Create Our App
-* Go into the mycomposeapp directory <!-- .element: class="fragment" data-fragment-index="0" -->
+* Fire up your favourite editor and create a Dockerfile <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
-   cd ~/docker-introduction/sample-code/mycomposeapp
-   ls
    gedit Dockerfile
    ```
    <!-- .element: style="font-size:13pt;"  -->
@@ -47,7 +47,7 @@
    ```
 
 
-### Run Containers as Microservices
+### First Pass: Creating Microservices
 
 * First let's start our redis container <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
@@ -62,7 +62,7 @@ data-noescape>docker run -d --rm --name web <mark>--link redis</mark> -p 5000:50
 * Once you start the web container go to <!-- .element: class="fragment" data-fragment-index="4" -->[web page](http://localhost:5000) to see counter
 
 
-### Disadvantages of this approach
+### Disadvantages of Command Line Approach
 
 * Complicated with shell/script commands <!-- .element: class="fragment" data-fragment-index="0" -->
    * Managing service interactions
