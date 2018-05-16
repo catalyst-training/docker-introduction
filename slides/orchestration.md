@@ -48,7 +48,8 @@
 
 ### Orchestration Platforms
 
-* There are two main orchestration platforms
+* Apache Mesos
+* AWS ECS
 * Docker Swarm
    + Integrated into Docker since 17.03
 * Kubernetes
