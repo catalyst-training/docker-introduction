@@ -2,6 +2,10 @@
 - name: Preflight to set up machine specific variables
   hosts: "cluster"
   gather_facts: false
+  tasks:
+    - fail:
+        msg: Please provide prefix
+      when: not prefix
 
 - name: Provision a set of hosts in the Catalyst Cloud
   hosts: localhost
