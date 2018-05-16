@@ -1,9 +1,10 @@
 ---
 - name: Preflight to set up machine specific variables
-  hosts: "cluster"
+  hosts: kubernetes
   gather_facts: false
-  vars:
-    host_prefix: "{{ prefix | mandatory }}"
+  tasks:
+    - debug:
+        var: prefix | mandatory
 
 - name: Provision a set of hosts in the Catalyst Cloud
   hosts: localhost

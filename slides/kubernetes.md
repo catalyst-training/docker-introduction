@@ -151,18 +151,24 @@ metadata:
 
 
 
-### Setting up the Voting Application
-* Have a look in the `example-voting-app/k8s-specifications`
-
+### Create Hosts File
+```
+cd docker-introduction/ansible
+ansible-playbook local-setup.yml -e prefix=<username>
+```
 
 
 ### Create Kubernetes Cluster
 
 ```
-cd ~/docker-introduction
 ansible-playbook -K -i cloud-hosts \
    create-cluster-hosts.yml kubeadm-install.yml
 ```
+
+
+### Setting up the Voting Application
+* Have a look in the `example-voting-app/k8s-specifications`
+
 
 
 ### Remotely Controlling Kubernetes
