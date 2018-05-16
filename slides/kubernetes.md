@@ -248,7 +248,7 @@ for i in `ls *.yaml`; \
 	result    NodePort    10.107.43.36     ...   5001:<mark>31001/TCP</mark>   3h
 	vote      NodePort    10.104.244.69    ...   5000:<mark>31000/TCP</mark>   3h
 </code></pre> <!-- .element: style="font-size:13pt;" -->
-* Navigate to the [voting app](http://voting:app:31000). You may need to
+* Navigate to the [voting app](http://voting:appl:31000). You may need to
   change the port
 
 
