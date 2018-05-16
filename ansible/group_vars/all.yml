@@ -1,6 +1,5 @@
 ---
 
-prefix: "{{ lookup('lines', 'hostname') }}"
 suffix: "-{{ prefix }}"
 ssh_user: "{{ lookup('env', 'USER') }}"
 ssh_public_key_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
