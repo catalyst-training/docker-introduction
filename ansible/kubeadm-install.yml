@@ -1,3 +1,32 @@
+
+- name: Install kubernetes admin on host machines
+  hosts: kubernetes
+  become: true
+  tasks:
+
+    - name: Add kubernetes repository key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add kubernetes repository
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+
+    - name: Update cache
+      apt:
+        update_cache: yes
+
+    - name: Install kubernetes packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items: 
+        - kubelet 
+        - kubeadm 
+        - kubectl
+
 - name: Install kubernetes admin on host machines
   hosts: kubernetes
   become: true
