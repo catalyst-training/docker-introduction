@@ -2,6 +2,10 @@
 - name: Preflight to set up machine specific variables
   hosts: "kubernetes"
   gather_facts: false
+  tasks:
+    - fail: 
+        msg: Please define a prefix
+      when: not prefix
 
 
 
