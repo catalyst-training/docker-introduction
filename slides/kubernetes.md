@@ -162,7 +162,7 @@ ansible-playbook local-setup.yml -e prefix=<username>
 
 ```
 ansible-playbook -K -i cloud-hosts \
-   create-cluster-hosts.yml kubeadm-install.yml
+   create-cluster-hosts.yml kubeadm-install.yml -e prefix=<username>
 ```
 
 
@@ -290,5 +290,5 @@ for i in `ls *.yaml`; \
 ### Clean up
 
 ```
-ansible-playbook ansible/remove-cluster-hosts.yml -K
+ansible-playbook ansible/remove-cluster-hosts.yml -K -e prefix=<username>
 ```
