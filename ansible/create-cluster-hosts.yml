@@ -1,6 +1,6 @@
 ---
 - name: Preflight to set up machine specific variables
-  hosts: "cluster"
+  hosts: "kubernetes"
   gather_facts: false
 
 
