@@ -1,7 +1,7 @@
 
 
 - name: Install kubernetes admin on host machines
-  hosts: kubernetes
+  hosts: kubernetes:localhost
   become: true
   tasks:
 
