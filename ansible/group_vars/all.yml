@@ -10,7 +10,7 @@ network_name: "training-net{{ suffix }}"
 public_net_name: public-net
 subnet_name: "training-subnet{{ suffix }}"
 router_name: "training-router{{ suffix }}"
-subnet_prefix: 192.168.99
+subnet_prefix: 10.244.99
 subnet_cidr: "{{ subnet_prefix }}.0/24"
 subnet_dhcp_start: "{{ subnet_prefix }}.98"
 subnet_dhcp_end: "{{ subnet_prefix }}.200"

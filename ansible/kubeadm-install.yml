@@ -33,16 +33,10 @@
   hosts: master
   become: true
   tasks:
-    - name: Init kubeadm with flannel
+    - name: Init kubeadm with calico
       command: kubeadm init {{ kubeadm_extra_args }}
       args:
         creates: /etc/kubernetes/admin.conf
-
-    - name: Pass bridged ipv4 traffic to iptables
-      sysctl:
-        name: net.bridge.bridge-nf-call-iptables
-        value: 1
-        state: present
 
     - name: Create a kubeadm join token
       command: kubeadm token generate
@@ -77,11 +71,17 @@
   hosts: master
   tasks:
 
-    - name: Import flannel pod network
-      command: kubectl apply -f {{ kube_flannel_url }}
+    - name: Set up calico network
+      command: kubectl apply -f {{ item }}
       register: pod_network_create
+      with_items: "{{ calico_network_configs }}"
       changed_when:
         - pod_network_create.stdout is search('created')
+
+
+    - name: Dump output of network setup
+      debug:
+        var: pod_network_create
 
 
     - name: Retrieve admin.conf file
