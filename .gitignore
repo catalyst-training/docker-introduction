@@ -9,3 +9,5 @@ Session.vim
 
 *.retry
 ansible/cloud-hosts
+
+venv
