@@ -1,6 +1,6 @@
 ---
 - name: Preflight to set up machine specific variables
-  hosts: kubernetes
+  hosts: cluster
   gather_facts: false
   tasks:
     - debug:
@@ -21,15 +21,18 @@
   tasks:
     - name: Connect to Catalyst Cloud
       os_auth:
+        cloud: docker
 
     - name: Remove floating ips from known_hosts
       known_hosts:
+        cloud: docker
         name: "{{ item }}"
         state: absent
       with_items: "{{ host_set }}"
 
     - name: Remove cluster servers
       os_server:
+        cloud: docker
         name: "{{ item }}"
         state: absent
         delete_fip: true
@@ -37,27 +40,32 @@
 
     - name: Remove ports
       os_port:
+        cloud: docker
         name: "{{ item }}"
         state: absent
       with_items: "{{ host_set }}"
 
     - name: Remove cluster keypair
       os_keypair: 
+        cloud: docker
         state: absent
         name: "{{ keypair_name }}"
 
     - name: Remove cluster router
       os_router:
+        cloud: docker
         state: absent
         name: "{{ router_name }}"
 
     - name: Remove cluster network
       os_network:
+        cloud: docker
         state: absent
         name: "{{ network_name }}"
 
     - name: Remove security group
       os_security_group:
+        cloud: docker
         name: "{{ item }}"
         state: absent
       with_items: "{{ security_group_names }}"

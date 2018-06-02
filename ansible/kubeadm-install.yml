@@ -1,7 +1,7 @@
 
 
 - name: Install kubernetes admin on host machines
-  hosts: kubernetes:localhost
+  hosts: cluster:localhost
   become: true
   tasks:
 
@@ -81,7 +81,7 @@
       command: kubectl apply -f {{ kube_flannel_url }}
       register: pod_network_create
       changed_when:
-        - pod_network_create.stdout | search('created')
+        - pod_network_create.stdout is search('created')
 
 
     - name: Retrieve admin.conf file
