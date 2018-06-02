@@ -25,7 +25,6 @@
 
     - name: Remove floating ips from known_hosts
       known_hosts:
-        cloud: docker
         name: "{{ item }}"
         state: absent
       with_items: "{{ host_set }}"
