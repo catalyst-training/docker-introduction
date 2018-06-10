@@ -133,7 +133,7 @@
 
 
 - name: Basic host setup
-  hosts: "cluster"
+  hosts: cluster
   become: true
   gather_facts: false
   vars: 
@@ -172,7 +172,7 @@
         marker: "# {mark} ANSIBLE MANAGED BLOCK for {{ inventory_hostname }}"
 
 - name: Basic host setup
-  hosts: "cluster"
+  hosts: cluster
   become: true
   gather_facts: false
   vars: 
@@ -202,7 +202,7 @@
 
 
 - name: Set up Docker on hosts
-  hosts: "cluster"
+  hosts: cluster
   become: yes
   roles: 
     - docker
