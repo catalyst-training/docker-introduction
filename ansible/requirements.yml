@@ -1,0 +1,13 @@
+---
+- src: https://github.com/heytrav/ansible-docker.git
+  scm: git
+  name: docker
+  version: master
+
+
+- src: https://github.com/heytrav/ansible-docker-compose.git
+  scm: git
+  name: docker-compose
+  version: master
+
+
