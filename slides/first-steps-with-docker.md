@@ -123,13 +123,6 @@ docker run hello-world
 <code>docker</code> <code >run</code> <code style="color:green;">image</code> <code style="color:blue;font-style:italic">[command]</code>
 ```
 $ docker run alpine ls
-bin
-dev
-.
-.
-usr
-var
-$ 
 ```
 <!-- .element: class="fragment" data-fragment-index="0" -->
 

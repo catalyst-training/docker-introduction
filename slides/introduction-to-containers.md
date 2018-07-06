@@ -18,7 +18,7 @@ Note: Same application container can run on any system or cloud.
 
 
 ### Lightweight <!-- .slide: class="image-slide" --> 
-![Docker](img/docker.png "Docker")
+![Docker](img/containers-as-lightweight-vms.png "Docker")
 
 
 
