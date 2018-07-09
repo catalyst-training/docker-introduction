@@ -1,6 +1,8 @@
 - name: Install docker
   hosts: localhost
-  become: yes
+  become: true
+  vars:
+    ssh_user: "{{ lookup('env', 'USER') }}"
   roles:
     - docker
     - docker-compose
