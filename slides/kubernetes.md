@@ -150,6 +150,19 @@ metadata:
    + Deploy Kubernetes spec files
 
 
+#### Kubernetes Demo Repository
+* Check out the demo repository
+   ```
+   git clone https://github.com/heytrav/k8s-ansible.git
+   cd k8s-ansible
+   ```
+   <!-- .element: style="font-size:13pt;"  -->
+
+* Follow [README](https://github.com/heytrav/k8s-ansible) instructions for
+  setting up environment
+
+<!-- .element: class="stretch"  -->
+
 
 ### Create Hosts File
 ```
@@ -161,8 +174,8 @@ ansible-playbook local-setup.yml -e prefix=<username>
 ### Create Kubernetes Cluster
 
 ```
-ansible-playbook -K -i cloud-hosts \
-   create-cluster-hosts.yml kubeadm-install.yml -e prefix=<username>
+ansible-playbook -K  -e prefix=<username> 
+   create-cluster-hosts.yml kubeadm-install.yml
 ```
 
 
