@@ -164,7 +164,7 @@ metadata:
 <!-- .element: class="stretch"  -->
 
 
-### Create Hosts File
+### Set up environment
 ```
 cd docker-introduction/ansible
 ansible-playbook local-setup.yml -e prefix=<username>
@@ -287,17 +287,6 @@ for i in `ls *.yaml`; \
    ```
 * Watch the _watcher_ terminal
 * Refresh the site several times while update is running
-
-
-
-### Kubernetes Dashboard
-* Kubernetes provides a dashboard for monitoring purposes
-   ```
-   kubectl --server=127.0.0.1:8001 -n kube-system apply -f \
-       https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-   ```
-* Once you've activated it, go to the [dashboard page](http://127.0.0.1:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
-
 
 
 ### Clean up
