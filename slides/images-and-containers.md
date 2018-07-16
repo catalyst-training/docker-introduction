@@ -180,7 +180,7 @@ namespace and sets of cgroups
 
 #### Exercise: Explore Image Layers
 ```
-docker run -it ubuntu:16.04 /bin/bash
+docker run -it ubuntu:18.04 /bin/bash
 root@CONTAINERID:/$ apt-get update 
 root@CONTAINERID:/$ exit
 docker ps -a

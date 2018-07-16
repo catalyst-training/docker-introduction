@@ -31,7 +31,7 @@ cd ~/docker-introduction
    * Configuration management
 
 
-## Setup Ansible
+### Setup Ansible
 ```
 git clone https://github.com/catalyst/catalystcloud-ansible.git
 ```
@@ -54,7 +54,7 @@ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate
 <!-- .element: style="width:80%;"  -->
 
 
-## Setup Docker
+### Setup Docker
 
 * Follow instructions on website for installing <!-- .element: class="fragment" data-fragment-index="0" -->
    * [Docker Community Edition](https://store.docker.com/search?offering=community&type=edition)
@@ -63,24 +63,32 @@ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate
 
 ```
 cd docker-introduction
-ansible-playbook -K ansible/docker-install.yml \
-        -e ansible_python_interpreter=/usr/bin/python
+ansible-galaxy -f -r ansible/requirements.yml
+ansible-playbook -i ansible/hosts -K ansible/docker-install.yml 
 ```
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 
 
-## Setup Docker
+### Setup Docker
 * This playbook installs:
    * latest Docker _Community Edition_
    * `docker-compose`
 * You might need to logout and login again
 
 
-## Fetch and run slides
+### Fetch and run slides
 ```
 docker run --name docker-intro -d --rm \
         -p 8000:8000 heytrav/docker-introduction-slides
 ```
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
 * Follow along with the <!-- .element: class="fragment" data-fragment-index="0" -->[course slides](http://localhost:800)
+
+
+### Pre pull some containers
+* A few of the lessons require large containers
+* Run the `pre-pull-images` playbook to start downloading them
+```
+ansible-playbook -i ansible/hosts ansible/pre-pull-images.yml
+```
