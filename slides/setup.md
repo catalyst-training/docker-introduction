@@ -84,7 +84,7 @@ docker run --name docker-intro -d --rm \
         -p 8000:8000 heytrav/docker-introduction-slides
 ```
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-119477.json" cols="150" rows="15"></asciinema-player>
-* Follow along with the <!-- .element: class="fragment" data-fragment-index="0" -->[course slides](http://localhost:800)
+* Follow along with the <!-- .element: class="fragment" data-fragment-index="0" -->[course slides](http://localhost:8000)
 
 
 ### Pre pull some containers
