@@ -276,7 +276,7 @@ services:
    ```
    $ docker-compose up -d
    ```
-   _Note_  `-d` optionally sends to background
+   <!-- .element: class="fragment" data-fragment-index="4" -->_Note_  `-d` optionally sends to background
                     
 
 
