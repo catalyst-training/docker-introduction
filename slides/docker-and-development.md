@@ -21,7 +21,7 @@
 * We want to run the app and redis as separate microservices <!-- .element: class="fragment" data-fragment-index="3" -->
 * Redis is already available as a <!-- .element: class="fragment" data-fragment-index="4" -->[docker image](https://hub.docker.com/_/redis/)
    ```
-   docker pull redis:alpine
+   $ docker pull redis:alpine
    ```
 *  Let's build a docker image for our app <!-- .element: class="fragment" data-fragment-index="5" -->
 
@@ -34,16 +34,16 @@
    <!-- .element: style="font-size:13pt;"  -->
 * Contents of <!-- .element: class="fragment" data-fragment-index="1" -->`Dockerfile`
    ```
-   FROM python:3.4-alpine
-   WORKDIR /code
-   COPY requirements.txt /code
-   RUN pip install -r requirements.txt
-   COPY . /code
-   CMD ["python", "app.py"]
+  FROM python:3.4-alpine
+  WORKDIR /code
+  COPY requirements.txt /code
+  RUN pip install -r requirements.txt
+  COPY . /code
+  CMD ["python", "app.py"]
    ```
 *  Build Docker image for app  <!-- .element: class="fragment" data-fragment-index="2" -->
    ```
-   docker build -t web .  
+   $ docker build -t web .  
    ```
 
 
@@ -51,7 +51,7 @@
 
 * First let's start our redis container <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
-    docker run -d --rm --name redis redis:alpine 
+    $ docker run -d --rm --name redis redis:alpine 
    ```
 * For our web container, we need a specific option to connect it to redis
   <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -261,21 +261,22 @@ services:
 * Create a file called <!-- .element: class="fragment" data-fragment-index="1" -->`docker-compose.yml`
 * Add our service definition: <!-- .element: class="fragment" data-fragment-index="2" -->
    ```
-   ---
-   version: "3"
-   services:
-     web: 
-       build: .
-       ports: 
-         - "5000:5000"
-     redis:
-       image: redis:alpine
+  ---
+  version: "3"
+  services:
+    web: 
+      build: .
+      ports: 
+        - "5000:5000"
+    redis:
+      image: redis:alpine
    ```
  <!-- .element: style="font-size:10pt;" -->
 * Start our microservices <!-- .element: class="fragment" data-fragment-index="3" -->
    ```
-   $ docker-compose up [-d]
+   $ docker-compose up -d
    ```
+   _Note_  `-d` optionally sends to background
                     
 
 

@@ -151,10 +151,14 @@ metadata:
 
 
 #### Kubernetes Demo Repository
+* Change to home directory
+   ```
+   $ cd
+   ```
 * Check out the demo repository
    ```
-   git clone https://github.com/heytrav/k8s-ansible.git
-   cd k8s-ansible
+   $ git clone https://github.com/heytrav/k8s-ansible.git
+   $ cd k8s-ansible
    ```
    <!-- .element: style="font-size:13pt;"  -->
 
@@ -162,21 +166,6 @@ metadata:
   setting up environment
 
 <!-- .element: class="stretch"  -->
-
-
-### Set up environment
-```
-cd docker-introduction/ansible
-ansible-playbook local-setup.yml -e prefix=<username>
-```
-
-
-### Create Kubernetes Cluster
-
-```
-ansible-playbook -K  -e prefix=<username> 
-   create-cluster-hosts.yml kubeadm-install.yml
-```
 
 
 ### Setting up the Voting Application
@@ -187,7 +176,7 @@ ansible-playbook -K  -e prefix=<username>
 ### Remotely Controlling Kubernetes
 * Start kubectl proxy locally
    ```
-   kubectl --kubeconfig ~/k8s-admin.conf proxy
+   $ kubectl --kubeconfig ~/k8s-admin.conf proxy
    Starting to serve on 127.0.0.1:8001
    ```
 * Put this terminal aside and open a new one
@@ -196,7 +185,7 @@ ansible-playbook -K  -e prefix=<username>
 
 ### Verify Kubernetes Cluster
 ```
-kubectl --server=127.0.0.1:8001 get nodes
+$ kubectl --server=127.0.0.1:8001 get nodes
 NAME               STATUS    ROLES     AGE       VERSION
 trainingpc-master   Ready     master    26m       v1.10.2
 trainingpc-worker1  Ready     <none>    25m       v1.10.2
