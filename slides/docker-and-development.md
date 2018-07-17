@@ -282,7 +282,7 @@ services:
 
 ### Scaling Services
 ```
-docker-compose up -d --scale SERVICE=<number>
+$ docker-compose up -d --scale redis=9
 ```
 * Try scaling the redis service to 4 instances <!-- .element: class="fragment" data-fragment-index="0" -->
 
