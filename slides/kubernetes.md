@@ -186,6 +186,7 @@ metadata:
 ### Verify Kubernetes Cluster
 ```
 $ kubectl --server=127.0.0.1:8001 get nodes
+
 NAME               STATUS    ROLES     AGE       VERSION
 trainingpc-master   Ready     master    26m       v1.10.2
 trainingpc-worker1  Ready     <none>    25m       v1.10.2
@@ -197,16 +198,16 @@ trainingpc-worker2  Ready     <none>    25m       v1.10.2
 * Create a namespace for our application
 
 ```
-kubectl  --server=127.0.0.1:8001 create namespace vote
+$ kubectl  --server=127.0.0.1:8001 create namespace vote
+
 namespace "vote" created
 ```
 
 
 ### Watch cluster
 * In another terminal, run the following
-
-```
-watch -t -n1 'echo Vote Pods \
+   ```
+   watch -t -n1 'echo Vote Pods \
    && kubectl --server=127.0.0.1:8001 get pods -n vote -o wide \
    && echo && echo vote Services \
    && kubectl --server=127.0.0.1:8001 get svc -n vote \
@@ -214,8 +215,12 @@ watch -t -n1 'echo Vote Pods \
    && kubectl --server=127.0.0.1:8001 get deployments -n vote \
    && echo && echo Nodes \
    && kubectl --server=127.0.0.1:8001 get nodes -o wide'
-```
+   ```
+   <!-- .element: style="font-size:12pt;"  -->
+* We'll refer to this as the _watcher_ terminal and check on it from time to
+  time
 
+<!-- .element: class="stretch"  -->
 
 
 ### Load Specification Files
@@ -241,7 +246,8 @@ for i in `ls *.yaml`; \
 
 ### View Website
 * Once all containers are running you can visit your website
-* You first need to find a couple ports:
+* You first need to find a couple ports. Look for this in the _watcher_
+  terminal:
    <pre><code data-trim data-noescape>
 	vote Services
 	NAME      TYPE        CLUSTER-IP       ...   PORT(S)          AGE
@@ -250,7 +256,7 @@ for i in `ls *.yaml`; \
 	result    NodePort    10.107.43.36     ...   5001:<mark>31001/TCP</mark>   3h
 	vote      NodePort    10.104.244.69    ...   5000:<mark>31000/TCP</mark>   3h
 </code></pre> <!-- .element: style="font-size:13pt;" -->
-* Navigate to the [voting app](http://voting:appl:31000). You may need to
+* Navigate to the [voting app](http://voting.appl:31000). You may need to
   change the port
 
 
@@ -272,7 +278,7 @@ for i in `ls *.yaml`; \
    ```
    kubectl --server=127.0.0.1:8001  \
         -n vote set image deployment/vote \
-            vote=YOURNAME/vote:v1
+            vote=YOURNAME/vote:v2
    ```
 * Watch the _watcher_ terminal
 * Refresh the site several times while update is running
@@ -283,3 +289,4 @@ for i in `ls *.yaml`; \
 ```
 ansible-playbook ansible/remove-cluster-hosts.yml -K -e prefix=<username>
 ```
+<!-- .element: style="font-size:13pt;"  -->

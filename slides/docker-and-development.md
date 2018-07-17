@@ -57,7 +57,7 @@
   <!-- .element: class="fragment" data-fragment-index="1" -->
    * `--link <name of container>`
     <pre class="fragment" data-fragment-index="2"><code data-trim
-data-noescape>docker run -d --rm --name web <mark>--link redis</mark> -p 5000:5000 web </code></pre>
+data-noescape>$ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:5000 web </code></pre>
 * Try <!-- .element: class="fragment" data-fragment-index="3" -->`docker ps` to see that _web_ and _redis_ containers are running 
 * Once you start the web container go to <!-- .element: class="fragment" data-fragment-index="4" -->[web page](http://localhost:5000) to see counter
 
@@ -135,8 +135,7 @@ data-noescape>docker run -d --rm --name web <mark>--link redis</mark> -p 5000:50
 </div>
 <div class="fragment" data-fragment-index="0" style="width:50%;float:left;">
 
-<pre style="font-size:10pt;"><code data-trim
-data-noescape>
+<pre style="font-size:10pt;"><code data-trim data-noescape>
 ---
 version: "3"
 <span class="fragment" data-fragment-index="4"><mark >services:</mark>
@@ -276,13 +275,13 @@ services:
    ```
    $ docker-compose up -d
    ```
-   <!-- .element: class="fragment" data-fragment-index="4" -->_Note_  `-d` optionally sends to background
+   _Note_  `-d` optionally sends to background
                     
 
 
 ### Scaling Services
 ```
-$ docker-compose up -d --scale redis=9
+$ docker-compose up -d --scale redis=4
 ```
 * Try scaling the redis service to 4 instances <!-- .element: class="fragment" data-fragment-index="0" -->
 
