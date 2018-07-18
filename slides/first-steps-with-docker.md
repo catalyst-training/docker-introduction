@@ -303,7 +303,7 @@ Go to <!-- .element: class="fragment" data-fragment-index="1" -->[localhost:8081
 
 
 
-### Run a command inside a container
+### Execute command inside a running container
 <code style="font-size:18pt;">docker</code> <code  style="font-size:18pt;">exec</code> <code style="color:purple;font-size:18pt;">[options]</code> <code style="color:red;font-style:italic;font-size:18pt;">CONTAINERID</code> <code style="color:blue;font-style:italic;font-size:18pt;">[command]</code> 
 
 * <!-- .element: class="fragment" data-fragment-index="0" --><code>docker exec</code> interacts with running containers
