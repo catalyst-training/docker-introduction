@@ -36,7 +36,7 @@
 * No upper-case letters  <!-- .element: class="fragment" data-fragment-index="0" -->
 * Tag is optional. Implicitly <!-- .element: class="fragment" data-fragment-index="1" -->_:latest_ if not specified
    * <!-- .element: class="fragment" data-fragment-index="2" --><code>postgres<em style="color:green">:9.4</em></code>
-   * <!-- .element: class="fragment" data-fragment-index="3" --><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">16.04</em></code>
+   * <!-- .element: class="fragment" data-fragment-index="3" --><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">18.04</em></code>
 
 
 ### Image Naming Semantics
@@ -183,23 +183,34 @@ namespace and sets of cgroups
 docker run -it ubuntu:18.04 /bin/bash
 root@CONTAINERID:/$ apt-get update 
 root@CONTAINERID:/$ exit
-docker ps -a
+```
+<!-- .element: class="fragment" data-fragment-index="0"-->
+```
 docker diff CONTAINERID
 ```
-<!-- .example: class="fragment" data-fragment-index="0"-->
+<!-- .element: class="fragment" data-fragment-index="1"-->
+* By running the cache update, you have added files to container's filesystem <!-- .element: class="fragment" data-fragment-index="2" -->
+* The files displayed in the diff exist in the container's <!-- .element: class="fragment" data-fragment-index="3" -->_read/write_ layer
+* They are not part of the image <!-- .element: class="fragment" data-fragment-index="4" -->
 
-```
-docker commit CONTAINERID ubuntu:update
-13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
-```
-<!-- .example: class="fragment" data-fragment-index="1"-->
 
-```
-docker image ls
-docker history ubuntu:16.04
-docker history ubuntu:update
-```
-<!-- .example: class="fragment" data-fragment-index="2"-->
+
+#### Exercise: Create a layer
+
+* Create a new <!-- .element: class="fragment" data-fragment-index="0" -->_layer_ on top of the _base image_
+   ```
+   docker commit CONTAINERID ubuntu:update
+   13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
+   ```
+   <!-- .element: style="font-size:12pt;  -->
+* This is now a <!-- .element: class="fragment" data-fragment-index="1" -->_child image_
+* Compare the two images using <!-- .element: class="fragment" data-fragment-index="2" -->`docker history`
+   ```
+   docker image ls
+   docker history ubuntu:16.04
+   docker history ubuntu:update
+   ```
+   <!-- .element: style="font-size:12pt;  -->
 
 
 ### Explore Image Layers
@@ -277,9 +288,12 @@ docker history ubuntu:update
 ### WORKDIR
 
 <code>WORKDIR </code><code style="color:red;">path</code>
-* Create a directory in the image
-* Container will run relative to this directory
 <pre><code>WORKDIR /usr/local/myapp</code></pre>
+* Create a directory in the image
+* Following commands will run relative to this directory until
+   + end of Dockerfile
+   + next <code>WORKDIR</code> directive
+
 
 
 ### CMD

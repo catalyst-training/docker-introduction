@@ -14,6 +14,7 @@
 ### Start Application
 ```
 cd ~/example-voting-app
+docker-compose up -d
 ```
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="asciinema/docker-compose.json" cols="174" rows="15"></asciinema-player>

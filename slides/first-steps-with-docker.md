@@ -4,7 +4,7 @@
 ### Docker Version
 ```
 docker --version
-Docker version 17.12.0-ce, build c6d4123
+Docker version 18.03.1-ce, build 9ee9f40
 ```
 
 * Version numbering scheme similar to Ubuntu versioning: `YY.MM.#`
@@ -303,8 +303,29 @@ Go to <!-- .element: class="fragment" data-fragment-index="1" -->[localhost:8081
 
 
 
+### Run a command inside a container
+<code style="font-size:18pt;">docker</code> <code  style="font-size:18pt;">exec</code> <code style="color:purple;font-size:18pt;">[options]</code> <code style="color:red;font-style:italic;font-size:18pt;">CONTAINERID</code> <code style="color:blue;font-style:italic;font-size:18pt;">[command]</code> 
+
+* <!-- .element: class="fragment" data-fragment-index="0" --><code>docker exec</code> interacts with running containers
+* <!-- .element: class="fragment" data-fragment-index="1" -->Similar to using `ssh` to log into a host machine 
+
+| Option       | Argument | Description  |
+| ---          | ---      | ---         |
+| -i           |          |              Keep STDIN open                                    |
+| -t           |          |              Allocate a tty                                     |
+| -e, --env    | list     |              Set environment variables                          |
+| -d, --detach |          |              Run container in background and print container ID |
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+
+
 #### Exercise: Check process list in _static-site_ container
-<asciinema-player class="fragment" data-fragment-index="0"  autoplay="1" loop="1" font-size="medium"
+```
+docker exec -it static-site /bin/bash
+```
+<!-- .element: class="fragment" data-fragment-index="0" -->
+<asciinema-player class="fragment" data-fragment-index="1"  autoplay="1" loop="1" font-size="medium"
    theme="solarized-light" speed="1" src="asciinema/asciicast-122554.json" cols="150" rows="13"></asciinema-player>
 
 

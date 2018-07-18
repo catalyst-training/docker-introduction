@@ -40,61 +40,6 @@
 
 
 
-### Services
-* Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
-    + Other Pods
-    + External ports (i.e. web, API ingress)
-
-
-
-### Labels & Selectors
-* Label is a key: value pair used to group objects
-    - replication controllers for scheduling pods
-    - services 
-* Label Selectors 
-   + Select objects base on labels
-   + Semantics:
-      - `role = webserver` 
-      - `app != foo`, 
-      - `role in (webserver, backend)`
-
-
-
-### Namespaces
-* Virtual cluster
-* Isolate set of containers on same physical cluster
-
-
-
-### Kubernetes Labels & Deployments <!-- .slide: class="image-slide" -->
-![label-selectors](img/label-selectors.svg "Label Selectors") 
-
-
-
-### Defining a Service
-* Service spec defines
-  + Type <!-- .element: class="fragment" data-fragment-index="0" -->
-     - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
-  + Ports & protocol <!-- .element: class="fragment" data-fragment-index="2" -->
-  + Map to Replication Controller (Pod) <!-- .element: class="fragment" data-fragment-index="3" -->
-
-<!-- .element: style="width:50%;float:left;"  -->
-
-<pre style="width:40%;float:left;"><code data-trim data-noescape>
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-spec:
-  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
-  <span class="fragment" data-fragment-index="2">ports:
-  - port: 6379
-    targetPort: 6379</span>
-  <span class="fragment" data-fragment-index="3">selector:
-    <mark>app: redis</mark></span></code></pre>
-
-
-
 ### Defining a Deployment
 * Specification deployment file
 * Attributes define <!-- .element: class="fragment" data-fragment-index="0" -->
@@ -127,6 +72,61 @@ metadata:
       - name: redis-data
         emptyDir: {}</span> 
         </code></pre>
+
+
+
+### Services
+* Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
+    + Other Pods
+    + External ports (i.e. web, API ingress)
+
+
+
+### Defining a Service
+* Service spec defines
+  + Type <!-- .element: class="fragment" data-fragment-index="0" -->
+     - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
+  + Ports & protocol <!-- .element: class="fragment" data-fragment-index="2" -->
+  + Map to Replication Controller (Pod) <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<!-- .element: style="width:50%;float:left;"  -->
+
+<pre style="width:40%;float:left;"><code data-trim data-noescape>
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
+  <span class="fragment" data-fragment-index="2">ports:
+  - port: 6379
+    targetPort: 6379</span>
+  <span class="fragment" data-fragment-index="3">selector:
+    <mark>app: redis</mark></span></code></pre>
+
+
+
+### Kubernetes Labels & Deployments <!-- .slide: class="image-slide" -->
+![label-selectors](img/label-selectors.svg "Label Selectors") 
+
+
+
+### Labels & Selectors
+* Label is a key: value pair used to group objects
+    - replication controllers for scheduling pods
+    - services 
+* Label Selectors 
+   + Select objects base on labels
+   + Semantics:
+      - `role = webserver` 
+      - `app != foo`, 
+      - `role in (webserver, backend)`
+
+
+
+### Namespaces
+* Virtual cluster
+* Isolate set of containers on same physical cluster
 
 
 

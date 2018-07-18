@@ -254,7 +254,7 @@ services:
 
 
 
-### Exercise: Convert app to `docker-compose`
+#### Exercise: Convert app to `docker-compose`
 
 * In the same directory as previous example <!-- .element: class="fragment" data-fragment-index="0" -->
 * Create a file called <!-- .element: class="fragment" data-fragment-index="1" -->`docker-compose.yml`
@@ -280,10 +280,10 @@ services:
 
 
 ### Scaling Services
-```
-$ docker-compose up -d --scale redis=4
-```
 * Try scaling the redis service to 4 instances <!-- .element: class="fragment" data-fragment-index="0" -->
+   ```
+   $ docker-compose up -d --scale redis=4
+   ```
 
 <asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
      theme="solarized-light" src="asciinema/docker-compose-scaling-service.json"

@@ -11,18 +11,18 @@
                     
 
 
-#### Set up the the web page
-<dl style="font-size:18pt;">
+#### Components of our application
+```
+cd ~/docker-introduction/sample-code/flask-app
+```
+<!-- .element: class="fragment" data-fragment-index="0" -->
+<dl class="fragment" data-fragment-index="1" style="font-size:18pt;">
 <dt>app.py</dt> <dd>A simple flask application for displaying cat pictures</dd>
 <dt>requirements.txt</dt> <dd>list of dependencies for flask</dd>
 <dt>templates/index.html</dt> <dd>A jinja2 template</dd>
 <dt>Dockerfile</dt><dd>Instructions for building a Docker image</dd>
 </dl>
 
-```
-cd ~/docker-introduction/sample-code/flask-app
-```
-<!-- .element: class="fragment" data-fragment-index="0" -->
                     
 
 

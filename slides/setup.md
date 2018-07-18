@@ -19,12 +19,15 @@ cd ~/docker-introduction
    * Ansible setup playbook
    * Sample code for exercises
 
+<!-- .element: class="stretch"  -->
+
+
 
 ### Ansible
 
-* Some of the features we will be exploring require setup. We'll use ansible for that.
-* Python based tool set
-* Automate devops tasks
+* Some of the features we will be exploring require setup. We'll use Ansible for that.
+* Ansible is Python based tool set
+* Useful for automating
    * server/cluster management 
    * installing packages
    * deploying code 
@@ -51,7 +54,7 @@ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate
 * Installs python virtualenv with latest ansible libraries <!-- .element: class="fragment" data-fragment-index="2" -->
 * We'll be using this virtualenv for tasks throughout the course <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<!-- .element: style="width:80%;"  -->
+<!-- .element: class="stretch"  -->
 
 
 ### Setup Docker
@@ -66,7 +69,7 @@ cd docker-introduction
 ansible-galaxy -f -r ansible/requirements.yml
 ansible-playbook -i ansible/hosts -K ansible/docker-install.yml 
 ```
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" data-fragment-index="1"  -->
 
 
 
