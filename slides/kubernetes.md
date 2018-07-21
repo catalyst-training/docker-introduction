@@ -10,33 +10,98 @@
 * [Source](https://news.ycombinator.com/item?id=9653797)
 
 
+### Kubernetes Host Types
+* master
+   - performs _scheduling_
+   - monitoring/healthchecks
+* node (formerly _minion_)
+   - runs containers
+
+
 ### Kubernetes Concepts
-* Host types
-   + master
-      - performs _scheduling_
-      - monitoring/healthchecks
-   + node (formerly _minion_)
-      - runs containers
+* Deployment
+* Pod
+* Services
+* Labels and Selectors
+* Namespaces
+
+
+### Running applications in Kubernetes <!-- .slide "class="image-slide" -->
+![k8s deployment](img/k8s-deployment.png "Deployment")
+
+
+### Deployment
+* A declarative configuration 
+* Instructions for Kubernetes how to run an application:
+   + which image(s) to use for an application
+   + replicas - number of instances
+   + other (mount volumes, etc.)
+* The Kubernetes _deployment controller_ maintains that state in the cluster
+
+
+### Maintaining Homeostasis <!-- .slide: class="image-slide" -->
+![k8s homeostasis](img/k8s-deployment-homeostasis.png "K8s homeostasis") <!-- .element: class="fragment" data-fragment-index="0" -->
+
+
+### Managing Deployments
+* A _Deployment_ can be modified at any time
+  + _scaling_ 
+     - changing number of replicas
+  + _update_ 
+     - change image for all instances 
+* Kubernetes replication controller adapts to new desired state
 
 
 ### Pods
-* A _pod_ is the unit of work 
-   + Consist of ≥ 1 containers ![pod and services](img/pod-diagram.svg "Pod and Services") <!-- .element: class="img-right" style="width:50%;" -->
-      - Always _scheduled_ together
-      - Have same IP
-      - Communication via localhost
+* From _Deployment_ Kubernetes creates _Pods_
+* Atomic _run unit_ of K8s
+* An abstraction representing group of ≥ 1 containers
+   - images![pod and services](img/k8s-pods.png "Pods") <!-- .element: class="img-right" style="width:50%;" -->
+   - network ports
+   - volumes
 
 
-### Deployments
+### Pods
+* Containers in a Pod share common resources   
+   - mounted volume
+   - Network IP address ![pod-anatomy](img/k8s-pod-anatomy.png "Pod upclose") <!-- .element: class="img-right" -->
+   - scheduled together
+* Within Pod communicate via _localhost_
 
-* Provides declarative updates for Pods
-* Describe _desired state_ of an object and controller changes state at a
-  controlled rate
-* Functions
-   + Create pods
-   + Declare new state of pods
-   + Scale deployment
-   + Rollback to an earlier deployment revision
+
+### Defining a Deployment
+ ![pod-anatomy](img/k8s-pod-anatomy.png "Pod upclose")
+<!-- .element: style="width:40%;float:right;"  -->
+
+<pre  style="width:40%;float:left;font-size:10pt;" ><code data-trim data-noescape>
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  replicas: 1
+  template:
+metadata:
+  labels:
+    app: webapp
+    spec:
+      containers:
+        <span class="fragment" data-fragment-index="0">- <mark>image: my-app:v1</mark>
+          name: myapp
+          volumeMounts:
+          - mountPath: /var/www
+            name: static-assets</span>
+        <span class="fragment" data-fragment-index="1">- <mark>image: nginx:2</mark>
+          name: nginx
+          volumeMounts:
+          - mountPath: /var/www
+            name: static-assets</span>
+      <span class="fragment" data-fragment-index="2">volumes:
+      - name: static-assets
+        emptyDir: {}</span> 
+        </code></pre>
+
+
 
 
 
