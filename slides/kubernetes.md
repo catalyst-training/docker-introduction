@@ -152,6 +152,7 @@ spec:
 * Ensure Pods for a specific Deployment receive network traffic <!-- .element: class="fragment" data-fragment-index="4" -->
 
 
+
 #### Labels & Selectors
 * Labels are key/values assigned to objects in k8s
 * Labels can be used in a variety of ways: ![pod-label](img/k8s-pod-label.png "Pod Label") <!-- .element: class="img-right" -->
