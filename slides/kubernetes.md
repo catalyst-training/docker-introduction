@@ -74,12 +74,15 @@
 
 
 #### Pods
-* Containers in a Pod share common resources   
-   - Mounted volumes
+* Containers in a Pod share common <!-- .element: class="fragment" data-fragment-index="0" -->resources   
    - Network IP address ![pod-anatomy](img/k8s-pod-anatomy.png "Pod upclose") <!-- .element: class="img-right" -->
+   - Mounted volumes
    - Always co-located and co-scheduled
-* Within Pod communicate via _localhost_
-* Deployments defined with a _Deployment Spec_
+* Containers within a Pod communicate via <!-- .element: class="fragment" data-fragment-index="1" -->_localhost_
+* Deployments defined with a <!-- .element: class="fragment" data-fragment-index="2" -->_Deployment Spec_
+   - typically yaml or json file <!-- .element: class="fragment" data-fragment-index="3" -->
+   - number of replicas <!-- .element: class="fragment" data-fragment-index="4" -->
+   - how containers are run <!-- .element: class="fragment" data-fragment-index="5" -->
 
 
 
@@ -138,12 +141,31 @@ spec:
         </code></pre>
 
 
-#### Services
-* Each Pod in k8s has own IP (even on same node) <!-- .element: class="fragment" data-fragment-index="0" -->
+#### Container Networking
+* Each Pod in k8s has its own IP (even on same node) <!-- .element: class="fragment" data-fragment-index="0" --> ![raw pod](img/k8s-raw-pod-ip.png "Raw Pod Networking") <!-- .element: class="img-right" -->
 * Pod IPs never exposed outside cluster <!-- .element: class="fragment" data-fragment-index="1" -->
 * Need to reconcile changing Pod IPs <!-- .element: class="fragment" data-fragment-index="2" -->
-* Service defines logical set of pods and policy to access them <!-- .element: class="fragment" data-fragment-index="3" -->![pods service](img/k8s-service-pods1.png "Basic Service") <!-- .element: class="img-right" -->
+
+
+#### Services
+* A service defines logical set of pods and policy to access them <!-- .element: class="fragment" data-fragment-index="3" -->![pods service](img/k8s-service-pods1.png "Basic Service") <!-- .element: class="img-right" -->
 * Ensure Pods for a specific Deployment receive network traffic <!-- .element: class="fragment" data-fragment-index="4" -->
+
+
+#### Labels & Selectors
+* Labels are key/values assigned to objects in k8s
+* Labels can be used in a variety of ways: ![pod-label](img/k8s-pod-label.png "Pod Label") <!-- .element: class="img-right" -->
+   + Classify object
+   + versioning
+   + designate as production, staging, etc.
+
+
+
+#### Matching Services and Pods
+* Labels provide means for _services_ to route traffic to groups of pods
+* Services route traffic to Pods with certain label using Selectors ![service-label-selector](img/k8s-service-label-selectors.png "Labels and Selectors") <!-- .element: class="img-right" -->
+
+
 
 
 #### Service types
@@ -155,12 +177,6 @@ spec:
    - Creates LB on cloud (if supported)
 * _ExternalName_ 
    - Expose service using name by returning CNAME
-
-
-#### Matching Services and Pods
-* Services route traffic to a set of Pods
-* Route to Pods using labels and selectors ![service-label-selector](img/k8s-service-label-selectors.png "Labels and Selectors") <!-- .element: class="img-right" -->
-
 
 
 ### Services
@@ -196,19 +212,6 @@ spec:
 
 ### Kubernetes Labels & Deployments <!-- .slide: class="image-slide" -->
 ![label-selectors](img/label-selectors.svg "Label Selectors") 
-
-
-
-### Labels & Selectors
-* Label is a key: value pair used to group objects
-    - replication controllers for scheduling pods
-    - services 
-* Label Selectors 
-   + Select objects base on labels
-   + Semantics:
-      - `role = webserver` 
-      - `app != foo`, 
-      - `role in (webserver, backend)`
 
 
 
