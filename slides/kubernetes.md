@@ -10,7 +10,7 @@
 * [Source](https://news.ycombinator.com/item?id=9653797)
 
 
-### Kubernetes Host Types
+#### Kubernetes Host Types
 * master
    - performs _scheduling_
    - monitoring/healthchecks
@@ -18,7 +18,7 @@
    - runs containers
 
 
-### Kubernetes Concepts
+#### Kubernetes Concepts
 * Deployment
 * Pod
 * Services
@@ -26,24 +26,31 @@
 * Namespaces
 
 
-### Running applications in Kubernetes <!-- .slide "class="image-slide" -->
-![k8s deployment](img/k8s-deployment.png "Deployment")
+#### Running applications in Kubernetes
+* A declarative configuration called a <!-- .element: class="fragment" data-fragment-index="0" -->_Deployment_
+* Tell Kubernetes the <!-- .element: class="fragment" data-fragment-index="1" -->desired state of an application 
+   + which image(s) to use for an application ![k8s deployment](img/k8s-deployment.png "Deployment") <!-- .element: class="img-right" style="width:50%;" -->
+   + number _replicas_ to run
+   + volume mounts
+* The Kubernetes <!-- .element: class="fragment" data-fragment-index="2" -->_deployment controller_ maintains that state in the cluster
 
 
-### Deployment
-* A declarative configuration 
-* Instructions for Kubernetes how to run an application:
-   + which image(s) to use for an application
-   + replicas - number of instances
-   + other (mount volumes, etc.)
-* The Kubernetes _deployment controller_ maintains that state in the cluster
+
+#### Creating a Deployment
+<code style="font-size:14pt;">kubectl run </code><code style="color:red;font-size:14pt;">name </code><code style="color:red;font-size:14pt;">--image=IMAGE:TAG</code><code style="color:green;font-size:14pt;"> OPTIONS</code>
+* Example
+   ```
+   kubectl run nginx --image=nginx --replicas=3
+   ```
+* Simplest way to create a deployment in Kubernetes
+   + `kubectl run` command
+* CLI options ![pod-anatomy](img/k8s-deployment-replicas.png "Deployment Replicas") <!-- .element: class="img-right" -->
+   + _name_ for the deployment
+   + an image
+   + other info (i.e. replicas, ports, volumes)
 
 
-### Maintaining Homeostasis <!-- .slide: class="image-slide" -->
-![k8s homeostasis](img/k8s-deployment-homeostasis.png "K8s homeostasis") <!-- .element: class="fragment" data-fragment-index="0" -->
-
-
-### Managing Deployments
+#### Managing Deployments
 * A _Deployment_ can be modified at any time
   + _scaling_ 
      - changing number of replicas
@@ -52,24 +59,53 @@
 * Kubernetes replication controller adapts to new desired state
 
 
-### Pods
-* From _Deployment_ Kubernetes creates _Pods_
-* Atomic _run unit_ of K8s
-* An abstraction representing group of ≥ 1 containers
+#### Maintaining State of a Deployment <!-- .slide: class="image-slide" -->
+![k8s homeostasis](img/k8s-deployment-homeostasis.png "K8s homeostasis") <!-- .element: class="fragment" data-fragment-index="0" -->
+
+
+#### Pods
+* From <!-- .element: class="fragment" data-fragment-index="1" -->_Deployment_ Kubernetes creates _Pods_
+* Atomic <!-- .element: class="fragment" data-fragment-index="2" -->_run unit_ of K8s (not containers)
+* An abstraction representing group <!-- .element: class="fragment" data-fragment-index="3" -->of ≥ 1 containers
    - images![pod and services](img/k8s-pods.png "Pods") <!-- .element: class="img-right" style="width:50%;" -->
    - network ports
    - volumes
 
 
-### Pods
+
+#### Pods
 * Containers in a Pod share common resources   
-   - mounted volume
+   - Mounted volumes
    - Network IP address ![pod-anatomy](img/k8s-pod-anatomy.png "Pod upclose") <!-- .element: class="img-right" -->
-   - scheduled together
+   - Always co-located and co-scheduled
 * Within Pod communicate via _localhost_
+* Deployments defined with a _Deployment Spec_
 
 
-### Defining a Deployment
+
+#### Deployment Spec
+ ![pod-anatomy](img/k8s-deployment-replicas.png "Deployment Replicas")
+<!-- .element: style="width:40%;float:right;"  -->
+
+<pre  style="width:40%;float:left;font-size:10pt;" ><code data-trim data-noescape>
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  <mark>replicas: 3</mark>
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      .
+      .
+        </code></pre>
+
+
+
+#### Deployment Spec
  ![pod-anatomy](img/k8s-pod-anatomy.png "Pod upclose")
 <!-- .element: style="width:40%;float:right;"  -->
 
@@ -79,11 +115,11 @@ kind: Deployment
 metadata:
   name: webapp
 spec:
-  replicas: 1
+  replicas: 3
   template:
-metadata:
-  labels:
-    app: webapp
+    metadata:
+      labels:
+        app: webapp
     spec:
       containers:
         <span class="fragment" data-fragment-index="0">- <mark>image: my-app:v1</mark>
@@ -102,41 +138,28 @@ metadata:
         </code></pre>
 
 
+#### Services
+* Each Pod in k8s has own IP (even on same node) <!-- .element: class="fragment" data-fragment-index="0" -->
+* Pod IPs never exposed outside cluster <!-- .element: class="fragment" data-fragment-index="1" -->
+* Need to reconcile changing Pod IPs <!-- .element: class="fragment" data-fragment-index="2" -->
+* Service defines logical set of pods and policy to access them <!-- .element: class="fragment" data-fragment-index="3" -->![pods service](img/k8s-service-pods1.png "Basic Service") <!-- .element: class="img-right" -->
+* Ensure Pods for a specific Deployment receive network traffic <!-- .element: class="fragment" data-fragment-index="4" -->
 
 
+#### Service types
+* _ClusterIP_
+   - Exposes the Service on an internal IP in the cluster
+* _NodePort_
+   - Expose port on each node in cluster
+* _LoadBalancer_
+   - Creates LB on cloud (if supported)
+* _ExternalName_ 
+   - Expose service using name by returning CNAME
 
-### Defining a Deployment
-* Specification deployment file
-* Attributes define <!-- .element: class="fragment" data-fragment-index="0" -->
-   + How many instances to run at start<!-- .element: class="fragment" data-fragment-index="1" -->
-   + Label selectors <!-- .element: class="fragment" data-fragment-index="1" -->
-   + Images/containers in pod <!-- .element: class="fragment" data-fragment-index="2" -->
-   + Volumes mounted in pod <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<!-- .element: style="width:50%;float:left;"  -->
-
-<pre  style="width:40%;float:left;font-size:10pt;" ><code data-trim data-noescape>
-<span class="fragment" data-fragment-index="0">apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: redis</span>
-<span class="fragment" data-fragment-index="1">spec:
-  <span class="fragment" data-fragment-index="1"><mark>replicas: 1</mark></span>
-  template:
-    metadata:
-      labels:
-        <mark>app: redis</mark></span>
-    <span class="fragment" data-fragment-index="2">spec:
-      containers:
-      - <mark>image: redis:alpine</mark>
-        name: redis
-        volumeMounts:
-        - mountPath: /data
-          name: redis-data</span>
-      <span class="fragment" data-fragment-index="3">volumes:
-      - name: redis-data
-        emptyDir: {}</span> 
-        </code></pre>
+#### Matching Services and Pods
+* Services route traffic to a set of Pods
+* Route to Pods using labels and selectors ![service-label-selector](img/k8s-service-label-selectors.png "Labels and Selectors") <!-- .element: class="img-right" -->
 
 
 
