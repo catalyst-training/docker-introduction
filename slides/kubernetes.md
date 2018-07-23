@@ -31,23 +31,35 @@
 * Tell Kubernetes the <!-- .element: class="fragment" data-fragment-index="1" -->desired state of an application 
    + which image(s) to use for an application ![k8s deployment](img/k8s-deployment.png "Deployment") <!-- .element: class="img-right" style="width:50%;" -->
    + number _replicas_ to run
+   + network ports
    + volume mounts
-* The Kubernetes <!-- .element: class="fragment" data-fragment-index="2" -->_deployment controller_ maintains that state in the cluster
+* The <!-- .element: class="fragment" data-fragment-index="2" -->_deployment controller_ changes cluster from actual to desired state
 
 
 
 #### Creating a Deployment
 <code style="font-size:14pt;">kubectl run </code><code style="color:red;font-size:14pt;">name </code><code style="color:red;font-size:14pt;">--image=IMAGE:TAG</code><code style="color:green;font-size:14pt;"> OPTIONS</code>
-* Example
+* Simplest way to create a deployment in Kubernetes <!-- .element: class="fragment" data-fragment-index="0" -->
+   + `kubectl run` command
    ```
    kubectl run nginx --image=nginx --replicas=3
    ```
-* Simplest way to create a deployment in Kubernetes
-   + `kubectl run` command
-* CLI options ![pod-anatomy](img/k8s-deployment-replicas.png "Deployment Replicas") <!-- .element: class="img-right" -->
+* CLI options <!-- .element: class="fragment" data-fragment-index="1" -->![pod-anatomy](img/k8s-deployment-replicas.png "Deployment Replicas") <!-- .element: class="img-right" -->
    + _name_ for the deployment
    + an image
    + other info (i.e. replicas, ports, volumes)
+
+
+#### Maintaining Deployment State
+* K8s continuously monitors state of application
+* Self-healing 
+  + Replace unhealthy instances
+  + Redistribute instances if node goes down
+* Periodically culls and respawns instances
+
+
+#### Maintaining State of a Deployment <!-- .slide: class="image-slide" -->
+![k8s homeostasis](img/k8s-deployment-homeostasis.png "K8s homeostasis") <!-- .element: class="fragment" data-fragment-index="0" -->
 
 
 #### Managing Deployments
@@ -57,10 +69,6 @@
   + _update_ 
      - change image for all instances 
 * Kubernetes replication controller adapts to new desired state
-
-
-#### Maintaining State of a Deployment <!-- .slide: class="image-slide" -->
-![k8s homeostasis](img/k8s-deployment-homeostasis.png "K8s homeostasis") <!-- .element: class="fragment" data-fragment-index="0" -->
 
 
 #### Pods
@@ -132,6 +140,8 @@ spec:
             name: static-assets</span>
         <span class="fragment" data-fragment-index="1">- <mark>image: nginx:2</mark>
           name: nginx
+          ports:
+            - containerPort: 80
           volumeMounts:
           - mountPath: /var/www
             name: static-assets</span>
@@ -142,7 +152,8 @@ spec:
 
 
 #### Container Networking
-* Each Pod in k8s has its own IP (even on same node) <!-- .element: class="fragment" data-fragment-index="0" --> ![raw pod](img/k8s-raw-pod-ip.png "Raw Pod Networking") <!-- .element: class="img-right" -->
+* Each Pod in k8s has its own IP<!-- .element: class="fragment" data-fragment-index="0" --> ![raw pod](img/k8s-raw-pod-ip.png "Raw Pod Networking") <!-- .element: class="img-right" -->
+   + even on same node
 * Pod IPs never exposed outside cluster <!-- .element: class="fragment" data-fragment-index="1" -->
 * Need to reconcile changing Pod IPs <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -154,7 +165,8 @@ spec:
 
 
 #### Labels & Selectors
-* Labels are key/values assigned to objects in k8s
+* Labels are key/values assigned to objects
+   + Pods
 * Labels can be used in a variety of ways: ![pod-label](img/k8s-pod-label.png "Pod Label") <!-- .element: class="img-right" -->
    + Classify object
    + versioning
@@ -167,13 +179,56 @@ spec:
 * Services route traffic to Pods with certain label using Selectors ![service-label-selector](img/k8s-service-label-selectors.png "Labels and Selectors") <!-- .element: class="img-right" -->
 
 
-
-
 #### Service types
 * _ClusterIP_
    - Exposes the Service on an internal IP in the cluster
 * _NodePort_
    - Expose port on each node in cluster
+
+
+#### ClusterIP
+
+ ![clusterip-service](img/k8s-cluster-ip-port-service.hml.png "ClusterIP")
+<!-- .element: style="width:40%;float:right;"  -->
+
+<pre style="width:40%;float:left;"><code data-trim data-noescape>
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
+  <span class="fragment" data-fragment-index="2">ports:
+  - port: 6379
+    targetPort: 6379</span>
+  <span class="fragment" data-fragment-index="3">selector:
+    <mark>app: redis</mark></span></code></pre>
+
+
+
+#### NodePort
+_NodePort_ services exposed on each node of cluster
+ ![nodeport-service](img/k8s-nodeport-service.png "NodePort")
+<!-- .element: style="width:50%;float:right;"  -->
+
+<pre style="width:40%;float:left;"><code data-trim data-noescape>
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  name: "web-service"
+  <mark>type: NodePort</mark>
+  ports:
+  - port: 80
+    targetPort: 5000
+    <mark>nodePort: 31000</mark>
+  selector:
+    app: app</code></pre>
+
+
+
+##### Other Service Types
 * _LoadBalancer_
    - Creates LB on cloud (if supported)
 * _ExternalName_ 
