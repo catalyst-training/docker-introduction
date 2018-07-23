@@ -28,9 +28,9 @@
 
 #### Running applications in Kubernetes
 * A declarative configuration called a <!-- .element: class="fragment" data-fragment-index="0" -->_Deployment_
-* Tell Kubernetes the <!-- .element: class="fragment" data-fragment-index="1" -->desired state of an application 
+* Tell Kubernetes the <!-- .element: class="fragment" data-fragment-index="1" -->_desired state_ of an application 
    + which image(s) to use for an application ![k8s deployment](img/k8s-deployment.png "Deployment") <!-- .element: class="img-right" style="width:50%;" -->
-   + number _replicas_ to run
+   + number of _replicas_ to run
    + network ports
    + volume mounts
 * The <!-- .element: class="fragment" data-fragment-index="2" -->_deployment controller_ changes cluster from actual to desired state
@@ -68,6 +68,8 @@
      - changing number of replicas
   + _update_ 
      - change image for all instances 
+  + _rollback_
+     - roll back to a previous version of application
 * Kubernetes replication controller adapts to new desired state
 
 
@@ -176,7 +178,7 @@ spec:
 
 #### Matching Services and Pods
 * Labels provide means for _services_ to route traffic to groups of pods
-* Services route traffic to Pods with certain label using Selectors ![service-label-selector](img/k8s-service-label-selectors.png "Labels and Selectors") <!-- .element: class="img-right" -->
+* Services route traffic to Pods with certain label using _Selectors_ ![service-label-selector](img/k8s-service-label-selectors.png "Labels and Selectors") <!-- .element: class="img-right" -->
 
 
 #### Service types
@@ -187,7 +189,7 @@ spec:
 
 
 #### ClusterIP
-
+_ClusterIP_ services are only visible within a cluster
  ![clusterip-service](img/k8s-cluster-ip-port-service.hml.png "ClusterIP")
 <!-- .element: style="width:40%;float:right;"  -->
 
@@ -235,44 +237,18 @@ spec:
    - Expose service using name by returning CNAME
 
 
-### Services
-* Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
-    + Other Pods
-    + External ports (i.e. web, API ingress)
-
-
-
-### Defining a Service
-* Service spec defines
-  + Type <!-- .element: class="fragment" data-fragment-index="0" -->
-     - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
-  + Ports & protocol <!-- .element: class="fragment" data-fragment-index="2" -->
-  + Map to Replication Controller (Pod) <!-- .element: class="fragment" data-fragment-index="3" -->
-
-<!-- .element: style="width:50%;float:left;"  -->
-
-<pre style="width:40%;float:left;"><code data-trim data-noescape>
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-spec:
-  <span class="fragment" data-fragment-index="1"><mark>type: ClusterIP</mark></span>
-  <span class="fragment" data-fragment-index="2">ports:
-  - port: 6379
-    targetPort: 6379</span>
-  <span class="fragment" data-fragment-index="3">selector:
-    <mark>app: redis</mark></span></code></pre>
-
-
-
-### Kubernetes Labels & Deployments <!-- .slide: class="image-slide" -->
-![label-selectors](img/label-selectors.svg "Label Selectors") 
+### Connecting an Application
+* Functioning application depends on![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
+   + Deployment
+   + Pods
+   + Services
+   + Labels, selectors
 
 
 
 ### Namespaces
-* Virtual cluster
+* A way to partition a k8s cluster for different applications
+* Virtual cluster ![namespaces](img/k8s-namespaces.png "Namespaces") <!-- .element: class="img-right" -->
 * Isolate set of containers on same physical cluster
 
 
