@@ -35,6 +35,24 @@
   configuring Ansible
 
 
+#### Setup
+* You will need to run some Ansible playbooks from the k8s-ansible respository
+* If not already checked out in your `$HOME` directory
+   ```
+   git clone https://github.com/heytrav/k8s-ansible.git
+   ```
+   <!-- .element: style="font-size:13pt;"  -->
+* Change to the k8s-ansible directory
+   ```
+   cd $K8S_ANSIBLE_HOME
+   ```
+* Set up Ansible roles
+   ```
+   ansible-galaxy install -f -r requirements.yml
+   ```
+   <!-- .element: style="font-size:13pt;"  -->
+
+
 #### Create Kubernetes Cluster
 
 ```bash
