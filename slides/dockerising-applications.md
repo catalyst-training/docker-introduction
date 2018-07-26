@@ -68,11 +68,12 @@ docker run -p 8888:5000 --rm --name myfirstapp YOURNAME/myfirstapp
 
 
 ### Login to Docker Registry
+<code>docker login </code><code style="color:blue;">URL</code> 
 ```
-docker login <registry url>
+docker login 
 ```
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-120558.json" cols="138" rows="11"></asciinema-player>
-* If registry not specified, logs into <a href="https://hub.docker.com">hub.docker.com</a>
+* If registry not specified, logs into _docker.io_
 * Can log in to multiple registries
 
 
