@@ -82,7 +82,7 @@ ansible-playbook -i ansible/hosts -K ansible/docker-install.yml
 
 ### Fetch and run slides
 ```
-docker pull heytrav/docker-introduction-slides:latest
+docker pull heytrav/docker-introduction-slides:microservices
 docker run --name docker-intro -d --rm \
         -p 8000:8000 heytrav/docker-introduction-slides
 ```
