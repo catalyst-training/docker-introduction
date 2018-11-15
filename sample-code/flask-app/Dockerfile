@@ -9,6 +9,8 @@ RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
 
 # copy files required for the app to run
 COPY app.py /usr/src/app/
+RUN mkdir -p /usr/src/app/tests
+COPY tests/ /usr/src/app/tests
 COPY templates/index.html /usr/src/app/templates/
 
 # tell the port number the container should expose
