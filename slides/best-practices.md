@@ -98,13 +98,13 @@ RUN apt-get update \
           data-noescape>FROM ubuntu:latest <mark class="fragment" data-fragment-index="1">112MB</mark>
 
 RUN apt-get update \ 
-&& apt-get install -y \
-automake \
-build-essential \
-curl \
-wget \
-libcap-dev \
-reprepro         <mark class="fragment" data-fragment-index="2">284MB</mark>
+    && apt-get install -y \
+    automake \
+    build-essential \
+    curl \
+    wget \
+    libcap-dev \
+    reprepro   <mark class="fragment" data-fragment-index="2">284MB</mark>
 RUN rm -rf /var/lib/apt/lists/\* <mark class="fragment" data-fragment-index="3">0MB</mark>
 
 ADD https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz .  <mark class="fragment" data-fragment-index="4">326MB</mark>    
@@ -184,7 +184,7 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 
 <div style="width:50%;float:left;">
 <pre style="font-size:12pt;" class="fragment" data-fragment-index="4"><code data-trim>
-FROM ubuntu:16.04 as builder
+FROM ubuntu:18.04 as builder
 WORKDIR /bin
 COPY . /bin/
 RUN make install

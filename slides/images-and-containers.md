@@ -16,7 +16,7 @@
 <dd>Created by single authority (OS, packages):
 <br>
         <ul style="width:50%;">
-            <li>ubuntu:16.04</li>
+            <li>ubuntu:18.04</li>
             <li>
                 centos:7.3.1611
             </li>
@@ -207,7 +207,7 @@ docker diff CONTAINERID
 * Compare the two images using <!-- .element: class="fragment" data-fragment-index="2" -->`docker history`
    ```
    docker image ls
-   docker history ubuntu:16.04
+   docker history ubuntu:18.04
    docker history ubuntu:update
    ```
    <!-- .element: style="font-size:12pt;  -->
