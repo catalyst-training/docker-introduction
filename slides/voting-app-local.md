@@ -32,17 +32,13 @@ docker-compose up -d
 <asciinema-player autoplay="1" loop="loop"  font-size="medium" speed="1" theme="solarized-light" src="asciinema/asciicast-120556.json" cols="138" rows="21"></asciinema-player>
 
 
-### Developer Workflow
-
-* Push code to repository <!-- .element: class="fragment" data-fragment-index="0" -->
-* Continuous Integration (CI) system runs tests <!-- .element: class="fragment" data-fragment-index="1" -->
-* If tests successful, automate image build &amp; push to a docker registry <!-- .element: class="fragment" data-fragment-index="2" -->
-* Easy to setup with existing services <!-- .element: class="fragment" data-fragment-index="3" -->
-   * [DockerHub](https://hub.docker.com) (eg. [these slides](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/))
-   * [GitHub](https://github.com)
-   * [CircleCI](https://circleci.com)
-   * GitLab
-   * [Quay.io](https://quay.io)
+#### Docker Development Workflow 
+* Automated pipelines <!-- .element: class="fragment" data-fragment-index="0" -->  ![Docker development workflow](img/development-ci-workflow.svg "Docker workflow") <!-- .element: class="img-right" -->
+* Can be single or combination of services<!-- .element: class="fragment" data-fragment-index="1" -->
+   * [GitHub](https://github.com), [GitLab](https://about.gitlab.com)
+   * Jenkins, Travis-CI
+   * [DockerHub](https://hub.docker.com), [Quay.io](https://quay.io) 
+      - (eg. [these slides](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/))
 
 
 ### Developer Workflow
