@@ -44,18 +44,18 @@
 
 * [Local Development](voting-app-local.md)
    + Demo voting app
+* [Docker Compose](docker-compose-advanced.md)
 * [Deploying Applications](orchestration.md)
    + Container orchestration 
 
 
-
+#### If we have time
 * [Kubernetes](kubernetes.md)
    + About Kubernetes
    + Architecture
-   + Deploy demo
-
-
-   
+   + Deploy demo 
 * [Deploying Swarm Apps](deploying-swarm-app.md)
+
+
 * [Wrap Up](wrap-up.md)
 
