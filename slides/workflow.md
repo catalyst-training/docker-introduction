@@ -3,7 +3,8 @@
 
 ####  Docker Deployment Pipeline
 * In a nutshell <!-- .element: class="fragment" data-fragment-index="0" -->
-   - test code
+   - commit change
+   - run (and pass) unit tests
    - create image
    - distribute image
    - deploy somewhere
@@ -13,7 +14,9 @@
 
 
 #### Source Control Management
-* Developer pushes code ![Docker development workflow](img/development-ci-workflow-step1.svg "Docker workflow") <!-- .element: class="img-right" -->
+* Developer commits change to repository ![Docker development workflow](img/development-ci-workflow-step1.svg "Docker workflow") <!-- .element: class="img-right" -->
+* Pushes change to centralised repository
+
 
 
 #### Run unit tests
@@ -27,14 +30,14 @@
 
 
 #### Build and ship images
-* Perform  basic image build  ![Docker development workflow](img/development-ci-workflow-step3.svg "Docker workflow") <!-- .element: class="img-right" -->
+* Build image artefact ![Docker development workflow](img/development-ci-workflow-step3.svg "Docker workflow") <!-- .element: class="img-right" -->
    - `docker build `...
-   - `docker push `...
 * Push to registry <!-- .element: class="fragment" data-fragment-index="0" -->
-   - [Docker Hub](https://hub.docker.com)
-   - [Quay](https://quay.io)
-   - Private Docker registry
-* For example <!-- .element: class="fragment" data-fragment-index="2" -->:
+   - `docker push `...
+   - <!-- .element: class="fragment" data-fragment-index="1" -->[Docker Hub](https://hub.docker.com)
+   - <!-- .element: class="fragment" data-fragment-index="2" -->[Quay](https://quay.io)
+   - <!-- .element: class="fragment" data-fragment-index="3" -->Private Docker registry
+* For example <!-- .element: class="fragment" data-fragment-index="4" -->:
    - [Repo for these slides](https://github.com/catalyst-training/docker-introductin)
    - [Docker registry](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/)
 

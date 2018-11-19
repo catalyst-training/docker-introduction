@@ -39,13 +39,11 @@ docker-compose up -d
 * Build and ship our image directly<!-- .element: class="fragment" data-fragment-index="2" -->
 
 
-#### Developer Workflow
+#### Building with `docker-compose`
 
-* Build image using docker-compose <!-- .element: class="fragment" data-fragment-index="0" -->
-   * Useful if you want to test an image immediately
+* Useful if you want to test an image immediately <!-- .element: class="fragment" data-fragment-index="0" -->
 * Tell docker-compose to rebuild the image <!-- .element: class="fragment" data-fragment-index="1" -->
 * Build and tag the image as <!-- .element: class="fragment" data-fragment-index="2" -->`YOURNAME/vote:v2` and push to [hub.docker.com](https://hub.docker.com)
-* This will come in handy in an example we're doing later <!-- .element: class="fragment" data-fragment-index="2" -->
 ```
 docker-compose build vote
 docker tag example-voting-app_vote:latest YOURNAME/vote:v2
