@@ -28,14 +28,14 @@ cd ~/docker-introduction/sample-code/flask-app
 
 #### Our Dockerfile
 ```
-FROM alpine:3.5
+FROM alpine:3.6
 
 # Install python and pip
-RUN apk add --update py2-pip
+RUN apk add --update python3
 
 # install Python modules needed by the Python app
 COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
+RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
 
 # copy files required for the app to run
 COPY app.py /usr/src/app/

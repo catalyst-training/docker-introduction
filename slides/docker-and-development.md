@@ -1,15 +1,15 @@
 ## Docker and Development
 
 
-### Docker and Microservices
+#### Docker and Microservices
 * Containerised applications ideal for microservices <!-- .element: class="fragment" data-fragment-index="0" -->![basic microsrevices](img/microservice-basic.png "Microservice applications") <!-- .element: class="img-right" -->
-* Components ideally self contained and modular <!-- .element: class="fragment" data-fragment-index="1" -->
+* Components ideally self-contained and modular <!-- .element: class="fragment" data-fragment-index="1" -->
    * deployed independently 
    * scaled independently
 
 
 
-### Microservices in Docker
+#### Microservices in Docker
 ```
  cd ~/docker-introduction/sample-code/mycomposeapp 
 ```
@@ -26,7 +26,7 @@
 *  Let's build a docker image for our app <!-- .element: class="fragment" data-fragment-index="5" -->
 
 
-### Create Our App
+#### Create Our App
 * Fire up your favourite editor and create a Dockerfile <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
    gedit Dockerfile
@@ -47,7 +47,7 @@
    ```
 
 
-### First Pass: Creating Microservices
+#### First Pass: Creating Microservices
 
 * First let's start our redis container <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
@@ -62,7 +62,7 @@ data-noescape>$ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:
 * Once you start the web container go to <!-- .element: class="fragment" data-fragment-index="4" -->[web page](http://localhost:5000) to see counter
 
 
-### Disadvantages of Command Line Approach
+#### Disadvantages of Command Line Approach
 
 * Complicated with shell/script commands <!-- .element: class="fragment" data-fragment-index="0" -->
    * Managing service interactions
@@ -77,7 +77,7 @@ data-noescape>$ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:
 * Better tools exist.. <!-- .element: class="fragment" data-fragment-index="3" -->
 
 
-### `docker-compose`
+#### `docker-compose`
 
 * A tool that let's you easily bootstrap complex microservice apps <!-- .element: class="fragment" data-fragment-index="0" -->
 * Allows interactive development <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -87,7 +87,7 @@ data-noescape>$ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:
 
 
 
-### The `docker-compose` file
+#### The `docker-compose` file
 <div style="width:50%;float:left;font-size:19pt;">
 <ul>
     <li class="fragment" data-fragment-index="0">
@@ -164,7 +164,7 @@ version: "3"
 
 
 
-### Services
+#### Services
 <div style="width:50%;float:left;font-size:20pt;">
     <ul>
         <li  class="fragment" data-fragment-index="0">
@@ -240,7 +240,7 @@ services:
                     </div>
 
 
-### Interacting with Docker Compose
+#### Interacting with Docker Compose
 
 <code>docker-compose</code> <code style="color:red;">COMMAND</code> <code style="color:blue;">[options]</code> <code>[args]</code>
  
@@ -254,7 +254,7 @@ services:
 
 
 
-#### Exercise: Convert app to `docker-compose`
+##### Exercise: Convert app to `docker-compose`
 
 * In the same directory as previous example <!-- .element: class="fragment" data-fragment-index="0" -->
 * Create a file called <!-- .element: class="fragment" data-fragment-index="1" -->`docker-compose.yml`
@@ -279,7 +279,7 @@ services:
                     
 
 
-### Scaling Services
+#### Scaling Services
 * Try scaling the redis service to 4 instances <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
    $ docker-compose up -d --scale redis=4
@@ -290,7 +290,7 @@ services:
      cols="138" rows="15"></asciinema-player>
 
 
-### Stopping `docker-compose`
+#### Stopping `docker-compose`
 
 * In the directory where your `docker-compose.yml` file is, run:
    ```
@@ -298,7 +298,7 @@ services:
    ```
 
 
-### Summary
+#### Summary
 
 * `docker-compose` provides useful way to setup development environments
 * Takes care of

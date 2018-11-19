@@ -39,10 +39,20 @@
    - [Docker registry](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/)
 
 
-#### Deploy Container Workload
-* Orchestration frameworks ![Docker development workflow](img/development-ci-workflow.svg "Docker workflow") <!-- .element: class="img-right" width="50%" height="50%" -->
+#### Deploying containers
+* Deploy containerised microservices ![Docker development workflow](img/development-ci-workflow.svg "Docker workflow") <!-- .element: class="img-right" width="50%" height="50%" -->
+* Orchestration frameworks <!-- .element: class="fragment" data-fragment-index="0" -->
    - Docker Swarm
    - Kubernetes
-* Vendor solutions
+* Vendor specific solutions <!-- .element: class="fragment" data-fragment-index="1" -->
    - AWS ECS
    - Azure Containers
+
+
+#### Overlapping Functionality
+* Some solutions or tools may have multiple roles <!-- .element: class="fragment" data-fragment-index="0" -->
+   - SCM: Gitlab, Bitbucket
+   - CI: Jenkins, GitLab
+   - Build/ship images: Jenkins, Gitlab, DockerHub
+   - Registry: DockerHub, Quay, GitLab
+* All-in-one (or almost-all-in-one) solutions <!-- .element: class="fragment" data-fragment-index="1" -->
