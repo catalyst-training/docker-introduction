@@ -13,15 +13,15 @@
    - the webs
 
 
-#### Source Control Management
-* Developer commits change to repository ![Docker development workflow](img/development-ci-workflow-step1.svg "Docker workflow") <!-- .element: class="img-right" -->
+#### Source Control Management (SCM)
+* Developer commits change ![Docker development workflow](img/development-ci-workflow-step1.svg "Docker workflow") <!-- .element: class="img-right" -->
 * Pushes change to centralised repository
 
 
 
 #### Run unit tests
 
-* Push to SCM fires webhook  ![Docker development workflow](img/development-ci-workflow-step2.svg "Docker workflow") <!-- .element: class="img-right" -->
+* Push to central repository fires webhook  ![Docker development workflow](img/development-ci-workflow-step2.svg "Docker workflow") <!-- .element: class="img-right" -->
 * CI runs unit tests <!-- .element: class="fragment" data-fragment-index="0" -->
    - Jenkins
    - Travis-CI
@@ -36,7 +36,7 @@
    - `docker push `...
    - <!-- .element: class="fragment" data-fragment-index="1" -->[Docker Hub](https://hub.docker.com)
    - <!-- .element: class="fragment" data-fragment-index="2" -->[Quay](https://quay.io)
-   - <!-- .element: class="fragment" data-fragment-index="3" -->Private Docker registry
+   - <!-- .element: class="fragment" data-fragment-index="3" -->[Local Registry](https://docs.docker.com/registry/deploying)
 * For example <!-- .element: class="fragment" data-fragment-index="4" -->:
    - [Repo for these slides](https://github.com/catalyst-training/docker-introductin)
    - [Docker registry](https://hub.docker.com/r/heytrav/docker-introduction-slides/builds/)

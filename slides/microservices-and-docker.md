@@ -1,4 +1,4 @@
-## Docker and Development
+### Microservice Applications in Docker
 
 
 #### Docker and Microservices
@@ -102,31 +102,17 @@ data-noescape>$ docker run -d --rm --name web <mark>--link redis</mark> -p 5000:
     <li class="fragment" data-fragment-index="3">Specifies
     <ul>
         <li class="fragment" data-fragment-index="4">Services 
-            <ul>
-                <li class="fragment" data-fragment-index="5">
-                    effectively containers that you
-                    will run
-                </li>
-            </ul>
+            
         </li>
-        <li class="fragment" data-fragment-index="6">Volumes 
-            <ul>
-                <li class="fragment" data-fragment-index="7">
-                    filesystem mounts for containers
-                </li>
-            </ul>
+        <li class="fragment" data-fragment-index="5">Volumes 
+            
         </li>
-        <li class="fragment" data-fragment-index="8">Networks 
-            <ul>
-                <li class="fragment" data-fragment-index="9">
-                    to be created and used by
-                    containers
-                </li>
-            </ul>
+        <li class="fragment" data-fragment-index="6">Networks 
+            
         </li>
     </ul>
     </li> 
-    <li class="fragment" data-fragment-index="10">
+    <li class="fragment" data-fragment-index="7">
                             Have a look at the <a
                                 href="https://docs.docker.com/compose/compose-file/">compose file reference</a>
             </li>
@@ -152,10 +138,10 @@ version: "3"
     networks:
         hostnet: {}</span>
 
-<span class="fragment" data-fragment-index="6"><mark>volumes:</mark>
+<span class="fragment" data-fragment-index="5"><mark>volumes:</mark>
   data-volume:</span>
 
-<span class="fragment" data-fragment-index="8"><mark>networks:</mark>
+<span class="fragment" data-fragment-index="6"><mark>networks:</mark>
   hostnet:
     external:
       name: host</span>
@@ -176,37 +162,16 @@ version: "3"
             Attributes of a service include
             <ul>
                 <li>
-                    build
-                    <ul>
-                        <li>
-                            path or dictionary pointing to Dockerfile to
-                            build for container
-                        </li>
-                    </ul>
+                    build - points to a Dockerfile
                 </li>
                 <li>
-                    image
-                    <ul>
-                        <li>
-                            Use a particular image for container
-                        </li>
-                    </ul>
+                    image - Use a particular image for container
                 </li>
                 <li>
-                    ports
-                    <ul>
-                        <li>
-                            expose ports for accessing application
-                        </li>
-                    </ul>
+                    ports -  expose ports for accessing application
                 </li>
                 <li>
-                    volumes
-                    <ul>
-                        <li>
-                            mount into container
-                        </li>
-                    </ul>
+                    volumes -  mount into container
                 </li>
             </ul>
         </li>
@@ -273,7 +238,7 @@ services:
  <!-- .element: style="font-size:10pt;" -->
 * Start our microservices <!-- .element: class="fragment" data-fragment-index="3" -->
    ```
-   $ docker-compose up -d
+   docker-compose up -d
    ```
    _Note_  `-d` optionally sends to background
                     
@@ -282,7 +247,7 @@ services:
 #### Scaling Services
 * Try scaling the redis service to 4 instances <!-- .element: class="fragment" data-fragment-index="0" -->
    ```
-   $ docker-compose up -d --scale redis=4
+   docker-compose up -d --scale redis=4
    ```
 
 <asciinema-player class="fragment" data-fragment-index="1" autoplay="1" loop="loop"  font-size="medium" speed="1"
@@ -294,7 +259,7 @@ services:
 
 * In the directory where your `docker-compose.yml` file is, run:
    ```
-   $ docker-compose stop
+   docker-compose down
    ```
 
 

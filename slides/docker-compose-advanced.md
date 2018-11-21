@@ -72,14 +72,14 @@ services:
 
 ##### Exercise: Use a different image
 * Reload the [vote](http://localhost:5000) application
-* Repeat this using image created by other course participants
-* Note that you will need to pull the image 
+* Repeat this using an image created by other course participants
+* _Note_ you will need to pull the image 
 
 
 #### Explicitly overriding files
-* Often need to have configuration for specific environment <!-- .element: class="fragment" data-fragment-index="0" -->
+* Often practical to have configuration for specific environments <!-- .element: class="fragment" data-fragment-index="0" -->
 * For example, say you need a specific image on staging environments <!-- .element: class="fragment" data-fragment-index="1" -->
-   - `docker-compose.staging.yml`
+   - `docker-compose-staging.yml`
    <pre><code data-trim data-noescape>
         services:
           vote:
@@ -89,7 +89,7 @@ services:
    </code></pre>
 * <!-- .element: class="fragment" data-fragment-index="2" -->Common pattern is to compose files 
    <pre><code style="font-size:12pt;" data-trim>
-    docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d
+    docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d
    </code></pre>
 
 
@@ -99,20 +99,20 @@ services:
    * Always add to `.gitignore`
    * General rule: always delete when you don't need it
 * Files for explicit override are fine to add to version control
-   * `docker-compose.staging.yml`
-   * `docker-compose.feature-branch.yml`
+   * `docker-compose-staging.yml`
+   * `docker-compose-ci.yml`
 
 
 #### Environment Variables in `docker-compose`
 * Populate values in compose file <!-- .element: class="fragment" data-fragment-index="0" -->
    - in your shell
-      ```
+      ```bash
       export TAG=6
       ```
-   - then somewherei in your compose file
+   - then somewhere in your compose file
       <pre><code data-noescape data-trim>
    db:
-     image: "mysql:<mark>${TAG}</mark>"
+      image: "mysql:<mark>${TAG}</mark>"
    </code></pre>
 * Pass variables into containers using <!-- .element: class="fragment" data-fragment-index="1" -->_environment_ section
    - Similar to `docker run -e DBNAME=mydb ...`
@@ -158,26 +158,27 @@ services:
    ```
    docker-compose up -d vote
    ```
-* Bonus: try this with <!-- .element: class="fragment" data-fragment-index="2" -->`.env_file`
+* Bonus: try this with <!-- .element: class="fragment" data-fragment-index="2" -->`env_file`
 
 <!-- .element: class="stretch"  -->
 
 
 #### Using a `.env` file
-* File called <!-- .element: class="fragment" data-fragment-index="0" -->`.env` containing environment variables
+* <!-- .element: class="fragment" data-fragment-index="0" -->A `.env` file can
+  be used to define global default variables
    ```
    TAG=v2
    DBNAME=staging
    DBPASSWORD=changeMe!
    DBUSER=myuser
    ```
-* Can be used to set default values for <!-- .element: class="fragment" data-fragment-index="1" -->_any_ variables referenced in the compose file
+* Can be used for <!-- .element: class="fragment" data-fragment-index="1" -->_any_ variables referenced in the compose file
 * Definitely should not add this to repository <!-- .element: class="fragment" data-fragment-index="2" -->
 * Add it to <!-- .element: class="fragment" data-fragment-index="3" -->`.gitignore`
 
 
 #### Environment variable precedence
-* Priority of environment variables <!-- .element: class="fragment" data-fragment-index="2" -->
+* Priority of environment variables (decreasing order)<!-- .element: class="fragment" data-fragment-index="2" -->
    - Compose file
       * `environment:`
       * `env_file:`
@@ -185,3 +186,38 @@ services:
    - `.env` file
    - Dockerfile
    - variable is undefined
+
+
+
+#### Volume Configuration
+* The `volumes` directive in a compose is used to mount a local directory into
+  a container
+  ```
+    volumes:
+     - ./vote:/app
+  ```
+* <!-- .element: class="fragment" data-fragment-index="0" -->An alternative is
+  to create _named_ volumes
+   <pre style="font-size:12pt;"><code data-trim data-noescape>
+version: "3"
+services:
+  db:
+    image: db
+    volumes:
+      - <mark>data-volume</mark>:/var/lib/db
+  backup:
+    image: backup-service
+    volumes:
+      - <mark>data-volume</mark>:/var/lib/backup/data
+<mark>volumes:
+    data-volume:</mark>
+</code></pre>
+
+
+#### Named volumes
+* Easy to create; just declare in compose file
+* Persist when `docker-compose` is stopped and restarted
+* Can be retrieved and inspected using `docker volume` subcommand
+   ```
+   docker volume --help
+   ```

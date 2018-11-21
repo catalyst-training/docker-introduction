@@ -1,7 +1,8 @@
 ## Kubernetes
+#### A very brief tour
 
 
-### Kubernetes Facts
+#### Kubernetes Facts
 
 * Greek word for _helmsman_ or _pilot_
 * Also origin of words like _cybernetics_ and _government_
@@ -10,7 +11,7 @@
 * [Source](https://news.ycombinator.com/item?id=9653797)
 
 
-### Kubernetes Concepts
+#### Kubernetes Concepts
 * Host types
    + master
       - performs _scheduling_
@@ -19,7 +20,7 @@
       - runs containers
 
 
-### Pods
+#### Pods
 * A _pod_ is the unit of work 
    + Consist of ≥ 1 containers ![pod and services](img/pod-diagram.svg "Pod and Services") <!-- .element: class="img-right" style="width:50%;" -->
       - Always _scheduled_ together
@@ -27,7 +28,7 @@
       - Communication via localhost
 
 
-### Deployments
+#### Deployments
 
 * Provides declarative updates for Pods
 * Describe _desired state_ of an object and controller changes state at a
@@ -40,7 +41,7 @@
 
 
 
-### Defining a Deployment
+#### Defining a Deployment
 * Specification deployment file
 * Attributes define <!-- .element: class="fragment" data-fragment-index="0" -->
    + How many instances to run at start<!-- .element: class="fragment" data-fragment-index="1" -->
@@ -75,14 +76,14 @@ metadata:
 
 
 
-### Services
+#### Services
 * Exposes IP of Pod to ![kubernetes interaction](img/kubernetes-user-interaction.svg "Kubernetes Architecture") <!-- .element: class="img-right" style="width:50%;" -->
     + Other Pods
     + External ports (i.e. web, API ingress)
 
 
 
-### Defining a Service
+#### Defining a Service
 * Service spec defines
   + Type <!-- .element: class="fragment" data-fragment-index="0" -->
      - <!-- .element: class="fragment" data-fragment-index="1" -->`NodePort | ClusterIP`
@@ -106,12 +107,12 @@ spec:
 
 
 
-### Kubernetes Labels & Deployments <!-- .slide: class="image-slide" -->
+#### Kubernetes Labels & Deployments <!-- .slide: class="image-slide" -->
 ![label-selectors](img/label-selectors.svg "Label Selectors") 
 
 
 
-### Labels & Selectors
+#### Labels & Selectors
 * Label is a key: value pair used to group objects
     - replication controllers for scheduling pods
     - services 
@@ -124,21 +125,21 @@ spec:
 
 
 
-### Namespaces
+#### Namespaces
 * Virtual cluster
 * Isolate set of containers on same physical cluster
 
 
 
-### Controlling Kubernetes
+#### Controlling Kubernetes
 * Control plane of Kubernetes is a REST API ![admin interaction](img/kubernetes-admin-interaction.svg "Kubernetes Admin Control") <!-- .element: class="img-right" style="width:60%;"  -->
 * Admin cluster using `kubectl` command line client
 
 
-### Demo: Set up Voting Application in Kubernetes
+#### Demo: Set up Voting Application in Kubernetes
 
 
-### Setup
+#### Setup
 * Steps needed:
    + Create host machines in the cloud
    + Set up networking
@@ -150,42 +151,62 @@ spec:
    + Deploy Kubernetes spec files
 
 
-#### Kubernetes Demo Repository
+#### Create Kubernetes Cluster
 * Change to home directory
    ```
-   $ cd
+   cd ~/k8s-ansible
    ```
-* Check out the demo repository
+
+   ```bash
+   ansible-playbook -K create-cluster-hosts.yml kubeadm-install.yml
    ```
-   $ git clone https://github.com/heytrav/k8s-ansible.git
-   $ cd k8s-ansible
+    <!-- .element: style="font-size:12pt;"  -->
+* This playbook should do the following
+  + Set up a cluster in OpenStack
+  + Install Docker and Kubernetes libraries on servers
+  + Initialise the _master_ node with `kubeadm`
+  + Join worker nodes to cluster
+
+
+#### Controlling Kubernetes Remotely
+* Start kubectl proxy locally <!-- .element: class="fragment" data-fragment-index="0" -->
+   ```bash
+   kubectl --kubeconfig ~/k8s-admin.conf proxy
    ```
-   <!-- .element: style="font-size:13pt;"  -->
+   ```
+   Starting to serve on 127.0.0.1:8001
+   ```
+   <!-- .element: class="fragment" data-fragment-index="1" -->
+* Put this terminal aside and open a new one <!-- .element: class="fragment" data-fragment-index="2" -->
+* All <!-- .element: class="fragment" data-fragment-index="3" -->`kubectl` calls must override server location
+   ```
+   kubectl --server=127.0.0.1:8001 ...
+   ```
+   + There is an alias defined in your .bashrc file:
+   ```
+   alias kubeptl="kubectl --server=127.0.0.1:8001"
+   ```
 
-* Follow [README](https://github.com/heytrav/k8s-ansible) instructions for
-  setting up environment
 
-<!-- .element: class="stretch"  -->
-
-
-### Setting up the Voting Application
+#### Setting up the Voting Application
 * Have a look in the `example-voting-app/k8s-specifications`
 
 
 
-### Remotely Controlling Kubernetes
+#### Remotely Controlling Kubernetes
 * Start kubectl proxy locally
    ```
-   $ kubectl --kubeconfig ~/k8s-admin.conf proxy
+   kubectl --kubeconfig ~/k8s-admin.conf proxy
    Starting to serve on 127.0.0.1:8001
    ```
 * Put this terminal aside and open a new one
+* From now on
 
 
 
-### Verify Kubernetes Cluster
+#### Verify Kubernetes Cluster
 ```
-$ kubectl --server=127.0.0.1:8001 get nodes
+$ kubeptl get nodes
 
 NAME               STATUS    ROLES     AGE       VERSION
 trainingpc-master   Ready     master    26m       v1.10.2
@@ -194,17 +215,17 @@ trainingpc-worker2  Ready     <none>    25m       v1.10.2
 ```
 
 
-### Create Namespace
+#### Create Namespace
 * Create a namespace for our application
 
 ```
-$ kubectl  --server=127.0.0.1:8001 create namespace vote
+$ kubeptl  create namespace vote
 
 namespace "vote" created
 ```
 
 
-### Watch cluster
+#### Watch cluster
 * In another terminal, run the following
    ```
    watch -t -n1 'echo Vote Pods \
@@ -223,7 +244,7 @@ namespace "vote" created
 <!-- .element: class="stretch"  -->
 
 
-### Load Specification Files
+#### Load Specification Files
 
 * The `apply` command loads a specification into kubernetes
    ```
@@ -231,9 +252,8 @@ namespace "vote" created
    ```
 * The entire vote app is specified in yaml files
 ```bash
-cd ~/example-voting-app/k8s-specifications
-for i in `ls *.yaml`; \
-     do kubectl --server=127.0.0.1:8001 apply -n vote -f $i; done
+cd ~/example-voting-app
+kubeptl apply -f k8s-specifications
 ```
 <!-- .element: style="font-size:12pt;"  -->
 
@@ -244,7 +264,7 @@ for i in `ls *.yaml`; \
 
 
 
-### View Website
+#### View Website
 * Once all containers are running you can visit your website
 * You first need to find a couple ports. Look for this in the _watcher_
   terminal:
@@ -260,33 +280,32 @@ for i in `ls *.yaml`; \
   change the port
 
 
-### Scaling 
+#### Scaling 
 
 * Orchestration platforms make it easy to scale your app up/down
    + Simply increase or decrease the number of containers
 * Let's increase the number of vote containers
    ```
-   kubectl --server=127.0.0.1:8001 -n vote scale deployment vote --replicas=9
+   kubeptl -n vote scale deployment vote --replicas=9
    ```
    <!-- .element: style="font-size:13pt;" -->
 * Play with the scaled number; keep an eye on _watcher_ terminal 
 
 
 
-###  Updating Our Application
+####  Updating Our Application
 * Update the _vote_ application with your image
    ```
-   kubectl --server=127.0.0.1:8001  \
-        -n vote set image deployment/vote \
+   kubeptl -n vote set image deployment/vote \
             vote=YOURNAME/vote:v2
    ```
 * Watch the _watcher_ terminal
 * Refresh the site several times while update is running
 
 
-### Clean up
+#### Clean up
 
 ```
-ansible-playbook ansible/remove-cluster-hosts.yml -K -e prefix=<username>
+ansible-playbook remove-cluster-hosts.yml -K
 ```
 <!-- .element: style="font-size:13pt;"  -->

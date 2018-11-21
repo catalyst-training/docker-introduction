@@ -33,7 +33,7 @@ docker-compose up -d
 
 
 #### Shortcut Deployment pipeline
-* Ideally follow deployment pipeline mentioned earlier ![Docker development workflow](img/development-ci-workflow-skipping-steps.svg "Docker workflow Skipped steps") <!-- .element: class="img-right" width="50%" -->
+* Ideally follow deployment pipeline mentioned earlier ![Docker development workflow](img/development-ci-workflow-skipping-steps.svg "Docker workflow Skipped steps") <!-- .element: class="img-right" width="40%"  -->
 * We do not have a CI or build system available <!-- .element: class="fragment" data-fragment-index="0" -->
 * Skip the CI step (for now) <!-- .element: class="fragment" data-fragment-index="1" --> 
 * Build and ship our image directly<!-- .element: class="fragment" data-fragment-index="2" -->
@@ -41,11 +41,13 @@ docker-compose up -d
 
 #### Building with `docker-compose`
 
-* Useful if you want to test an image immediately <!-- .element: class="fragment" data-fragment-index="0" -->
-* Tell docker-compose to rebuild the image <!-- .element: class="fragment" data-fragment-index="1" -->
-* Build and tag the image as <!-- .element: class="fragment" data-fragment-index="2" -->`YOURNAME/vote:v2` and push to [hub.docker.com](https://hub.docker.com)
+* Useful if you are collaborating and want to share an image<!-- .element: class="fragment" data-fragment-index="0" -->
+* Tell docker-compose to build a new image <!-- .element: class="fragment" data-fragment-index="1" -->
+   ```
+    docker-compose build vote
+   ```
+* Tag the image as <!-- .element: class="fragment" data-fragment-index="2" -->`YOURNAME/vote:v2` and push to [hub.docker.com](https://hub.docker.com)
 ```
-docker-compose build vote
 docker tag example-voting-app_vote:latest YOURNAME/vote:v2
 docker push YOURNAME/vote:v2
 ```

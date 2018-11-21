@@ -1,7 +1,7 @@
 ## Designing Containerised Applications
 
 
-### Developing Applications
+#### Developing Applications
 * Applications can consist of many components <!-- .element: class="fragment" data-fragment-index="0" -->  ![basic cluster](img/prod-application.svg "Simple Application") <!-- .element: class="img-right" style="width:30%;" -->
    * Web server (nginx, apache)
    * Database (sql, nosql)
@@ -10,7 +10,7 @@
 * <!-- .element: class="fragment" data-fragment-index="1" -->Typically spread across cluster of machines 
 
 
-### Development vs Production
+#### Development vs Production
 
 * Ideal scenario: Development environment identical to production <!-- .element: class="fragment" data-fragment-index="0" -->
 * In practice this is often difficult to achieve  <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -19,7 +19,7 @@
    * Compromise is to develop everything in single VM <!-- .element: class="fragment" data-fragment-index="4" --> 
 
 
-### Pitfalls of Single VM Development
+#### Pitfalls of Single VM Development
 * Single VM development creates blindspot <!-- .element: class="fragment" data-fragment-index="0" -->
 * Developers can make false assumptions about <!-- .element: class="fragment" data-fragment-index="1" -->
    * Which config files on which machines <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -29,16 +29,23 @@
 * Can lead to unpredictable behaviour when application is deployed to production <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
+#### Containers to the rescue
+* Containers can make this easier <!-- .element: class="fragment" data-fragment-index="0" -->
+* Container serves as the  <!-- .element: class="fragment" data-fragment-index="1" -->_unit_ equivalent of microservice
+* Deployable artefact (i.e. <!-- .element: class="fragment" data-fragment-index="2" -->_image_)
+* Can be versioned <!-- .element: class="fragment" data-fragment-index="3" -->
+* Layered filesystem <!-- .element: class="fragment" data-fragment-index="4" -->
+   + Deploying updates equivalent of deploying _just what was changed_
+Note: containers mitigate some of the above issues
 
-### Misconception About Docker Containers
-
->I'll just put my entire application into a Docker container
-> and run it that way
-
-Common mistake to try and treat Docker containers like traditional VMs <!-- .element: class="fragment" data-fragment-index="0" -->
 
 
-### Designing Containerised Applications
+#### Microservices
+* Caveat is that we must think of your application in terms of services <!-- .element: class="fragment" data-fragment-index="0" -->
+* Application components as services <!-- .element: class="fragment" data-fragment-index="1" -->  ![basic cluster](img/prod-application.svg "Simple Application") <!-- .element: class="img-right" style="width:30%;" -->
+
+
+#### Designing Containerised Applications
 * Containerised application should <!-- .element: class="fragment" data-fragment-index="0" -->_smallest executable unit_
   * Have a single application <!-- .element: class="fragment" data-fragment-index="1" -->
   * Single executable runner <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -47,7 +54,7 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
 * No stored <!-- .element: class="fragment" data-fragment-index="5" -->_state_
 
 
-### Containerise Application Components
+#### Containerise Application Components
 * Each component is self-contained <!-- .element: class="fragment" data-fragment-index="0" -->![containerised-dev](img/containerised-dev-prod-deploy.svg "Containerised deploy") <!-- .element: class="img-right" style="width:50%;" -->
    * dependencies <!-- .element: class="fragment" data-fragment-index="1" -->
    * configuration <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -56,7 +63,7 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
 
 
 
-### Designing Containerised Applications
+#### Designing Containerised Applications
 * Containerised component(s) should be agnostic to other services/components <!-- .element: class="fragment" data-fragment-index="0" -->
 * Eg. application component may interact with <!-- .element: class="fragment" data-fragment-index="1" -->![agnostic](img/components-agnostic.svg "Agnostic Components") <!-- .element: class="img-right" -->
    * Containerised database in development  <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -64,13 +71,7 @@ Common mistake to try and treat Docker containers like traditional VMs <!-- .ele
     
 
 
-### Something still not right
->Your Docker thingy still isn't <!-- .element: class="fragment" data-fragment-index="0" -->_exactly_ like production!
-
-> Our application(s) are not deployed as Docker containers <!-- .element: class="fragment" data-fragment-index="1" -->
-
-
-### Docker Developer Workflow
+#### Docker Developer Workflow
 * In the following sections we'll explore ways of making development
   environment similar/identical to production <!-- .element: class="fragment" data-fragment-index="0" -->
 * Development <!-- .element: class="fragment" data-fragment-index="1" -->
