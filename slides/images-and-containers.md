@@ -2,7 +2,7 @@
 
 
 
-### Docker Images
+#### Docker Images
 
 * Images are the basis of containers
 * An image is a <em>readonly</em> file system similar to tar archive
@@ -10,12 +10,12 @@
 
 
 
-### Types of Images
+#### Types of Images
 <dl>
-<dt>Official Base Image</dt> 
-<dd>Created by single authority (OS, packages):
+<dt class="fragment" data-fragment-index="0">Official Base Image</dt> 
+<dd class="fragment" data-fragment-index="0">Created by single authority (OS, packages):
 <br>
-        <ul style="width:50%;">
+        <ul  class="fragment" data-fragment-index="0"style="width:50%;">
             <li>ubuntu:18.04</li>
             <li>
                 centos:7.3.1611
@@ -26,20 +26,24 @@
 
         </ul>
 </dd>
-<dt>Base Image</dt> <dd>Can be any image (official or otherwise) that is used to build a new image</dd>
-<dt>Child Images</dt> <dd>Build on base images and add functionality (this is the type you'll build)</dd>
+<dt class="fragment" data-fragment-index="1">Base Image</dt> <dd class="fragment" data-fragment-index="1">Can be any image (official or otherwise) that is used to build a new image</dd>
+<dt class="fragment" data-fragment-index="2">Child Images</dt> <dd class="fragment" data-fragment-index="2">Build on base images and add functionality (this is the type you'll build)</dd>
 </dl>
 
 
 
-### Image Naming Semantics
+#### Image Naming Semantics
 * No upper-case letters  <!-- .element: class="fragment" data-fragment-index="0" -->
 * Tag is optional. Implicitly <!-- .element: class="fragment" data-fragment-index="1" -->_:latest_ if not specified
    * <!-- .element: class="fragment" data-fragment-index="2" --><code>postgres<em style="color:green">:9.4</em></code>
    * <!-- .element: class="fragment" data-fragment-index="3" --><code>ubuntu == ubuntu<em style="color:green">:latest</em> == ubuntu:<em style="color:green">18.04</em></code>
+* Tags often used to denote version <!-- .element: class="fragment" data-fragment-index="4" -->
+* Convention with official base images <!-- .element: class="fragment" data-fragment-index="5" -->
+   * `latest` tag usually points to a long term support (LTS) version
+* Tags are just pointers, they can be moved if necessary <!-- .element: class="fragment" data-fragment-index="6" -->
 
 
-### Image Naming Semantics
+#### Image Naming Semantics
 * If pushing to a registry, need url and username <!-- .element: class="fragment" data-fragment-index="0" -->
 * If registry not specified, docker.io is default: <!-- .element: class="fragment" data-fragment-index="1" -->
     *  <!-- .element: class="fragment" data-fragment-index="1" --><code><em style="color:green">docker.io</em>/<em style="color:red">username</em>/my-image</code> == <code><em style="color:red">username</em>/my-image</code> 
@@ -49,7 +53,7 @@
    * quay.io/&lt;username&gt;/image-name:tag
 
 
-### Images and Layering
+#### Images and Layering
 
 * Images are a type of _layered_ file system
 * Each image is a type of archive file (eg. tar archive) containing
@@ -59,7 +63,7 @@
 * Each successive layer is set of differences to preceding layer
 
 
-### Images and Layering
+#### Images and Layering
 
 | Layer | Description |
 |---   | --- |
@@ -75,7 +79,7 @@
 
 
 
-### Sharing Image Layers
+#### Sharing Image Layers
 
 * Images will share any common layers
 * Applies to
@@ -83,7 +87,7 @@
    * Images you build yourself
 
 
-### Sharing Image Layers
+#### Sharing Image Layers
 <div class="fragment" data-fragment-index="0"
     style="width:50%;float:left;">
     <p>
@@ -95,14 +99,14 @@
 <div class="fragment" data-fragment-index="1"
     style="width:50%;float:left;">
     <p>
-    Reality: common layers shared
+    How Docker sees things
     </p>
     <img   src="img/image-share-layers.svg"/>
 </div>
 
 
 
-### View Image Layers
+#### View Image Layers
 `docker history ` `<image>` <!-- .element: style="color:red;"  --> 
 
 ```
@@ -124,7 +128,7 @@ style="font-size:10pt;" -->
 ## Containers
 
 
-### Namespaces
+#### Namespaces
 
 * Restrict visibility ![Namespaces](img/docker-namespaces.png "Docker Namespaces") <!-- .element: class="img-right" -->
 * Processes inside a namespace should only see that namespace
@@ -135,7 +139,7 @@ style="font-size:10pt;" -->
    * ipc
 
 
-### cgroups
+#### cgroups
 
 * Restrict usage ![cgroups](img/cgroups.svg "Cgroups") <!-- .element: class="img-right" -->
 * Highly flexible; fine tuned
@@ -146,7 +150,7 @@ style="font-size:10pt;" -->
    * pids
 
 
-### Combining the Two
+#### Combining the Two
 
 A running container represents a combination of
 layered file system,
@@ -156,19 +160,19 @@ namespace and sets of cgroups
 
 
 
-### Container Layering
+#### Container Layering
 
 * Container creates its own read/write layer on top of image
 * Multiple containers each have own read/write layer, but can share the actual image
 
 
 
-### Container Layering
+#### Container Layering
 ![Layers](img/sharing-layers.jpg "Sharing Layers")
 
 
 
-### Create images, explore layers
+#### Create images, explore layers
 
 |Docker command    |Description    |Syntax|
 |---   |---|---  |
@@ -178,7 +182,7 @@ namespace and sets of cgroups
 
 
 
-#### Exercise: Explore Image Layers
+##### Exercise: Explore Image Layers
 ```
 docker run -it ubuntu:18.04 /bin/bash
 root@CONTAINERID:/$ apt-get update 
@@ -195,7 +199,7 @@ docker diff CONTAINERID
 
 
 
-#### Exercise: Create a layer
+##### Exercise: Create a layer
 
 * Create a new <!-- .element: class="fragment" data-fragment-index="0" -->_layer_ on top of the _base image_
    ```
@@ -213,7 +217,7 @@ docker diff CONTAINERID
    <!-- .element: style="font-size:12pt;  -->
 
 
-### Explore Image Layers
+#### Explore Image Layers
 * Created an image by committing changes in a container <!-- .element: class="fragment" data-fragment-index="3" -->
 * Now have two separate images <!-- .element: class="fragment" data-fragment-index="4" -->
 * Share common layers; only difference is new layer on ubuntu:update <!-- .element: class="fragment" data-fragment-index="5" -->
@@ -223,7 +227,7 @@ docker diff CONTAINERID
 ## Creating Docker Images
 
 
-### The _Dockerfile_
+#### The _Dockerfile_
 
 * A text file 
 * Usually named <code>Dockerfile</code>
@@ -231,7 +235,7 @@ docker diff CONTAINERID
 * Each instruction creates a layer on the previous
 
 
-### Structure of a Dockerfile
+#### Structure of a Dockerfile
 
 * Start by telling Docker which base image to use <!-- .element: class="fragment" data-fragment-index="0" -->
    ``` Dockerfile
@@ -253,7 +257,7 @@ docker diff CONTAINERID
 ## Common Dockerfile Instructions
 
 
-### FROM
+#### FROM
 <code>FROM </code><code style="color:red;">image</code><code style="color:blue;">:tag</code>
                     
 * Define the base image for a new image
@@ -265,7 +269,7 @@ docker diff CONTAINERID
     * Another image you have created
 
 
-### RUN
+#### RUN
 <code>RUN </code><code
     style="color:red;">command</code><code style="color:blue;"> arg1 arg2 ...</code>
 
@@ -273,10 +277,11 @@ docker diff CONTAINERID
 <pre><code>RUN apt-get update && apt-get install python3</code></pre>
 <pre><code>RUN mkdir -p /usr/local/myapp && cd /usr/local/myapp</code></pre>
 <pre><code>RUN make all</code></pre>
-<pre><code>RUN curl https://domain.com/somebig.tar | tar -xv | /bin/sh</code></pre>
+<pre><code>RUN curl https://domain.com/somebig.tar  \
+          | tar -xv | /bin/sh</code></pre>
 
 
-### COPY
+#### COPY
 
 <code>COPY </code><code style="color:red;">src dest</code>
 
@@ -285,7 +290,7 @@ docker diff CONTAINERID
 <pre><code>COPY . /usr/share/www</code></pre>
 
 
-### WORKDIR
+#### WORKDIR
 
 <code>WORKDIR </code><code style="color:red;">path</code>
 <pre><code>WORKDIR /usr/local/myapp</code></pre>
@@ -296,7 +301,7 @@ docker diff CONTAINERID
 
 
 
-### CMD
+#### CMD
 
 * Provide defaults to executable
 * or provide executable
@@ -307,7 +312,7 @@ docker diff CONTAINERID
       * <code>CMD ["command", "param1", "param2"]</code>
 
 
-#### Exercise: Write a basic Dockerfile
+##### Exercise: Write a basic Dockerfile
 ```
 cd ~/docker-introduction/sample-code/first-docker-file && ls
 ```
@@ -328,7 +333,7 @@ CMD ["./hello.sh"]
 <!-- .example: style="font-size:10pt;" class="fragment" data-fragment-index="0" -->
 
 
-### `docker build`
+#### `docker build`
 
 <code style="font-size:14pt;">docker build </code><code style="font-size:14pt;color:purple">[options]</code> <code
     style="font-size:14pt;color:red;">image</code><code style="font-size:14pt;color:blue;">:[tag]</code>
@@ -348,7 +353,7 @@ CMD ["./hello.sh"]
 
 
 
-#### Exercise: Build an image using a Dockerfile
+##### Exercise: Build an image using a Dockerfile
 
 * Build a Docker image:
    * Use Dockerfile from earlier example
@@ -367,7 +372,7 @@ docker build -t YOURNAME/my-first-image .
 
 
 
-### ENTRYPOINT
+#### ENTRYPOINT
 * Docker images need not be executable by default <!-- .element: class="fragment" data-fragment-index="0" -->
 * ENTRYPOINT configures executable behaviour of container <!-- .element: class="fragment" data-fragment-index="1" -->
 * <!-- .element: class="fragment" data-fragment-index="2" -->_shell_ and _exec_ forms just like <code>CMD</code>
@@ -382,13 +387,13 @@ $ docker run executable
 </code></pre>
 
 
-### Combining ENTRYPOINT and CMD
+#### Combining ENTRYPOINT and CMD
 
 * <!-- .element: class="fragment" data-fragment-index="0" -->Arguments following the image for `docker run image` overrides `CMD`
 * <!-- .element: class="fragment" data-fragment-index="1" -->Use exec form of ENTRYPOINT and CMD together to set base command and default arguments
 
 
-### ENTRYPOINT & CMD
+#### ENTRYPOINT & CMD
 * Hypothetical application <!-- .element: class="fragment" data-fragment-index="0" -->
   ```dockerfile
   FROM ubuntu:latest
@@ -402,7 +407,7 @@ $ docker run executable
    ```
 
 
-### ENTRYPOINT & CMD
+#### ENTRYPOINT & CMD
 <pre class="fragment" data-fragment-index="0"><code data-trim data-noescape>
 docker run my-image <mark>server</mark>
 </code></pre>
@@ -410,7 +415,7 @@ docker run my-image <mark>server</mark>
 * Passing argument at the end tells it to override CMD and execute with <!-- .element: class="fragment" data-fragment-index="1" --><code>server</code> to run server feature 
 
 
-### Exploring ENTRYPOINT & CMD
+#### Exploring ENTRYPOINT & CMD
 ```
 cd sample-code/entrypoint_cmd_examples 
 ```
@@ -421,13 +426,14 @@ cd sample-code/entrypoint_cmd_examples
 * Build images: <!-- .element: class="fragment" data-fragment-index="1" -->
    ```
    docker build -t cmd_only -f Dockerfile.cmd_only .
-   docker build -t cmd_and_entrypoint -f Dockerfile.cmd_and_entrypoint .
+   docker build -t cmd_and_entrypoint \
+           -f Dockerfile.cmd_and_entrypoint .
    ```
 * Run both the images with or without an additional argument to see what happens <!-- .element: class="fragment" data-fragment-index="2" -->
 
 
 
-### More Dockerfile instructions 
+#### More Dockerfile instructions 
 <dl>
     <dt>EXPOSE        </dt>      <dd>ports to expose when running</dd>
     <dt>VOLUME        </dt>      <dd>folders to expose when running</dd>

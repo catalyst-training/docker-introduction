@@ -1,7 +1,7 @@
 ## Dockerfile Best Practices
 
 
-### General Guidelines
+#### General Guidelines
 
 * Containers should be as ephemeral as possible
 * Avoid installing unnecessary packages
@@ -9,7 +9,7 @@
    * Avoid multiple processes/apps in one container
 
 
-### `.dockerignore`
+#### `.dockerignore`
 * A text file called `.dockerignore`
 * Top level of your project
 * Very similar to <code>.gitignore</code>
@@ -19,7 +19,7 @@
    * <code>node_modules</code>, <code>virtualenv</code> directories
 
 
-#### Sample `.dockerignore` File
+##### Sample `.dockerignore` File
 
 ```
 .git*
@@ -31,7 +31,7 @@ README*
 ```
 
 
-### Best Practices for Images
+#### Best Practices for Images
 
 * Use current official repositories in FROM as base image
 * Image size may be a factor on cloud hosts where space is limited
@@ -43,7 +43,7 @@ README*
 
 
 
-### Layer Caching
+#### Layer Caching
 ```
 cd ~/docker-introduction/sample-code/caching
 docker build -t caching-example -f Dockerfile.layering . 
@@ -58,7 +58,7 @@ docker build -t caching-example -f Dockerfile.layering .
 
 
 
-### Layer Caching
+#### Layer Caching
 <div style="width:100%">
 <div style="float:left;width:50%">
 <pre style="font-size:14pt;"><code class="dockerfile" data-trim>
@@ -84,14 +84,14 @@ RUN apt-get update \
 
 
 
-### Optimising Image Size
+#### Optimising Image Size
 
 * Image size is sum of intermediate layers <!-- .element: class="fragment" data-fragment-index="0" -->
 * Even if you remove something it exists as a diff on previous layer <!-- .element: class="fragment" data-fragment-index="2" -->
 * Run clean up in same layer whenever possible <!-- .element: class="fragment" data-fragment-index="3" -->
 
 
-#### Example: Optimising Image Size
+##### Example: Optimising Image Size
 
 <div  class="fragment" data-fragment-index="0">
     <pre style="font-size:10pt;"><code
@@ -137,7 +137,7 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 
 
 
-### ADD
+#### ADD
 
 * Large intermediate layers
   ```
@@ -148,7 +148,7 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 * Increased overall image size
 
 
-### Better to use COPY
+#### Better to use COPY
 * Better solution:
    ```
    RUN curl -SL http://domain.com/big.tar.gz  \ 
@@ -160,56 +160,7 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 * Recommend to only use COPY and never ADD
 
 
-### Multistage Builds
-
-* Best practices intended to optimise image size by keeping them small
-* Come at the expense of readability 
-   * Layers with long complicated commands
-* Multistage builds
-   * Introduced with Docker 17.05
-   * Enable optimised image size
-   * maintain readability
-
-
-### Multistage Builds
-
-<div style="width:50%;float:left;">
-    <ul>
-        <li class="fragment" data-fragment-index="0">Multiple FROM directives in a Dockerfile</li>
-        <li class="fragment" data-fragment-index="1">Each FROM represents a new build</li>
-        <li class="fragment" data-fragment-index="2">Selectively copy artifacts from one of the previous builds</li>
-        <li class="fragment" data-fragment-index="3">Leave behind what is not needed</li>
-    </ul>
-</div>
-
-<div style="width:50%;float:left;">
-<pre style="font-size:12pt;" class="fragment" data-fragment-index="4"><code data-trim>
-FROM ubuntu:18.04 as builder
-WORKDIR /bin
-COPY . /bin/
-RUN make install
-
-FROM alpine
-COPY --from=builder /bin/myprogram /root
-ENTRYPOINT ['/root/myprogram'] </code></pre>
-</div>
-
-
-#### Example: Multistage Build
-<pre style="font-size:14pt;"  class="fragment" data-fragment-index="0"><code data-trim>
-cd ~/href-counter $ docker build -t href-counter -f Dockerfile.build .
-$ docker image ls | grep href
-REPOSITORY    TAG     IMAGE ID          SIZE
-href-counter  latest  b0eb64a75c55      687MB
-</code></pre>
-<pre style="font-size:14pt;"  class="fragment" data-fragment-index="1"><code data-trim>$ docker build -t href-counter-multi -f Dockerfile.multi .
-$ docker image ls | grep href
-REPOSITORY          TAG           SIZE
-href-counter-multi  latest        10.3MB
-</code></pre>
-
-
-### CMD & ENTRYPOINT revisited
+#### CMD & ENTRYPOINT revisited
 
 * Avoid using <!-- .element: class="fragment" data-fragment-index="0" -->_shell_ form
    * <code>ENTRYPOINT "executable param1 param2 ..."</code>
@@ -218,7 +169,7 @@ href-counter-multi  latest        10.3MB
 * <!-- .element: class="fragment" data-fragment-index="3" -->It can be difficult to stop container since process does not receive SIGTERM from <code>docker stop container</code>
 
 
-### Example: Shell vs Exec
+#### Example: Shell vs Exec
 ```
 cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
 $ docker build -t runtop-shell -f Dockerfile.top_shell .
@@ -229,7 +180,7 @@ What happens when you want to stop container
                         
 
 
-### Example: Shell vs Exec
+#### Example: Shell vs Exec
 
 * Best practice to use <!-- .element: class="fragment" data-fragment-index="0" --><strong>exec</strong> form: 
    * `CMD ["executable", "param1", "param2", ..]`
@@ -244,7 +195,63 @@ What happens when you want to stop container
 * For this purpose recommended to use <!-- .element: class="fragment" data-fragment-index="3" --> [dumb-init](https://github.com/Yelp/dumb-init)
 
 
-### Summary
+#### Review: Our Dockerfile from the last section
+
+<pre style="font-size:12pt;" width="10%"><code data-trim data-noescape>
+FROM alpine:3.6
+
+# Install python and pip
+RUN apk add --update python3
+
+# install Python modules needed by the Python app
+COPY . /usr/src/app/
+RUN pip3 install \
+        --no-cache-dir \
+        -r /usr/src/app/requirements.txt
+
+# tell the port number the container should expose
+EXPOSE 5000
+
+CMD python3 /usr/src/app/app.py
+</code></pre>
+
+
+
+#### Problems with this Dockerfile
+* Not importing `requirements.txt` separately
+   - Docker will not notice changes to library dependencies
+   - Skip library install after first run
+* Shell syntax for CMD
+   - application starts as subprocess of bash
+   - Difficult to shutdown container; must use `docker stop`
+* Minor things
+   - can use WORKDIR to clean up 
+
+
+##### Exercise: Improve Dockerfile
+```
+FROM alpine:3.6
+
+# Install python and pip
+RUN apk add --update python3
+
+# install Python modules needed by the Python app
+COPY . /usr/src/app/
+RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
+
+# tell the port number the container should expose
+EXPOSE 5000
+
+CMD python3 /usr/src/app/app.py
+```
+
+
+
+
+
+
+
+#### Summary
 
 * Dockerfile best practices aim to
    * Keep image footprint small 

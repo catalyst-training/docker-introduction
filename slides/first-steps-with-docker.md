@@ -183,6 +183,7 @@ docker run -it alpine /bin/sh
 #### Exercise: Assign the name <em>myalpine</em> when running previous example container
 * Hint: <code>docker run -it </code><code style="color:red;">&lt;option&gt;</code><code> alpine</code>
 
+<!-- .element: class="stretch"  -->
 <pre style="width:100%;"  class="fragment" data-fragment-index="0"><code data-trim data-noescape>
 docker run -it <mark>--name myalpine</mark> alpine /bin/sh
 </code></pre>
@@ -196,6 +197,8 @@ db1faf244e7a        alpine                               <mark>myalpine</mark>
 
 * Exit the shell <!-- .element: class="fragment" data-fragment-index="2" -->
 * Repeat using same name.  What happens? <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<!-- .element: class="stretch"  -->
 
 <asciinema-player  class="fragment" data-fragment-index="4" autoplay="1" loop="loop"  font-size="medium" speed="1"
     theme="solarized-light" src="asciinema/name-in-use-error.json" cols="200"
@@ -252,17 +255,17 @@ docker run --name static-site --rm \
 
 
 #### Exercise: Stop the _static-site_ container
-
-* You actually have a couple options: <!-- .element: class="fragment" data-fragment-index="0" -->
-   * use the name you gave to the container <!-- .element: class="fragment" data-fragment-index="1" -->
+* First, open up a separate terminal <!-- .element: class="fragment" data-fragment-index="0" -->
+   * The one you are in is currently blocked
+* Now, try either one of the following commands <!-- .element: class="fragment" data-fragment-index="1" -->
+   * use the name you gave to the container <!-- .element: class="fragment" data-fragment-index="2" -->
       ```
       $ docker stop static-site
       ```
-   * <!-- .element: class="fragment" data-fragment-index="2" -->use the `CONTAINERID` from `docker ps` output (will depend on your environment)
+   * <!-- .element: class="fragment" data-fragment-index="3" -->use the `CONTAINERID` from `docker ps` output (will depend on your environment)
       ```
       $ docker stop 25eff330a4e4
       ```
-* For the previous exercise, you'll need to be in another terminal <!-- .element: class="fragment" data-fragment-index="3" -->
 
 
 #### Exercise: Run a detached container

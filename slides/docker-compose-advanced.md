@@ -189,13 +189,23 @@ services:
 
 
 
-#### Volume Configuration
-* The `volumes` directive in a compose is used to mount a local directory into
-  a container
+#### Mounting Volumes
+* A <!-- .element: class="fragment" data-fragment-index="0" -->_volume_ refers to a directory or filesystem that is mounted inside a docker container
+* On the command line you typically mount a directory into a container using the <!-- .element: class="fragment" data-fragment-index="1" -->`-v` option
   ```
-    volumes:
-     - ./vote:/app
+  docker run --rm -d -v ./vote:/app my-app
   ```
+* <!-- .element: class="fragment" data-fragment-index="2" -->In a compose file, using the `volume` attribute accomplishes the same thing
+  ```
+services:
+   myapp:
+      image: my-app
+      volumes:
+         - ./vote:/app
+  ```
+
+
+#### Named Volumes
 * <!-- .element: class="fragment" data-fragment-index="0" -->An alternative is
   to create _named_ volumes
    <pre style="font-size:12pt;"><code data-trim data-noescape>

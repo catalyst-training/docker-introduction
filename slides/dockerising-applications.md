@@ -34,17 +34,13 @@ FROM alpine:3.6
 RUN apk add --update python3
 
 # install Python modules needed by the Python app
-COPY requirements.txt /usr/src/app/
+COPY . /usr/src/app/
 RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
-
-# copy files required for the app to run
-COPY app.py /usr/src/app/
-COPY templates/index.html /usr/src/app/templates/
 
 # tell the port number the container should expose
 EXPOSE 5000
 
-CMD ["python", "/usr/src/app/app.py"]
+CMD python3 /usr/src/app/app.py
 ```
 <!-- .element: style="font-size:13pt;"  -->
 
