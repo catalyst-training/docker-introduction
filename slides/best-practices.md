@@ -236,20 +236,17 @@ FROM alpine:3.6
 RUN apk add --update python3
 
 # install Python modules needed by the Python app
-COPY . /usr/src/app/
+WORKDIR /usr/src/app
+COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
+COPY . .
 
 # tell the port number the container should expose
 EXPOSE 5000
 
-CMD python3 /usr/src/app/app.py
+ENTRYPOINT ["python3"]
+CMD ["app.py"]
 ```
-
-
-
-
-
-
 
 #### Summary
 
