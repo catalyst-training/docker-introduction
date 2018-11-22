@@ -244,8 +244,7 @@ COPY . .
 # tell the port number the container should expose
 EXPOSE 5000
 
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+CMD ["python3", "app.py"]
 ```
 
 #### Summary
