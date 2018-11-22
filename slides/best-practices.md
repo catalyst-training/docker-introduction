@@ -218,9 +218,9 @@ CMD python3 /usr/src/app/app.py
 
 
 #### Problems with this Dockerfile
-* Not importing `requirements.txt` separately
-   - Docker will not notice changes to library dependencies
-   - Skip library install after first run
+* Changes to `requirements.txt` not cached
+   - Result: will always reinstall all python libraries
+   - Not a big deal, but could be time consuming
 * Shell syntax for CMD
    - application starts as subprocess of bash
    - Difficult to shutdown container; must use `docker stop`
@@ -246,6 +246,7 @@ EXPOSE 5000
 
 CMD ["python3", "app.py"]
 ```
+
 
 #### Summary
 
