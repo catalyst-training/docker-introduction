@@ -9,6 +9,7 @@
    * Avoid multiple processes/apps in one container
 
 
+
 #### `.dockerignore`
 * A text file called `.dockerignore`
 * Top level of your project
@@ -35,8 +36,8 @@ README*
 
 * Use current official repositories in FROM as base image
 * Image size may be a factor on cloud hosts where space is limited
-   * debian 124 MB
-   * ubuntu 117 MB
+   * debian 101 MB
+   * ubuntu 86.2 MB
    * alpine 3.99 MB
    * busybox 1.11 MB
 * Choice of image depends on other factors
@@ -118,14 +119,14 @@ RUN rm -f android-sdk_r24.4.1-linux.tgz <mark  class="fragment" data-fragment-in
           data-noescape>FROM ubuntu:latest <mark class="fragment" data-fragment-index="9">112MB</mark>
 
 RUN apt-get update \ 
-&& apt-get install -y \
-automake \
-build-essential \
-curl \
-wget \
-libcap-dev \
-reprepro \
-&& rm -rf /var/lib/apt/lists/\* <mark class="fragment" data-fragment-index="10">244MB</mark>
+    && apt-get install -y \
+    automake \
+    build-essential \
+    curl \
+    wget \
+    libcap-dev \
+    reprepro \
+    && rm -rf /var/lib/apt/lists/\* <mark class="fragment" data-fragment-index="10">244MB</mark>
 
 RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \     
    tar xf android-sdk_r24.4.1-linux.tgz && \     
@@ -253,7 +254,6 @@ CMD ["python3", "app.py"]
 * Dockerfile best practices aim to
    * Keep image footprint small 
       * Sometimes at expense readability
-      * Multistage builds are a good compromise
    * Maintain clean control over containers
       * Easy to top and start
       * Flexible in the way they are executed

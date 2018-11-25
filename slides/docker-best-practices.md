@@ -1,6 +1,24 @@
 ## Designing Containerised Applications
 
 
+#### Designing Containerised Applications
+* Containerised component(s) should be agnostic to other services/components <!-- .element: class="fragment" data-fragment-index="0" -->
+* Eg. application component may interact with <!-- .element: class="fragment" data-fragment-index="1" -->![agnostic](img/components-agnostic.svg "Agnostic Components") <!-- .element: class="img-right" -->
+   * Containerised database in development  <!-- .element: class="fragment" data-fragment-index="2" -->
+   * Cloud provider in production  <!-- .element: class="fragment" data-fragment-index="3" -->
+
+
+
+#### Designing Containerised Applications
+* Containerised application should <!-- .element: class="fragment" data-fragment-index="0" -->_smallest executable unit_
+  * Have a single application <!-- .element: class="fragment" data-fragment-index="1" -->
+  * Single executable runner <!-- .element: class="fragment" data-fragment-index="2" -->
+  * Single process per container <!-- .element: class="fragment" data-fragment-index="3" -->
+  * Single component of your application <!-- .element: class="fragment" data-fragment-index="4" -->
+* No stored <!-- .element: class="fragment" data-fragment-index="5" -->_state_
+
+
+
 #### Developing Applications
 * Applications can consist of many components <!-- .element: class="fragment" data-fragment-index="0" -->  ![basic cluster](img/prod-application.svg "Simple Application") <!-- .element: class="img-right" style="width:30%;" -->
    * Web server (nginx, apache)
@@ -8,6 +26,7 @@
    * Message Queue 
    * Your application
 * <!-- .element: class="fragment" data-fragment-index="1" -->Typically spread across cluster of machines 
+
 
 
 #### Development vs Production
@@ -40,35 +59,15 @@ Note: containers mitigate some of the above issues
 
 
 
-#### Microservices
-* Caveat is that we must think of your application in terms of services <!-- .element: class="fragment" data-fragment-index="0" -->
-* Application components as services <!-- .element: class="fragment" data-fragment-index="1" -->  ![basic cluster](img/prod-application.svg "Simple Application") <!-- .element: class="img-right" style="width:30%;" -->
-
-
-#### Designing Containerised Applications
-* Containerised application should <!-- .element: class="fragment" data-fragment-index="0" -->_smallest executable unit_
-  * Have a single application <!-- .element: class="fragment" data-fragment-index="1" -->
-  * Single executable runner <!-- .element: class="fragment" data-fragment-index="2" -->
-  * Single process per container <!-- .element: class="fragment" data-fragment-index="3" -->
-  * Single component of your application <!-- .element: class="fragment" data-fragment-index="4" -->
-* No stored <!-- .element: class="fragment" data-fragment-index="5" -->_state_
-
-
 #### Containerise Application Components
-* Each component is self-contained <!-- .element: class="fragment" data-fragment-index="0" -->![containerised-dev](img/containerised-dev-prod-deploy.svg "Containerised deploy") <!-- .element: class="img-right" style="width:50%;" -->
+* Each component is self-contained <!-- .element: class="fragment" data-fragment-index="0" -->![containerised-dev](img/containerised-services.svg "Containerised deploy") <!-- .element: class="img-right" style="width:40%;" -->
    * dependencies <!-- .element: class="fragment" data-fragment-index="1" -->
    * configuration <!-- .element: class="fragment" data-fragment-index="2" -->
-* Better decoupling of components and dependencies <!-- .element: class="fragment" data-fragment-index="3" -->
+* Easier to scale <!-- .element: class="fragment" data-fragment-index="3" -->
 * Brings us closer to production environment <!-- .element: class="fragment" data-fragment-index="4" -->
+* It is possible to use exact same setup in dev and production
+  <!-- .element: class="fragment" data-fragment-index="5" -->
 
-
-
-#### Designing Containerised Applications
-* Containerised component(s) should be agnostic to other services/components <!-- .element: class="fragment" data-fragment-index="0" -->
-* Eg. application component may interact with <!-- .element: class="fragment" data-fragment-index="1" -->![agnostic](img/components-agnostic.svg "Agnostic Components") <!-- .element: class="img-right" -->
-   * Containerised database in development  <!-- .element: class="fragment" data-fragment-index="2" -->
-   * Cloud provider in production  <!-- .element: class="fragment" data-fragment-index="3" -->
-    
 
 
 #### Docker Developer Workflow
