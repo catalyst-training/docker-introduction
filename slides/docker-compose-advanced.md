@@ -178,7 +178,7 @@ services:
 
 
 #### Environment variable precedence
-* Priority of environment variables (decreasing order)<!-- .element: class="fragment" data-fragment-index="2" -->
+* Priority of environment variables (highest to lowest)<!-- .element: class="fragment" data-fragment-index="2" -->
    - Compose file
       * `environment:`
       * `env_file:`
