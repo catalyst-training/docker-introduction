@@ -12,8 +12,7 @@
 
 #### Orchestration Platforms
 * Docker Swarm
-   + Built into Docker
-   + Since 17.03
+   + Built into Docker since 17.03
 * Kubernetes
    + Descends from _Borg_, (Google)
    + Joint project from Google, CoreOS, OpenShift

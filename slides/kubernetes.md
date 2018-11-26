@@ -162,7 +162,9 @@ spec:
    ```
     <!-- .element: style="font-size:12pt;"  -->
 * This playbook should do the following
-  + Set up a cluster in OpenStack
+  + Set up a cluster in Catalyst Cloud
+     - 1 master
+     - 2 workers
   + Install Docker and Kubernetes libraries on servers
   + Initialise the _master_ node with `kubeadm`
   + Join worker nodes to cluster
@@ -186,22 +188,6 @@ spec:
    ```
    alias kubeptl="kubectl --server=127.0.0.1:8001"
    ```
-
-
-#### Setting up the Voting Application
-* Have a look in the `example-voting-app/k8s-specifications`
-
-
-
-#### Remotely Controlling Kubernetes
-* Start kubectl proxy locally
-   ```
-   kubectl --kubeconfig ~/k8s-admin.conf proxy
-   Starting to serve on 127.0.0.1:8001
-   ```
-* Put this terminal aside and open a new one
-* From now on
-
 
 
 #### Verify Kubernetes Cluster
@@ -253,7 +239,7 @@ namespace "vote" created
 * The entire vote app is specified in yaml files
 ```bash
 cd ~/example-voting-app
-kubeptl apply -f k8s-specifications
+kubeptl -n vote apply -f k8s-specifications
 ```
 <!-- .element: style="font-size:12pt;"  -->
 
