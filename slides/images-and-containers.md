@@ -99,7 +99,7 @@
 <div class="fragment" data-fragment-index="1"
     style="width:50%;float:left;">
     <p>
-    How Docker sees things
+    Docker's view
     </p>
     <img   src="img/image-share-layers.svg"/>
 </div>
@@ -295,7 +295,7 @@ docker diff CONTAINERID
 <code>WORKDIR </code><code style="color:red;">path</code>
 <pre><code>WORKDIR /usr/local/myapp</code></pre>
 * Create a directory in the image
-* Following commands will run relative to this directory until
+* Subsequent commands will run relative to this directory until
    + end of Dockerfile
    + next <code>WORKDIR</code> directive
 
@@ -316,21 +316,20 @@ docker diff CONTAINERID
 ```
 cd ~/docker-introduction/sample-code/first-docker-file && ls
 ```
-* Write a `Dockerfile`:
-   * Named `Dockerfile`
-   * Based on alpine
-   * Set working directory to <code style="color:blue;">/app</code>
-   * Copy `hello.sh` into working directory
-   * make `hello.sh` executable
-   * tell docker to run `hello.sh` on docker run
-```
+* Write a <!-- .element: class="fragment" data-fragment-index="0" -->`Dockerfile`:
+   * Named <!-- .element: class="fragment" data-fragment-index="1" -->`Dockerfile`
+   * Based on alpine <!-- .element: class="fragment" data-fragment-index="2" -->
+   * Set working directory to <!-- .element: class="fragment" data-fragment-index="3" --> <code style="color:blue;">/app</code>
+   * Copy <!-- .element: class="fragment" data-fragment-index="4" --> `hello.sh` into working directory
+   * make <!-- .element: class="fragment" data-fragment-index="5" -->`hello.sh` executable
+   * tell docker to run <!-- .element: class="fragment" data-fragment-index="6" -->`hello.sh` on docker run
+<pre class="fragment" data-fragment-index="7"><code data-trim data-noescape>
 FROM alpine
 WORKDIR /app
 COPY hello.sh .
 RUN chmod +x hello.sh
 CMD ["./hello.sh"]
-```
-<!-- .example: style="font-size:10pt;" class="fragment" data-fragment-index="0" -->
+</code></pre>
 
 
 #### `docker build`
@@ -368,8 +367,7 @@ docker build -t YOURNAME/my-first-image .
 
 
 
-## More Dockerfile Instructions
-
+### More Dockerfile Instructions
 
 
 #### ENTRYPOINT

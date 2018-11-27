@@ -92,11 +92,11 @@ RUN apt-get update \
 * Run clean up in same layer whenever possible <!-- .element: class="fragment" data-fragment-index="3" -->
 
 
-##### Example: Optimising Image Size
+##### Example: Layers and image size
 
 <div  class="fragment" data-fragment-index="0">
     <pre style="font-size:10pt;"><code
-          data-noescape>FROM ubuntu:latest <mark class="fragment" data-fragment-index="1">112MB</mark>
+          data-noescape>FROM ubuntu:16.04 <mark class="fragment" data-fragment-index="1">112MB</mark>
 
 RUN apt-get update \ 
     && apt-get install -y \
@@ -116,7 +116,7 @@ RUN rm -f android-sdk_r24.4.1-linux.tgz <mark  class="fragment" data-fragment-in
 </div>
 <div  class="fragment" data-fragment-index="8">
     <pre style="font-size:10pt;"><code
-          data-noescape>FROM ubuntu:latest <mark class="fragment" data-fragment-index="9">112MB</mark>
+          data-noescape>FROM ubuntu:16.04 <mark class="fragment" data-fragment-index="9">112MB</mark>
 
 RUN apt-get update \ 
     && apt-get install -y \
@@ -149,7 +149,7 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 * Increased overall image size
 
 
-#### Better to use COPY
+#### Alternative solutions
 * Better solution:
    ```
    RUN curl -SL http://domain.com/big.tar.gz  \ 
@@ -164,8 +164,10 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 #### CMD & ENTRYPOINT revisited
 
 * Avoid using <!-- .element: class="fragment" data-fragment-index="0" -->_shell_ form
-   * <code>ENTRYPOINT "executable param1 param2 ..."</code>
-* Docker directs POSIX commands at process with PID 1 <!-- .element: class="fragment" data-fragment-index="1" -->
+   * <code>ENTRYPOINT executable param1 param2 ...</code>
+   * <code>CMD executable param1 param2 ...</code>
+* Docker directs POSIX commands at  PID 1 <!-- .element: class="fragment" data-fragment-index="1" -->
+   + SIGTERM
 * Using <!-- .element: class="fragment" data-fragment-index="2" -->_shell_ form, process is run internally using <code>/bin/sh -c</code> and do not have PID 1
 * <!-- .element: class="fragment" data-fragment-index="3" -->It can be difficult to stop container since process does not receive SIGTERM from <code>docker stop container</code>
 
