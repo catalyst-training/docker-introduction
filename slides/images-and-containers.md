@@ -106,25 +106,6 @@
 
 
 
-#### View Image Layers
-`docker history ` `<image>` <!-- .element: style="color:red;"  --> 
-
-```
-docker history heytrav/docker-introduction-slides
-
-IMAGE          CREATED       CREATED BY             SIZE  
-e72084f25e08   2 months ago  /bin/sh -c #(nop)      0B    
-<missing>      2 months ago  /bin/sh -c #(no        0B    
-    .
-    .
-<missing>      9 months ago  /bin/sh -c #(n         0B    
-<missing>      9 months ago  /bin/sh -c #(n         3.97MB
-```
-<!-- .element: class="fragment" data-fragment-index="0"
-style="font-size:10pt;" -->
-
-
-
 ## Containers
 
 
@@ -182,7 +163,7 @@ namespace and sets of cgroups
 
 
 
-##### Exercise: Explore Image Layers
+##### Exercise: Show layer with `diff` 
 ```
 docker run -it ubuntu:18.04 /bin/bash
 root@CONTAINERID:/$ apt-get update 
@@ -207,6 +188,20 @@ docker diff CONTAINERID
    13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
    ```
    <!-- .element: style="font-size:12pt;  -->
+* Created an image by committing changes in a container <!-- .element: class="fragment" data-fragment-index="2" -->
+* Now have two separate images <!-- .element: class="fragment" data-fragment-index="3" -->
+* Share common layers; only difference is new layer on ubuntu:update <!-- .element: class="fragment" data-fragment-index="4" -->
+
+
+
+#### View Image Layers
+`docker history ` `<image>` <!-- .element: style="color:red;"  --> 
+
+```
+docker history ubuntu:update
+```
+<!-- .element: class="fragment" data-fragment-index="0"
+style="font-size:10pt;" -->
 * This is now a <!-- .element: class="fragment" data-fragment-index="1" -->_child image_
 * Compare the two images using <!-- .element: class="fragment" data-fragment-index="2" -->`docker history`
    ```
@@ -215,12 +210,6 @@ docker diff CONTAINERID
    docker history ubuntu:update
    ```
    <!-- .element: style="font-size:12pt;  -->
-
-
-#### Explore Image Layers
-* Created an image by committing changes in a container <!-- .element: class="fragment" data-fragment-index="3" -->
-* Now have two separate images <!-- .element: class="fragment" data-fragment-index="4" -->
-* Share common layers; only difference is new layer on ubuntu:update <!-- .element: class="fragment" data-fragment-index="5" -->
 
 
 
@@ -232,23 +221,30 @@ docker diff CONTAINERID
 * A text file 
 * Usually named <code>Dockerfile</code>
 * Sequential instructions for building a Docker image
+* General format:
+   ```
+   DIRECTIVE  something something something
+   ```
 * Each instruction creates a layer on the previous
 
 
-#### Structure of a Dockerfile
 
-* Start by telling Docker which base image to use <!-- .element: class="fragment" data-fragment-index="0" -->
+#### Types of Dockerfile directives
+
+* <!-- .element: class="fragment" data-fragment-index="0" -->Initialise building stage an set *base image*
    ``` Dockerfile
    FROM <base image>
    ```
-* A number of commands telling docker how to build image <!-- .element: class="fragment" data-fragment-index="1" -->
+* Instructions for building the image <!-- .element: class="fragment" data-fragment-index="1" -->
    ```dockerfile
    COPY . /app
    RUN make /app
    ```
-* Optionally tell Docker what command to run when the container is started
+* Control Docker behaviour when you type `docker run...`
   <!-- .element: class="fragment" data-fragment-index="3" -->
    ```dockerfile
+   EXPOSE 5000
+   VOLUME /var/www/data
    CMD ["python", "/app/app.py"]
    ```
     
@@ -267,6 +263,7 @@ docker diff CONTAINERID
 * Image can be
     * An official base image
     * Another image you have created
+
 
 
 #### RUN
@@ -371,18 +368,23 @@ docker build -t YOURNAME/my-first-image .
 
 
 #### ENTRYPOINT
-* Docker images need not be executable by default <!-- .element: class="fragment" data-fragment-index="0" -->
-* ENTRYPOINT configures executable behaviour of container <!-- .element: class="fragment" data-fragment-index="1" -->
-* <!-- .element: class="fragment" data-fragment-index="2" -->_shell_ and _exec_ forms just like <code>CMD</code>
-<pre class="fragment" data-fragment-index="3" style="font-size:14pt;"><code data-trim>
-cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
-$ docker build -t not-executable -f Dockerfile.notexecutable .
-$ docker run not-executable # does nothing
-</code></pre>
-<pre class="fragment" data-fragment-index="4" style="font-size:14pt;"><code data-trim>
-docker build -t executable -f Dockerfile.executable .
-$ docker run executable
-</code></pre>
+* Configure container that runs as executable <!-- .element: class="fragment" data-fragment-index="0" -->
+* <!-- .element: class="fragment" data-fragment-index="1" -->Create a simple Dockerfile:
+   ```
+   cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
+   gedit Dockerfile
+   ```
+   <pre><code data-trim  data-noescape>
+   FROM alpine:latest
+   <mark class="fragment" data-fragment-index="3">ENTRYPOINT ["echo", "Good", "morning,", "Dave"]</mark>
+   </code></pre>
+* <!-- .element: class="fragment" data-fragment-index="2" -->Build the image and run container
+   ```
+   docker build -t basic-docker-image .
+   docker run basic-docker-image
+   ```
+* <!-- .element: class="fragment" data-fragment-index="3" -->Modify Dockerfile as follows and repeat preceding step
+
 
 
 #### Combining ENTRYPOINT and CMD
