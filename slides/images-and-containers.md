@@ -55,27 +55,27 @@
 
 #### Images and Layering
 
-* Images are a type of _layered_ file system
+* Images are a type of _read only_ file system
 * Each image is a type of archive file (eg. tar archive) containing
    * Additional archive files
    * Meta information
-* Any child image built by adding layers on top of a base
-* Each successive layer is set of differences to preceding layer
+* Images are _layered_
+
 
 
 #### Images and Layering
 
-| Layer | Description |
-|---   | --- |
-| 4 | execute <code>myfile.sh</code> |
-| 3 | make myfile.sh executable |
-| 2 | copy myfile.sh |
-| 1 | install libraries | 
-| 0 | Base Ubuntu OS |
-
 * A layer is an instruction that 
    * changes the filesystem
    * tells Docker what to do when run
+* Visualize from the bottom up
+| Layer | Description | Hash |
+|---   | --- | --- |
+| 4 | execute <code>myfile.sh</code> | 2bf2a54eda17 |
+| 3 | make myfile.sh executable | 89e2af41da1d |
+| 2 | copy myfile.sh | 1bfa9e71da2e |
+| 1 | install libraries | 97f6a14eda1f | 
+| 0 | Base Ubuntu OS | 47b19964fb50 |
 
 
 
@@ -223,9 +223,10 @@ style="font-size:10pt;" -->
 * Sequential instructions for building a Docker image
 * General format:
    ```
-   DIRECTIVE  something something something
+   DIRECTIVE  arg1 arg2 ....
    ```
 * Each instruction creates a layer on the previous
+* Directive case insensitive but all uppercase best practice
 
 
 
@@ -299,14 +300,34 @@ style="font-size:10pt;" -->
 
 
 #### CMD
-
-* Provide defaults to executable
-* or provide executable
-* Two ways to execute a command:
-   * shell form: 
+* Provide a default action for `docker run`
+* Two forms:
+   * shell: 
       * <code>CMD </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
-   * exec form: 
+   * exec (json array): 
       * <code>CMD ["command", "param1", "param2"]</code>
+* Conventionally near end of Dockerfile
+  
+
+
+#### CMD and `docker run` behaviour
+* Assume Dockerfile for _my-image_ has CMD
+   ```
+   CMD echo Good morning Dave!
+   ```
+* By default Docker will execute this command
+   ```
+   docker run my-image
+   ```
+   ```
+   Good morning Dave!
+   ```
+* Passing arguments _after_ image will override
+   <pre><code data-trim data-noescape>
+   docker run my-image <mark>echo hello world!</mark>
+   hello world!
+   </code></pre>
+
 
 
 ##### Exercise: Write a basic Dockerfile
@@ -368,7 +389,17 @@ docker build -t YOURNAME/my-first-image .
 
 
 #### ENTRYPOINT
-* Configure container that runs as executable <!-- .element: class="fragment" data-fragment-index="0" -->
+* Tells Docker to execute something on `docker run ...`
+   * Similar to CMD
+* Also two forms:
+   * shell: 
+      * <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
+   * exec (json array): 
+      * <code>ENTRYPOINT ["command", "param1", "param2"]</code>
+* Unlike CMD, passing arguments to image does not override
+
+
+##### Excercise: Run Dockerfile with ENTRYPOINT
 * <!-- .element: class="fragment" data-fragment-index="1" -->Create a simple Dockerfile:
    ```
    cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
