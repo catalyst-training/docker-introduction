@@ -1,4 +1,4 @@
-FROM node:8.0-alpine
+FROM node:11.0-alpine
 
 RUN apk update && apk add ca-certificates wget && update-ca-certificates
 

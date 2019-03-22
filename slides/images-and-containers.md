@@ -62,6 +62,10 @@
 * Images are _layered_
 
 
+#### Images and Layering <!-- .slide: class="image-slide" -->
+![images-and-layering](img/image-layers-base.png "Images and Layering")
+
+
 
 #### Images and Layering
 
@@ -69,7 +73,9 @@
    * changes the filesystem
    * tells Docker what to do when run
 * Visualize from the bottom up
-| Layer | Description | Hash |
+<!-- .element: class="stretch"  -->
+
+| Layer | Description | Image Hash |
 |---   | --- | --- |
 | 4 | execute <code>myfile.sh</code> | 2bf2a54eda17 |
 | 3 | make myfile.sh executable | 89e2af41da1d |
