@@ -1,6 +1,6 @@
 FROM node:11.0-alpine
 
-RUN apt update && apt install -y wget
+RUN apk update && apk add ca-certificates wget && update-ca-certificates
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
 RUN chmod +x /usr/local/bin/dumb-init
