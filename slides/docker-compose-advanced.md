@@ -38,7 +38,8 @@ services:
    <!-- .element: style="font-size:11pt;"  -->
 * Restart the vote app <!-- .element: class="fragment" data-fragment-index="2" -->
    ```
-   docker-compose up -d vote
+   docker-compose down -v 
+   docker-compose up -d
    ```
 * You should not see any change at this point <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -46,7 +47,7 @@ services:
 
 ##### Exercise: Use a different image
 * Make <!-- .element: class="fragment" data-fragment-index="0" -->`docker-compose` use a specific image
-* Make following changes<!-- .element: class="fragment" data-fragment-index="1" -->
+* Edit <!-- .element: class="fragment" data-fragment-index="1" -->`docker-compose.override.yml`
    <pre style="font-size:12pt;"><code data-trim data-noescape>
         version: "3"
         <mark>volumes:
@@ -66,7 +67,8 @@ services:
    </code></pre>
 * Restart the vote application <!-- .element: class="fragment" data-fragment-index="2" -->
    ```
-   docker-compose up -d vote
+   docker-compose down -v 
+   docker-compose up -d
    ```
 
 
@@ -78,25 +80,51 @@ services:
 
 #### Explicitly overriding files
 * Often practical to have configuration for specific environments <!-- .element: class="fragment" data-fragment-index="0" -->
-* For example, say you need a specific image on staging environments <!-- .element: class="fragment" data-fragment-index="1" -->
+* <!-- .element: class="fragment" data-fragment-index="1" -->Use `-f` option to specify compose file instead of `docker-compose.yml`
+* For example, say you need a specific image on staging environments <!-- .element: class="fragment" data-fragment-index="2" -->
    - `docker-compose-staging.yml`
-   <pre><code data-trim data-noescape>
+   <pre style="font-size:12pt;"><code data-trim data-noescape>
         services:
           vote:
             image: PROJECT/vote:<mark>1.2.3</mark>
           .
           .
    </code></pre>
-* <!-- .element: class="fragment" data-fragment-index="2" -->Common pattern is to compose files 
-   <pre><code style="font-size:12pt;" data-trim>
-    docker-compose -f docker-compose.yml -f docker-compose-staging.yml up -d
+   <pre class="fragment" data-fragment-index="3" ><code style="font-size:12pt;" data-trim>
+    docker-compose -f docker-compose-staging.yml up -d
+   </code></pre>
+
+
+#### Chaining compose files
+* <!-- .element: class="fragment" data-fragment-index="0" -->Compose files can
+  be chained together
+* <!-- .element: class="fragment" data-fragment-index="1" -->Override specific service(s)
+   - <!-- .element: class="fragment" data-fragment-index="1" -->`docker-compose.yml`
+   <pre><code data-trim data-noescape>
+        services:
+          vote:
+            build: ./vote
+            .
+          postgres:
+            image: postgres:10
+   </code></pre>
+   - <!-- .element: class="fragment" data-fragment-index="2" -->`docker-compose-staging.yml`
+   <pre><code data-trim data-noescape>
+        services:
+          vote: # just override vote service with image
+            image: PROJECT/vote:<mark>1.2.3</mark>
+            .
+   </code></pre>
+   <pre class="fragment" data-fragment-index="3" style="font-size:12pt;"><code data-trim data-noescape>
+   docker-compose -f docker-compose.yml \
+      -f docker-compose.staging.yml up -d
    </code></pre>
 
 
 
-#### _Override_ files and version control
-* Never commit `docker-compose.override.yml` to your version control
-   * Always add to `.gitignore`
+#### Tips for compose files
+* Avoid adding `docker-compose.override.yml` to your version control
+   * Add to `.gitignore`
    * General rule: always delete when you don't need it
 * Files for explicit override are fine to add to version control
    * `docker-compose-staging.yml`
