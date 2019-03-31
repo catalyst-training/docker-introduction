@@ -448,7 +448,7 @@ docker build -t YOURNAME/my-first-image .
 
 
 
-#### ENTRYPOINT & CMD
+##### Excercise: Using ENTRYPOINT & CMD
 ```
 cd sample-code/entrypoint_cmd_examples 
 ```
@@ -463,7 +463,6 @@ cd sample-code/entrypoint_cmd_examples
            -f Dockerfile.cmd_and_entrypoint .
    ```
 * Run both the images with or without an additional argument to see what happens <!-- .element: class="fragment" data-fragment-index="2" -->
-
 
 
 
