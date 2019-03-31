@@ -161,9 +161,9 @@ RUN  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
 * Recommend to only use COPY and never ADD
 
 
-#### CMD & ENTRYPOINT revisited
+#### _shell_ vs _exec_ 
 
-* Avoid using <!-- .element: class="fragment" data-fragment-index="0" -->_shell_ form
+* Avoid using <!-- .element: class="fragment" data-fragment-index="0" -->_shell_ form for `ENTRYPOINT` and `CMD`
    * <code>ENTRYPOINT executable param1 param2 ...</code>
    * <code>CMD executable param1 param2 ...</code>
 * Docker directs POSIX commands at  PID 1 <!-- .element: class="fragment" data-fragment-index="1" -->

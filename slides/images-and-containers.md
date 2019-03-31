@@ -313,46 +313,38 @@ style="font-size:10pt;" -->
 
 
 #### ENTRYPOINT
-* Tells Docker to execute command when you type
-  ```shell
-  docker run my-image
-  ```
+* Tells Docker to execute command. For example:
+   ```
+   ENTRYPOINT ["my-script", "arg1", "arg2" ]
+   ```
+* Always executes command when container is run
+   ```
+   docker run my-image
+   ```
 * Two forms:
    * shell: 
       * <code>ENTRYPOINT </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
-      * Runs inside an embedded `bash` process
    * exec (json array): 
       * <code>ENTRYPOINT ["command", "param1", "param2"]</code>
 
 
-##### Excercise: Run Dockerfile with ENTRYPOINT
-* <!-- .element: class="fragment" data-fragment-index="1" -->Create a simple Dockerfile:
-   ```
-   cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
-   gedit Dockerfile
-   ```
-   <pre><code data-trim  data-noescape>
-   FROM alpine:latest
-   <mark class="fragment" data-fragment-index="3">ENTRYPOINT ["echo", "Good", "morning,", "Dave"]</mark>
-   </code></pre>
-* <!-- .element: class="fragment" data-fragment-index="2" -->Build the image and run container
-   ```
-   docker build -t basic-docker-image .
-   docker run basic-docker-image
-   ```
-* <!-- .element: class="fragment" data-fragment-index="3" -->Modify Dockerfile as follows and repeat preceding step
-
-
-
 #### CMD
-* Provide a default action for `docker run`
-* Two forms:
-   * shell: 
-      * <code>CMD </code><code style="color:red;">command</code><code style="color:blue;"> param1 param2 ...</code>
-   * exec (json array): 
-      * <code>CMD ["command", "param1", "param2"]</code>
-* Conventionally near end of Dockerfile
-  
+* Provide a default action for container 
+   ```
+   CMD ["my-script", "arg1", "arg2" ]
+   ```
+* Similar to `ENTRYPOINT`, but overriden by arguments on command line
+   - Runs _my-script_ with given args as in `CMD`
+   <pre><code data-trim data-noescape>
+    
+    docker run my-image  
+   </code></pre>
+   - Runs _other-script_ with given arguments
+   <pre><code data-trim data-noescape>
+    docker run my-image <mark>other-script arg1 arg2 arg3 ...</mark>
+   </code></pre>
+* Also has _shell_ and _exec_ form
+
 
 
 #### CMD and `docker run` behaviour
@@ -430,32 +422,30 @@ docker build -t YOURNAME/my-first-image .
 
 
 
+##### Excercise: Run Dockerfile with ENTRYPOINT
+* <!-- .element: class="fragment" data-fragment-index="1" -->Create a simple Dockerfile:
+   ```
+   cd ~/docker-introduction/sample-code/entrypoint_cmd_examples
+   gedit Dockerfile
+   ```
+   <pre><code data-trim  data-noescape>
+   FROM alpine:latest
+   <mark class="fragment" data-fragment-index="3">ENTRYPOINT ["echo", "Good", "morning,", "Dave"]</mark>
+   </code></pre>
+* <!-- .element: class="fragment" data-fragment-index="2" -->Build the image and run container
+   ```
+   docker build -t basic-docker-image .
+   docker run basic-docker-image
+   ```
+* <!-- .element: class="fragment" data-fragment-index="3" -->Modify Dockerfile as follows and repeat preceding step
+
+
+
 #### Combining ENTRYPOINT and CMD
 
 * <!-- .element: class="fragment" data-fragment-index="0" -->Arguments following the image for `docker run image` overrides `CMD`
 * <!-- .element: class="fragment" data-fragment-index="1" -->Use exec form of ENTRYPOINT and CMD together to set base command and default arguments
 
-
-#### ENTRYPOINT & CMD
-* Hypothetical application <!-- .element: class="fragment" data-fragment-index="0" -->
-  ```dockerfile
-  FROM ubuntu:latest
-  ENTRYPOINT ["./base-script"]
-  .
-  CMD ["test"]
-  ```
-* By default this image will just pass <!-- .element: class="fragment" data-fragment-index="1" -->`test` as argument to `base-script` to run unit tests by default.
-   ```
-   docker run my-image
-   ```
-
-
-#### ENTRYPOINT & CMD
-<pre class="fragment" data-fragment-index="0"><code data-trim data-noescape>
-docker run my-image <mark>server</mark>
-</code></pre>
-
-* Passing argument at the end tells it to override CMD and execute with <!-- .element: class="fragment" data-fragment-index="1" --><code>server</code> to run server feature 
 
 
 #### ENTRYPOINT & CMD
