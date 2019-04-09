@@ -22,10 +22,6 @@ practices, and how Docker can be used in day-to-day software development.
 * Dockerising applications
 * Dockerfile best practices
 * Software development workflows
-* Container orchestration
-   * Kubernetes
-   * Docker Swarm demo in Catalyst Cloud
-   
    
 ## Target audience
 

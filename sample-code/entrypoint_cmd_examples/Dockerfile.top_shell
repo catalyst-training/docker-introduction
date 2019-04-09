@@ -1,2 +1,3 @@
-FROM ubuntu
+FROM ubuntu:18.04
+
 ENTRYPOINT top -b -H

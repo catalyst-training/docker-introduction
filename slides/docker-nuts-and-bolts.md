@@ -14,7 +14,7 @@
 
 ### Components of Docker
 
-![docker components](http://alandargan.com/wp-content/uploads/2014/11/Docker2.png "Components of Docker")
+<img src="img/Docker2.png" />
 
 
 ### Docker Registries

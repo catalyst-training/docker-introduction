@@ -26,15 +26,15 @@ cd ~/docker-introduction
 ### Ansible
 
 * Some of the features we will be exploring require setup. We'll use Ansible for that.
-* Ansible is Python based tool set
-* Useful for automating
+* Ansible is a Python-based tool set
+* Useful for automation
    * server/cluster management 
-   * installing packages
-   * deploying code 
-   * Configuration management
+   * package installation
+   * code deploys
+   * configuration management
 
 
-### Setup Ansible
+### Ansible Setup
 ```
 git clone https://github.com/catalyst/catalystcloud-ansible.git
 ```
@@ -51,18 +51,18 @@ source $CC_ANSIBLE_DIR/ansible-venv/bin/activate
 ```
 <!-- .element: style="width:100%;" class="fragment" data-fragment-index="1" -->
 
-* Installs python virtualenv with latest ansible libraries <!-- .element: class="fragment" data-fragment-index="2" -->
-* We'll be using this virtualenv for tasks throughout the course <!-- .element: class="fragment" data-fragment-index="3" -->
+* Installs Python virtualenv with latest Ansible libraries <!-- .element: class="fragment" data-fragment-index="2" -->
+* This virtualenv will be used for tasks throughout the course <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <!-- .element: class="stretch"  -->
 
 
-### Setup Docker
+### Docker Setup
 
-* Follow instructions on website for installing <!-- .element: class="fragment" data-fragment-index="0" -->
+* Follow the instructions from the links below <!-- .element: class="fragment" data-fragment-index="0" -->
    * [Docker Community Edition](https://store.docker.com/search?offering=community&type=edition)
    * [docker-compose](https://docs.docker.com/compose/install/)
-* If you are using Ubuntu, you can use the ansible playbook included in course repo <!-- .element: class="fragment" data-fragment-index="1" -->
+* You can use the Ansible playbook included in the course repo if you are using Ubuntu <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ```
 cd docker-introduction
@@ -73,11 +73,11 @@ ansible-playbook -i ansible/hosts -K ansible/docker-install.yml
 
 
 
-### Setup Docker
+### Docker Setup
 * This playbook installs:
    * latest Docker _Community Edition_
    * `docker-compose`
-* You might need to logout and login again
+* You may need to log out and log in again
 
 
 ### Fetch and run slides
@@ -90,9 +90,9 @@ docker run --name docker-intro -d --rm \
 * Follow along with the <!-- .element: class="fragment" data-fragment-index="0" -->[course slides](http://localhost:8000)
 
 
-### Pre pull some containers
+### Pre-pull some containers
 * A few of the lessons require large containers
-* Run the `pre-pull-images` playbook to start downloading them
+* Run the `pre-pull-images` playbook to begin downloading them ahead of time
 ```
 ansible-playbook -i ansible/hosts ansible/pre-pull-images.yml
 ```

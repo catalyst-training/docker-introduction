@@ -33,6 +33,6 @@ that some people may already be familiar with.
 * Understand how to use Docker on the command line
 * Understand how Docker works
 * Learn how to integrate Docker with applications
-* Learn ops and developers can use Docker to deploy applications
+* Learn ops that developers can use Docker to deploy applications
 * Get people thinking about where they could use Docker
 

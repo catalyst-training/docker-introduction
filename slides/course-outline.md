@@ -49,13 +49,5 @@
    + Container orchestration 
 
 
-#### If we have time
-* [Kubernetes](kubernetes.md)
-   + About Kubernetes
-   + Architecture
-   + Deploy demo 
-* [Deploying Swarm Apps](deploying-swarm-app.md)
-
-
 * [Wrap Up](wrap-up.md)
 

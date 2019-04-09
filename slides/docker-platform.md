@@ -42,5 +42,5 @@ A command-line tool for programmatically defining the contents of a Linux contai
    * OSX 
    * Windows
 * Lightweight Docker optimized Linux distributions (CoreOS, Project Atomic, RancherOS, etc.)
-* Private clouds (OpenStack, Vmware)
+* Private clouds (OpenStack, VMware)
 * Public clouds (AWS, Azure, Rackspace, Google)

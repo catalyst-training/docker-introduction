@@ -5,7 +5,7 @@
 ### What is containerisation?
 
 * A type of virtualization
-* Differences from traditional VMs
+* Differences from traditional VMs:
    * Does not replicate entire OS, just bits needed for application
    * Run natively on host
 * Key benefits:

@@ -157,8 +157,8 @@ namespace and sets of cgroups
 
 #### Container Layering
 
-* Container creates its own read/write layer on top of image
-* Multiple containers each have own read/write layer, but can share the actual image
+* Containers create their own read/write layer on top of the image
+* Multiple containers each have their own read/write layer, but they can share the actual image
 
 
 
