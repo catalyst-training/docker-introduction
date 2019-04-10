@@ -167,7 +167,7 @@ docker run -it alpine /bin/sh
    02aa3e50580c  heytrav/docker-introduction-slides    docker-intro
    </code></pre>
 * <!-- .element: class="fragment" data-fragment-index="1" -->Note the name assigned to the alpine container.
-* By default docker assigns containers random names <!-- .element: class="fragment" data-fragment-index="2" -->
+* <!-- .element: class="fragment" data-fragment-index="2" -->By default docker assigns containers [random names](https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go)
 
 |Option                  |Argument |Description|
 | --- | --- | --- |

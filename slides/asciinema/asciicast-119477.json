@@ -28,7 +28,7 @@
     ],
     [
       1.434214,
-      "\u001b[3mdocker run -p 8080:8000 heytrav/docker-introduction-slides\u001b[23m"
+      "\u001b[3mdocker run -p 8000:8000 heytrav/docker-introduction-slides\u001b[23m"
     ],
     [
       1.337134,
