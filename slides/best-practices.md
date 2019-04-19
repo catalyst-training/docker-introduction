@@ -241,7 +241,7 @@ RUN apk add --update python3
 # install Python modules needed by the Python app
 WORKDIR /usr/src/app
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . .
 
 # tell the port number the container should expose
