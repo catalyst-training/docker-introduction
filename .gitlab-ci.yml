@@ -9,7 +9,7 @@ build:docker-course:
     #variables: # Tag with datetime: 201907301200
     #  - $CI_COMMIT_TAG =~ /^d+$/
   tags:
-    - gitlab-org
+    - docker
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
