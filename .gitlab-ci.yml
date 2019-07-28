@@ -1,0 +1,16 @@
+
+stages:
+  - build
+
+build:docker-course:
+  stage: build
+  only:
+    variables: # Tag with datetime: 201907301200
+      - $CI_COMMIT_TAG =~ /^d+$/
+  tags:
+    - docker
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build -t registry.gitlab.com/catalyst-it/training/introduction-to-docker:${CI_COMMIT_TAG}  -f slides/Dockerfile .
+    - docker push registry.gitlab.com/catalyst-it/training/introduction-to-docker:${CI_COMMIT_TAG}
